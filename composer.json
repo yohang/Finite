@@ -1,0 +1,21 @@
+{
+    "name":        "Finite",
+    "description": "A simple PHP5.4+ Finite State Machine",
+    "keywords":    ["statemachine"],
+    "homepage":    "https://github.com/yohang/Finite",
+    "type":        "library",
+    "license":     "MIT",
+    "authors": [
+        {
+            "name":     "Yohan Giarelli",
+            "email":    "yohan@giarel.li",
+            "homepage": "http://yohan.giarel.li"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "autoload": {
+        "psr-0": { "Finite": "src/" }
+    }
+}
