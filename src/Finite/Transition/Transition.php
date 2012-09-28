@@ -13,10 +13,19 @@ use Finite\State\StateInterface;
  */
 class Transition implements TransitionInterface
 {
+    /**
+     * @var array
+     */
     protected $initialStates;
 
+    /*
+     * @var string
+     */
     protected $state;
 
+    /**
+     * @var string
+     */
     protected $name;
 
     /**
