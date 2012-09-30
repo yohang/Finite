@@ -33,6 +33,11 @@ class State implements StateInterface
      */
     protected $name;
 
+    /**
+     * @var array
+     */
+    protected $properties;
+
     public function __construct($name, $type = self::TYPE_NORMAL, array $transitions = array())
     {
         $this->name        = $name;
@@ -128,5 +133,13 @@ class State implements StateInterface
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @param array $properties
+     */
+    public function setProperties(array $properties)
+    {
+        $this->properties = $properties;
     }
 }

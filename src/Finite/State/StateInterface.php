@@ -10,9 +10,9 @@ namespace Finite\State;
 interface StateInterface
 {
     const
-        TYPE_INITIAL = 0,
-        TYPE_NORMAL  = 1,
-        TYPE_FINAL   = 2
+        TYPE_INITIAL = 'initial',
+        TYPE_NORMAL  = 'normal',
+        TYPE_FINAL   = 'final'
     ;
 
     /**
@@ -46,7 +46,7 @@ interface StateInterface
     /**
      * Returns the state type
      *
-     * @return int
+     * @return string
      */
     public function getType();
 

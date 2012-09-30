@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="finite.state_machine.class">Finite\StateMachine</parameter>
+        <parameter key="finite.array_loader.class">Finite\Loader\ArrayLoader</parameter>
+    </parameters>
+
+    <services>
+        <service id="finite.state_machine" class="%finite.state_machine.class%" public="false" />
+        <service id="finite.array_loader" class="%finite.array_loader.class%" public="false" />
+    </services>
+
+</container>

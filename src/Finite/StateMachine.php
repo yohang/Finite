@@ -2,6 +2,7 @@
 
 namespace Finite;
 
+use Finite\Loader\LoaderInterface;
 use Finite\State\State;
 use Finite\State\StateInterface;
 use Finite\Transition\Transition;
@@ -171,6 +172,14 @@ class StateMachine
         }
 
         return $this->states[$name];
+    }
+
+    /**
+     * @param LoaderInterface $loader
+     */
+    public function load(LoaderInterface $loader)
+    {
+        $loader->load($this);
     }
 
     /**
