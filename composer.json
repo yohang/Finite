@@ -16,7 +16,10 @@
         "php": ">=5.4.0"
     },
     "require-dev": {
-        "symfony/event-dispatcher": "*"
+        "symfony/event-dispatcher": "*",
+        "phpunit/phpunit":          "*",
+        "phpmd/phpmd":              "*",
+        "pdepend/pdepend":          "*"
     },
     "suggest": {
         "symfony/event-dispatcher": "Needed for using EventStateMachine"

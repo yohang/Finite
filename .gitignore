@@ -1,0 +1,5 @@
+vendor
+build
+bin
+composer.phar
+cache.properties
