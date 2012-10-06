@@ -38,11 +38,12 @@ class State implements StateInterface
      */
     protected $properties;
 
-    public function __construct($name, $type = self::TYPE_NORMAL, array $transitions = array())
+    public function __construct($name, $type = self::TYPE_NORMAL, array $transitions = array(), array $properties = array())
     {
         $this->name        = $name;
         $this->type        = $type;
         $this->transitions = $transitions;
+        $this->properties  = $properties;
     }
 
     /**

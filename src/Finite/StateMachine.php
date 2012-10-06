@@ -77,7 +77,12 @@ class StateMachine
             ));
         }
 
-        return $transition->process($this);
+        $returnValue = $transition->process($this);
+
+        $this->object->setFiniteState($transition->getState());
+        $this->currentState = $this->getState($transition->getState());
+
+        return $returnValue;
     }
 
     /**
@@ -131,11 +136,20 @@ class StateMachine
         $this->transitions[$transition->getName()] = $transition;
 
         // We add missings states to the State Machine
-        foreach ($transition->getInitialStates() + array($transition->getState()) as $state) {
+        try {
+            $this->getState($transition->getState());
+        } catch (Exception\StateException $e) {
+            $this->addState($transition->getState());
+        }
+        foreach ($transition->getInitialStates() as $state) {
             try {
                 $this->getState($state);
             } catch (Exception\StateException $e) {
                 $this->addState($state);
+            }
+            $state = $this->getState($state);
+            if ($state instanceof State) {
+                $state->addTransition($transition);
             }
         }
     }
@@ -172,14 +186,6 @@ class StateMachine
         }
 
         return $this->states[$name];
-    }
-
-    /**
-     * @param LoaderInterface $loader
-     */
-    public function load(LoaderInterface $loader)
-    {
-        $loader->load($this);
     }
 
     /**

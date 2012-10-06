@@ -32,6 +32,7 @@ class ArrayLoader implements LoaderInterface
     public function load(StateMachine $stateMachine)
     {
         $this->loadStates($stateMachine);
+        $this->loadTransitions($stateMachine);
     }
 
     /**
@@ -40,7 +41,7 @@ class ArrayLoader implements LoaderInterface
     private function loadStates(StateMachine $stateMachine)
     {
         foreach ($this->config['states'] as $state => $config) {
-            $stateMachine->addState(new State($state, $config['type'], array(),$config['properties']));
+            $stateMachine->addState(new State($state, $config['type'], array(), $config['properties']));
         }
     }
 
