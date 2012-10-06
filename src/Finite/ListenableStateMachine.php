@@ -4,6 +4,7 @@ namespace Finite;
 
 use Finite\Event\FiniteEvents;
 use Finite\Event\StateMachineEvent;
+use Finite\Event\TransitionEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -42,9 +43,10 @@ class ListenableStateMachine extends \Finite\StateMachine
      */
     public function apply($transitionName)
     {
-        $this->dispatcher->dispatch(FiniteEvents::PRE_TRANSITION);
+        $transition = $this->getTransition($transitionName);
+        $this->dispatcher->dispatch(FiniteEvents::PRE_TRANSITION, new TransitionEvent($transition, $this));
         $value = parent::apply($transitionName);
-        $this->dispatcher->dispatch(FiniteEvents::POST_TRANSITION);
+        $this->dispatcher->dispatch(FiniteEvents::POST_TRANSITION, new TransitionEvent($transition, $this));
 
         return $value;
     }
