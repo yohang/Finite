@@ -7,18 +7,8 @@ use Finite\StateMachine;
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class StateMachineTest extends \PHPUnit_Framework_TestCase
+class StateMachineTest extends StateMachineTestCase
 {
-    /**
-     * @var StateMachine
-     */
-    protected $object;
-
-    protected function setUp()
-    {
-        $this->object = new StateMachine();
-    }
-
     public function testAddState()
     {
         $this->object->addState('foo');
@@ -78,59 +68,5 @@ class StateMachineTest extends \PHPUnit_Framework_TestCase
         $this->object->apply('t23');
         $this->assertSame('s3', $this->object->getCurrentState()->getName());
         $this->object->apply('t23');
-    }
-
-    private function initialize()
-    {
-        $this->addStates();
-        $this->addTransitions();
-        $this->object->setObject($this->getStatefulObjectMock());
-        $this->object->initialize();
-    }
-
-    private function getStatefulObjectMock()
-    {
-        $mock = $this->getMock('Finite\StatefulInterface');
-        $mock
-            ->expects($this->once())
-            ->method('getFiniteState')
-            ->will($this->returnValue('s2'));
-
-        return $mock;
-    }
-
-    public function statesProvider()
-    {
-        return array(
-            array('s1'),
-            array('s2'),
-            array('s3'),
-            array('s3'),
-            array('s4'),
-        );
-    }
-
-    public function transitionsProvider()
-    {
-        return array(
-            array('t12', 's1', 's2'),
-            array('t23', 's2', 's3'),
-            array('t34', 's3', 's4'),
-            array('t45', 's4', 's5'),
-        );
-    }
-
-    private function addStates()
-    {
-        foreach ($this->statesProvider() as $state) {
-            $this->object->addState($state[0]);
-        }
-    }
-
-    private function addTransitions()
-    {
-        foreach ($this->transitionsProvider() as $transitions) {
-            $this->object->addTransition($transitions[0], $transitions[1], $transitions[2]);
-        }
     }
 }
