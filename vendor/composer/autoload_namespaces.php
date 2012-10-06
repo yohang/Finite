@@ -7,6 +7,17 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Symfony\\Component\\Yaml' => $vendorDir . '/symfony/yaml/',
+    'Symfony\\Component\\Translation' => $vendorDir . '/symfony/translation/',
+    'Symfony\\Component\\Templating' => $vendorDir . '/symfony/templating/',
+    'Symfony\\Component\\Routing' => $vendorDir . '/symfony/routing/',
+    'Symfony\\Component\\HttpKernel' => $vendorDir . '/symfony/http-kernel/',
+    'Symfony\\Component\\HttpFoundation' => $vendorDir . '/symfony/http-foundation/',
+    'Symfony\\Component\\Filesystem' => $vendorDir . '/symfony/filesystem/',
     'Symfony\\Component\\EventDispatcher' => $vendorDir . '/symfony/event-dispatcher/',
+    'Symfony\\Component\\DependencyInjection' => $vendorDir . '/symfony/dependency-injection/',
+    'Symfony\\Component\\Config' => $vendorDir . '/symfony/config/',
+    'Symfony\\Bundle\\FrameworkBundle' => $vendorDir . '/symfony/framework-bundle/',
+    'SessionHandlerInterface' => $vendorDir . '/symfony/http-foundation/Symfony/Component/HttpFoundation/Resources/stubs',
     'Finite' => $baseDir . '/src/',
+    'Doctrine\\Common' => $vendorDir . '/doctrine/common/lib/',
 );

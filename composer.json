@@ -17,6 +17,7 @@
     },
     "require-dev": {
         "symfony/event-dispatcher": "*",
+        "symfony/framework-bundle": "*",
         "phpunit/phpunit":          "*",
         "phpmd/phpmd":              "*",
         "pdepend/pdepend":          "*"
