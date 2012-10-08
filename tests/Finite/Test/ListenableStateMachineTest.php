@@ -37,7 +37,7 @@ class ListenableStateMachineTest extends StateMachineTestCase
             FiniteEvents::INITIALIZE,
             function(StateMachineEvent $event) use(&$initialized, $that) {
                 $initialized = true;
-                $that->assertSame($that->object, $event->getStateMachine());
+                $that->assertSame($that->getObject(), $event->getStateMachine());
             }
         );
         $this->initialize();
@@ -67,6 +67,11 @@ class ListenableStateMachineTest extends StateMachineTestCase
         $this->object->apply('t23');
         $this->assertTrue($preTransitioned);
         $this->assertTrue($postTransitioned);
+    }
+
+    public function getObject()
+    {
+        return $this->object;
     }
 }
 
