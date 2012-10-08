@@ -53,14 +53,14 @@ class ListenableStateMachineTest extends StateMachineTestCase
             FiniteEvents::PRE_TRANSITION,
             function(StateMachineEvent $event) use(&$preTransitioned, $that) {
                 $preTransitioned = true;
-                $that->assertSame($that->object, $event->getStateMachine());
+                $that->assertSame($that->getObject(), $event->getStateMachine());
             }
         );
         $this->dispatcher->addListener(
             FiniteEvents::POST_TRANSITION,
             function(TransitionEvent $event) use(&$postTransitioned, $that) {
                 $postTransitioned = true;
-                $that->assertSame($that->object, $event->getStateMachine());
+                $that->assertSame($that->getObject(), $event->getStateMachine());
             }
         );
         $this->initialize();
