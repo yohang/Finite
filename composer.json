@@ -1,6 +1,6 @@
 {
-    "name":        "Finite",
-    "description": "A simple PHP5.4+ Finite State Machine",
+    "name":        "yohang/finite",
+    "description": "A simple PHP5.3+ Finite State Machine",
     "keywords":    ["statemachine"],
     "homepage":    "https://github.com/yohang/Finite",
     "type":        "library",
