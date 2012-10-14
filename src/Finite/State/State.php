@@ -133,7 +133,7 @@ class State implements StateInterface
      */
     public function getProperties()
     {
-        return array();
+        return $this->properties;
     }
 
     /**
