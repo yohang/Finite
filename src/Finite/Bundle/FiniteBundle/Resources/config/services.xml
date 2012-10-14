@@ -9,6 +9,7 @@
         <parameter key="finite.array_loader.class">Finite\Loader\ArrayLoader</parameter>
         <parameter key="finite.factory.class">Finite\Factory\SymfonyDependencyInjectionFactory</parameter>
         <parameter key="finite.context.class">Finite\Context</parameter>
+        <parameter key="finite.twig_extension.class">Finite\Extension\Twig\FiniteExtension</parameter>
     </parameters>
 
     <services>
@@ -22,6 +23,10 @@
         </service>
         <service id="finite.context" class="%finite.context.class%">
             <argument type="service" id="finite.factory" />
+        </service>
+        <service id="finite.twig_extension" class="%finite.twig_extension.class%" public="false">
+            <argument type="service" id="finite.context" />
+            <tag name="twig.extension" />
         </service>
     </services>
 

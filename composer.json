@@ -22,7 +22,8 @@
         "phpunit/phpunit":              "*",
         "phpmd/phpmd":                  "*",
         "pdepend/pdepend":              "*",
-        "pimple/pimple":                "*"
+        "pimple/pimple":                "*",
+        "twig/twig": "*"
     },
     "suggest": {
         "symfony/event-dispatcher": "Needed for using ListenableStateMachine",
