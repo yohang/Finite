@@ -8,6 +8,7 @@
         <parameter key="finite.state_machine.class">Finite\ListenableStateMachine</parameter>
         <parameter key="finite.array_loader.class">Finite\Loader\ArrayLoader</parameter>
         <parameter key="finite.factory.class">Finite\Factory\SymfonyDependencyInjectionFactory</parameter>
+        <parameter key="finite.context.class">Finite\Context</parameter>
     </parameters>
 
     <services>
@@ -18,6 +19,9 @@
         <service id="finite.factory" class="%finite.factory.class%">
             <argument type="service" id="service_container" />
             <argument>finite.state_machine</argument>
+        </service>
+        <service id="finite.context" class="%finite.context.class%">
+            <argument type="service" id="finite.factory" />
         </service>
     </services>
 
