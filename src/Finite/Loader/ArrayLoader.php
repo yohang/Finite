@@ -2,6 +2,7 @@
 
 namespace Finite\Loader;
 
+use Finite\StatefulInterface;
 use Finite\StateMachine;
 use Finite\State\State;
 use Finite\Transition\Transition;
@@ -23,7 +24,14 @@ class ArrayLoader implements LoaderInterface
      */
     public function __construct(array $config)
     {
-        $this->config = $config;
+        $this->config = array_merge(
+            array(
+                'class'       => '',
+                'states'      => array(),
+                'transitions' => array(),
+            ),
+            $config
+        );
     }
 
     /**
@@ -33,6 +41,16 @@ class ArrayLoader implements LoaderInterface
     {
         $this->loadStates($stateMachine);
         $this->loadTransitions($stateMachine);
+    }
+
+    /**
+     * @{inheritDoc}
+     */
+    public function supports(StatefulInterface $object)
+    {
+        $reflection = new \ReflectionClass($this->config['class']);
+
+        return $reflection->isInstance($object);
     }
 
     /**

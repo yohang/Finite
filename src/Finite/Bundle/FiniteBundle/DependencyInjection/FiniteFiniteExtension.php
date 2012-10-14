@@ -26,47 +26,18 @@ class FiniteFiniteExtension extends Extension
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
+        $factoryDefinition = $container->getDefinition('finite.factory');
 
         foreach ($config as $key => $stateMachineConfig)
         {
-            $container->setDefinition(
-                'finite.state_machine.'.$key,
-                $this->buildStateMachineDefinition($key, $container, $stateMachineConfig)
-            );
+            $definition = clone $container->getDefinition('finite.array_loader');
+            $serviceId  = 'finite.loader.'.$key;
+            $definition->addArgument($stateMachineConfig);
+            $container->setDefinition($serviceId, $definition);
+
+            $factoryDefinition->addMethodCall('addLoader', array(new Reference($serviceId)));
         }
-    }
 
-    /**
-     * @param ContainerBuilder $container
-     * @param array            $config
-     *
-     * @return Definition
-     */
-    protected function buildStateMachineDefinition($name, ContainerBuilder $container, array $config)
-    {
-        $definition = $container->getDefinition('finite.state_machine');
-        $definition = clone $definition;
-
-        $container->setDefinition('finite.array_loader.'.$name, $this->buildLoaderDefinition($container, $config));
-        $definition->setPublic(true);
-        $definition->addMethodCall('load', array(new Reference('finite.array_loader.'.$name)));
-
-        return $definition;
-    }
-
-    /**
-     * @param ContainerBuilder $container
-     * @param array            $config
-     *
-     * @return Definition
-     */
-    protected function buildLoaderDefinition(ContainerBuilder $container, array $config)
-    {
-        $definition = $container->getDefinition('finite.array_loader');
-        $definition = clone $definition;
-
-        $definition->addArgument($config);
-
-        return $definition;
+        $container->removeDefinition('finite.array_loader');
     }
 }
