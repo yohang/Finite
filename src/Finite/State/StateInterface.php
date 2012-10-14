@@ -67,6 +67,13 @@ interface StateInterface
     public function can($transition);
 
     /**
+     * @param string $property
+     *
+     * @return boolean
+     */
+    public function has($property);
+
+    /**
      * Returns optional state properties
      *
      * @return mixed

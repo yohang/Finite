@@ -123,6 +123,14 @@ class State implements StateInterface
     /**
      * @{inheritDoc}
      */
+    public function has($property)
+    {
+        return in_array($property, $this->properties);
+    }
+
+    /**
+     * @{inheritDoc}
+     */
     public function getProperties()
     {
         return array();
