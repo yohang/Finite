@@ -70,7 +70,7 @@ class Context
     /**
      * @param StatefulInterface $object
      *
-     * @return StateMachine
+     * @return \Finite\StateMachine\StateMachine
      */
     public function getStateMachine(StatefulInterface $object)
     {
