@@ -74,6 +74,13 @@ interface StateInterface
     public function has($property);
 
     /**
+     * @param string $property
+     *
+     * @return mixed
+     */
+    public function get($property);
+
+    /**
      * Returns optional state properties
      *
      * @return mixed

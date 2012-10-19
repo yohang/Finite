@@ -64,7 +64,10 @@ class FiniteFiniteExtensionTest extends \PHPUnit_Framework_TestCase
                         ),
                         'state3' => array(
                             'type'       => 'final',
-                            'properties' => array()
+                            'properties' => array(
+                                'foo' => true,
+                                'bar' => false,
+                            )
                         )
                     ),
                     'transitions' => array(

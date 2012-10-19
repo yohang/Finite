@@ -22,7 +22,7 @@ class ContextTest extends \PHPUnit_Framework_TestCase
         $container = new \Pimple(array(
             'state_machine' => function() {
                 $sm =  new StateMachine;
-                $sm->addState(new State('s1', State::TYPE_INITIAL, array(), array('foo', 'bar')));
+                $sm->addState(new State('s1', State::TYPE_INITIAL, array(), array('foo' => true, 'bar' => false)));
                 $sm->addTransition('t12', 's1', 's2');
                 $sm->addTransition('t23', 's2', 's3');
 
@@ -53,7 +53,7 @@ class ContextTest extends \PHPUnit_Framework_TestCase
 
     public function testGetProperties()
     {
-        $this->assertEquals(array('foo', 'bar'), $this->object->getProperties($this->getObjectMock()));
+        $this->assertEquals(array('foo' => true, 'bar' => false), $this->object->getProperties($this->getObjectMock()));
     }
 
     public function testHasProperty()

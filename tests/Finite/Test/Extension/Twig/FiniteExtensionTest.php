@@ -30,7 +30,7 @@ class FiniteExtensionTest extends \PHPUnit_Framework_TestCase
                 array(
                     'state'       => '{{ finite_state(object) }}',
                     'transitions' => '{% for transition in finite_transitions(object) %}{{ transition }}{% endfor %}',
-                    'properties'  => '{% for property in finite_properties(object) %}{{ property }}{% endfor %}',
+                    'properties'  => '{% for property, val in finite_properties(object) %}{{ property }}{% endfor %}',
                     'has'         => '{{ finite_has(object, property) ? "yes" : "no" }}'
                 )
             )
@@ -39,7 +39,7 @@ class FiniteExtensionTest extends \PHPUnit_Framework_TestCase
         $container = new \Pimple(array(
             'state_machine' => function() {
                 $sm =  new StateMachine;
-                $sm->addState(new State('s1', State::TYPE_INITIAL, array(), array('foo', 'bar')));
+                $sm->addState(new State('s1', State::TYPE_INITIAL, array(), array('foo' => true, 'bar' => false)));
                 $sm->addTransition('t12', 's1', 's2');
                 $sm->addTransition('t23', 's2', 's3');
 

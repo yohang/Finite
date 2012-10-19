@@ -19,7 +19,7 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
         $this->object = new ArrayLoader(array(
             'class'       => 'Stateful1',
             'states'      => array(
-                'start'  => array('type' => 'initial', 'properties' => array()),
+                'start'  => array('type' => 'initial', 'properties' => array('foo' => true, 'bar' => false)),
                 'middle' => array('type' => 'normal', 'properties' => array()),
                 'end'    => array('type' => 'final', 'properties' => array()),
             ),

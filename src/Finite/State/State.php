@@ -125,7 +125,15 @@ class State implements StateInterface
      */
     public function has($property)
     {
-        return in_array($property, $this->properties);
+        return array_key_exists($property, $this->properties);
+    }
+
+    /**
+     * @{inheritDoc}
+     */
+    public function get($property, $default = null)
+    {
+        return $this->has($property) ? $this->properties[$property] : $default;
     }
 
     /**
