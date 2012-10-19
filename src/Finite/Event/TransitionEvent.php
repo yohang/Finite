@@ -2,7 +2,7 @@
 
 namespace Finite\Event;
 
-use Finite\ListenableStateMachine;
+use  Finite\StateMachine\ListenableStateMachine;
 use Finite\Transition\TransitionInterface;
 use Symfony\Component\EventDispatcher\Event;
 

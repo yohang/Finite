@@ -2,7 +2,7 @@
 
 namespace Finite\Test;
 
-use Finite\StateMachine;
+use  Finite\StateMachine\StateMachine;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>

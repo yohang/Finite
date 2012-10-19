@@ -1,6 +1,6 @@
 <?php
 
-namespace Finite;
+namespace Finite\StateMachine;
 
 use Finite\Event\FiniteEvents;
 use Finite\Event\StateMachineEvent;
@@ -14,7 +14,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class ListenableStateMachine extends \Finite\StateMachine
+class ListenableStateMachine extends StateMachine
 {
     /**
      * @var EventDispatcherInterface
@@ -50,5 +50,5 @@ class ListenableStateMachine extends \Finite\StateMachine
 
         return $value;
     }
-
 }
+

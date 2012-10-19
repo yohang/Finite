@@ -2,7 +2,7 @@
 
 namespace Finite\Transition;
 
-use Finite\StateMachine;
+use  Finite\StateMachine\StateMachine;
 
 /**
  * The base Transition interface

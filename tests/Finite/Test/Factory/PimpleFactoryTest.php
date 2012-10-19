@@ -3,7 +3,7 @@
 namespace Finite\Test\Factory;
 
 use Finite\Factory\PimpleFactory;
-use Finite\StateMachine;
+use  Finite\StateMachine\StateMachine;
 
 class PimpleFactoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -33,7 +33,7 @@ class PimpleFactoryTest extends \PHPUnit_Framework_TestCase
         $object->expects($this->once())->method('getFiniteState')->will($this->returnValue('s2'));
         $sm = $this->object->get($object);
 
-        $this->assertInstanceOf('Finite\StateMachine', $sm);
+        $this->assertInstanceOf('Finite\StateMachine\StateMachine', $sm);
         $this->assertSame('s2', $sm->getCurrentState()->getName());
 
         $object2 = $this->getMock('Finite\StatefulInterface');

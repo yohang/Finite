@@ -3,7 +3,7 @@
 namespace Finite\Loader;
 
 use Finite\StatefulInterface;
-use Finite\StateMachine;
+use  Finite\StateMachine\StateMachine;
 use Finite\State\State;
 use Finite\Transition\Transition;
 

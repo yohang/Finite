@@ -4,7 +4,7 @@ namespace Finite\Test;
 
 use Finite\Context;
 use Finite\Factory\PimpleFactory;
-use Finite\StateMachine;
+use  Finite\StateMachine\StateMachine;
 use Finite\State\State;
 
 /**
@@ -37,7 +37,7 @@ class ContextTest extends \PHPUnit_Framework_TestCase
     {
         $sm = $this->object->getStateMachine($this->getObjectMock());
 
-        $this->assertInstanceOf('Finite\StateMachine', $sm);
+        $this->assertInstanceOf('Finite\StateMachine\StateMachine', $sm);
         $this->assertSame('s1', $sm->getCurrentState()->getName());
     }
 

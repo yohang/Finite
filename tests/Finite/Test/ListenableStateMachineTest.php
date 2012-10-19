@@ -5,7 +5,7 @@ namespace Finite\Test;
 use Finite\Event\FiniteEvents;
 use Finite\Event\StateMachineEvent;
 use Finite\Event\TransitionEvent;
-use Finite\ListenableStateMachine;
+use  Finite\StateMachine\ListenableStateMachine;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**

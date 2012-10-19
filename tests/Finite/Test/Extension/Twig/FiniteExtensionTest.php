@@ -5,7 +5,7 @@ namespace Finite\Test\Extension\Twig;
 use Finite\Context;
 use Finite\Extension\Twig\FiniteExtension;
 use Finite\Factory\PimpleFactory;
-use Finite\StateMachine;
+use  Finite\StateMachine\StateMachine;
 use Finite\State\State;
 
 /**

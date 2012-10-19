@@ -1,8 +1,10 @@
 <?php
 
-namespace Finite;
+namespace Finite\StateMachine;
 
+use Finite\Exception;
 use Finite\Loader\LoaderInterface;
+use Finite\StatefulInterface;
 use Finite\State\State;
 use Finite\State\StateInterface;
 use Finite\Transition\Transition;
@@ -13,7 +15,7 @@ use Finite\Transition\TransitionInterface;
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class StateMachine
+class StateMachine implements StateMachineInterface
 {
     /**
      * The stateful object
@@ -52,7 +54,7 @@ class StateMachine
     }
 
     /**
-     * Initialize the State Machine current state
+     * @{inheritDoc}
      */
     public function initialize()
     {
@@ -60,11 +62,9 @@ class StateMachine
     }
 
     /**
-     * Apply a transition
+     * @{inheritDoc}
      *
-     * @param string $transitionName
-     *
-     * @return mixed
+     * @throws Exception\StateException
      */
     public function apply($transitionName)
     {
@@ -86,11 +86,7 @@ class StateMachine
     }
 
     /**
-     * Returns if the transition is applicable
-     *
-     * @param string|TransitionInterface $transition
-     *
-     * @return bool
+     * @{inheritDoc}
      */
     public function can($transition)
     {
@@ -98,7 +94,7 @@ class StateMachine
     }
 
     /**
-     * @param string|StateInterface $state
+     * @{inheritDoc}
      */
     public function addState($state)
     {
@@ -110,11 +106,7 @@ class StateMachine
     }
 
     /**
-     * @param string|TransitionInterface $transition
-     * @param string|null                $initialState
-     * @param string|null                $finalState
-     *
-     * @throws \InvalidArgumentException
+     * @{inheritDoc}
      */
     public function addTransition($transition, $initialState = null, $finalState = null)
     {
@@ -155,13 +147,7 @@ class StateMachine
     }
 
     /**
-     * Returns a transition by its name
-     *
-     * @param string $name
-     *
-     * @return TransitionInterface
-     *
-     * @throws Exception\TransitionException
+     * @{inheritDoc}
      */
     public function getTransition($name)
     {
@@ -173,11 +159,7 @@ class StateMachine
     }
 
     /**
-     * @param string $name
-     *
-     * @return StateInterface
-     *
-     * @throws Exception\StateException
+     * @{inheritDoc}
      */
     public function getState($name)
     {
@@ -197,7 +179,7 @@ class StateMachine
     }
 
     /**
-     * @return StatefulInterface
+     * @{inheritDoc}
      */
     public function getObject()
     {
@@ -205,7 +187,7 @@ class StateMachine
     }
 
     /**
-     * @return StateInterface
+     * @{inheritDoc}
      */
     public function getCurrentState()
     {

@@ -3,7 +3,7 @@
 namespace Finite\Test\Factory;
 
 use Finite\Factory\SymfonyDependencyInjectionFactory;
-use Finite\StateMachine;
+use  Finite\StateMachine\StateMachine;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -18,7 +18,7 @@ class SymfonyDependencyInjectionFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $container = new ContainerBuilder;
         $container
-            ->register('state_machine', 'Finite\StateMachine')
+            ->register('state_machine', 'Finite\StateMachine\StateMachine')
             ->setScope('prototype')
             ->addMethodCall('addTransition', array('t12', 's1', 's2'))
             ->addMethodCall('addTransition', array('t23', 's2', 's3'));
@@ -32,7 +32,7 @@ class SymfonyDependencyInjectionFactoryTest extends \PHPUnit_Framework_TestCase
         $object->expects($this->once())->method('getFiniteState')->will($this->returnValue('s2'));
         $sm = $this->object->get($object);
 
-        $this->assertInstanceOf('Finite\StateMachine', $sm);
+        $this->assertInstanceOf('Finite\StateMachine\StateMachine', $sm);
         $this->assertSame('s2', $sm->getCurrentState()->getName());
 
         $object2 = $this->getMock('Finite\StatefulInterface');

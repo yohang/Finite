@@ -38,7 +38,7 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
 
     public function testLoad()
     {
-        $sm = $this->getMock('Finite\StateMachine');
+        $sm = $this->getMock('Finite\StateMachine\StateMachine');
         $sm->expects($this->exactly(3))->method('addState');
         $sm->expects($this->exactly(2))->method('addTransition');
         $this->object->load($sm);

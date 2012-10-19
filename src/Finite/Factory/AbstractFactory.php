@@ -4,7 +4,7 @@ namespace Finite\Factory;
 
 use Finite\Loader\LoaderInterface;
 use Finite\StatefulInterface;
-use Finite\StateMachine;
+use  Finite\StateMachine\StateMachine;
 
 /**
  * The abstract base class for state machine factories
