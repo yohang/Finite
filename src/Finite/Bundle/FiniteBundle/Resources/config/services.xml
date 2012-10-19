@@ -15,7 +15,9 @@
     <services>
         <service id="finite.array_loader" class="%finite.array_loader.class%" public="false" />
         <service id="finite.state_machine" class="%finite.state_machine.class%" scope="prototype">
-            <argument type="service" id="event_dispatcher" />
+            <call method="setEventDispatcher">
+                <argument type="service" id="event_dispatcher" />
+            </call>
         </service>
         <service id="finite.factory" class="%finite.factory.class%">
             <argument type="service" id="service_container" />
