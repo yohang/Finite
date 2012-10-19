@@ -3,7 +3,7 @@
 namespace Finite\Loader;
 
 use Finite\StatefulInterface;
-use  Finite\StateMachine\StateMachine;
+use Finite\StateMachine\StateMachineInterface;
 use Finite\State\State;
 use Finite\Transition\Transition;
 
@@ -37,7 +37,7 @@ class ArrayLoader implements LoaderInterface
     /**
      * @{inheritDoc}
      */
-    public function load(StateMachine $stateMachine)
+    public function load(StateMachineInterface $stateMachine)
     {
         $this->loadStates($stateMachine);
         $this->loadTransitions($stateMachine);
@@ -56,7 +56,7 @@ class ArrayLoader implements LoaderInterface
     /**
      * @param StateMachine $stateMachine
      */
-    private function loadStates(StateMachine $stateMachine)
+    private function loadStates(StateMachineInterface $stateMachine)
     {
         foreach ($this->config['states'] as $state => $config) {
             $stateMachine->addState(new State($state, $config['type'], array(), $config['properties']));
@@ -66,7 +66,7 @@ class ArrayLoader implements LoaderInterface
     /**
      * @param StateMachine $stateMachine
      */
-    private function loadTransitions(StateMachine $stateMachine)
+    private function loadTransitions(StateMachineInterface $stateMachine)
     {
         foreach ($this->config['transitions'] as $transition => $config) {
             $stateMachine->addTransition(new Transition($transition, $config['from'], $config['to']));

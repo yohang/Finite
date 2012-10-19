@@ -3,7 +3,7 @@
 namespace Finite\Loader;
 
 use Finite\StatefulInterface;
-use  Finite\StateMachine\StateMachine;
+use Finite\StateMachine\StateMachineInterface;
 
 /**
  * State & Transitions Loader interface
@@ -15,9 +15,9 @@ interface LoaderInterface
     /**
      * Loads a state machine
      *
-     * @param \Finite\StateMachine $stateMachine
+     * @param StateMachineInterface $stateMachine
      */
-    public function load(StateMachine $stateMachine);
+    public function load(StateMachineInterface $stateMachine);
 
     /**
      * Returns if this loader supports $object

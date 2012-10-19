@@ -16,7 +16,7 @@ interface FactoryInterface
      *
      * @param StatefulInterface $object
      *
-     * @return \Finite\StateMachine
+     * @return \Finite\StateMachine\StateMachineInterface
      */
     public function get(StatefulInterface $object);
 }

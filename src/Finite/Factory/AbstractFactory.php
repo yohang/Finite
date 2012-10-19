@@ -4,7 +4,7 @@ namespace Finite\Factory;
 
 use Finite\Loader\LoaderInterface;
 use Finite\StatefulInterface;
-use  Finite\StateMachine\StateMachine;
+use Finite\StateMachine\StateMachineInterface;
 
 /**
  * The abstract base class for state machine factories
@@ -14,7 +14,7 @@ use  Finite\StateMachine\StateMachine;
 abstract class AbstractFactory implements FactoryInterface
 {
     /**
-     * @var array<StateMachine>
+     * @var array<StateMachineInterface>
      */
     protected $stateMachines = array();
 
@@ -70,7 +70,7 @@ abstract class AbstractFactory implements FactoryInterface
     /**
      * Creates an instance of StateMachine
      *
-     * @return StateMachine
+     * @return StateMachineInterface
      */
     abstract protected function createStateMachine();
 }
