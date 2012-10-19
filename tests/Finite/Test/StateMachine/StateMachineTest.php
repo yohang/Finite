@@ -1,8 +1,9 @@
 <?php
 
-namespace Finite\Test;
+namespace Finite\Test\StateMachine;
 
-use  Finite\StateMachine\StateMachine;
+use Finite\StateMachine\StateMachine;
+use Finite\Test\StateMachineTestCase;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>

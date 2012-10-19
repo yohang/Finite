@@ -1,11 +1,12 @@
 <?php
 
-namespace Finite\Test;
+namespace Finite\Test\StateMachine;
 
 use Finite\Event\FiniteEvents;
 use Finite\Event\StateMachineEvent;
 use Finite\Event\TransitionEvent;
-use  Finite\StateMachine\ListenableStateMachine;
+use Finite\StateMachine\ListenableStateMachine;
+use Finite\Test\StateMachineTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**

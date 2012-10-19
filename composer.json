@@ -23,10 +23,12 @@
         "phpmd/phpmd":                  "*",
         "pdepend/pdepend":              "*",
         "pimple/pimple":                "*",
-        "twig/twig": "*"
+        "twig/twig":                    "*",
+        "symfony/security": "*"
     },
     "suggest": {
         "symfony/event-dispatcher": "Needed for using ListenableStateMachine",
+        "symfony/security": "Needed for using SecurityAwareStateMachine",
         "pimple/pimple": "Needed for use with PimpleFactory",
         "symfony/dependency-injection": "Needed for use with Symfony DependencyInjection Factory"
     },
