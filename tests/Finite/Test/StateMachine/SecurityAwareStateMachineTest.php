@@ -35,7 +35,7 @@ class SecurityAwareStateMachineTest extends \PHPUnit_Framework_TestCase
         $securityMock = $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
         $this->object->setSecurityContext($securityMock);
 
-        $addIsGrandedExpectation = function($return, $transition) use($securityMock) {
+        $addIsGrandedExpectation = function($return, $transition) use ($securityMock) {
             static $at = 0;
 
             $securityMock
@@ -49,7 +49,6 @@ class SecurityAwareStateMachineTest extends \PHPUnit_Framework_TestCase
         $addIsGrandedExpectation(true, 't23');
         $addIsGrandedExpectation(false, 't12');
         $addIsGrandedExpectation(true, 't23');
-
 
         $this->assertTrue($this->object->can('t12'));
         $this->assertFalse($this->object->can('t23'));

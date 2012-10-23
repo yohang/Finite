@@ -28,8 +28,7 @@ class FiniteFiniteExtension extends Extension
         $loader->load('services.xml');
         $factoryDefinition = $container->getDefinition('finite.factory');
 
-        foreach ($config as $key => $stateMachineConfig)
-        {
+        foreach ($config as $key => $stateMachineConfig) {
             $definition = clone $container->getDefinition('finite.array_loader');
             $serviceId  = 'finite.loader.'.$key;
             $definition->addArgument($stateMachineConfig);

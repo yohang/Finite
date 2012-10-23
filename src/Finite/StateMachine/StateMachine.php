@@ -3,7 +3,6 @@
 namespace Finite\StateMachine;
 
 use Finite\Exception;
-use Finite\Loader\LoaderInterface;
 use Finite\StatefulInterface;
 use Finite\State\State;
 use Finite\State\StateInterface;

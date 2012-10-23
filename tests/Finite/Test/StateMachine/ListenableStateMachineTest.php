@@ -36,7 +36,7 @@ class ListenableStateMachineTest extends StateMachineTestCase
         $that        = $this;
         $this->dispatcher->addListener(
             FiniteEvents::INITIALIZE,
-            function(StateMachineEvent $event) use(&$initialized, $that) {
+            function(StateMachineEvent $event) use (&$initialized, $that) {
                 $initialized = true;
                 $that->assertSame($that->getObject(), $event->getStateMachine());
             }
@@ -52,14 +52,14 @@ class ListenableStateMachineTest extends StateMachineTestCase
         $that             = $this;
         $this->dispatcher->addListener(
             FiniteEvents::PRE_TRANSITION,
-            function(StateMachineEvent $event) use(&$preTransitioned, $that) {
+            function(StateMachineEvent $event) use (&$preTransitioned, $that) {
                 $preTransitioned = true;
                 $that->assertSame($that->getObject(), $event->getStateMachine());
             }
         );
         $this->dispatcher->addListener(
             FiniteEvents::POST_TRANSITION,
-            function(TransitionEvent $event) use(&$postTransitioned, $that) {
+            function(TransitionEvent $event) use (&$postTransitioned, $that) {
                 $postTransitioned = true;
                 $that->assertSame($that->getObject(), $event->getStateMachine());
             }
@@ -75,4 +75,3 @@ class ListenableStateMachineTest extends StateMachineTestCase
         return $this->object;
     }
 }
-

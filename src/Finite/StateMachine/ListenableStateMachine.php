@@ -51,4 +51,3 @@ class ListenableStateMachine extends StateMachine
         return $value;
     }
 }
-

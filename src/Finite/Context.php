@@ -3,7 +3,6 @@
 namespace Finite;
 
 use Finite\Factory\FactoryInterface;
-use Finite\Transition\TransitionInterface;
 
 /**
  * The Finite context.

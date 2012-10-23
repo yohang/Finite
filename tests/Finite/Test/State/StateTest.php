@@ -55,7 +55,7 @@ class StateTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param  string $transitionName
+     * @param string $transitionName
      *
      * @return \PHPUnit_Framework_MockObject_Builder_InvocationMocker
      */

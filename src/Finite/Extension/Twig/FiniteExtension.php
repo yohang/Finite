@@ -70,7 +70,7 @@ class FiniteExtension extends \Twig_Extension
 
     /**
      * @param StatefulInterface $object
-     * @param string $property
+     * @param string            $property
      *
      * @return bool
      */

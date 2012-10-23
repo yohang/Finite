@@ -3,7 +3,6 @@
 namespace Finite\Factory;
 
 use Finite\Exception\FactoryException;
-use Finite\StatefulInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
