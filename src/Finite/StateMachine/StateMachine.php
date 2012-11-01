@@ -170,6 +170,22 @@ class StateMachine implements StateMachineInterface
     }
 
     /**
+     * @{inheritDoc}
+     */
+    public function getTransitions()
+    {
+        return array_keys($this->transitions);
+    }
+
+    /**
+     * @{inheritDoc}
+     */
+    public function getStates()
+    {
+        return array_keys($this->states);
+    }
+
+    /**
      * @param StatefulInterface $object
      */
     public function setObject(StatefulInterface $object)

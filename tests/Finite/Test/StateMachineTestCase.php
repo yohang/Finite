@@ -25,8 +25,8 @@ class StateMachineTestCase extends \PHPUnit_Framework_TestCase
             array('s1'),
             array('s2'),
             array('s3'),
-            array('s3'),
             array('s4'),
+            array('s5'),
         );
     }
 

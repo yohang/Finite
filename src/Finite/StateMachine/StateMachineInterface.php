@@ -71,6 +71,20 @@ interface StateMachineInterface
     public function getState($name);
 
     /**
+     * Returns an array containing all the transitions names
+     *
+     * @return array<string>
+     */
+    public function getTransitions();
+
+    /**
+     * Returns an array containing all the states names
+     *
+     * @return array<string>
+     */
+    public function getStates();
+
+    /**
      * @param StatefulInterface $object
      */
     public function setObject(StatefulInterface $object);

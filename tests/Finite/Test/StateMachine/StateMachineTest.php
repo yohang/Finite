@@ -70,4 +70,18 @@ class StateMachineTest extends StateMachineTestCase
         $this->assertSame('s3', $this->object->getCurrentState()->getName());
         $this->object->apply('t23');
     }
+
+    public function testGetStates()
+    {
+        $this->initialize();
+
+        $this->assertSame(array('s1', 's2', 's3', 's4', 's5'), $this->object->getStates());
+    }
+
+    public function testGetTransitions()
+    {
+        $this->initialize();
+
+        $this->assertSame(array('t12', 't23', 't34', 't45'), $this->object->getTransitions());
+    }
 }
