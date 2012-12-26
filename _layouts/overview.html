@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+{% include head.html %}
+<body>
+    {% include nav.html %}
+    <div class="container">
+        <div class="row">
+            <div class="span7">
+                <div class="hero-unit">
+                    <h1>Finite</h1>
+                    <p>A PHP5.3+ Finite State Machine</p>
+                </div>
+            </div>
+            <div class="span5">
+                <h2>Install</h2>
+                <pre> $ curl -s http://getcomposer.org/installer | php
+ $ php composer.phar require yohang/finite</pre>
+                <a href="https://github.com/yohang/Finite" class="btn btn-success btn-large" id="view-on-github">
+                    View on Github
+                </a>
+                <div id="share-buttons">
+                    <a href="https://twitter.com/rouKs" class="twitter-follow-button" data-show-count="false" data-lang="en" data-size="large">Follow @rouKs</a>
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-text="#Finite A PHP5.3+ Finite State Machine" data-via="rouKs" data-lang="fr" data-size="large" data-related="rouKs">Tweeter</a>
+                </div>
+            </div>
+        </div>
+        {{ content }}
+    </div>
+    {% include foot.html %}
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</body>
+</html>

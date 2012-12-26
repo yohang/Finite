@@ -1,0 +1,24 @@
+{% from "macros.twig" import class_link %}
+
+{% set current_namespace = '' %}
+{% autoescape false %}
+<ul class="dropdown-menu" id="api-menu">
+    {% for class in classes | namespace_sort if not contains(class, 'Exception') and not contains(class, 'Extension') %}
+        {% if current_namespace != '' and current_namespace != class.namespace %}
+            {% if current_namespace != 'CalendR'%}
+                    </ul>
+                </li>
+            {% endif %}
+            <li class="namespace{{ '{%if page.current_namespace == "' ~ class.namespace ~ '"%} active{%endif%}' }}">
+                <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                    {{ class.namespace | remove_vendor }}
+                </a>
+                <ul class="dropdown-menu">
+        {% endif %}
+        <li{{ '{%if page.current_class == "' ~ class.name ~ '"%} class="active"{%endif%}' }}>
+            {{ class_link(class, {}, true) }}
+        </li>
+        {% set current_namespace = class.namespace %}
+    {% endfor %}
+</ul>
+{% endautoescape %}

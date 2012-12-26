@@ -1,0 +1,9 @@
+name: calendr
+
+global:
+#    'pages/opensearch.twig': '../opensearch.xml'
+#    'pages/interfaces.twig': 'interfaces.html'
+    'pages/classes.twig':    '../_includes/api/classes.html'
+
+class:
+    'pages/class.twig':      '%s.html'
