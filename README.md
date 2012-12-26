@@ -20,7 +20,7 @@ Getting started
 ### Installation (via composer)
 ```js
 {
-	  "require": {
+      "require": {
         "yohang/finite": "1.0.*"
     }
 }
@@ -34,15 +34,15 @@ use Finite\StatefulInterface;
 
 class Document implements StatefulInterface
 {
-		public function setFiniteState($state)
-		{
-				$this->state = $state;
-		}
+        public function setFiniteState($state)
+        {
+                $this->state = $state;
+        }
 
-		public function getFiniteState()
-		{
-			return $this->state;
-		}
+        public function getFiniteState()
+        {
+            return $this->state;
+        }
 }
 ```
 
@@ -78,4 +78,4 @@ $sm->getCurrentState();
 $sm->can('t34');
 
 ```
- 
+
