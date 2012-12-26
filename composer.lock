@@ -100,28 +100,29 @@
         },
         {
             "name": "phpmd/phpmd",
-            "version": "1.4.0",
+            "version": "1.4.1",
             "source": {
                 "type": "git",
                 "url": "git://github.com/phpmd/phpmd.git",
-                "reference": "1.4.0"
+                "reference": "1.4.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/phpmd/phpmd/zipball/1.4.0",
-                "reference": "1.4.0",
+                "url": "https://github.com/phpmd/phpmd/archive/1.4.1.zip",
+                "reference": "1.4.1",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0",
                 "pdepend/pdepend": "*"
             },
-            "time": "2012-09-07 21:52:24",
+            "time": "2012-12-14 12:25:09",
             "bin": [
                 "src/bin/phpmd"
             ],
             "type": "library",
             "installation-source": "dist",
+            "notification-url": "https://packagist.org/downloads/",
             "include-path": [
                 "../../pdepend/pdepend/src/main/php",
                 "src/main/php"
@@ -130,16 +131,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "1.2.3",
+            "version": "1.2.7",
             "source": {
                 "type": "git",
                 "url": "git://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "1.2.3"
+                "reference": "1.2.7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/sebastianbergmann/php-code-coverage/zipball/1.2.3",
-                "reference": "1.2.3",
+                "url": "https://github.com/sebastianbergmann/php-code-coverage/archive/1.2.7.zip",
+                "reference": "1.2.7",
                 "shasum": ""
             },
             "require": {
@@ -150,11 +151,9 @@
             },
             "suggest": {
                 "ext-dom": "*",
-                "ext-reflection": "*",
-                "ext-spl": "*",
                 "ext-xdebug": ">=2.0.5"
             },
-            "time": "2012-10-05 00:00:00",
+            "time": "2012-12-02 14:54:55",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -162,6 +161,7 @@
                     "PHP/"
                 ]
             },
+            "notification-url": "https://packagist.org/downloads/",
             "include-path": [
                 ""
             ],
@@ -176,7 +176,7 @@
                 }
             ],
             "description": "Library that provides collection, processing, and rendering functionality for PHP code coverage information.",
-            "homepage": "http://www.phpunit.de/",
+            "homepage": "https://github.com/sebastianbergmann/php-code-coverage",
             "keywords": [
                 "testing",
                 "coverage",
@@ -230,22 +230,22 @@
         },
         {
             "name": "phpunit/php-text-template",
-            "version": "1.1.3",
+            "version": "1.1.4",
             "source": {
                 "type": "git",
                 "url": "git://github.com/sebastianbergmann/php-text-template.git",
-                "reference": "1.1.3"
+                "reference": "1.1.4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/sebastianbergmann/php-text-template/zipball/1.1.3",
-                "reference": "1.1.3",
+                "url": "https://github.com/sebastianbergmann/php-text-template/zipball/1.1.4",
+                "reference": "1.1.4",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.2.7"
+                "php": ">=5.3.3"
             },
-            "time": "2012-10-05 09:17:21",
+            "time": "2012-10-31 11:15:28",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -253,6 +253,7 @@
                     "Text/"
                 ]
             },
+            "notification-url": "https://packagist.org/downloads/",
             "include-path": [
                 ""
             ],
@@ -267,7 +268,7 @@
                 }
             ],
             "description": "Simple template engine.",
-            "homepage": "http://www.phpunit.de/",
+            "homepage": "https://github.com/sebastianbergmann/php-text-template/",
             "keywords": [
                 "template"
             ]
@@ -363,16 +364,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "3.7.5",
+            "version": "3.7.10",
             "source": {
                 "type": "git",
                 "url": "git://github.com/sebastianbergmann/phpunit.git",
-                "reference": "3.7.5"
+                "reference": "3.7.10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/sebastianbergmann/phpunit/zipball/3.7.5",
-                "reference": "3.7.5",
+                "url": "https://github.com/sebastianbergmann/phpunit/archive/3.7.10.zip",
+                "reference": "3.7.10",
                 "shasum": ""
             },
             "require": {
@@ -381,7 +382,7 @@
                 "phpunit/php-text-template": ">=1.1.1",
                 "phpunit/php-code-coverage": ">=1.2.1",
                 "phpunit/php-timer": ">=1.0.2",
-                "phpunit/phpunit-mock-objects": ">=1.2.0",
+                "phpunit/phpunit-mock-objects": ">=1.2.0,<1.3.0",
                 "symfony/yaml": ">=2.1.0",
                 "ext-dom": "*",
                 "ext-pcre": "*",
@@ -394,7 +395,7 @@
                 "ext-simplexml": "*",
                 "ext-tokenizer": "*"
             },
-            "time": "2012-10-06 02:30:36",
+            "time": "2012-12-02 14:56:55",
             "bin": [
                 "composer/bin/phpunit"
             ],
@@ -410,6 +411,7 @@
                     "PHPUnit/"
                 ]
             },
+            "notification-url": "https://packagist.org/downloads/",
             "include-path": [
                 "",
                 "../../symfony/yaml/"
@@ -434,28 +436,26 @@
         },
         {
             "name": "phpunit/phpunit-mock-objects",
-            "version": "1.2.1",
+            "version": "1.2.2",
             "source": {
                 "type": "git",
                 "url": "git://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "1.2.1"
+                "reference": "1.2.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/sebastianbergmann/phpunit-mock-objects/zipball/1.2.1",
-                "reference": "1.2.1",
+                "url": "https://github.com/sebastianbergmann/phpunit-mock-objects/archive/1.2.2.zip",
+                "reference": "1.2.2",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
-                "phpunit/php-text-template": ">=1.1.1@stable",
-                "ext-reflection": "*",
-                "ext-spl": "*"
+                "phpunit/php-text-template": ">=1.1.1@stable"
             },
             "suggest": {
                 "ext-soap": "*"
             },
-            "time": "2012-10-05 00:00:00",
+            "time": "2012-11-05 10:39:13",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -463,6 +463,7 @@
                     "PHPUnit/"
                 ]
             },
+            "notification-url": "https://packagist.org/downloads/",
             "include-path": [
                 ""
             ],
@@ -477,7 +478,7 @@
                 }
             ],
             "description": "Mock Object library for PHPUnit",
-            "homepage": "http://www.phpunit.de/",
+            "homepage": "https://github.com/sebastianbergmann/phpunit-mock-objects/",
             "keywords": [
                 "mock",
                 "xunit"
@@ -485,22 +486,22 @@
         },
         {
             "name": "pimple/pimple",
-            "version": "1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "git://github.com/fabpot/Pimple.git",
-                "reference": "v1.0.0"
+                "reference": "v1.0.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/fabpot/Pimple/zipball/v1.0.0",
-                "reference": "v1.0.0",
+                "url": "https://github.com/fabpot/Pimple/archive/v1.0.1.zip",
+                "reference": "v1.0.1",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
-            "time": "2012-05-08 06:57:24",
+            "time": "2012-11-11 08:32:34",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -513,6 +514,7 @@
                     "Pimple": "lib/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -531,35 +533,31 @@
         },
         {
             "name": "symfony/config",
-            "version": "v2.1.2",
+            "version": "v2.1.6",
             "target-dir": "Symfony/Component/Config",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Config",
-                "reference": "v2.1.0-RC2"
+                "reference": "v2.1.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/Config/zipball/v2.1.0-RC2",
-                "reference": "v2.1.0-RC2",
+                "url": "https://github.com/symfony/Config/archive/v2.1.6.zip",
+                "reference": "v2.1.6",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
-            "time": "2012-08-22 13:48:41",
+            "time": "2012-12-11 10:40:22",
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.1-dev"
-                }
-            },
             "installation-source": "dist",
             "autoload": {
                 "psr-0": {
                     "Symfony\\Component\\Config": ""
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -578,17 +576,17 @@
         },
         {
             "name": "symfony/dependency-injection",
-            "version": "v2.1.2",
+            "version": "v2.1.6",
             "target-dir": "Symfony/Component/DependencyInjection",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/DependencyInjection",
-                "reference": "v2.1.2"
+                "reference": "v2.1.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/DependencyInjection/zipball/v2.1.2",
-                "reference": "v2.1.2",
+                "url": "https://github.com/symfony/DependencyInjection/archive/v2.1.6.zip",
+                "reference": "v2.1.6",
                 "shasum": ""
             },
             "require": {
@@ -602,19 +600,15 @@
                 "symfony/yaml": "2.1.*",
                 "symfony/config": "2.1.*"
             },
-            "time": "2012-09-17 20:41:57",
+            "time": "2012-12-06 10:00:55",
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.1-dev"
-                }
-            },
             "installation-source": "dist",
             "autoload": {
                 "psr-0": {
                     "Symfony\\Component\\DependencyInjection": ""
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -633,17 +627,17 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.1.2",
+            "version": "v2.1.6",
             "target-dir": "Symfony/Component/EventDispatcher",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/EventDispatcher",
-                "reference": "v2.1.2"
+                "reference": "v2.1.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/EventDispatcher/zipball/v2.1.2",
-                "reference": "v2.1.2",
+                "url": "https://github.com/symfony/EventDispatcher/archive/v2.1.6.zip",
+                "reference": "v2.1.6",
                 "shasum": ""
             },
             "require": {
@@ -656,19 +650,15 @@
                 "symfony/dependency-injection": "2.1.*",
                 "symfony/http-kernel": "2.1.*"
             },
-            "time": "2012-09-10 10:53:42",
+            "time": "2012-12-06 10:00:55",
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.1-dev"
-                }
-            },
             "installation-source": "dist",
             "autoload": {
                 "psr-0": {
                     "Symfony\\Component\\EventDispatcher": ""
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -687,35 +677,31 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v2.1.2",
+            "version": "v2.1.6",
             "target-dir": "Symfony/Component/Filesystem",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Filesystem",
-                "reference": "v2.1.0-RC2"
+                "reference": "v2.1.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/Filesystem/zipball/v2.1.0-RC2",
-                "reference": "v2.1.0-RC2",
+                "url": "https://github.com/symfony/Filesystem/archive/v2.1.6.zip",
+                "reference": "v2.1.6",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
-            "time": "2012-08-22 13:48:41",
+            "time": "2012-12-11 10:40:22",
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.1-dev"
-                }
-            },
             "installation-source": "dist",
             "autoload": {
                 "psr-0": {
                     "Symfony\\Component\\Filesystem": ""
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -734,17 +720,17 @@
         },
         {
             "name": "symfony/framework-bundle",
-            "version": "v2.1.2",
+            "version": "v2.1.6",
             "target-dir": "Symfony/Bundle/FrameworkBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/FrameworkBundle",
-                "reference": "v2.1.2"
+                "reference": "v2.1.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/FrameworkBundle/zipball/v2.1.2",
-                "reference": "v2.1.2",
+                "url": "https://github.com/symfony/FrameworkBundle/archive/v2.1.6.zip",
+                "reference": "v2.1.6",
                 "shasum": ""
             },
             "require": {
@@ -768,19 +754,15 @@
                 "symfony/form": "2.1.*",
                 "symfony/validator": "2.1.*"
             },
-            "time": "2012-09-10 10:53:42",
+            "time": "2012-12-20 22:10:14",
             "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.1-dev"
-                }
-            },
             "installation-source": "dist",
             "autoload": {
                 "psr-0": {
                     "Symfony\\Bundle\\FrameworkBundle": ""
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -799,29 +781,24 @@
         },
         {
             "name": "symfony/http-foundation",
-            "version": "v2.1.2",
+            "version": "v2.1.6",
             "target-dir": "Symfony/Component/HttpFoundation",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/HttpFoundation",
-                "reference": "v2.1.2"
+                "reference": "v2.1.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/HttpFoundation/zipball/v2.1.2",
-                "reference": "v2.1.2",
+                "url": "https://github.com/symfony/HttpFoundation/archive/v2.1.6.zip",
+                "reference": "v2.1.6",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
-            "time": "2012-09-18 16:09:52",
+            "time": "2012-12-14 21:03:29",
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.1-dev"
-                }
-            },
             "installation-source": "dist",
             "autoload": {
                 "psr-0": {
@@ -829,6 +806,7 @@
                     "SessionHandlerInterface": "Symfony/Component/HttpFoundation/Resources/stubs"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -847,17 +825,17 @@
         },
         {
             "name": "symfony/http-kernel",
-            "version": "v2.1.2",
+            "version": "v2.1.7",
             "target-dir": "Symfony/Component/HttpKernel",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/HttpKernel",
-                "reference": "v2.1.2"
+                "reference": "v2.1.7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/HttpKernel/zipball/v2.1.2",
-                "reference": "v2.1.2",
+                "url": "https://github.com/symfony/HttpKernel/archive/v2.1.7.zip",
+                "reference": "v2.1.7",
                 "shasum": ""
             },
             "require": {
@@ -883,19 +861,15 @@
                 "symfony/dependency-injection": "2.1.*",
                 "symfony/finder": "2.1.*"
             },
-            "time": "2012-09-20 07:13:00",
+            "time": "2012-12-21 10:24:53",
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.1-dev"
-                }
-            },
             "installation-source": "dist",
             "autoload": {
                 "psr-0": {
                     "Symfony\\Component\\HttpKernel": ""
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -914,17 +888,17 @@
         },
         {
             "name": "symfony/routing",
-            "version": "v2.1.2",
+            "version": "v2.1.6",
             "target-dir": "Symfony/Component/Routing",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Routing",
-                "reference": "v2.1.2"
+                "reference": "v2.1.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/Routing/zipball/v2.1.2",
-                "reference": "v2.1.2",
+                "url": "https://github.com/symfony/Routing/archive/v2.1.6.zip",
+                "reference": "v2.1.6",
                 "shasum": ""
             },
             "require": {
@@ -941,19 +915,15 @@
                 "symfony/yaml": "2.1.*",
                 "doctrine/common": ">=2.2,<2.4-dev"
             },
-            "time": "2012-09-10 10:53:42",
+            "time": "2012-12-11 10:40:22",
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.1-dev"
-                }
-            },
             "installation-source": "dist",
             "autoload": {
                 "psr-0": {
                     "Symfony\\Component\\Routing": ""
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -972,17 +942,17 @@
         },
         {
             "name": "symfony/security",
-            "version": "v2.1.2",
+            "version": "v2.1.6",
             "target-dir": "Symfony/Component/Security",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Security",
-                "reference": "v2.1.2"
+                "reference": "v2.1.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/Security/zipball/v2.1.2",
-                "reference": "v2.1.2",
+                "url": "https://github.com/symfony/Security/archive/v2.1.6.zip",
+                "reference": "v2.1.6",
                 "shasum": ""
             },
             "require": {
@@ -1006,19 +976,15 @@
                 "symfony/routing": "2.1.*",
                 "doctrine/dbal": "to use the built-in ACL implementation"
             },
-            "time": "2012-09-10 03:53:42",
+            "time": "2012-12-11 10:40:22",
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.1-dev"
-                }
-            },
             "installation-source": "dist",
             "autoload": {
                 "psr-0": {
                     "Symfony\\Component\\Security": ""
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1037,35 +1003,31 @@
         },
         {
             "name": "symfony/templating",
-            "version": "v2.1.2",
+            "version": "v2.1.6",
             "target-dir": "Symfony/Component/Templating",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Templating",
-                "reference": "v2.1.0-RC2"
+                "reference": "v2.1.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/Templating/zipball/v2.1.0-RC2",
-                "reference": "v2.1.0-RC2",
+                "url": "https://github.com/symfony/Templating/archive/v2.1.6.zip",
+                "reference": "v2.1.6",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
-            "time": "2012-08-22 13:48:41",
+            "time": "2012-12-06 10:00:55",
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.1-dev"
-                }
-            },
             "installation-source": "dist",
             "autoload": {
                 "psr-0": {
                     "Symfony\\Component\\Templating": ""
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1084,17 +1046,17 @@
         },
         {
             "name": "symfony/translation",
-            "version": "v2.1.2",
+            "version": "v2.1.6",
             "target-dir": "Symfony/Component/Translation",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Translation",
-                "reference": "v2.1.2"
+                "reference": "v2.1.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/Translation/zipball/v2.1.2",
-                "reference": "v2.1.2",
+                "url": "https://github.com/symfony/Translation/archive/v2.1.6.zip",
+                "reference": "v2.1.6",
                 "shasum": ""
             },
             "require": {
@@ -1108,19 +1070,15 @@
                 "symfony/config": "2.1.*",
                 "symfony/yaml": "2.1.*"
             },
-            "time": "2012-09-10 10:53:42",
+            "time": "2012-12-06 10:00:55",
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.1-dev"
-                }
-            },
             "installation-source": "dist",
             "autoload": {
                 "psr-0": {
                     "Symfony\\Component\\Translation": ""
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1139,35 +1097,31 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.1.2",
+            "version": "v2.1.6",
             "target-dir": "Symfony/Component/Yaml",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml",
-                "reference": "v2.1.0-RC2"
+                "reference": "v2.1.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/Yaml/zipball/v2.1.0-RC2",
-                "reference": "v2.1.0-RC2",
+                "url": "https://github.com/symfony/Yaml/archive/v2.1.6.zip",
+                "reference": "v2.1.6",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
-            "time": "2012-08-22 13:48:41",
+            "time": "2012-12-06 10:00:55",
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.1-dev"
-                }
-            },
             "installation-source": "dist",
             "autoload": {
                 "psr-0": {
                     "Symfony\\Component\\Yaml": ""
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1186,26 +1140,26 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.10.0",
+            "version": "v1.11.1",
             "source": {
                 "type": "git",
                 "url": "git://github.com/fabpot/Twig.git",
-                "reference": "v1.10.0"
+                "reference": "v1.11.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/fabpot/Twig/zipball/v1.10.0",
-                "reference": "v1.10.0",
+                "url": "https://github.com/fabpot/Twig/archive/v1.11.1.zip",
+                "reference": "v1.11.1",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.4"
             },
-            "time": "2012-09-28 13:11:39",
+            "time": "2012-11-11 17:17:59",
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.10-dev"
+                    "dev-master": "1.11-dev"
                 }
             },
             "installation-source": "dist",
@@ -1214,6 +1168,7 @@
                     "Twig_": "lib/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3"
             ],
