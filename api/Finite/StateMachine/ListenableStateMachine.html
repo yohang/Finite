@@ -19,7 +19,7 @@ current_namespace: "Finite\StateMachine"
                     <div class="class-desc">
                 <p>{% capture the_text_to_capture %}An Event-aware State machine.{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
                 <p>{% capture the_text_to_capture %}Uses the Symfony EventDispatcher Component{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
-                <p>                                            <br />Inherits from: <a href="/CalendR/api/Finite/StateMachine/StateMachine.html"
+                <p>                                            <br />Inherits from: <a href="/Finite/api/Finite/StateMachine/StateMachine.html"
            data-content="The Finite State Machine"
            data-original-title="tateMachine\StateMachine" rel="popover">StateMachine</a>
                     
@@ -36,7 +36,7 @@ current_namespace: "Finite\StateMachine"
             <table>
                     <tr>
                 <td class="type" id="property_object">
-                                                                            <span class="label label-hint label-info"><a href="/CalendR/api/Finite/StatefulInterface.html"
+                                                                            <span class="label label-hint label-info"><a href="/Finite/api/Finite/StatefulInterface.html"
            data-content="Implementing this interface make an object Stateful and able to be handled by the state machine"
            data-original-title="tatefulInterface" rel="popover">StatefulInterface</a></span>
                 </td>
@@ -59,7 +59,7 @@ current_namespace: "Finite\StateMachine"
             </tr>
                     <tr>
                 <td class="type" id="property_currentState">
-                                                                            <span class="label label-hint label-info"><a href="/CalendR/api/Finite/State/StateInterface.html"
+                                                                            <span class="label label-hint label-info"><a href="/Finite/api/Finite/State/StateInterface.html"
            data-content="The base State Interface"
            data-original-title="tate\StateInterface" rel="popover">StateInterface</a></span>
                 </td>
@@ -77,7 +77,7 @@ current_namespace: "Finite\StateMachine"
                                         
                 </td>
                 <td class="last">
-                    <a href="#method___construct">__construct</a>(                <span class="label label-hint label-info"><a href="/CalendR/api/Finite/StatefulInterface.html"
+                    <a href="#method___construct">__construct</a>(                <span class="label label-hint label-info"><a href="/Finite/api/Finite/StatefulInterface.html"
            data-content="Implementing this interface make an object Stateful and able to be handled by the state machine"
            data-original-title="tatefulInterface" rel="popover">StatefulInterface</a></span> $object = null)
                     <p></p>
@@ -90,7 +90,7 @@ current_namespace: "Finite\StateMachine"
                 </td>
                 <td class="last">
                     <a href="#method_initialize">initialize</a>()
-                    <p></p>
+                    <p>Initialize the State Machine current state</p>
                 </td>
                 <td></td>
             </tr>
@@ -100,7 +100,7 @@ current_namespace: "Finite\StateMachine"
                 </td>
                 <td class="last">
                     <a href="#method_apply">apply</a>(                <span class="label label-hint label-warning">string</span> $transitionName)
-                    <p></p>
+                    <p>Apply a transition</p>
                 </td>
                 <td></td>
             </tr>
@@ -109,10 +109,10 @@ current_namespace: "Finite\StateMachine"
                                                         <span class="label label-hint label-warning">bool</span>
                 </td>
                 <td class="last">
-                    <a href="#method_can">can</a>(                <span class="label label-hint label-warning">string</span>|                <span class="label label-hint label-info"><a href="/CalendR/api/Finite/Transition/TransitionInterface.html"
+                    <a href="#method_can">can</a>(                <span class="label label-hint label-warning">string</span>|                <span class="label label-hint label-info"><a href="/Finite/api/Finite/Transition/TransitionInterface.html"
            data-content="The base Transition interface"
            data-original-title="ransition\TransitionInterface" rel="popover">TransitionInterface</a></span> $transition)
-                    <p></p>
+                    <p>Returns if the transition is applicable</p>
                 </td>
                 <td><small>from&nbsp;<a href="../../Finite/StateMachine/StateMachine.html#method_can"><abbr title="Finite\StateMachine\StateMachine">StateMachine</abbr></a></small></td>
             </tr>
@@ -121,7 +121,7 @@ current_namespace: "Finite\StateMachine"
                                         
                 </td>
                 <td class="last">
-                    <a href="#method_addState">addState</a>(                <span class="label label-hint label-warning">string</span>|                <span class="label label-hint label-info"><a href="/CalendR/api/Finite/State/StateInterface.html"
+                    <a href="#method_addState">addState</a>(                <span class="label label-hint label-warning">string</span>|                <span class="label label-hint label-info"><a href="/Finite/api/Finite/State/StateInterface.html"
            data-content="The base State Interface"
            data-original-title="tate\StateInterface" rel="popover">StateInterface</a></span> $state)
                     <p></p>
@@ -133,7 +133,7 @@ current_namespace: "Finite\StateMachine"
                                         
                 </td>
                 <td class="last">
-                    <a href="#method_addTransition">addTransition</a>(                <span class="label label-hint label-warning">string</span>|                <span class="label label-hint label-info"><a href="/CalendR/api/Finite/Transition/TransitionInterface.html"
+                    <a href="#method_addTransition">addTransition</a>(                <span class="label label-hint label-warning">string</span>|                <span class="label label-hint label-info"><a href="/Finite/api/Finite/Transition/TransitionInterface.html"
            data-content="The base Transition interface"
            data-original-title="ransition\TransitionInterface" rel="popover">TransitionInterface</a></span> $transition,                 <span class="label label-hint label-warning">string</span>|                <span class="label label-hint label-warning">null</span> $initialState = null,                 <span class="label label-hint label-warning">string</span>|                <span class="label label-hint label-warning">null</span> $finalState = null)
                     <p></p>
@@ -142,19 +142,19 @@ current_namespace: "Finite\StateMachine"
             </tr>
                     <tr>
                 <td class="type">
-                                                        <span class="label label-hint label-info"><a href="/CalendR/api/Finite/Transition/TransitionInterface.html"
+                                                        <span class="label label-hint label-info"><a href="/Finite/api/Finite/Transition/TransitionInterface.html"
            data-content="The base Transition interface"
            data-original-title="ransition\TransitionInterface" rel="popover">TransitionInterface</a></span>
                 </td>
                 <td class="last">
                     <a href="#method_getTransition">getTransition</a>(                <span class="label label-hint label-warning">string</span> $name)
-                    <p></p>
+                    <p>Returns a transition by its name</p>
                 </td>
                 <td><small>from&nbsp;<a href="../../Finite/StateMachine/StateMachine.html#method_getTransition"><abbr title="Finite\StateMachine\StateMachine">StateMachine</abbr></a></small></td>
             </tr>
                     <tr>
                 <td class="type">
-                                                        <span class="label label-hint label-info"><a href="/CalendR/api/Finite/State/StateInterface.html"
+                                                        <span class="label label-hint label-info"><a href="/Finite/api/Finite/State/StateInterface.html"
            data-content="The base State Interface"
            data-original-title="tate\StateInterface" rel="popover">StateInterface</a></span>
                 </td>
@@ -170,7 +170,7 @@ current_namespace: "Finite\StateMachine"
                 </td>
                 <td class="last">
                     <a href="#method_getTransitions">getTransitions</a>()
-                    <p></p>
+                    <p>Returns an array containing all the transitions names</p>
                 </td>
                 <td><small>from&nbsp;<a href="../../Finite/StateMachine/StateMachine.html#method_getTransitions"><abbr title="Finite\StateMachine\StateMachine">StateMachine</abbr></a></small></td>
             </tr>
@@ -180,7 +180,7 @@ current_namespace: "Finite\StateMachine"
                 </td>
                 <td class="last">
                     <a href="#method_getStates">getStates</a>()
-                    <p></p>
+                    <p>Returns an array containing all the states names</p>
                 </td>
                 <td><small>from&nbsp;<a href="../../Finite/StateMachine/StateMachine.html#method_getStates"><abbr title="Finite\StateMachine\StateMachine">StateMachine</abbr></a></small></td>
             </tr>
@@ -189,7 +189,7 @@ current_namespace: "Finite\StateMachine"
                                         
                 </td>
                 <td class="last">
-                    <a href="#method_setObject">setObject</a>(                <span class="label label-hint label-info"><a href="/CalendR/api/Finite/StatefulInterface.html"
+                    <a href="#method_setObject">setObject</a>(                <span class="label label-hint label-info"><a href="/Finite/api/Finite/StatefulInterface.html"
            data-content="Implementing this interface make an object Stateful and able to be handled by the state machine"
            data-original-title="tatefulInterface" rel="popover">StatefulInterface</a></span> $object)
                     <p></p>
@@ -198,7 +198,7 @@ current_namespace: "Finite\StateMachine"
             </tr>
                     <tr>
                 <td class="type">
-                                                        <span class="label label-hint label-info"><a href="/CalendR/api/Finite/StatefulInterface.html"
+                                                        <span class="label label-hint label-info"><a href="/Finite/api/Finite/StatefulInterface.html"
            data-content="Implementing this interface make an object Stateful and able to be handled by the state machine"
            data-original-title="tatefulInterface" rel="popover">StatefulInterface</a></span>
                 </td>
@@ -210,7 +210,7 @@ current_namespace: "Finite\StateMachine"
             </tr>
                     <tr>
                 <td class="type">
-                                                        <span class="label label-hint label-info"><a href="/CalendR/api/Finite/State/StateInterface.html"
+                                                        <span class="label label-hint label-info"><a href="/Finite/api/Finite/State/StateInterface.html"
            data-content="The base State Interface"
            data-original-title="tate\StateInterface" rel="popover">StateInterface</a></span>
                 </td>
@@ -237,7 +237,7 @@ current_namespace: "Finite\StateMachine"
 
                         <h3 id="method___construct">
         <code class="heading-code">            <span class="label label-success">public</span>            
-    <strong>__construct</strong>(                <span class="label label-hint label-info"><a href="/CalendR/api/Finite/StatefulInterface.html"
+    <strong>__construct</strong>(                <span class="label label-hint label-info"><a href="/Finite/api/Finite/StatefulInterface.html"
            data-content="Implementing this interface make an object Stateful and able to be handled by the state machine"
            data-original-title="tatefulInterface" rel="popover">StatefulInterface</a></span> $object = null)</code>
     </h3>
@@ -249,7 +249,7 @@ current_namespace: "Finite\StateMachine"
                     <th>Parameters</th>
                     <td>    <table class="table table-bordered table-stripped">
                     <tr>
-                <td>                <span class="label label-hint label-info"><a href="/CalendR/api/Finite/StatefulInterface.html"
+                <td>                <span class="label label-hint label-info"><a href="/Finite/api/Finite/StatefulInterface.html"
            data-content="Implementing this interface make an object Stateful and able to be handled by the state machine"
            data-original-title="tatefulInterface" rel="popover">StatefulInterface</a></span></td>
                 <td colspan="2" >$object</td>
@@ -268,7 +268,7 @@ current_namespace: "Finite\StateMachine"
     <strong>initialize</strong>()</code>
     </h3>
     <div class="details method-details">
-        <p>{% capture the_text_to_capture %}{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
+        <p>{% capture the_text_to_capture %}Initialize the State Machine current state{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
         <p>{% capture the_text_to_capture %}{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
         <table class="tags table method-detail">
             
@@ -282,7 +282,7 @@ current_namespace: "Finite\StateMachine"
     <strong>apply</strong>(                <span class="label label-hint label-warning">string</span> $transitionName)</code>
     </h3>
     <div class="details method-details">
-        <p>{% capture the_text_to_capture %}{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
+        <p>{% capture the_text_to_capture %}Apply a transition{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
         <p>{% capture the_text_to_capture %}{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
         <table class="tags table method-detail">
                             <tr>
@@ -313,19 +313,19 @@ current_namespace: "Finite\StateMachine"
 
                 <h3 id="method_can">
         <code class="heading-code">            <span class="label label-success">public</span>                            <span class="label label-hint label-warning">bool</span>
-    <strong>can</strong>(                <span class="label label-hint label-warning">string</span>|                <span class="label label-hint label-info"><a href="/CalendR/api/Finite/Transition/TransitionInterface.html"
+    <strong>can</strong>(                <span class="label label-hint label-warning">string</span>|                <span class="label label-hint label-info"><a href="/Finite/api/Finite/Transition/TransitionInterface.html"
            data-content="The base Transition interface"
            data-original-title="ransition\TransitionInterface" rel="popover">TransitionInterface</a></span> $transition)</code>
     </h3>
     <div class="details method-details">
-        <p>{% capture the_text_to_capture %}{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
+        <p>{% capture the_text_to_capture %}Returns if the transition is applicable{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
         <p>{% capture the_text_to_capture %}{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
         <table class="tags table method-detail">
                             <tr>
                     <th>Parameters</th>
                     <td>    <table class="table table-bordered table-stripped">
                     <tr>
-                <td>                <span class="label label-hint label-warning">string</span>|                <span class="label label-hint label-info"><a href="/CalendR/api/Finite/Transition/TransitionInterface.html"
+                <td>                <span class="label label-hint label-warning">string</span>|                <span class="label label-hint label-info"><a href="/Finite/api/Finite/Transition/TransitionInterface.html"
            data-content="The base Transition interface"
            data-original-title="ransition\TransitionInterface" rel="popover">TransitionInterface</a></span></td>
                 <td colspan="2" >$transition</td>
@@ -351,7 +351,7 @@ current_namespace: "Finite\StateMachine"
 
                 <h3 id="method_addState">
         <code class="heading-code">            <span class="label label-success">public</span>            
-    <strong>addState</strong>(                <span class="label label-hint label-warning">string</span>|                <span class="label label-hint label-info"><a href="/CalendR/api/Finite/State/StateInterface.html"
+    <strong>addState</strong>(                <span class="label label-hint label-warning">string</span>|                <span class="label label-hint label-info"><a href="/Finite/api/Finite/State/StateInterface.html"
            data-content="The base State Interface"
            data-original-title="tate\StateInterface" rel="popover">StateInterface</a></span> $state)</code>
     </h3>
@@ -363,7 +363,7 @@ current_namespace: "Finite\StateMachine"
                     <th>Parameters</th>
                     <td>    <table class="table table-bordered table-stripped">
                     <tr>
-                <td>                <span class="label label-hint label-warning">string</span>|                <span class="label label-hint label-info"><a href="/CalendR/api/Finite/State/StateInterface.html"
+                <td>                <span class="label label-hint label-warning">string</span>|                <span class="label label-hint label-info"><a href="/Finite/api/Finite/State/StateInterface.html"
            data-content="The base State Interface"
            data-original-title="tate\StateInterface" rel="popover">StateInterface</a></span></td>
                 <td colspan="2" >$state</td>
@@ -379,7 +379,7 @@ current_namespace: "Finite\StateMachine"
 
                 <h3 id="method_addTransition">
         <code class="heading-code">            <span class="label label-success">public</span>            
-    <strong>addTransition</strong>(                <span class="label label-hint label-warning">string</span>|                <span class="label label-hint label-info"><a href="/CalendR/api/Finite/Transition/TransitionInterface.html"
+    <strong>addTransition</strong>(                <span class="label label-hint label-warning">string</span>|                <span class="label label-hint label-info"><a href="/Finite/api/Finite/Transition/TransitionInterface.html"
            data-content="The base Transition interface"
            data-original-title="ransition\TransitionInterface" rel="popover">TransitionInterface</a></span> $transition,                 <span class="label label-hint label-warning">string</span>|                <span class="label label-hint label-warning">null</span> $initialState = null,                 <span class="label label-hint label-warning">string</span>|                <span class="label label-hint label-warning">null</span> $finalState = null)</code>
     </h3>
@@ -391,7 +391,7 @@ current_namespace: "Finite\StateMachine"
                     <th>Parameters</th>
                     <td>    <table class="table table-bordered table-stripped">
                     <tr>
-                <td>                <span class="label label-hint label-warning">string</span>|                <span class="label label-hint label-info"><a href="/CalendR/api/Finite/Transition/TransitionInterface.html"
+                <td>                <span class="label label-hint label-warning">string</span>|                <span class="label label-hint label-info"><a href="/Finite/api/Finite/Transition/TransitionInterface.html"
            data-content="The base Transition interface"
            data-original-title="ransition\TransitionInterface" rel="popover">TransitionInterface</a></span></td>
                 <td colspan="2" >$transition</td>
@@ -409,18 +409,28 @@ current_namespace: "Finite\StateMachine"
                 </tr>
             
             
+                            <tr>
+                    <th>Exceptions</th>
+                    <td>    <table>
+                    <tr>
+                <td><a href="http://php.net/InvalidArgumentException">InvalidArgumentException</a></td>
+                <td></td>
+            </tr>
+            </table>
+</td>
+                </tr>
             
                     </table>
     </div>
 
                 <h3 id="method_getTransition">
-        <code class="heading-code">            <span class="label label-success">public</span>                            <span class="label label-hint label-info"><a href="/CalendR/api/Finite/Transition/TransitionInterface.html"
+        <code class="heading-code">            <span class="label label-success">public</span>                            <span class="label label-hint label-info"><a href="/Finite/api/Finite/Transition/TransitionInterface.html"
            data-content="The base Transition interface"
            data-original-title="ransition\TransitionInterface" rel="popover">TransitionInterface</a></span>
     <strong>getTransition</strong>(                <span class="label label-hint label-warning">string</span> $name)</code>
     </h3>
     <div class="details method-details">
-        <p>{% capture the_text_to_capture %}{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
+        <p>{% capture the_text_to_capture %}Returns a transition by its name{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
         <p>{% capture the_text_to_capture %}{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
         <table class="tags table method-detail">
                             <tr>
@@ -438,7 +448,7 @@ current_namespace: "Finite\StateMachine"
                     <th>Return Value</th>
                     <td>    <table>
         <tr>
-            <td>                <span class="label label-hint label-info"><a href="/CalendR/api/Finite/Transition/TransitionInterface.html"
+            <td>                <span class="label label-hint label-info"><a href="/Finite/api/Finite/Transition/TransitionInterface.html"
            data-content="The base Transition interface"
            data-original-title="ransition\TransitionInterface" rel="popover">TransitionInterface</a></span></td>
             <td></td>
@@ -447,12 +457,24 @@ current_namespace: "Finite\StateMachine"
 </td>
                 </tr>
             
+                            <tr>
+                    <th>Exceptions</th>
+                    <td>    <table>
+                    <tr>
+                <td><a href="/Finite/api/Finite/Exception/TransitionException.html"
+           data-content="A transition exception"
+           data-original-title="xception\TransitionException" rel="popover">TransitionException</a></td>
+                <td></td>
+            </tr>
+            </table>
+</td>
+                </tr>
             
                     </table>
     </div>
 
                 <h3 id="method_getState">
-        <code class="heading-code">            <span class="label label-success">public</span>                            <span class="label label-hint label-info"><a href="/CalendR/api/Finite/State/StateInterface.html"
+        <code class="heading-code">            <span class="label label-success">public</span>                            <span class="label label-hint label-info"><a href="/Finite/api/Finite/State/StateInterface.html"
            data-content="The base State Interface"
            data-original-title="tate\StateInterface" rel="popover">StateInterface</a></span>
     <strong>getState</strong>(                <span class="label label-hint label-warning">string</span> $name)</code>
@@ -476,7 +498,7 @@ current_namespace: "Finite\StateMachine"
                     <th>Return Value</th>
                     <td>    <table>
         <tr>
-            <td>                <span class="label label-hint label-info"><a href="/CalendR/api/Finite/State/StateInterface.html"
+            <td>                <span class="label label-hint label-info"><a href="/Finite/api/Finite/State/StateInterface.html"
            data-content="The base State Interface"
            data-original-title="tate\StateInterface" rel="popover">StateInterface</a></span></td>
             <td></td>
@@ -485,6 +507,18 @@ current_namespace: "Finite\StateMachine"
 </td>
                 </tr>
             
+                            <tr>
+                    <th>Exceptions</th>
+                    <td>    <table>
+                    <tr>
+                <td><a href="/Finite/api/Finite/Exception/TransitionException.html"
+           data-content="A transition exception"
+           data-original-title="xception\TransitionException" rel="popover">TransitionException</a></td>
+                <td></td>
+            </tr>
+            </table>
+</td>
+                </tr>
             
                     </table>
     </div>
@@ -494,7 +528,7 @@ current_namespace: "Finite\StateMachine"
     <strong>getTransitions</strong>()</code>
     </h3>
     <div class="details method-details">
-        <p>{% capture the_text_to_capture %}{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
+        <p>{% capture the_text_to_capture %}Returns an array containing all the transitions names{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
         <p>{% capture the_text_to_capture %}{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
         <table class="tags table method-detail">
             
@@ -518,7 +552,7 @@ current_namespace: "Finite\StateMachine"
     <strong>getStates</strong>()</code>
     </h3>
     <div class="details method-details">
-        <p>{% capture the_text_to_capture %}{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
+        <p>{% capture the_text_to_capture %}Returns an array containing all the states names{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
         <p>{% capture the_text_to_capture %}{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
         <table class="tags table method-detail">
             
@@ -539,7 +573,7 @@ current_namespace: "Finite\StateMachine"
 
                 <h3 id="method_setObject">
         <code class="heading-code">            <span class="label label-success">public</span>            
-    <strong>setObject</strong>(                <span class="label label-hint label-info"><a href="/CalendR/api/Finite/StatefulInterface.html"
+    <strong>setObject</strong>(                <span class="label label-hint label-info"><a href="/Finite/api/Finite/StatefulInterface.html"
            data-content="Implementing this interface make an object Stateful and able to be handled by the state machine"
            data-original-title="tatefulInterface" rel="popover">StatefulInterface</a></span> $object)</code>
     </h3>
@@ -551,7 +585,7 @@ current_namespace: "Finite\StateMachine"
                     <th>Parameters</th>
                     <td>    <table class="table table-bordered table-stripped">
                     <tr>
-                <td>                <span class="label label-hint label-info"><a href="/CalendR/api/Finite/StatefulInterface.html"
+                <td>                <span class="label label-hint label-info"><a href="/Finite/api/Finite/StatefulInterface.html"
            data-content="Implementing this interface make an object Stateful and able to be handled by the state machine"
            data-original-title="tatefulInterface" rel="popover">StatefulInterface</a></span></td>
                 <td colspan="2" >$object</td>
@@ -566,7 +600,7 @@ current_namespace: "Finite\StateMachine"
     </div>
 
                 <h3 id="method_getObject">
-        <code class="heading-code">            <span class="label label-success">public</span>                            <span class="label label-hint label-info"><a href="/CalendR/api/Finite/StatefulInterface.html"
+        <code class="heading-code">            <span class="label label-success">public</span>                            <span class="label label-hint label-info"><a href="/Finite/api/Finite/StatefulInterface.html"
            data-content="Implementing this interface make an object Stateful and able to be handled by the state machine"
            data-original-title="tatefulInterface" rel="popover">StatefulInterface</a></span>
     <strong>getObject</strong>()</code>
@@ -580,7 +614,7 @@ current_namespace: "Finite\StateMachine"
                     <th>Return Value</th>
                     <td>    <table>
         <tr>
-            <td>                <span class="label label-hint label-info"><a href="/CalendR/api/Finite/StatefulInterface.html"
+            <td>                <span class="label label-hint label-info"><a href="/Finite/api/Finite/StatefulInterface.html"
            data-content="Implementing this interface make an object Stateful and able to be handled by the state machine"
            data-original-title="tatefulInterface" rel="popover">StatefulInterface</a></span></td>
             <td></td>
@@ -594,7 +628,7 @@ current_namespace: "Finite\StateMachine"
     </div>
 
                 <h3 id="method_getCurrentState">
-        <code class="heading-code">            <span class="label label-success">public</span>                            <span class="label label-hint label-info"><a href="/CalendR/api/Finite/State/StateInterface.html"
+        <code class="heading-code">            <span class="label label-success">public</span>                            <span class="label label-hint label-info"><a href="/Finite/api/Finite/State/StateInterface.html"
            data-content="The base State Interface"
            data-original-title="tate\StateInterface" rel="popover">StateInterface</a></span>
     <strong>getCurrentState</strong>()</code>
@@ -608,7 +642,7 @@ current_namespace: "Finite\StateMachine"
                     <th>Return Value</th>
                     <td>    <table>
         <tr>
-            <td>                <span class="label label-hint label-info"><a href="/CalendR/api/Finite/State/StateInterface.html"
+            <td>                <span class="label label-hint label-info"><a href="/Finite/api/Finite/State/StateInterface.html"
            data-content="The base State Interface"
            data-original-title="tate\StateInterface" rel="popover">StateInterface</a></span></td>
             <td></td>

@@ -35,7 +35,7 @@ class __TwigTemplate_c8e9ac043896273a95c2cb4937caea96 extends Twig_Template
                 if ((($this->getContext($context, "current_namespace") != "") && ($this->getContext($context, "current_namespace") != $this->getAttribute($this->getContext($context, "class"), "namespace")))) {
                     // line 8
                     echo "            ";
-                    if (($this->getContext($context, "current_namespace") != "CalendR")) {
+                    if (($this->getContext($context, "current_namespace") != "Finite")) {
                         // line 9
                         echo "                    </ul>
                 </li>

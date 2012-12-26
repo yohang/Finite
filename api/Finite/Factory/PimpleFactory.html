@@ -19,7 +19,7 @@ current_namespace: "Finite\Factory"
                     <div class="class-desc">
                 <p>{% capture the_text_to_capture %}A concrete implementation of State Machine Factory using Pimple{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
                 <p>{% capture the_text_to_capture %}{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
-                <p>                                            <br />Inherits from: <a href="/CalendR/api/Finite/Factory/AbstractFactory.html"
+                <p>                                            <br />Inherits from: <a href="/Finite/api/Finite/Factory/AbstractFactory.html"
            data-content="The abstract base class for state machine factories"
            data-original-title="actory\AbstractFactory" rel="popover">AbstractFactory</a>
                     
@@ -34,15 +34,15 @@ current_namespace: "Finite\Factory"
             <table class="table">
                     <tr>
                 <td class="type">
-                                                        <span class="label label-hint label-info"><a href="/CalendR/api/Finite/StateMachine/StateMachineInterface.html"
+                                                        <span class="label label-hint label-info"><a href="/Finite/api/Finite/StateMachine/StateMachineInterface.html"
            data-content="The Finite State Machine base Interface"
            data-original-title="tateMachine\StateMachineInterface" rel="popover">StateMachineInterface</a></span>
                 </td>
                 <td class="last">
-                    <a href="#method_get">get</a>(                <span class="label label-hint label-info"><a href="/CalendR/api/Finite/StatefulInterface.html"
+                    <a href="#method_get">get</a>(                <span class="label label-hint label-info"><a href="/Finite/api/Finite/StatefulInterface.html"
            data-content="Implementing this interface make an object Stateful and able to be handled by the state machine"
            data-original-title="tatefulInterface" rel="popover">StatefulInterface</a></span> $object)
-                    <p></p>
+                    <p>Returns a StateMachine instance initialized on $object</p>
                 </td>
                 <td><small>from&nbsp;<a href="../../Finite/Factory/AbstractFactory.html#method_get"><abbr title="Finite\Factory\AbstractFactory">AbstractFactory</abbr></a></small></td>
             </tr>
@@ -51,7 +51,7 @@ current_namespace: "Finite\Factory"
                                         
                 </td>
                 <td class="last">
-                    <a href="#method_addLoader">addLoader</a>(                <span class="label label-hint label-info"><a href="/CalendR/api/Finite/Loader/LoaderInterface.html"
+                    <a href="#method_addLoader">addLoader</a>(                <span class="label label-hint label-info"><a href="/Finite/api/Finite/Loader/LoaderInterface.html"
            data-content="State &amp; Transitions Loader interface"
            data-original-title="oader\LoaderInterface" rel="popover">LoaderInterface</a></span> $loader)
                     <p></p>
@@ -74,22 +74,22 @@ current_namespace: "Finite\Factory"
         <h2>Details</h2>
 
                         <h3 id="method_get">
-        <code class="heading-code">            <span class="label label-success">public</span>                            <span class="label label-hint label-info"><a href="/CalendR/api/Finite/StateMachine/StateMachineInterface.html"
+        <code class="heading-code">            <span class="label label-success">public</span>                            <span class="label label-hint label-info"><a href="/Finite/api/Finite/StateMachine/StateMachineInterface.html"
            data-content="The Finite State Machine base Interface"
            data-original-title="tateMachine\StateMachineInterface" rel="popover">StateMachineInterface</a></span>
-    <strong>get</strong>(                <span class="label label-hint label-info"><a href="/CalendR/api/Finite/StatefulInterface.html"
+    <strong>get</strong>(                <span class="label label-hint label-info"><a href="/Finite/api/Finite/StatefulInterface.html"
            data-content="Implementing this interface make an object Stateful and able to be handled by the state machine"
            data-original-title="tatefulInterface" rel="popover">StatefulInterface</a></span> $object)</code>
     </h3>
     <div class="details method-details">
-        <p>{% capture the_text_to_capture %}{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
+        <p>{% capture the_text_to_capture %}Returns a StateMachine instance initialized on $object{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
         <p>{% capture the_text_to_capture %}{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
         <table class="tags table method-detail">
                             <tr>
                     <th>Parameters</th>
                     <td>    <table class="table table-bordered table-stripped">
                     <tr>
-                <td>                <span class="label label-hint label-info"><a href="/CalendR/api/Finite/StatefulInterface.html"
+                <td>                <span class="label label-hint label-info"><a href="/Finite/api/Finite/StatefulInterface.html"
            data-content="Implementing this interface make an object Stateful and able to be handled by the state machine"
            data-original-title="tatefulInterface" rel="popover">StatefulInterface</a></span></td>
                 <td colspan="2" >$object</td>
@@ -102,7 +102,7 @@ current_namespace: "Finite\Factory"
                     <th>Return Value</th>
                     <td>    <table>
         <tr>
-            <td>                <span class="label label-hint label-info"><a href="/CalendR/api/Finite/StateMachine/StateMachineInterface.html"
+            <td>                <span class="label label-hint label-info"><a href="/Finite/api/Finite/StateMachine/StateMachineInterface.html"
            data-content="The Finite State Machine base Interface"
            data-original-title="tateMachine\StateMachineInterface" rel="popover">StateMachineInterface</a></span></td>
             <td></td>
@@ -117,7 +117,7 @@ current_namespace: "Finite\Factory"
 
                 <h3 id="method_addLoader">
         <code class="heading-code">            <span class="label label-success">public</span>            
-    <strong>addLoader</strong>(                <span class="label label-hint label-info"><a href="/CalendR/api/Finite/Loader/LoaderInterface.html"
+    <strong>addLoader</strong>(                <span class="label label-hint label-info"><a href="/Finite/api/Finite/Loader/LoaderInterface.html"
            data-content="State &amp; Transitions Loader interface"
            data-original-title="oader\LoaderInterface" rel="popover">LoaderInterface</a></span> $loader)</code>
     </h3>
@@ -129,7 +129,7 @@ current_namespace: "Finite\Factory"
                     <th>Parameters</th>
                     <td>    <table class="table table-bordered table-stripped">
                     <tr>
-                <td>                <span class="label label-hint label-info"><a href="/CalendR/api/Finite/Loader/LoaderInterface.html"
+                <td>                <span class="label label-hint label-info"><a href="/Finite/api/Finite/Loader/LoaderInterface.html"
            data-content="State &amp; Transitions Loader interface"
            data-original-title="oader\LoaderInterface" rel="popover">LoaderInterface</a></span></td>
                 <td colspan="2" >$loader</td>

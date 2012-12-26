@@ -22,7 +22,7 @@ current_namespace: "Finite\State"
                 <p>                    
                                             <br />
                         Implements:
-                                                    <a href="/CalendR/api/Finite/State/StateInterface.html"
+                                                    <a href="/Finite/api/Finite/State/StateInterface.html"
            data-content="The base State Interface"
            data-original-title="tate\StateInterface" rel="popover">StateInterface</a>
                                                             </p>            </div>
@@ -50,7 +50,7 @@ current_namespace: "Finite\State"
                 </td>
                 <td class="last">
                     <a href="#method_isInitial">isInitial</a>()
-                    <p></p>
+                    <p>Returns if this state is the initial state</p>
                 </td>
                 <td></td>
             </tr>
@@ -60,7 +60,7 @@ current_namespace: "Finite\State"
                 </td>
                 <td class="last">
                     <a href="#method_isFinal">isFinal</a>()
-                    <p></p>
+                    <p>Returns if this state is the final state</p>
                 </td>
                 <td></td>
             </tr>
@@ -70,7 +70,7 @@ current_namespace: "Finite\State"
                 </td>
                 <td class="last">
                     <a href="#method_isNormal">isNormal</a>()
-                    <p></p>
+                    <p>Returns if this state is a normal state (!($this-&gt;isInitial() || $this-&gt;isFinal())</p>
                 </td>
                 <td></td>
             </tr>
@@ -80,7 +80,7 @@ current_namespace: "Finite\State"
                 </td>
                 <td class="last">
                     <a href="#method_getType">getType</a>()
-                    <p></p>
+                    <p>Returns the state type</p>
                 </td>
                 <td></td>
             </tr>
@@ -110,7 +110,7 @@ current_namespace: "Finite\State"
                 </td>
                 <td class="last">
                     <a href="#method_getTransitions">getTransitions</a>()
-                    <p></p>
+                    <p>Returns the available transitions</p>
                 </td>
                 <td></td>
             </tr>
@@ -119,10 +119,10 @@ current_namespace: "Finite\State"
                                                         <span class="label label-hint label-warning">boolean</span>
                 </td>
                 <td class="last">
-                    <a href="#method_can">can</a>(                <span class="label label-hint label-warning">string</span>|                <span class="label label-hint label-info"><a href="/CalendR/api/Finite/Transition/TransitionInterface.html"
+                    <a href="#method_can">can</a>(                <span class="label label-hint label-warning">string</span>|                <span class="label label-hint label-info"><a href="/Finite/api/Finite/Transition/TransitionInterface.html"
            data-content="The base Transition interface"
            data-original-title="ransition\TransitionInterface" rel="popover">TransitionInterface</a></span> $transition)
-                    <p></p>
+                    <p>Returns if this state can run $transition</p>
                 </td>
                 <td></td>
             </tr>
@@ -152,7 +152,7 @@ current_namespace: "Finite\State"
                 </td>
                 <td class="last">
                     <a href="#method_getProperties">getProperties</a>()
-                    <p></p>
+                    <p>Returns optional state properties</p>
                 </td>
                 <td></td>
             </tr>
@@ -162,7 +162,7 @@ current_namespace: "Finite\State"
                 </td>
                 <td class="last">
                     <a href="#method_getName">getName</a>()
-                    <p></p>
+                    <p>Returns the state name</p>
                 </td>
                 <td></td>
             </tr>
@@ -222,7 +222,7 @@ current_namespace: "Finite\State"
     <strong>isInitial</strong>()</code>
     </h3>
     <div class="details method-details">
-        <p>{% capture the_text_to_capture %}{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
+        <p>{% capture the_text_to_capture %}Returns if this state is the initial state{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
         <p>{% capture the_text_to_capture %}{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
         <table class="tags table method-detail">
             
@@ -246,7 +246,7 @@ current_namespace: "Finite\State"
     <strong>isFinal</strong>()</code>
     </h3>
     <div class="details method-details">
-        <p>{% capture the_text_to_capture %}{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
+        <p>{% capture the_text_to_capture %}Returns if this state is the final state{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
         <p>{% capture the_text_to_capture %}{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
         <table class="tags table method-detail">
             
@@ -270,7 +270,7 @@ current_namespace: "Finite\State"
     <strong>isNormal</strong>()</code>
     </h3>
     <div class="details method-details">
-        <p>{% capture the_text_to_capture %}{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
+        <p>{% capture the_text_to_capture %}Returns if this state is a normal state (!($this->isInitial() || $this->isFinal()){% endcapture %}{{ the_text_to_capture | markdownify }}</p>
         <p>{% capture the_text_to_capture %}{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
         <table class="tags table method-detail">
             
@@ -294,7 +294,7 @@ current_namespace: "Finite\State"
     <strong>getType</strong>()</code>
     </h3>
     <div class="details method-details">
-        <p>{% capture the_text_to_capture %}{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
+        <p>{% capture the_text_to_capture %}Returns the state type{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
         <p>{% capture the_text_to_capture %}{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
         <table class="tags table method-detail">
             
@@ -366,7 +366,7 @@ current_namespace: "Finite\State"
     <strong>getTransitions</strong>()</code>
     </h3>
     <div class="details method-details">
-        <p>{% capture the_text_to_capture %}{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
+        <p>{% capture the_text_to_capture %}Returns the available transitions{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
         <p>{% capture the_text_to_capture %}{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
         <table class="tags table method-detail">
             
@@ -387,19 +387,19 @@ current_namespace: "Finite\State"
 
                 <h3 id="method_can">
         <code class="heading-code">            <span class="label label-success">public</span>                            <span class="label label-hint label-warning">boolean</span>
-    <strong>can</strong>(                <span class="label label-hint label-warning">string</span>|                <span class="label label-hint label-info"><a href="/CalendR/api/Finite/Transition/TransitionInterface.html"
+    <strong>can</strong>(                <span class="label label-hint label-warning">string</span>|                <span class="label label-hint label-info"><a href="/Finite/api/Finite/Transition/TransitionInterface.html"
            data-content="The base Transition interface"
            data-original-title="ransition\TransitionInterface" rel="popover">TransitionInterface</a></span> $transition)</code>
     </h3>
     <div class="details method-details">
-        <p>{% capture the_text_to_capture %}{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
+        <p>{% capture the_text_to_capture %}Returns if this state can run $transition{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
         <p>{% capture the_text_to_capture %}{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
         <table class="tags table method-detail">
                             <tr>
                     <th>Parameters</th>
                     <td>    <table class="table table-bordered table-stripped">
                     <tr>
-                <td>                <span class="label label-hint label-warning">string</span>|                <span class="label label-hint label-info"><a href="/CalendR/api/Finite/Transition/TransitionInterface.html"
+                <td>                <span class="label label-hint label-warning">string</span>|                <span class="label label-hint label-info"><a href="/Finite/api/Finite/Transition/TransitionInterface.html"
            data-content="The base Transition interface"
            data-original-title="ransition\TransitionInterface" rel="popover">TransitionInterface</a></span></td>
                 <td colspan="2" >$transition</td>
@@ -500,7 +500,7 @@ current_namespace: "Finite\State"
     <strong>getProperties</strong>()</code>
     </h3>
     <div class="details method-details">
-        <p>{% capture the_text_to_capture %}{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
+        <p>{% capture the_text_to_capture %}Returns optional state properties{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
         <p>{% capture the_text_to_capture %}{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
         <table class="tags table method-detail">
             
@@ -524,7 +524,7 @@ current_namespace: "Finite\State"
     <strong>getName</strong>()</code>
     </h3>
     <div class="details method-details">
-        <p>{% capture the_text_to_capture %}{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
+        <p>{% capture the_text_to_capture %}Returns the state name{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
         <p>{% capture the_text_to_capture %}{% endcapture %}{{ the_text_to_capture | markdownify }}</p>
         <table class="tags table method-detail">
             

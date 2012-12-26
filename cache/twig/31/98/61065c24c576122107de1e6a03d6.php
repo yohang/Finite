@@ -380,7 +380,7 @@ class __TwigTemplate_319861065c24c576122107de1e6a03d6 extends Twig_Template
 
         ob_start();
         try {
-            echo "/CalendR/api/";
+            echo "/Finite/api/";
             echo twig_escape_filter($this->env, strtr($this->getContext($context, "class"), "\\", "/"), "html", null, true);
             echo ".html";
         } catch(Exception $e) {
