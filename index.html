@@ -7,14 +7,15 @@ current: index
 <div class="page-header">
     <h2>Overview</h2>
 </div>
-
 <div class="row">
     <div class="span6">
-        {% capture code %}{% include code/basic.md %}{% endcapture %}
+        {% capture code %}{% include code/workflow.md %}{% endcapture %}
         {{ code | markdownify }}
     </div>
     <div class="span6">
-        {% capture code %}{% include code/workflow.md %}{% endcapture %}
+        {% capture code %}{% include code/object.md %}{% endcapture %}
+        {{ code | markdownify }}
+        {% capture code %}{% include code/basic.md %}{% endcapture %}
         {{ code | markdownify }}
     </div>
 </div>

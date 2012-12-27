@@ -1,20 +1,18 @@
-### Basic usage
+### Work with states and transitions
 
 {% highlight php %}
 <?php
+echo $stateMachine->getState();
+// => "draft"
 
-// $document = Retrieve your stateful object
+var_dump($stateMachine->can('accept'));
+// => bool(false)
 
-$stateMachine = $factory->get($document);
-
-echo $stateMachine->getState()->getName();
-// => string "state-1"
-
-var_dump($stateMachine->can('an-available-transition'));
+var_dump($stateMachine->can('propose'));
 // => bool(true)
 
-$stateMachine->apply('an-available-transition');
-echo $stateMachine->getState()->getName();
-// => string "state-2"
+$stateMachine->apply('propose');
+echo $stateMachine->getState();
+// => "proposed"
 
 {% endhighlight %}
