@@ -4,7 +4,7 @@
 <?php
 
 $document     = new MyDocument;
-$stateMachine = new StateMachine;
+$stateMachine = new Finite\StateMachine\StateMachine;
 $loader       = new Finite\Loader\ArrayLoader([
     'class'  => 'MyDocument',
     'states' => [
