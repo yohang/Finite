@@ -54,7 +54,7 @@ class ArrayLoader implements LoaderInterface
     }
 
     /**
-     * @param StateMachine $stateMachine
+     * @param StateMachineInterface $stateMachine
      */
     private function loadStates(StateMachineInterface $stateMachine)
     {
@@ -64,7 +64,7 @@ class ArrayLoader implements LoaderInterface
     }
 
     /**
-     * @param StateMachine $stateMachine
+     * @param StateMachineInterface $stateMachine
      */
     private function loadTransitions(StateMachineInterface $stateMachine)
     {

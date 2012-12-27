@@ -16,26 +16,27 @@
         "php": ">=5.3.0"
     },
     "require-dev": {
+        "pdepend/pdepend":              "*",
+        "phpmd/phpmd":                  "*",
+        "phpunit/phpunit":              "*",
+        "pimple/pimple":                "*",
+        "symfony/dependency-injection": "*",
         "symfony/event-dispatcher":     "*",
         "symfony/framework-bundle":     "*",
-        "symfony/dependency-injection": "*",
-        "phpunit/phpunit":              "*",
-        "phpmd/phpmd":                  "*",
-        "pdepend/pdepend":              "*",
-        "pimple/pimple":                "*",
-        "twig/twig":                    "*",
-        "symfony/security": "*"
+        "symfony/security":             "*",
+        "twig/twig":                    "*"
     },
     "suggest": {
-        "symfony/event-dispatcher": "Needed for using ListenableStateMachine",
-        "symfony/security": "Needed for using SecurityAwareStateMachine",
-        "pimple/pimple": "Needed for use with PimpleFactory",
-        "symfony/dependency-injection": "Needed for use with Symfony DependencyInjection Factory"
+        "pimple/pimple":                "Needed for use with PimpleFactory",
+        "symfony/dependency-injection": "Needed for use with Symfony DependencyInjection Factory",
+        "symfony/event-dispatcher":     "Needed for using ListenableStateMachine",
+        "symfony/security":             "Needed for using SecurityAwareStateMachine",
+        "symfony/yaml":                 "Yaml allows you to define your State graph in YAML"
     },
     "autoload": {
         "psr-0": { "Finite": "src/" }
     },
-    "config":{
+    "config": {
         "bin-dir":"bin"
     }
 }

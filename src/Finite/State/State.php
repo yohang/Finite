@@ -159,4 +159,12 @@ class State implements StateInterface
     {
         $this->properties = $properties;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
 }
