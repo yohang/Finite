@@ -10,10 +10,12 @@ current: index
 
 <div class="row">
     <div class="span6">
-
+        {% capture code %}{% include code/basic.md %}{% endcapture %}
+        {{ code | markdownify }}
     </div>
     <div class="span6">
-
+        {% capture code %}{% include code/workflow.md %}{% endcapture %}
+        {{ code | markdownify }}
     </div>
 </div>
 

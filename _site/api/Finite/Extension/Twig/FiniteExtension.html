@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link type="text/css" rel="stylesheet" href="/Finite/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="/Finite/css/styles.css" />
+    <link type="text/css" rel="stylesheet" href="/Finite/css/pygments.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Finite\Extension\Twig\FiniteExtension |  | Finite</title>
+    <script type="text/javascript">var _gaq = _gaq || [];_gaq.push(['_setAccount', 'UA-11791470-13']);_gaq.push(['_trackPageview']);(function() {var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();</script>
+</head>
+
+<body>
+    <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="/Finite/index.html">Finite</a>
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <div class="nav-collapse">
+                <ul class="nav">
+                    <li><a href="/Finite/index.html">Overview</a></li>
+                    <li class="visible-desktop dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">API<b class="caret"></b></a>
+                        
+<ul class="dropdown-menu" id="api-menu">
+                    <li>
+            <a href="/Finite/api/Finite/Context.html"
+           data-content="The Finite context."
+           data-original-title="Context" rel="popover">Context</a>
+        </li>
+                            <li>
+            <a href="/Finite/api/Finite/StatefulInterface.html"
+           data-content="Implementing this interface make an object Stateful and able to be handled by the state machine"
+           data-original-title="StatefulInterface" rel="popover">StatefulInterface</a>
+        </li>
+                                            <li class="namespace">
+                <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                    Bundle\FiniteBundle
+                </a>
+                <ul class="dropdown-menu">
+                <li>
+            <a href="/Finite/api/Finite/Bundle/FiniteBundle/FiniteFiniteBundle.html"
+           data-content=""
+           data-original-title="Bundle\FiniteBundle\FiniteFiniteBundle" rel="popover">FiniteFiniteBundle</a>
+        </li>
+                                                    </ul>
+                </li>
+                        <li class="namespace">
+                <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                    Bundle\FiniteBundle\DependencyInjection
+                </a>
+                <ul class="dropdown-menu">
+                <li>
+            <a href="/Finite/api/Finite/Bundle/FiniteBundle/DependencyInjection/Configuration.html"
+           data-content="This is the class that validates and merges configuration from your app/config files"
+           data-original-title="Bundle\FiniteBundle\DependencyInjection\Configuration" rel="popover">Configuration</a>
+        </li>
+                                                    </ul>
+                </li>
+                        <li class="namespace">
+                <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                    Event
+                </a>
+                <ul class="dropdown-menu">
+                <li>
+            <a href="/Finite/api/Finite/Event/FiniteEvents.html"
+           data-content="The class that contains event names"
+           data-original-title="Event\FiniteEvents" rel="popover">FiniteEvents</a>
+        </li>
+                            <li>
+            <a href="/Finite/api/Finite/Event/StateMachineEvent.html"
+           data-content="The event object which is thrown on state machine actions"
+           data-original-title="Event\StateMachineEvent" rel="popover">StateMachineEvent</a>
+        </li>
+                            <li>
+            <a href="/Finite/api/Finite/Event/TransitionEvent.html"
+           data-content="The event object which is thrown on transitions actions"
+           data-original-title="Event\TransitionEvent" rel="popover">TransitionEvent</a>
+        </li>
+                                                    </ul>
+                </li>
+                        <li class="namespace">
+                <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                    Factory
+                </a>
+                <ul class="dropdown-menu">
+                <li>
+            <a href="/Finite/api/Finite/Factory/AbstractFactory.html"
+           data-content="The abstract base class for state machine factories"
+           data-original-title="Factory\AbstractFactory" rel="popover">AbstractFactory</a>
+        </li>
+                            <li>
+            <a href="/Finite/api/Finite/Factory/FactoryInterface.html"
+           data-content="The base interface for Finite&#039;s State Machine Factory"
+           data-original-title="Factory\FactoryInterface" rel="popover">FactoryInterface</a>
+        </li>
+                            <li>
+            <a href="/Finite/api/Finite/Factory/PimpleFactory.html"
+           data-content="A concrete implementation of State Machine Factory using Pimple"
+           data-original-title="Factory\PimpleFactory" rel="popover">PimpleFactory</a>
+        </li>
+                            <li>
+            <a href="/Finite/api/Finite/Factory/SymfonyDependencyInjectionFactory.html"
+           data-content="A concrete implementation of State Machine Factory using the sf2 DIC"
+           data-original-title="Factory\SymfonyDependencyInjectionFactory" rel="popover">SymfonyDependencyInjectionFactory</a>
+        </li>
+                                                    </ul>
+                </li>
+                        <li class="namespace">
+                <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                    Loader
+                </a>
+                <ul class="dropdown-menu">
+                <li>
+            <a href="/Finite/api/Finite/Loader/ArrayLoader.html"
+           data-content="Loads a StateMachine from an array"
+           data-original-title="Loader\ArrayLoader" rel="popover">ArrayLoader</a>
+        </li>
+                            <li>
+            <a href="/Finite/api/Finite/Loader/LoaderInterface.html"
+           data-content="State &amp; Transitions Loader interface"
+           data-original-title="Loader\LoaderInterface" rel="popover">LoaderInterface</a>
+        </li>
+                                                    </ul>
+                </li>
+                        <li class="namespace">
+                <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                    State
+                </a>
+                <ul class="dropdown-menu">
+                <li>
+            <a href="/Finite/api/Finite/State/State.html"
+           data-content="The base State class."
+           data-original-title="State\State" rel="popover">State</a>
+        </li>
+                            <li>
+            <a href="/Finite/api/Finite/State/StateInterface.html"
+           data-content="The base State Interface"
+           data-original-title="State\StateInterface" rel="popover">StateInterface</a>
+        </li>
+                                                    </ul>
+                </li>
+                        <li class="namespace">
+                <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                    StateMachine
+                </a>
+                <ul class="dropdown-menu">
+                <li>
+            <a href="/Finite/api/Finite/StateMachine/ListenableStateMachine.html"
+           data-content="An Event-aware State machine."
+           data-original-title="StateMachine\ListenableStateMachine" rel="popover">ListenableStateMachine</a>
+        </li>
+                            <li>
+            <a href="/Finite/api/Finite/StateMachine/SecurityAwareStateMachine.html"
+           data-content="Security Aware state machine."
+           data-original-title="StateMachine\SecurityAwareStateMachine" rel="popover">SecurityAwareStateMachine</a>
+        </li>
+                            <li>
+            <a href="/Finite/api/Finite/StateMachine/StateMachine.html"
+           data-content="The Finite State Machine"
+           data-original-title="StateMachine\StateMachine" rel="popover">StateMachine</a>
+        </li>
+                            <li>
+            <a href="/Finite/api/Finite/StateMachine/StateMachineInterface.html"
+           data-content="The Finite State Machine base Interface"
+           data-original-title="StateMachine\StateMachineInterface" rel="popover">StateMachineInterface</a>
+        </li>
+                                                    </ul>
+                </li>
+                        <li class="namespace">
+                <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                    Transition
+                </a>
+                <ul class="dropdown-menu">
+                <li>
+            <a href="/Finite/api/Finite/Transition/Transition.html"
+           data-content="The base Transition class."
+           data-original-title="Transition\Transition" rel="popover">Transition</a>
+        </li>
+                            <li>
+            <a href="/Finite/api/Finite/Transition/TransitionInterface.html"
+           data-content="The base Transition interface"
+           data-original-title="Transition\TransitionInterface" rel="popover">TransitionInterface</a>
+        </li>
+            </ul>
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<a id="forkme" href="https://github.com/yohang/Finite" class="visible-desktop">Fork me on Github</a>
+
+    <div class="container">
+        <div class="row">
+            <div class="span12">
+                    <div class="hero-unit">
+        <h1>
+            <span class="class-info">
+                <small>Class</small>
+                <small>Finite\Extension\Twig\</small>
+            </span>
+            <span class="class-name">FiniteExtension</span>
+        </h1>
+
+                    <div class="class-desc">
+                <p><p>The Finite Twig extension</p></p>
+                <p></p>
+                <p>                                            <br />Inherits from: Twig_Extension
+                    
+                                    </p>            </div>
+            </div>
+
+
+    
+    
+            <h2>Methods</h2>
+
+            <table class="table">
+                    <tr>
+                <td class="type">
+                                        
+                </td>
+                <td class="last">
+                    <a href="#method___construct">__construct</a>(                <span class="label label-hint label-info"><a href="/Finite/api/Finite/Context.html"
+           data-content="The Finite context."
+           data-original-title="Context" rel="popover">Context</a></span> $context)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                                        
+                </td>
+                <td class="last">
+                    <a href="#method_getFunctions">getFunctions</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                                                        <span class="label label-hint label-warning">string</span>
+                </td>
+                <td class="last">
+                    <a href="#method_getFiniteState">getFiniteState</a>(                <span class="label label-hint label-info"><a href="/Finite/api/Finite/StatefulInterface.html"
+           data-content="Implementing this interface make an object Stateful and able to be handled by the state machine"
+           data-original-title="StatefulInterface" rel="popover">StatefulInterface</a></span> $object)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                                                        <span class="label label-hint label-warning">array</span>
+                </td>
+                <td class="last">
+                    <a href="#method_getFiniteTransitions">getFiniteTransitions</a>(                <span class="label label-hint label-info"><a href="/Finite/api/Finite/StatefulInterface.html"
+           data-content="Implementing this interface make an object Stateful and able to be handled by the state machine"
+           data-original-title="StatefulInterface" rel="popover">StatefulInterface</a></span> $object)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                                                        <span class="label label-hint label-warning">array</span>
+                </td>
+                <td class="last">
+                    <a href="#method_getFiniteProperties">getFiniteProperties</a>(                <span class="label label-hint label-info"><a href="/Finite/api/Finite/StatefulInterface.html"
+           data-content="Implementing this interface make an object Stateful and able to be handled by the state machine"
+           data-original-title="StatefulInterface" rel="popover">StatefulInterface</a></span> $object)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                                                        <span class="label label-hint label-warning">bool</span>
+                </td>
+                <td class="last">
+                    <a href="#method_hasFiniteProperty">hasFiniteProperty</a>(                <span class="label label-hint label-info"><a href="/Finite/api/Finite/StatefulInterface.html"
+           data-content="Implementing this interface make an object Stateful and able to be handled by the state machine"
+           data-original-title="StatefulInterface" rel="popover">StatefulInterface</a></span> $object,                 <span class="label label-hint label-warning">string</span> $property)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                                        
+                </td>
+                <td class="last">
+                    <a href="#method_getName">getName</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method___construct">
+        <code class="heading-code">            <span class="label label-success">public</span>            
+    <strong>__construct</strong>(                <span class="label label-hint label-info"><a href="/Finite/api/Finite/Context.html"
+           data-content="The Finite context."
+           data-original-title="Context" rel="popover">Context</a></span> $context)</code>
+    </h3>
+    <div class="details method-details">
+        <p></p>
+        <p></p>
+        <table class="tags table method-detail">
+                            <tr>
+                    <th>Parameters</th>
+                    <td>    <table class="table table-bordered table-stripped">
+                    <tr>
+                <td>                <span class="label label-hint label-info"><a href="/Finite/api/Finite/Context.html"
+           data-content="The Finite context."
+           data-original-title="Context" rel="popover">Context</a></span></td>
+                <td colspan="2" >$context</td>
+                            </tr>
+            </table>
+</td>
+                </tr>
+            
+            
+            
+                    </table>
+    </div>
+
+                <h3 id="method_getFunctions">
+        <code class="heading-code">            <span class="label label-success">public</span>            
+    <strong>getFunctions</strong>()</code>
+    </h3>
+    <div class="details method-details">
+        <p></p>
+        <p></p>
+        <table class="tags table method-detail">
+            
+            
+            
+                    </table>
+    </div>
+
+                <h3 id="method_getFiniteState">
+        <code class="heading-code">            <span class="label label-success">public</span>                            <span class="label label-hint label-warning">string</span>
+    <strong>getFiniteState</strong>(                <span class="label label-hint label-info"><a href="/Finite/api/Finite/StatefulInterface.html"
+           data-content="Implementing this interface make an object Stateful and able to be handled by the state machine"
+           data-original-title="StatefulInterface" rel="popover">StatefulInterface</a></span> $object)</code>
+    </h3>
+    <div class="details method-details">
+        <p></p>
+        <p></p>
+        <table class="tags table method-detail">
+                            <tr>
+                    <th>Parameters</th>
+                    <td>    <table class="table table-bordered table-stripped">
+                    <tr>
+                <td>                <span class="label label-hint label-info"><a href="/Finite/api/Finite/StatefulInterface.html"
+           data-content="Implementing this interface make an object Stateful and able to be handled by the state machine"
+           data-original-title="StatefulInterface" rel="popover">StatefulInterface</a></span></td>
+                <td colspan="2" >$object</td>
+                            </tr>
+            </table>
+</td>
+                </tr>
+            
+                            <tr>
+                    <th>Return Value</th>
+                    <td>    <table>
+        <tr>
+            <td>                <span class="label label-hint label-warning">string</span></td>
+            <td></td>
+        </tr>
+    </table>
+</td>
+                </tr>
+            
+            
+                    </table>
+    </div>
+
+                <h3 id="method_getFiniteTransitions">
+        <code class="heading-code">            <span class="label label-success">public</span>                            <span class="label label-hint label-warning">array</span>
+    <strong>getFiniteTransitions</strong>(                <span class="label label-hint label-info"><a href="/Finite/api/Finite/StatefulInterface.html"
+           data-content="Implementing this interface make an object Stateful and able to be handled by the state machine"
+           data-original-title="StatefulInterface" rel="popover">StatefulInterface</a></span> $object)</code>
+    </h3>
+    <div class="details method-details">
+        <p></p>
+        <p></p>
+        <table class="tags table method-detail">
+                            <tr>
+                    <th>Parameters</th>
+                    <td>    <table class="table table-bordered table-stripped">
+                    <tr>
+                <td>                <span class="label label-hint label-info"><a href="/Finite/api/Finite/StatefulInterface.html"
+           data-content="Implementing this interface make an object Stateful and able to be handled by the state machine"
+           data-original-title="StatefulInterface" rel="popover">StatefulInterface</a></span></td>
+                <td colspan="2" >$object</td>
+                            </tr>
+            </table>
+</td>
+                </tr>
+            
+                            <tr>
+                    <th>Return Value</th>
+                    <td>    <table>
+        <tr>
+            <td>                <span class="label label-hint label-warning">array</span></td>
+            <td></td>
+        </tr>
+    </table>
+</td>
+                </tr>
+            
+            
+                    </table>
+    </div>
+
+                <h3 id="method_getFiniteProperties">
+        <code class="heading-code">            <span class="label label-success">public</span>                            <span class="label label-hint label-warning">array</span>
+    <strong>getFiniteProperties</strong>(                <span class="label label-hint label-info"><a href="/Finite/api/Finite/StatefulInterface.html"
+           data-content="Implementing this interface make an object Stateful and able to be handled by the state machine"
+           data-original-title="StatefulInterface" rel="popover">StatefulInterface</a></span> $object)</code>
+    </h3>
+    <div class="details method-details">
+        <p></p>
+        <p></p>
+        <table class="tags table method-detail">
+                            <tr>
+                    <th>Parameters</th>
+                    <td>    <table class="table table-bordered table-stripped">
+                    <tr>
+                <td>                <span class="label label-hint label-info"><a href="/Finite/api/Finite/StatefulInterface.html"
+           data-content="Implementing this interface make an object Stateful and able to be handled by the state machine"
+           data-original-title="StatefulInterface" rel="popover">StatefulInterface</a></span></td>
+                <td colspan="2" >$object</td>
+                            </tr>
+            </table>
+</td>
+                </tr>
+            
+                            <tr>
+                    <th>Return Value</th>
+                    <td>    <table>
+        <tr>
+            <td>                <span class="label label-hint label-warning">array</span></td>
+            <td></td>
+        </tr>
+    </table>
+</td>
+                </tr>
+            
+            
+                    </table>
+    </div>
+
+                <h3 id="method_hasFiniteProperty">
+        <code class="heading-code">            <span class="label label-success">public</span>                            <span class="label label-hint label-warning">bool</span>
+    <strong>hasFiniteProperty</strong>(                <span class="label label-hint label-info"><a href="/Finite/api/Finite/StatefulInterface.html"
+           data-content="Implementing this interface make an object Stateful and able to be handled by the state machine"
+           data-original-title="StatefulInterface" rel="popover">StatefulInterface</a></span> $object,                 <span class="label label-hint label-warning">string</span> $property)</code>
+    </h3>
+    <div class="details method-details">
+        <p></p>
+        <p></p>
+        <table class="tags table method-detail">
+                            <tr>
+                    <th>Parameters</th>
+                    <td>    <table class="table table-bordered table-stripped">
+                    <tr>
+                <td>                <span class="label label-hint label-info"><a href="/Finite/api/Finite/StatefulInterface.html"
+           data-content="Implementing this interface make an object Stateful and able to be handled by the state machine"
+           data-original-title="StatefulInterface" rel="popover">StatefulInterface</a></span></td>
+                <td colspan="2" >$object</td>
+                            </tr>
+                    <tr>
+                <td>                <span class="label label-hint label-warning">string</span></td>
+                <td colspan="2" >$property</td>
+                            </tr>
+            </table>
+</td>
+                </tr>
+            
+                            <tr>
+                    <th>Return Value</th>
+                    <td>    <table>
+        <tr>
+            <td>                <span class="label label-hint label-warning">bool</span></td>
+            <td></td>
+        </tr>
+    </table>
+</td>
+                </tr>
+            
+            
+                    </table>
+    </div>
+
+                <h3 id="method_getName">
+        <code class="heading-code">            <span class="label label-success">public</span>            
+    <strong>getName</strong>()</code>
+    </h3>
+    <div class="details method-details">
+        <p></p>
+        <p></p>
+        <table class="tags table method-detail">
+            
+            
+            
+                    </table>
+    </div>
+
+    
+    
+            </div>
+        </div>
+    </div>
+    <footer id="footer">
+    <div id="footer-addition">Generated by <a href="https://github.com/fabpot/Sami" target="_top">Sami, the API Documentation Generator</a>.</div>
+    <p>
+        Finite is a library licensed under the MIT license.
+        &copy;2012 <a href="http://yohan.giarel.li/">Yohan Giarelli</a>.
+    </p>
+</footer>
+<script type="text/javascript" src="/Finite/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Finite/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/Finite/js/script.js"></script>
+
+</body>
+</html>
