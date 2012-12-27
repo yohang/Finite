@@ -51,7 +51,7 @@ class Document implements StatefulInterface
 ```php
 use Finite\StateMachine\StateMachine;
 
-// $document = retrieve your stageful object
+// $document = retrieve your stateful object
 
 $sm = new StateMachine();
 
