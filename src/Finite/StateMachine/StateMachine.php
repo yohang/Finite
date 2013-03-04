@@ -70,7 +70,7 @@ class StateMachine implements StateMachineInterface
         $transition = $this->getTransition($transitionName);
         if (!$this->currentState->can($transition)) {
             throw new Exception\StateException(sprintf(
-               'The "%s" transition can not be applied to the "%s" state.',
+                'The "%s" transition can not be applied to the "%s" state.',
                 $transition->getName(),
                 $this->currentState->getName()
             ));
