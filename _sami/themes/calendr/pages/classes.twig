@@ -3,7 +3,8 @@
 {% set current_namespace = '' %}
 {% autoescape false %}
 <ul class="dropdown-menu" id="api-menu">
-    {% for class in classes | namespace_sort if not contains(class, 'Exception') and not contains(class, 'Extension') %}
+    {% for class in classes | namespace_sort
+        if not contains(class, 'Exception') and not contains(class, 'Extension') and not contains(class, 'Bundle') %}
         {% if current_namespace != '' and current_namespace != class.namespace %}
             {% if current_namespace != 'Finite'%}
                     </ul>

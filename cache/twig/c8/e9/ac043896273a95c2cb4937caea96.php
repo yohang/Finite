@@ -29,51 +29,51 @@ class __TwigTemplate_c8e9ac043896273a95c2cb4937caea96 extends Twig_Template
         $context['_parent'] = (array) $context;
         $context['_seq'] = twig_ensure_traversable($this->env->getExtension('calendr_doc')->namespaceSort($this->getContext($context, "classes")));
         foreach ($context['_seq'] as $context["_key"] => $context["class"]) {
-            if (((!$this->env->getExtension('calendr_doc')->contains($this->getContext($context, "class"), "Exception")) && (!$this->env->getExtension('calendr_doc')->contains($this->getContext($context, "class"), "Extension")))) {
-                // line 7
+            if ((((!$this->env->getExtension('calendr_doc')->contains($this->getContext($context, "class"), "Exception")) && (!$this->env->getExtension('calendr_doc')->contains($this->getContext($context, "class"), "Extension"))) && (!$this->env->getExtension('calendr_doc')->contains($this->getContext($context, "class"), "Bundle")))) {
+                // line 8
                 echo "        ";
                 if ((($this->getContext($context, "current_namespace") != "") && ($this->getContext($context, "current_namespace") != $this->getAttribute($this->getContext($context, "class"), "namespace")))) {
-                    // line 8
+                    // line 9
                     echo "            ";
                     if (($this->getContext($context, "current_namespace") != "Finite")) {
-                        // line 9
+                        // line 10
                         echo "                    </ul>
                 </li>
             ";
                     }
-                    // line 12
+                    // line 13
                     echo "            <li class=\"namespace";
                     echo (("{%if page.current_namespace == \"" . $this->getAttribute($this->getContext($context, "class"), "namespace")) . "\"%} active{%endif%}");
                     echo "\">
                 <a class=\"dropdown-toggle\" href=\"#\" data-toggle=\"dropdown\">
                     ";
-                    // line 14
+                    // line 15
                     echo $this->env->getExtension('calendr_doc')->removeVendor($this->getAttribute($this->getContext($context, "class"), "namespace"));
                     echo "
                 </a>
                 <ul class=\"dropdown-menu\">
         ";
                 }
-                // line 18
+                // line 19
                 echo "        <li";
                 echo (("{%if page.current_class == \"" . $this->getAttribute($this->getContext($context, "class"), "name")) . "\"%} class=\"active\"{%endif%}");
                 echo ">
             ";
-                // line 19
+                // line 20
                 echo $context["__internal_c8e9ac043896273a95c2cb4937caea96_1"]->getclass_link($this->getContext($context, "class"), array(), true);
                 echo "
         </li>
         ";
-                // line 21
-                $context["current_namespace"] = $this->getAttribute($this->getContext($context, "class"), "namespace");
                 // line 22
+                $context["current_namespace"] = $this->getAttribute($this->getContext($context, "class"), "namespace");
+                // line 23
                 echo "    ";
             }
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['class'], $context['_parent'], $context['loop']);
         $context = array_merge($_parent, array_intersect_key($context, $_parent));
-        // line 23
+        // line 24
         echo "</ul>
 ";
     }
@@ -90,6 +90,6 @@ class __TwigTemplate_c8e9ac043896273a95c2cb4937caea96 extends Twig_Template
 
     public function getDebugInfo()
     {
-        return array (  75 => 23,  68 => 22,  66 => 21,  61 => 19,  56 => 18,  49 => 14,  43 => 12,  38 => 9,  35 => 8,  32 => 7,  27 => 6,  24 => 5,  22 => 3,  19 => 2,  17 => 1,);
+        return array (  75 => 24,  68 => 23,  66 => 22,  61 => 20,  56 => 19,  49 => 15,  43 => 13,  38 => 10,  35 => 9,  32 => 8,  27 => 6,  24 => 5,  22 => 3,  19 => 2,  17 => 1,);
     }
 }

@@ -12,7 +12,7 @@ var_dump($stateMachine->can('propose'));
 // => bool(true)
 
 $stateMachine->apply('propose');
-echo $stateMachine->getState();
+echo $stateMachine->getCurrentState();
 // => "proposed"
 
 {% endhighlight %}
