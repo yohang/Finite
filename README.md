@@ -10,8 +10,7 @@ Features
 * Defining and retrieving properties for states
 * Event Listenable transitions
 * Symfony2 integration
-* Custom workflow loaders
-* Extendable States and Transitions
+* Custom state graph loaders
 * Twig Extension
 
 Getting started
@@ -27,7 +26,7 @@ Getting started
 ```
 
 ### Define your Stateful Object
-Your stageful object just need to implement the `StatefulInterface` Interface.
+Your stateful object just need to implement the `StatefulInterface` Interface.
 
 ```php
 use Finite\StatefulInterface;
@@ -74,7 +73,7 @@ $sm->initialize();
 // Retrieve current state
 $sm->getCurrentState();
 
-// Can we process a transitions ?
+// Can we process a transition ?
 $sm->can('t34');
 
 ```
