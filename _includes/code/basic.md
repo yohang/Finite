@@ -2,7 +2,7 @@
 
 {% highlight php %}
 <?php
-echo $stateMachine->getState();
+echo $stateMachine->getCurrentState();
 // => "draft"
 
 var_dump($stateMachine->can('accept'));
