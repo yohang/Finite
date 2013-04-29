@@ -46,6 +46,20 @@ class StateMachineTest extends StateMachineTestCase
         $this->initialize();
     }
 
+    public function testInitializeWithInitialState()
+    {
+        $object = $this->getMock('Finite\StatefulInterface');
+        $object
+            ->expects($this->once())
+            ->method('setFiniteState')
+            ->with($this->equalTo('s1'));
+
+        $this->addStates();
+        $this->addTransitions();
+        $this->object->setObject($object);
+        $this->object->initialize();
+    }
+
     public function testGetCurrentState()
     {
         $this->initialize();
@@ -61,7 +75,7 @@ class StateMachineTest extends StateMachineTestCase
     }
 
     /**
-     * @expectedException Finite\Exception\StateException
+     * @expectedException \Finite\Exception\StateException
      */
     public function testApply()
     {

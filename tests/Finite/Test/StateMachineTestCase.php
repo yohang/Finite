@@ -2,6 +2,7 @@
 
 namespace Finite\Test;
 
+use Finite\State\State;
 use  Finite\StateMachine\StateMachine;
 
 /**
@@ -22,7 +23,7 @@ class StateMachineTestCase extends \PHPUnit_Framework_TestCase
     public function statesProvider()
     {
         return array(
-            array('s1'),
+            array(new State('s1', State::TYPE_INITIAL)),
             array('s2'),
             array('s3'),
             array('s4'),

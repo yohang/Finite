@@ -57,7 +57,13 @@ class StateMachine implements StateMachineInterface
      */
     public function initialize()
     {
-        $this->currentState = $this->getState($this->object->getFiniteState());
+        $initialState = $this->object->getFiniteState();
+        if (null === $initialState) {
+            $initialState = $this->findInitialState();
+            $this->object->setFiniteState($initialState);
+        }
+
+        $this->currentState = $this->getState($initialState);
     }
 
     /**
@@ -207,5 +213,23 @@ class StateMachine implements StateMachineInterface
     public function getCurrentState()
     {
         return $this->currentState;
+    }
+
+    /**
+     * Find and return the Initial state if exists
+     *
+     * @return string
+     *
+     * @throws Exception\StateException
+     */
+    protected function findInitialState()
+    {
+        foreach ($this->states as $state) {
+            if (State::TYPE_INITIAL === $state->getType()) {
+                return $state->getName();
+            }
+        }
+
+        throw new Exception\StateException('No initial state found.');
     }
 }
