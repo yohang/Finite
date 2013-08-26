@@ -33,6 +33,7 @@ use Finite\StatefulInterface;
 
 class Document implements StatefulInterface
 {
+        private $state;
         public function setFiniteState($state)
         {
                 $this->state = $state;
@@ -49,16 +50,18 @@ class Document implements StatefulInterface
 
 ```php
 use Finite\StateMachine\StateMachine;
+use Finite\State\State;
+use Finite\State\StateInterface;
 
 // $document = retrieve your stateful object
 
 $sm = new StateMachine();
 
 // Define states
-$sm->addState('s1');
+$sm->addState(new State('s1', StateInterface::TYPE_INITIAL));
 $sm->addState('s2');
 $sm->addState('s3');
-$sm->addState('s4');
+$sm->addState(new State('s4', StateInterface::TYPE_FINAL));
 
 // Define transitions
 $sm->addTransition('t12', 's1', 's2');
