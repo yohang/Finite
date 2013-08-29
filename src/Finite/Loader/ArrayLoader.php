@@ -7,6 +7,7 @@ use Finite\StateMachine\StateMachineInterface;
 use Finite\State\State;
 use Finite\State\StateInterface;
 use Finite\Transition\Transition;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -85,7 +86,7 @@ class ArrayLoader implements LoaderInterface
     {
         $resolver = new OptionsResolver;
         $resolver->setRequired(array('from', 'to'));
-        $resolver->setNormalizers(array('from' => function($v) { return (array)$v; }));
+        $resolver->setNormalizers(array('from' => function(Options $options, $v) { return (array)$v; }));
 
         foreach ($this->config['transitions'] as $transition => $config) {
             $config = $resolver->resolve($config);
