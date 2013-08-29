@@ -44,6 +44,33 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
         $this->object->load($sm);
     }
 
+    public function testLoadWithMissingOptions()
+    {
+        $this->object = new ArrayLoader(array(
+            'class'       => 'Stateful1',
+            'states'      => array(
+                'start'  => array('type' => 'initial', 'properties' => array('foo' => true, 'bar' => false)),
+                'middle' => array(),
+                'end'    => array('type' => 'final'),
+            ),
+            'transitions' => array(
+                'middleize' => array(
+                    'from' => 'start',
+                    'to'   => 'middle'
+                ),
+                'finish'    => array(
+                    'from' => array('middle'),
+                    'to'   => 'end'
+                )
+            )
+        ));
+
+        $sm = $this->getMock('Finite\StateMachine\StateMachine');
+        $sm->expects($this->exactly(3))->method('addState');
+        $sm->expects($this->exactly(2))->method('addTransition');
+        $this->object->load($sm);
+    }
+
     public function testSupports()
     {
         $object  = $this->getMock('Finite\StatefulInterface', array(), array(), 'Stateful1');

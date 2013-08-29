@@ -5,7 +5,9 @@ namespace Finite\Loader;
 use Finite\StatefulInterface;
 use Finite\StateMachine\StateMachineInterface;
 use Finite\State\State;
+use Finite\State\StateInterface;
 use Finite\Transition\Transition;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Loads a StateMachine from an array
@@ -58,7 +60,20 @@ class ArrayLoader implements LoaderInterface
      */
     private function loadStates(StateMachineInterface $stateMachine)
     {
+        $resolver = new OptionsResolver;
+        $resolver->setDefaults(array('type' => StateInterface::TYPE_NORMAL, 'properties' => array()));
+        $resolver->setAllowedValues(
+            array(
+                'type' => array(
+                    StateInterface::TYPE_INITIAL,
+                    StateInterface::TYPE_NORMAL,
+                    StateInterface::TYPE_FINAL
+                )
+            )
+        );
+
         foreach ($this->config['states'] as $state => $config) {
+            $config = $resolver->resolve($config);
             $stateMachine->addState(new State($state, $config['type'], array(), $config['properties']));
         }
     }
@@ -68,7 +83,12 @@ class ArrayLoader implements LoaderInterface
      */
     private function loadTransitions(StateMachineInterface $stateMachine)
     {
+        $resolver = new OptionsResolver;
+        $resolver->setRequired(array('from', 'to'));
+        $resolver->setNormalizers(array('from' => function($v) { return (array)$v; }));
+
         foreach ($this->config['transitions'] as $transition => $config) {
+            $config = $resolver->resolve($config);
             $stateMachine->addTransition(new Transition($transition, $config['from'], $config['to']));
         }
     }

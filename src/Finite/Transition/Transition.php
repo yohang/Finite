@@ -37,7 +37,7 @@ class Transition implements TransitionInterface
     {
         $this->name          = $name;
         $this->state         = $state;
-        $this->initialStates = is_array($initialStates) ? $initialStates : array($initialStates);
+        $this->initialStates = (array)$initialStates;
     }
 
     /**
