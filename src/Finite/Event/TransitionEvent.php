@@ -2,9 +2,8 @@
 
 namespace Finite\Event;
 
-use  Finite\StateMachine\ListenableStateMachine;
+use Finite\StateMachine\ListenableStateMachine;
 use Finite\Transition\TransitionInterface;
-use Symfony\Component\EventDispatcher\Event;
 
 /**
  * The event object which is thrown on transitions actions

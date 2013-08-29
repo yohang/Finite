@@ -26,48 +26,47 @@ class ListenableStateMachineTest extends StateMachineTestCase
 
     protected function setUp()
     {
+        $this->dispatcher = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcher')
+            ->disableOriginalConstructor()
+            ->getMock();
         $this->object = new ListenableStateMachine();
-        $this->object->setEventDispatcher($this->dispatcher = new EventDispatcher);
+        $this->object->setEventDispatcher($this->dispatcher);
     }
 
     public function testInitialize()
     {
-        $initialized = false;
-        $that        = $this;
-        $this->dispatcher->addListener(
-            FiniteEvents::INITIALIZE,
-            function(StateMachineEvent $event) use (&$initialized, $that) {
-                $initialized = true;
-                $that->assertSame($that->getObject(), $event->getStateMachine());
-            }
-        );
+        $this->dispatcher
+            ->expects($this->once())
+            ->method('dispatch')
+            ->with('finite.initialize', $this->isInstanceOf('Finite\Event\StateMachineEvent'));
+
         $this->initialize();
-        $this->assertTrue($initialized);
     }
 
     public function testApply()
     {
-        $preTransitioned  = false;
-        $postTransitioned = false;
-        $that             = $this;
-        $this->dispatcher->addListener(
-            FiniteEvents::PRE_TRANSITION,
-            function(StateMachineEvent $event) use (&$preTransitioned, $that) {
-                $preTransitioned = true;
-                $that->assertSame($that->getObject(), $event->getStateMachine());
-            }
-        );
-        $this->dispatcher->addListener(
-            FiniteEvents::POST_TRANSITION,
-            function(TransitionEvent $event) use (&$postTransitioned, $that) {
-                $postTransitioned = true;
-                $that->assertSame($that->getObject(), $event->getStateMachine());
-            }
-        );
+        $this->dispatcher
+            ->expects($this->at(1))
+            ->method('dispatch')
+            ->with('finite.pre_transition', $this->isInstanceOf('Finite\Event\TransitionEvent'));
+
+        $this->dispatcher
+            ->expects($this->at(2))
+            ->method('dispatch')
+            ->with('finite.pre_transition.t23', $this->isInstanceOf('Finite\Event\TransitionEvent'));
+
+        $this->dispatcher
+            ->expects($this->at(3))
+            ->method('dispatch')
+            ->with('finite.post_transition', $this->isInstanceOf('Finite\Event\TransitionEvent'));
+
+        $this->dispatcher
+            ->expects($this->at(4))
+            ->method('dispatch')
+            ->with('finite.post_transition.t23', $this->isInstanceOf('Finite\Event\TransitionEvent'));
+
         $this->initialize();
         $this->object->apply('t23');
-        $this->assertTrue($preTransitioned);
-        $this->assertTrue($postTransitioned);
     }
 
     public function getObject()
