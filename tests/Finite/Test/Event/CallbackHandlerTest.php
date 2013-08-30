@@ -168,7 +168,7 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
             function(TransitionEvent $event) use ($that, &$counter) {
                 $this->assertSame('foobar', $event->getInitialState()->getName());
             },
-            array('from' => ['all', '-bazqux'])
+            array('from' => array('all', '-bazqux'))
         );
     }
 
