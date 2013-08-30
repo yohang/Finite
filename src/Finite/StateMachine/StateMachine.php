@@ -105,12 +105,11 @@ class StateMachine implements StateMachineInterface
         $this->dispatcher->dispatch(FiniteEvents::PRE_TRANSITION.'.'.$transitionName, $event);
 
         $returnValue = $transition->process($this);
+        $this->object->setFiniteState($transition->getState());
+        $this->currentState = $this->getState($transition->getState());
 
         $this->dispatcher->dispatch(FiniteEvents::POST_TRANSITION, $event);
         $this->dispatcher->dispatch(FiniteEvents::POST_TRANSITION.'.'.$transitionName, $event);
-
-        $this->object->setFiniteState($transition->getState());
-        $this->currentState = $this->getState($transition->getState());
 
         return $returnValue;
     }
