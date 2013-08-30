@@ -68,11 +68,25 @@ class CallbackHandler
      * @param callable          $callback
      * @param array             $spec
      *
-     * @return CallbackHandler
+     * @return $this
      */
     public function addBefore(StatefulInterface $object, $callback, array $spec = array())
     {
         $this->add($object, FiniteEvents::PRE_TRANSITION, $callback, $spec);
+
+        return $this;
+    }
+
+    /**
+     * @param StatefulInterface $object
+     * @param callable          $callback
+     * @param array             $spec
+     *
+     * @return CallbackHandler
+     */
+    public function addAfter(StatefulInterface $object, $callback, array $spec = array())
+    {
+        $this->add($object, FiniteEvents::POST_TRANSITION, $callback, $spec);
 
         return $this;
     }
