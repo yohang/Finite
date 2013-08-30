@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class SecurityAwareStateMachine extends ListenableStateMachine
+class SecurityAwareStateMachine extends StateMachine
 {
     /**
      * @var SecurityContextInterface

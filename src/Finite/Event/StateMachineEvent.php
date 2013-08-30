@@ -2,7 +2,7 @@
 
 namespace Finite\Event;
 
-use  Finite\StateMachine\ListenableStateMachine;
+use Finite\StateMachine\StateMachine;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
@@ -13,20 +13,20 @@ use Symfony\Component\EventDispatcher\Event;
 class StateMachineEvent extends Event
 {
     /**
-     * @var ListenableStateMachine
+     * @var StateMachine
      */
     protected $stateMachine;
 
     /**
-     * @param ListenableStateMachine $stateMachine
+     * @param StateMachine $stateMachine
      */
-    public function __construct(ListenableStateMachine $stateMachine)
+    public function __construct(StateMachine $stateMachine)
     {
         $this->stateMachine = $stateMachine;
     }
 
     /**
-     * @return ListenableStateMachine
+     * @return StateMachine
      */
     public function getStateMachine()
     {

@@ -20,6 +20,7 @@ class StateMachineTest extends StateMachineTestCase
             ->expects($this->once())
             ->method('getName')
             ->will($this->returnValue('bar'));
+
         $this->object->addState($stateMock);
         $this->assertInstanceOf('Finite\State\StateInterface', $this->object->getState('bar'));
     }
@@ -43,6 +44,11 @@ class StateMachineTest extends StateMachineTestCase
 
     public function testInitialize()
     {
+        $this->dispatcher
+            ->expects($this->once())
+            ->method('dispatch')
+            ->with('finite.initialize', $this->isInstanceOf('Finite\Event\StateMachineEvent'));
+
         $this->initialize();
     }
 
@@ -111,6 +117,26 @@ class StateMachineTest extends StateMachineTestCase
      */
     public function testApply()
     {
+        $this->dispatcher
+            ->expects($this->at(1))
+            ->method('dispatch')
+            ->with('finite.pre_transition', $this->isInstanceOf('Finite\Event\TransitionEvent'));
+
+        $this->dispatcher
+            ->expects($this->at(2))
+            ->method('dispatch')
+            ->with('finite.pre_transition.t23', $this->isInstanceOf('Finite\Event\TransitionEvent'));
+
+        $this->dispatcher
+            ->expects($this->at(3))
+            ->method('dispatch')
+            ->with('finite.post_transition', $this->isInstanceOf('Finite\Event\TransitionEvent'));
+
+        $this->dispatcher
+            ->expects($this->at(4))
+            ->method('dispatch')
+            ->with('finite.post_transition.t23', $this->isInstanceOf('Finite\Event\TransitionEvent'));
+
         $this->initialize();
         $this->object->apply('t23');
         $this->assertSame('s3', $this->object->getCurrentState()->getName());

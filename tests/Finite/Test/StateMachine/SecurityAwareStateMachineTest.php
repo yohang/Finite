@@ -20,7 +20,6 @@ class SecurityAwareStateMachineTest extends \PHPUnit_Framework_TestCase
         $statefulMock->expects($this->any())->method('getFiniteState')->will($this->returnValue('s1'));
 
         $this->object = new SecurityAwareStateMachine($statefulMock);
-        $this->object->setEventDispatcher($this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface'));
         $this->object->addTransition('t12', 's1', 's2');
         $this->object->addTransition('t23', 's2', 's3');
         $this->object->initialize();

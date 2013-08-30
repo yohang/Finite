@@ -2,9 +2,6 @@
 
 namespace Finite\Test\StateMachine;
 
-use Finite\Event\FiniteEvents;
-use Finite\Event\StateMachineEvent;
-use Finite\Event\TransitionEvent;
 use Finite\StateMachine\ListenableStateMachine;
 use Finite\Test\StateMachineTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -29,8 +26,8 @@ class ListenableStateMachineTest extends StateMachineTestCase
         $this->dispatcher = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcher')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->object = new ListenableStateMachine();
-        $this->object->setEventDispatcher($this->dispatcher);
+
+        $this->object = new ListenableStateMachine(null, $this->dispatcher);
     }
 
     public function testInitialize()

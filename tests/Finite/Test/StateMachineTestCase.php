@@ -15,9 +15,18 @@ class StateMachineTestCase extends \PHPUnit_Framework_TestCase
      */
     protected $object;
 
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $dispatcher;
+
     protected function setUp()
     {
-        $this->object = new StateMachine();
+        $this->dispatcher = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcher')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->object = new StateMachine(null, $this->dispatcher);
     }
 
     public function statesProvider()

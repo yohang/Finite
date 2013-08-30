@@ -3,7 +3,7 @@
 namespace Finite\Event;
 
 use Finite\State\StateInterface;
-use Finite\StateMachine\ListenableStateMachine;
+use Finite\StateMachine\StateMachine;
 use Finite\Transition\TransitionInterface;
 
 /**
@@ -29,11 +29,11 @@ class TransitionEvent extends StateMachineEvent
     protected $initialState;
 
     /**
-     * @param StateInterface         $initialState
-     * @param TransitionInterface    $transition
-     * @param ListenableStateMachine $stateMachine
+     * @param StateInterface      $initialState
+     * @param TransitionInterface $transition
+     * @param StateMachine        $stateMachine
      */
-    public function __construct(StateInterface $initialState, TransitionInterface $transition, ListenableStateMachine $stateMachine)
+    public function __construct(StateInterface $initialState, TransitionInterface $transition, StateMachine $stateMachine)
     {
         $this->transition   = $transition;
         $this->initialState = $initialState;
