@@ -3,7 +3,9 @@
 namespace Finite\Event;
 
 use Finite\StatefulInterface;
+use Finite\StateMachine\StateMachineInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -51,7 +53,9 @@ class CallbackHandler
                 'exclude_to'   => array('string', 'array'),
             )
         );
-        $toArrayNormalizer = function($o, $v) { return (array)$v; };
+        $toArrayNormalizer = function (Options $options, $value) {
+            return (array)$value;
+        };
         $this->specResolver->setNormalizers(
             array(
                 'on'           => $toArrayNormalizer,
@@ -64,60 +68,62 @@ class CallbackHandler
     }
 
     /**
-     * @param StatefulInterface $object
-     * @param callable          $callback
-     * @param array             $spec
+     * @param StateMachineInterface $sm
+     * @param callable              $callback
+     * @param array                 $spec
+     *
+     * @return CallbackHandler
+     */
+    public function addBefore(StateMachineInterface $sm, $callback, array $spec = array())
+    {
+        $this->add($sm, FiniteEvents::PRE_TRANSITION, $callback, $spec);
+
+        return $this;
+    }
+
+    /**
+     * @param StateMachineInterface $sm
+     * @param callable              $callback
+     * @param array                 $spec
+     *
+     * @return CallbackHandler
+     */
+    public function addAfter(StateMachineInterface $sm, $callback, array $spec = array())
+    {
+        $this->add($sm, FiniteEvents::POST_TRANSITION, $callback, $spec);
+
+        return $this;
+    }
+
+    /**
+     * @param StateMachineInterface $sm
+     * @param string                $event
+     * @param callable              $callback
+     * @param array                 $specs
      *
      * @return $this
      */
-    public function addBefore(StatefulInterface $object, $callback, array $spec = array())
+    protected function add(StateMachineInterface $sm, $event, $callback, array $specs)
     {
-        $this->add($object, FiniteEvents::PRE_TRANSITION, $callback, $spec);
-
-        return $this;
-    }
-
-    /**
-     * @param StatefulInterface $object
-     * @param callable          $callback
-     * @param array             $spec
-     *
-     * @return CallbackHandler
-     */
-    public function addAfter(StatefulInterface $object, $callback, array $spec = array())
-    {
-        $this->add($object, FiniteEvents::POST_TRANSITION, $callback, $spec);
-
-        return $this;
-    }
-
-    /**
-     * @param StatefulInterface $object
-     * @param string            $event
-     * @param callable          $callback
-     * @param array             $specs
-     *
-     * @return CallbackHandler
-     */
-    protected function add(StatefulInterface $object, $event, $callback, array $specs)
-    {
-        $specs = $this->processSpecs($specs);
-        $listener = function (TransitionEvent $e) use ($object, $callback, $specs) {
-            if ($object !== $e->getStateMachine()->getObject()) {
+        $specs    = $this->processSpecs($specs);
+        $listener = function (TransitionEvent $e) use ($sm, $callback, $specs) {
+            if ($sm !== $e->getStateMachine()) {
                 return;
             }
 
             if (!(
                 in_array(CallbackHandler::ALL, $specs['to']) ||
                 in_array($e->getTransition()->getState(), $specs['to'])
-            )) {
+            )
+            ) {
                 return;
             }
 
             if (!(
                 in_array(CallbackHandler::ALL, $specs['from']) ||
                 in_array($e->getInitialState()->getName(), $specs['from'])
-            )) {
+            )
+            ) {
                 return;
             }
 
@@ -134,7 +140,9 @@ class CallbackHandler
 
         $events = array($event);
         if (count($specs['on']) > 0 && !in_array(self::ALL, $specs['on'])) {
-            $events = array_map(function($v) use ($event) { return $event.'.'.$v; }, $specs['on']);
+            $events = array_map(function ($v) use ($event) {
+                return $event . '.' . $v;
+            }, $specs['on']);
         }
 
         foreach ($events as $event) {
@@ -155,7 +163,7 @@ class CallbackHandler
         foreach (array('from', 'to') as $target) {
             foreach ($specs[$target] as $key => $state) {
                 if ($state[0] === '-') {
-                    $specs['exclude_'.$target][] = substr($state, 1);
+                    $specs['exclude_' . $target][] = substr($state, 1);
                     unset($specs[$target][$key]);
                 }
             }
