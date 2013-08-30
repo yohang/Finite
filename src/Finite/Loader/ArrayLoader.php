@@ -2,6 +2,7 @@
 
 namespace Finite\Loader;
 
+use Finite\Event\CallbackHandler;
 use Finite\StatefulInterface;
 use Finite\StateMachine\StateMachineInterface;
 use Finite\State\State;
@@ -23,10 +24,17 @@ class ArrayLoader implements LoaderInterface
     private $config;
 
     /**
-     * @param array $config
+     * @var CallbackHandler
      */
-    public function __construct(array $config)
+    private $callbackHandler;
+
+    /**
+     * @param CallbackHandler $handler
+     * @param array           $config
+     */
+    public function __construct(CallbackHandler $handler, array $config)
     {
+        $this->callbackHandler = $handler;
         $this->config = array_merge(
             array(
                 'class'       => '',
@@ -44,6 +52,7 @@ class ArrayLoader implements LoaderInterface
     {
         $this->loadStates($stateMachine);
         $this->loadTransitions($stateMachine);
+        $this->loadCallbacks($stateMachine);
     }
 
     /**
@@ -95,6 +104,35 @@ class ArrayLoader implements LoaderInterface
         foreach ($this->config['transitions'] as $transition => $config) {
             $config = $resolver->resolve($config);
             $stateMachine->addTransition(new Transition($transition, $config['from'], $config['to'], $config['guard']));
+        }
+    }
+
+    /**
+     * @param StateMachineInterface $stateMachine
+     */
+    private function loadCallbacks(StateMachineInterface $stateMachine)
+    {
+        if (!isset($this->config['callbacks'])) {
+            return;
+        }
+
+        foreach (array('before', 'after') as $position) {
+            $this->loadCallbacksFor($position, $stateMachine);
+        }
+    }
+
+    private function loadCallbacksFor($position, $stateMachine)
+    {
+        if (!isset($this->config['callbacks'][$position])) {
+            return;
+        }
+
+        $method = 'add'.ucfirst($position);
+        foreach ($this->config['callbacks'][$position] as $specs) {
+            $callback = $specs['do'];
+            unset($specs['do']);
+
+            $this->callbackHandler->$method($stateMachine, $callback, $specs);
         }
     }
 }

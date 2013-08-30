@@ -14,26 +14,38 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
      */
     protected $object;
 
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $callbackHandler;
+
     protected function setUp()
     {
-        $this->object = new ArrayLoader(array(
-            'class'       => 'Stateful1',
-            'states'      => array(
-                'start'  => array('type' => 'initial', 'properties' => array('foo' => true, 'bar' => false)),
-                'middle' => array('type' => 'normal', 'properties' => array()),
-                'end'    => array('type' => 'final', 'properties' => array()),
-            ),
-            'transitions' => array(
-                'middleize' => array(
-                    'from' => array('start'),
-                    'to'   => 'middle'
+        $this->callbackHandler = $this->getMockBuilder('Finite\Event\CallbackHandler')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->object = new ArrayLoader(
+            $this->callbackHandler,
+            array(
+                'class'       => 'Stateful1',
+                'states'      => array(
+                    'start'  => array('type' => 'initial', 'properties' => array('foo' => true, 'bar' => false)),
+                    'middle' => array('type' => 'normal', 'properties' => array()),
+                    'end'    => array('type' => 'final', 'properties' => array()),
                 ),
-                'finish'    => array(
-                    'from' => array('middle'),
-                    'to'   => 'end'
+                'transitions' => array(
+                    'middleize' => array(
+                        'from' => array('start'),
+                        'to'   => 'middle'
+                    ),
+                    'finish'    => array(
+                        'from' => array('middle'),
+                        'to'   => 'end'
+                    )
                 )
             )
-        ));
+        );
     }
 
     public function testLoad()
@@ -46,28 +58,83 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
 
     public function testLoadWithMissingOptions()
     {
-        $this->object = new ArrayLoader(array(
-            'class'       => 'Stateful1',
-            'states'      => array(
-                'start'  => array('type' => 'initial', 'properties' => array('foo' => true, 'bar' => false)),
-                'middle' => array(),
-                'end'    => array('type' => 'final'),
-            ),
-            'transitions' => array(
-                'middleize' => array(
-                    'from' => 'start',
-                    'to'   => 'middle'
-                ),
-                'finish'    => array(
-                    'from' => array('middle'),
-                    'to'   => 'end'
-                )
-            )
-        ));
-
         $sm = $this->getMock('Finite\StateMachine\StateMachine');
+
+        $this->object = new ArrayLoader(
+            $this->callbackHandler,
+            array(
+                'class'       => 'Stateful1',
+                'states'      => array(
+                    'start'  => array('type' => 'initial', 'properties' => array('foo' => true, 'bar' => false)),
+                    'middle' => array(),
+                    'end'    => array('type' => 'final'),
+                ),
+                'transitions' => array(
+                    'middleize' => array(
+                        'from' => 'start',
+                        'to'   => 'middle'
+                    ),
+                    'finish'    => array(
+                        'from' => array('middle'),
+                        'to'   => 'end'
+                    )
+                ),
+            )
+        );
+
         $sm->expects($this->exactly(3))->method('addState');
         $sm->expects($this->exactly(2))->method('addTransition');
+        $this->object->load($sm);
+    }
+
+
+    public function testLoadCallbacks()
+    {
+        $sm = $this->getMock('Finite\StateMachine\StateMachine');
+        $allTimes                   = function() {};
+        $beforeMiddleize            = function() {};
+        $fromStartToOtherThanMiddle = function() {};
+
+        $this->object = new ArrayLoader(
+            $this->callbackHandler,
+            array(
+                'class'       => 'Stateful1',
+                'states'      => array(
+                    'start'  => array('type' => 'initial'),
+                    'middle' => array(),
+                    'end'    => array('type' => 'final'),
+                ),
+                'transitions' => array(
+                    'middleize' => array('from' => 'start', 'to'   => 'middle'),
+                    'finish'    => array('from' => array('middle'), 'to' => 'end')
+                ),
+                'callbacks' => array(
+                    'before' => array(
+                        array('on'   => 'middleize', 'do' => $beforeMiddleize),
+                        array('from' => 'start', 'to' => '-middle', 'do' => $fromStartToOtherThanMiddle)
+                    ),
+                    'after' => array(
+                        array('do' => $allTimes)
+                    )
+                )
+            )
+        );
+
+        $this->callbackHandler
+            ->expects($this->at(0))
+            ->method('addBefore')
+            ->with($sm, $beforeMiddleize, array('on' => 'middleize'));
+
+        $this->callbackHandler
+            ->expects($this->at(1))
+            ->method('addBefore')
+            ->with($sm, $fromStartToOtherThanMiddle, array('from' => 'start', 'to' => '-middle'));
+
+        $this->callbackHandler
+            ->expects($this->at(2))
+            ->method('addAfter')
+            ->with($sm, $allTimes, array());
+
         $this->object->load($sm);
     }
 
