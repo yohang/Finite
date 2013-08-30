@@ -28,21 +28,19 @@ class SecurityAwareStateMachineTest extends \PHPUnit_Framework_TestCase
 
     public function testCan()
     {
-        if (!function_exists('trait_exists')) {
-            $this->markTestSkipped('This test needs PHP5.4+');
-        }
-
         $securityMock = $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
         $this->object->setSecurityContext($securityMock);
 
-        $addIsGrandedExpectation = function($return, $transition) use ($securityMock) {
+        $that     = $this;
+        $stateful = $this->object->getObject();
+        $addIsGrandedExpectation = function($return, $transition) use ($that, $securityMock, $stateful) {
             static $at = 0;
 
             $securityMock
-                ->expects($this->at($at++))
+                ->expects($that->at($at++))
                 ->method('isGranted')
-                ->with($transition, $this->object->getObject())
-                ->will($this->returnValue($return));
+                ->with($transition, $stateful)
+                ->will($that->returnValue($return));
         };
 
         $addIsGrandedExpectation(true, 't12');
