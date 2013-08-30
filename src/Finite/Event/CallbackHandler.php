@@ -107,11 +107,17 @@ class CallbackHandler
                 return;
             }
 
-            if (!(in_array(self::ALL, $specs['to']) || in_array($e->getTransition()->getState(), $specs['to']))) {
+            if (!(
+                in_array(CallbackHandler::ALL, $specs['to']) ||
+                in_array($e->getTransition()->getState(), $specs['to'])
+            )) {
                 return;
             }
 
-            if (!(in_array(self::ALL, $specs['from']) || in_array($e->getInitialState()->getName(), $specs['from']))) {
+            if (!(
+                in_array(CallbackHandler::ALL, $specs['from']) ||
+                in_array($e->getInitialState()->getName(), $specs['from'])
+            )) {
                 return;
             }
 

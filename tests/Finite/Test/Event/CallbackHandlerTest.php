@@ -86,7 +86,7 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
         $this->object->addBefore(
             $this->stateful,
             function(TransitionEvent $event) use ($that, &$counter) {
-                $this->assertSame('foobar', $event->getTransition()->getState());
+                $that->assertSame('foobar', $event->getTransition()->getState());
             },
             array('to' => 'foobar')
         );
@@ -126,7 +126,7 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
         $this->object->addBefore(
             $this->stateful,
             function(TransitionEvent $event) use ($that, &$counter) {
-                $this->assertSame('foobar', $event->getInitialState()->getName());
+                $that->assertSame('foobar', $event->getInitialState()->getName());
             },
             array('from' => 'foobar')
         );
@@ -166,7 +166,7 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
         $this->object->addBefore(
             $this->stateful,
             function(TransitionEvent $event) use ($that, &$counter) {
-                $this->assertSame('foobar', $event->getInitialState()->getName());
+                $that->assertSame('foobar', $event->getInitialState()->getName());
             },
             array('from' => array('all', '-bazqux'))
         );
@@ -206,7 +206,7 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
         $this->object->addBefore(
             $this->stateful,
             function(TransitionEvent $event) use ($that, &$counter) {
-                $this->assertSame('foobar', $event->getTransition()->getState());
+                $that->assertSame('foobar', $event->getTransition()->getState());
             },
             array('to' => '-bazqux')
         );
