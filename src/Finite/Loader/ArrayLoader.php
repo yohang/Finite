@@ -32,7 +32,7 @@ class ArrayLoader implements LoaderInterface
      * @param CallbackHandler $handler
      * @param array           $config
      */
-    public function __construct(CallbackHandler $handler, array $config)
+    public function __construct(array $config, CallbackHandler $handler = null)
     {
         $this->callbackHandler = $handler;
         $this->config = array_merge(
@@ -50,6 +50,9 @@ class ArrayLoader implements LoaderInterface
      */
     public function load(StateMachineInterface $stateMachine)
     {
+        if (null === $this->callbackHandler) {
+            $this->callbackHandler = new CallbackHandler($stateMachine->getDispatcher());
+        }
         $this->loadStates($stateMachine);
         $this->loadTransitions($stateMachine);
         $this->loadCallbacks($stateMachine);

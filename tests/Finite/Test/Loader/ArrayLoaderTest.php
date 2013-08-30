@@ -26,7 +26,6 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         $this->object = new ArrayLoader(
-            $this->callbackHandler,
             array(
                 'class'       => 'Stateful1',
                 'states'      => array(
@@ -44,7 +43,8 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
                         'to'   => 'end'
                     )
                 )
-            )
+            ),
+            $this->callbackHandler
         );
     }
 
@@ -61,7 +61,6 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
         $sm = $this->getMock('Finite\StateMachine\StateMachine');
 
         $this->object = new ArrayLoader(
-            $this->callbackHandler,
             array(
                 'class'       => 'Stateful1',
                 'states'      => array(
@@ -79,7 +78,8 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
                         'to'   => 'end'
                     )
                 ),
-            )
+            ),
+            $this->callbackHandler
         );
 
         $sm->expects($this->exactly(3))->method('addState');
@@ -96,7 +96,6 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
         $fromStartToOtherThanMiddle = function() {};
 
         $this->object = new ArrayLoader(
-            $this->callbackHandler,
             array(
                 'class'       => 'Stateful1',
                 'states'      => array(
@@ -117,7 +116,8 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
                         array('do' => $allTimes)
                     )
                 )
-            )
+            ),
+            $this->callbackHandler
         );
 
         $this->callbackHandler
