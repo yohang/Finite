@@ -45,7 +45,7 @@ class ListenableStateMachine extends StateMachine
     public function apply($transitionName)
     {
         $transition = $this->getTransition($transitionName);
-        $event      = new TransitionEvent($transition, $this);
+        $event      = new TransitionEvent($this->getCurrentState(), $transition, $this);
 
         $this->dispatcher->dispatch(FiniteEvents::PRE_TRANSITION, $event);
         $this->dispatcher->dispatch(FiniteEvents::PRE_TRANSITION.'.'.$transitionName, $event);
