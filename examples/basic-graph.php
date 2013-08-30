@@ -19,7 +19,9 @@ class Document implements Finite\StatefulInterface
 }
 
 // Configure your graph
-$loader = new Finite\Loader\ArrayLoader([
+$document     = new Document;
+$stateMachine = new Finite\StateMachine\StateMachine($document);
+$loader       = new Finite\Loader\ArrayLoader([
     'class'  => 'Document',
     'states'  => [
         'draft' => [
@@ -42,8 +44,6 @@ $loader = new Finite\Loader\ArrayLoader([
     ],
 ]);
 
-$document = new Document;
-$stateMachine = new Finite\StateMachine\StateMachine($document);
 $loader->load($stateMachine);
 $stateMachine->initialize();
 
