@@ -135,7 +135,7 @@ class CallbackHandler
                 return;
             }
 
-            $callback($e);
+            $callback($sm->getObject(), $e);
         };
 
         $events = array($event);

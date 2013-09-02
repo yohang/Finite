@@ -60,7 +60,9 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
         $state           = $this->getMock('Finite\State\StateInterface');
         $e1              = $this->getMockBuilder('Finite\Event\TransitionEvent')->disableOriginalConstructor()->getMock();
         $e2              = $this->getMockBuilder('Finite\Event\TransitionEvent')->disableOriginalConstructor()->getMock();
+        $stateful        = $this->getMock('Finite\StatefulInterface');
 
+        $this->statemachine->expects($this->any())->method('getObject')->will($this->returnValue($stateful));
         $e1->expects($this->any())->method('getStateMachine')->will($this->returnValue($this->statemachine));
         $e2->expects($this->any())->method('getStateMachine')->will($this->returnValue($this->statemachine));
         $e1->expects($this->any())->method('getInitialState')->will($this->returnValue($state));
@@ -83,7 +85,7 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
         $that    = $this;
         $this->object->addBefore(
             $this->statemachine,
-            function(TransitionEvent $event) use ($that, &$counter) {
+            function($object, TransitionEvent $event) use ($that, $stateful) {
                 $that->assertSame('foobar', $event->getTransition()->getState());
             },
             array('to' => 'foobar')
@@ -97,7 +99,9 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
         $stateOk         = $this->getMock('Finite\State\StateInterface');
         $stateNotOk      = $this->getMock('Finite\State\StateInterface');
         $transition      = $this->getMock('Finite\Transition\TransitionInterface');
+        $stateful        = $this->getMock('Finite\StatefulInterface');
 
+        $this->statemachine->expects($this->any())->method('getObject')->will($this->returnValue($stateful));
         $e1->expects($this->any())->method('getStateMachine')->will($this->returnValue($this->statemachine));
         $e2->expects($this->any())->method('getStateMachine')->will($this->returnValue($this->statemachine));
         $e1->expects($this->any())->method('getTransition')->will($this->returnValue($transition));
@@ -121,7 +125,7 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
         $that = $this;
         $this->object->addBefore(
             $this->statemachine,
-            function(TransitionEvent $event) use ($that, &$counter) {
+            function($object, TransitionEvent $event) use ($that, $stateful) {
                 $that->assertSame('foobar', $event->getInitialState()->getName());
             },
             array('from' => 'foobar')
@@ -135,7 +139,9 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
         $stateOk         = $this->getMock('Finite\State\StateInterface');
         $stateNotOk      = $this->getMock('Finite\State\StateInterface');
         $transition      = $this->getMock('Finite\Transition\TransitionInterface');
+        $stateful        = $this->getMock('Finite\StatefulInterface');
 
+        $this->statemachine->expects($this->any())->method('getObject')->will($this->returnValue($stateful));
         $e1->expects($this->any())->method('getStateMachine')->will($this->returnValue($this->statemachine));
         $e2->expects($this->any())->method('getStateMachine')->will($this->returnValue($this->statemachine));
         $e1->expects($this->any())->method('getTransition')->will($this->returnValue($transition));
@@ -159,7 +165,7 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
         $that = $this;
         $this->object->addBefore(
             $this->statemachine,
-            function(TransitionEvent $event) use ($that, &$counter) {
+            function($object, TransitionEvent $event) use ($that, $stateful) {
                 $that->assertSame('foobar', $event->getInitialState()->getName());
             },
             array('from' => array('all', '-bazqux'))
@@ -173,7 +179,9 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
         $state           = $this->getMock('Finite\State\StateInterface');
         $e1              = $this->getMockBuilder('Finite\Event\TransitionEvent')->disableOriginalConstructor()->getMock();
         $e2              = $this->getMockBuilder('Finite\Event\TransitionEvent')->disableOriginalConstructor()->getMock();
+        $stateful        = $this->getMock('Finite\StatefulInterface');
 
+        $this->statemachine->expects($this->any())->method('getObject')->will($this->returnValue($stateful));
         $e1->expects($this->any())->method('getStateMachine')->will($this->returnValue($this->statemachine));
         $e2->expects($this->any())->method('getStateMachine')->will($this->returnValue($this->statemachine));
         $e1->expects($this->any())->method('getInitialState')->will($this->returnValue($state));
@@ -197,7 +205,8 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
         $that    = $this;
         $this->object->addBefore(
             $this->statemachine,
-            function(TransitionEvent $event) use ($that, &$counter) {
+            function($object, TransitionEvent $event) use ($that, $stateful) {
+                $that->assertSame($object, $stateful);
                 $that->assertSame('foobar', $event->getTransition()->getState());
             },
             array('to' => '-bazqux')
