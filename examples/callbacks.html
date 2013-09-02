@@ -84,7 +84,7 @@ $loader       = new Finite\Loader\ArrayLoader([
         'before' => [
             [
                 'from' => '-proposed',
-                'do'   => function(\Finite\Event\TransitionEvent $e) {
+                'do'   => function($document, \Finite\Event\TransitionEvent $e) {
                     echo 'Applying transition '.$e->getTransition()->getName(), "\n";
                 }
             ],
