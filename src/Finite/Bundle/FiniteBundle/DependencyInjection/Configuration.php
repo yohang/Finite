@@ -2,6 +2,7 @@
 
 namespace Finite\Bundle\FiniteBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -18,41 +19,85 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('finite_finite');
+        $rootNode    = $treeBuilder->root('finite_finite');
+        $rootProto   = $rootNode->useAttributeAsKey('name')->prototype('array')->children();
 
-        $rootNode
-            ->useAttributeAsKey('name')
-            ->prototype('array')
-                ->children()
-                    ->scalarNode('class')->isRequired()->end()
-                    ->arrayNode('states')
-                        ->useAttributeAsKey('name')
-                        ->prototype('array')
-                            ->children()
-                                ->scalarNode('type')->defaultValue('normal')->end()
-                                ->arrayNode('properties')
-                                    ->useAttributeAsKey('name')
-                                    ->defaultValue(array())
-                                    ->prototype('variable')->end()
-                                ->end()
-                            ->end()
-                        ->end()
-                    ->end()
-                    ->arrayNode('transitions')
-                        ->useAttributeAsKey('name')
-                        ->prototype('array')
-                            ->children()
-                                ->arrayNode('from')
-                                    ->prototype('variable')->end()
-                                ->end()
-                                ->scalarNode('to')->end()
-                            ->end()
+        $rootProto->scalarNode('class')->isRequired()->end();
+        $this->addStateSection($rootProto);
+        $this->addTransitionSection($rootProto);
+        $this->addCallbackSection($rootProto);
+        $rootProto->end()->end();
+
+        return $treeBuilder;
+    }
+
+    /**
+     * @param NodeBuilder $rootProto
+     */
+    protected function addStateSection(NodeBuilder $rootProto)
+    {
+        $rootProto
+            ->arrayNode('states')
+                ->useAttributeAsKey('name')
+                ->prototype('array')
+                    ->children()
+                        ->scalarNode('type')->defaultValue('normal')->end()
+                        ->arrayNode('properties')
+                            ->useAttributeAsKey('name')
+                            ->defaultValue(array())
+                            ->prototype('variable')->end()
                         ->end()
                     ->end()
                 ->end()
-            ->end()
-        ;
+            ->end();
+    }
 
-        return $treeBuilder;
+    /**
+     * @param NodeBuilder $rootProto
+     */
+    protected function addTransitionSection(NodeBuilder $rootProto)
+    {
+        $rootProto
+            ->arrayNode('transitions')
+                ->useAttributeAsKey('name')
+                ->prototype('array')
+                    ->children()
+                        ->arrayNode('from')
+                            ->prototype('variable')->end()
+                        ->end()
+                        ->scalarNode('to')->end()
+                    ->end()
+                ->end()
+            ->end();
+    }
+
+    /**
+     * @param NodeBuilder $rootProto
+     */
+    protected function addCallbackSection(NodeBuilder $rootProto)
+    {
+        $callbacks = $rootProto->arrayNode('callbacks')->children();
+        $this->addSubCallbackSection($callbacks, 'before');
+        $this->addSubCallbackSection($callbacks, 'after');
+        $callbacks->end()->end();
+    }
+
+    /**
+     * @param NodeBuilder $callbacks
+     * @param string      $type
+     */
+    private function addSubCallbackSection(NodeBuilder $callbacks, $type)
+    {
+        $callbacks
+            ->arrayNode($type)
+                ->prototype('array')
+                    ->children()
+                        ->scalarNode('on')->end()
+                        ->variableNode('do')->end()
+                        ->variableNode('from')->end()
+                        ->variableNode('to')->end()
+                    ->end()
+                ->end()
+            ->end();
     }
 }
