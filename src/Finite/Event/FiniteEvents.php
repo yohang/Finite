@@ -23,6 +23,11 @@ final class FiniteEvents
         /**
          * This event is thrown after transitions are processed
          */
-        POST_TRANSITION = 'finite.post_transition'
+        POST_TRANSITION = 'finite.post_transition',
+
+        /**
+         * Fired when a transition test is made.
+         */
+        TEST_TRANSITION  = 'finite.test_transition'
     ;
 }

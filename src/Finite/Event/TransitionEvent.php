@@ -18,6 +18,12 @@ class TransitionEvent extends StateMachineEvent
     protected $transition;
 
     /**
+     * @var boolean
+     */
+    protected $transitionRejected = false;
+
+
+    /**
      * @param TransitionInterface    $transition
      * @param ListenableStateMachine $stateMachine
      */
@@ -33,5 +39,15 @@ class TransitionEvent extends StateMachineEvent
     public function getTransition()
     {
         return $this->transition;
+    }
+
+    public function isRejected()
+    {
+        return $this->transitionRejected;
+    }
+
+    public function reject()
+    {
+        $this->transitionRejected = true;
     }
 }
