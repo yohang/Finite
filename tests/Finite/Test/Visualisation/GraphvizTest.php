@@ -55,6 +55,7 @@ class GraphvizTest extends StateMachineTestCase
 
     public function testRendersToPng()
     {
+        $this->assertDotIsExecutable();
         $target = sys_get_temp_dir() . '/test.png';
         @unlink($target);
         $this->graphviz->render($this->object, $target);
@@ -63,9 +64,18 @@ class GraphvizTest extends StateMachineTestCase
     
     public function testFormatException()
     {
+        $this->assertDotIsExecutable();
         $target = sys_get_temp_dir() . '/test.unkown';
         
         $this->setExpectedException('\Finite\Visualisation\Exception', Exception::CODE_DOT_ERROR);
         $this->graphviz->render($this->object, $target);
+    }
+    
+    private function assertDotIsExecutable()
+    {
+        $returnVal = shell_exec("which dot");
+        if (empty($returnVal)) {
+            $this->markTestSkipped('dot is not executable on this system.');
+        }
     }
 }
