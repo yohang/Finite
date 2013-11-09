@@ -16,8 +16,12 @@ use Alom\Graphviz\Digraph;
  */
 class Graphviz
 {
-    private $executable = 'dot';
-    private $type = 'png';
+    /**
+     * target format
+     * 
+     * @var string
+     */
+    private $type = 'dot';
     
     /**
      * the graphviz graph representation
@@ -31,15 +35,63 @@ class Graphviz
      * 
      * @param \Finite\StateMachine\StateMachineInterface $stateMachine
      * @param string $target
+     * @throws Exception
      */
     public function render(StateMachineInterface $stateMachine, $target)
     {
-        $this->createGraph();
+        $this->graph = new \Alom\Graphviz\Digraph('state_machine');
         $this->addNodes($stateMachine);
         $this->addEdges($stateMachine);
         
+        $this->finalize($target);
+    }
+    
+    /**
+     * Guesses the target format based on the extension.
+     * 
+     * @param string $target
+     */
+    private function finalize($target)
+    {
         $this->graph->end();
-        file_put_contents($target, $this->graph->render());
+        
+        $this->type = pathinfo($target, PATHINFO_EXTENSION);
+        if ($this->type != 'dot') {
+            $this->renderDot($target);
+        } else {
+            $this->dumpGraphToFile($target);
+        }
+    }
+    
+    /**
+     * Executes dot
+     * 
+     * @param string $target
+     * @throws Exception
+     */
+    private function renderDot($target)
+    {
+        $returnVar = 0;
+        $output = 0;
+        $tempFile = tempnam(sys_get_temp_dir(), 'dot');
+        $this->dumpGraphToFile($tempFile);
+        exec('dot -T' . $this->type. ' -o' . $target . ' ' . $tempFile, $output, $returnVar);
+        if ($returnVar > 0) {
+            throw new Exception('Error executing dot.', Exception::CODE_DOT_ERROR);
+        }
+    }
+    
+    /**
+     * Write the raw dot content to the given file.
+     * 
+     * @param string $file
+     * @throws Exception
+     */
+    private function dumpGraphToFile($file)
+    {
+        if (!file_put_contents($file, $this->graph->render())) {
+            throw new Exception('Error dumping the dot content to ' . $file, 500);
+        }
     }
     
     /**
@@ -80,14 +132,5 @@ class Graphviz
                     ->end();
             }
         }
-    }
-    
-    /**
-     * 
-     * @return 
-     */
-    private function createGraph()
-    {
-        $this->graph = new \Alom\Graphviz\Digraph('state_machine');
     }
 }

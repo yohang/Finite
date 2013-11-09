@@ -8,5 +8,5 @@ namespace Finite\Visualisation;
  */
 class Exception extends \Finite\Exception\Exception
 {
-    
+    const CODE_DOT_ERROR = 1;
 }

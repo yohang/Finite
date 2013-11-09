@@ -3,15 +3,13 @@
 namespace Finite\Test\Visualisation;
 
 use Finite\Visualisation\Graphviz;
-
-use Finite\Event\StateMachineEvent;
-use Finite\Event\TransitionEvent;
-use Finite\StateMachine\ListenableStateMachine;
 use Finite\Test\StateMachineTestCase;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Finite\Visualisation\Exception;
 
 /**
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * Tests the graphviz visualisation
+ * 
+ * @author Daniel Pozzi <bonndan76@googlemail.com>
  */
 class GraphvizTest extends StateMachineTestCase
 {
@@ -55,4 +53,19 @@ class GraphvizTest extends StateMachineTestCase
         $this->assertContains('"s4" -> "s5"', $content, $content);
     }
 
+    public function testRendersToPng()
+    {
+        $target = sys_get_temp_dir() . '/test.png';
+        @unlink($target);
+        $this->graphviz->render($this->object, $target);
+        $this->assertFileExists($target);
+    }
+    
+    public function testFormatException()
+    {
+        $target = sys_get_temp_dir() . '/test.unkown';
+        
+        $this->setExpectedException('\Finite\Visualisation\Exception', Exception::CODE_DOT_ERROR);
+        $this->graphviz->render($this->object, $target);
+    }
 }
