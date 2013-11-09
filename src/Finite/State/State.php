@@ -9,6 +9,7 @@ use Finite\Transition\TransitionInterface;
  * Feel free to extend it to fit to your needs
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @author Michal Dabrowski <dabrowski@brillante.pl>
  */
 class State implements StateInterface
 {

@@ -2,7 +2,7 @@
 
 namespace Finite\Transition;
 
-use  Finite\StateMachine\StateMachine;
+use Finite\StateMachine\StateMachine;
 use Finite\State\StateInterface;
 
 /**
@@ -10,6 +10,7 @@ use Finite\State\StateInterface;
  * Feel free to extend it to fit to your needs
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @author Michal Dabrowski <dabrowski@brillante.pl>
  */
 class Transition implements TransitionInterface
 {
@@ -29,15 +30,25 @@ class Transition implements TransitionInterface
     protected $name;
 
     /**
+     * @var callable
+     */
+    protected $guard;
+
+    /**
      * @param string       $name
      * @param string|array $initialStates
      * @param string       $state
      */
-    public function __construct($name, $initialStates, $state)
+    public function __construct($name, $initialStates, $state, $guard = null)
     {
+        if (null !== $guard && !is_callable($guard)) {
+            throw new \InvalidArgumentException('Invalid callable guard argument passed to Transition::__construct().');
+        }
+
         $this->name          = $name;
         $this->state         = $state;
-        $this->initialStates = (array)$initialStates;
+        $this->initialStates = (array) $initialStates;
+        $this->guard = $guard;
     }
 
     /**
@@ -81,6 +92,14 @@ class Transition implements TransitionInterface
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @return callable|null
+     */
+    public function getGuard()
+    {
+        return $this->guard;
     }
 
     /**
