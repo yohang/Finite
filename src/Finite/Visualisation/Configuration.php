@@ -16,15 +16,15 @@ class Configuration
     /**
      * Constructor.
      * 
-     * @param string $targetFile       full path to the rendered output
-     * @param bool   $renderProperties flag
-     * @param bool   $markCurrentState flag
+     * @param string      $targetFile       full path to the rendered output
+     * @param bool        $renderProperties flag
+     * @param string|null $markCurrentState fillcolor
      */
-    public function __construct($targetFile, $renderProperties = false, $markCurrentState = false)
+    public function __construct($targetFile, $renderProperties = false, $markCurrentState = null)
     {
         $this->targetFile = $targetFile;
         $this->renderProperties = (bool) $renderProperties;
-        $this->markCurrentState = (bool) $markCurrentState;
+        $this->markCurrentState = $markCurrentState;
     }
     
     /**
@@ -48,9 +48,9 @@ class Configuration
     }
 
     /**
-     * Returns whether the current state shall be rendered or not.
+     * Returns in which color the current state shall be rendered (fillcolor) or null.
      * 
-     * @return bool
+     * @return string|null
      */
     public function markCurrentState()
     {
