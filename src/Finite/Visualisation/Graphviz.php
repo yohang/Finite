@@ -121,15 +121,30 @@ class Graphviz implements VisualisationInterface
     {
         $states = $stateMachine->getStates();
         foreach ($states as $name) {
-            $state = $stateMachine->getState($name);
-            /* @var $state \Finite\State\StateInterface */
-            $shape = $state->getType() != StateInterface::TYPE_NORMAL ? 'doublecircle' : 'circle';
-            $this->graph->beginNode(
-                $state->getName(), 
-                array('shape' => $shape, 'label' => $this->getNodeLabel($state))
-                )
-                ->end();
+            $this->graph->beginNode($name, $this->getNodeAttributes($stateMachine, $name))->end();
         }
+    }
+    
+    /**
+     * Returns the node attributes.
+     * 
+     * @param \Finite\StateMachine\StateMachineInterface $stateMachine
+     * @param string $name
+     * @return array
+     */
+    private function getNodeAttributes(StateMachineInterface $stateMachine, $name)
+    {
+        $state = $stateMachine->getState($name); /* @var $state \Finite\State\StateInterface */
+        $data  = array(
+            'shape' => $state->getType() != StateInterface::TYPE_NORMAL ? 'doublecircle' : 'circle',
+            'label' => $this->getNodeLabel($state),
+        );
+        if ($stateMachine->getCurrentState() == $state && $this->configuration->markCurrentState()) {
+            $data['fillcolor'] = $this->configuration->markCurrentState();
+            $data['style'] = 'filled';
+        }
+        
+        return $data;
     }
 
     /**
@@ -143,7 +158,7 @@ class Graphviz implements VisualisationInterface
         $id = $state->getName();
         $props = $state->getProperties();
         if (count($props) > 0 && $this->configuration->renderProperties()) {
-            foreach ($props as $prop => $value) {
+            foreach (array_keys($props) as $prop) {
                 $id .= "\\n* " . $prop;
             }
         }

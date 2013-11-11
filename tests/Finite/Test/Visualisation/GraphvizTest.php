@@ -73,6 +73,17 @@ class GraphvizTest extends StateMachineTestCase
         $this->assertContains('property1', $content, $content);
         $this->assertContains('property2', $content, $content);
     }
+    
+    public function testMarksCurrentState()
+    {
+        $config = new \Finite\Visualisation\Configuration($this->target, false, 'red');
+        $this->graphviz = new Graphviz($config);
+        $this->graphviz->render($this->object);
+        
+        $content = file_get_contents($this->target); echo $content;
+        $this->assertContains('label="s2", fillcolor=red', $content, $content);
+        $this->assertNotContains('label="s3", fillcolor="red"', $content, $content);
+    }
 
     public function testRendersToPng()
     {
