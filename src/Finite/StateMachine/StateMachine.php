@@ -125,7 +125,15 @@ class StateMachine implements StateMachineInterface
             return call_user_func($transition->getGuard());
         }
 
-        return $this->currentState->can($transition);
+        if (!$this->currentState->can($transition)) {
+            return false;
+        }
+
+        $event = new TransitionEvent($this->getCurrentState(), $transition, $this);
+        $this->dispatcher->dispatch(FiniteEvents::TEST_TRANSITION, $event);
+        $this->dispatcher->dispatch(FiniteEvents::TEST_TRANSITION.'.'.$transition->getName(), $event);
+
+        return !$event->isRejected();
     }
 
     /**
