@@ -98,4 +98,9 @@ interface StateMachineInterface
      * @return StateInterface
      */
     public function getCurrentState();
+
+    /**
+     * @return \Symfony\Component\EventDispatcher\EventDispatcherInterface
+     */
+    public function getDispatcher();
 }

@@ -11,7 +11,7 @@ final class FiniteEvents
 {
     const
         /**
-         * This event is thrown each time a ListenableStateMachine is initialized
+         * This event is thrown each time a StateMachine is initialized
          */
         INITIALIZE = 'finite.initialize',
 

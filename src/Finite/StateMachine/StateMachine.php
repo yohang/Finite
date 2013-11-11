@@ -2,12 +2,17 @@
 
 namespace Finite\StateMachine;
 
+use Finite\Event\FiniteEvents;
+use Finite\Event\StateMachineEvent;
+use Finite\Event\TransitionEvent;
 use Finite\Exception;
 use Finite\StatefulInterface;
 use Finite\State\State;
 use Finite\State\StateInterface;
 use Finite\Transition\Transition;
 use Finite\Transition\TransitionInterface;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * The Finite State Machine
@@ -45,11 +50,22 @@ class StateMachine implements StateMachineInterface
     public $currentState;
 
     /**
-     * @param StatefulInterface $object
+     * @var EventDispatcherInterface
      */
-    public function __construct(StatefulInterface $object = null)
+    protected $dispatcher;
+
+    /**
+     * @param StatefulInterface        $object
+     * @param EventDispatcherInterface $dispatcher
+     */
+    public function __construct(StatefulInterface $object = null, EventDispatcherInterface $dispatcher = null)
     {
-        $this->object = $object;
+        $this->object     = $object;
+        $this->dispatcher = $dispatcher;
+
+        if (null === $this->dispatcher) {
+            $this->dispatcher = new EventDispatcher;
+        }
     }
 
     /**
@@ -64,6 +80,8 @@ class StateMachine implements StateMachineInterface
         }
 
         $this->currentState = $this->getState($initialState);
+
+        $this->dispatcher->dispatch(FiniteEvents::INITIALIZE, new StateMachineEvent($this));
     }
 
     /**
@@ -74,7 +92,8 @@ class StateMachine implements StateMachineInterface
     public function apply($transitionName)
     {
         $transition = $this->getTransition($transitionName);
-        if (!$this->currentState->can($transition)) {
+        $event      = new TransitionEvent($this->getCurrentState(), $transition, $this);
+        if (!$this->can($transition)) {
             throw new Exception\StateException(sprintf(
                 'The "%s" transition can not be applied to the "%s" state.',
                 $transition->getName(),
@@ -82,10 +101,15 @@ class StateMachine implements StateMachineInterface
             ));
         }
 
-        $returnValue = $transition->process($this);
+        $this->dispatcher->dispatch(FiniteEvents::PRE_TRANSITION, $event);
+        $this->dispatcher->dispatch(FiniteEvents::PRE_TRANSITION.'.'.$transitionName, $event);
 
+        $returnValue = $transition->process($this);
         $this->object->setFiniteState($transition->getState());
         $this->currentState = $this->getState($transition->getState());
+
+        $this->dispatcher->dispatch(FiniteEvents::POST_TRANSITION, $event);
+        $this->dispatcher->dispatch(FiniteEvents::POST_TRANSITION.'.'.$transitionName, $event);
 
         return $returnValue;
     }
@@ -101,7 +125,15 @@ class StateMachine implements StateMachineInterface
             return call_user_func($transition->getGuard());
         }
 
-        return $this->currentState->can($transition);
+        if (!in_array($transition->getName(), $this->getCurrentState()->getTransitions())) {
+            return false;
+        }
+
+        $event = new TransitionEvent($this->getCurrentState(), $transition, $this);
+        $this->dispatcher->dispatch(FiniteEvents::TEST_TRANSITION, $event);
+        $this->dispatcher->dispatch(FiniteEvents::TEST_TRANSITION.'.'.$transition->getName(), $event);
+
+        return !$event->isRejected();
     }
 
     /**
@@ -237,5 +269,13 @@ class StateMachine implements StateMachineInterface
         }
 
         throw new Exception\StateException('No initial state found.');
+    }
+
+    /**
+     * @return EventDispatcherInterface
+     */
+    public function getDispatcher()
+    {
+        return $this->dispatcher;
     }
 }

@@ -2,7 +2,8 @@
 
 namespace Finite\Event;
 
-use Finite\StateMachine\ListenableStateMachine;
+use Finite\State\StateInterface;
+use Finite\StateMachine\StateMachine;
 use Finite\Transition\TransitionInterface;
 
 /**
@@ -23,12 +24,20 @@ class TransitionEvent extends StateMachineEvent
     protected $transitionRejected = false;
 
     /**
-     * @param TransitionInterface    $transition
-     * @param ListenableStateMachine $stateMachine
+     * @var StateInterface
      */
-    public function __construct(TransitionInterface $transition, ListenableStateMachine $stateMachine)
+    protected $initialState;
+
+    /**
+     * @param StateInterface      $initialState
+     * @param TransitionInterface $transition
+     * @param StateMachine        $stateMachine
+     */
+    public function __construct(StateInterface $initialState, TransitionInterface $transition, StateMachine $stateMachine)
     {
-        $this->transition = $transition;
+        $this->transition   = $transition;
+        $this->initialState = $initialState;
+
         parent::__construct($stateMachine);
     }
 
@@ -40,6 +49,9 @@ class TransitionEvent extends StateMachineEvent
         return $this->transition;
     }
 
+    /**
+     * @return bool
+     */
     public function isRejected()
     {
         return $this->transitionRejected;
@@ -48,5 +60,13 @@ class TransitionEvent extends StateMachineEvent
     public function reject()
     {
         $this->transitionRejected = true;
+    }
+
+    /**
+     * @return StateInterface
+     */
+    public function getInitialState()
+    {
+        return $this->initialState;
     }
 }

@@ -16,15 +16,20 @@ class Document implements Finite\StatefulInterface
     {
         $this->state = $state;
     }
+
+    public function display()
+    {
+        echo 'Hello, I\'m a document and I\'m currently at the ', $this->state, ' state.', "\n";
+    }
 }
 
 // Configure your graph
 $document     = new Document;
 $stateMachine = new Finite\StateMachine\StateMachine($document);
 $loader       = new Finite\Loader\ArrayLoader([
-    'class'  => 'Document',
-    'states'  => [
-        'draft' => [
+    'class'       => 'Document',
+    'states'      => [
+        'draft'    => [
             'type'       => Finite\State\StateInterface::TYPE_INITIAL,
             'properties' => ['deletable' => true, 'editable' => true],
         ],
@@ -42,33 +47,37 @@ $loader       = new Finite\Loader\ArrayLoader([
         'accept'  => ['from' => ['proposed'], 'to' => 'accepted'],
         'reject'  => ['from' => ['proposed'], 'to' => 'draft'],
     ],
+    'callbacks' => [
+        'before' => [
+            [
+                'from' => '-proposed',
+                'do' => function(\Finite\Event\TransitionEvent $e) {
+                    echo 'Applying transition '.$e->getTransition()->getName(), "\n";
+                }
+            ],
+            [
+                'from' => 'proposed',
+                'do' => function() {
+                    echo 'Applying transition from proposed state', "\n";
+                }
+            ]
+        ],
+        'after' => [
+            [
+                'to' => ['accepted'], 'do' => [$document, 'display']
+            ]
+        ]
+    ]
 ]);
 
 $loader->load($stateMachine);
 $stateMachine->initialize();
 
+$stateMachine->getDispatcher()->addListener('finite.pre_transition', function(\Finite\Event\TransitionEvent $e) {
+    echo 'This is a pre transition', "\n";
+});
 
-// Working with workflow
-
-// Current state
-var_dump($stateMachine->getCurrentState()->getName());
-var_dump($stateMachine->getCurrentState()->getProperties());
-var_dump($stateMachine->getCurrentState()->has('deletable'));
-var_dump($stateMachine->getCurrentState()->has('printable'));
-
-// Available transitions
-var_dump($stateMachine->getCurrentState()->getTransitions());
-var_dump($stateMachine->can('propose'));
-var_dump($stateMachine->can('accept'));
-
-// Apply transitions
-try {
-    $stateMachine->apply('accept');
-} catch (\Finite\Exception\StateException $e) {
-    echo $e->getMessage(), "\n";
-}
-
-// Applying a transition
 $stateMachine->apply('propose');
-var_dump($stateMachine->getCurrentState()->getName());
-var_dump($document->getFiniteState());
+$stateMachine->apply('reject');
+$stateMachine->apply('propose');
+$stateMachine->apply('accept');
