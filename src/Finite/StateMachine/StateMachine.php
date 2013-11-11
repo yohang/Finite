@@ -93,7 +93,7 @@ class StateMachine implements StateMachineInterface
     {
         $transition = $this->getTransition($transitionName);
         $event      = new TransitionEvent($this->getCurrentState(), $transition, $this);
-        if (!$this->currentState->can($transition)) {
+        if (!$this->can($transition)) {
             throw new Exception\StateException(sprintf(
                 'The "%s" transition can not be applied to the "%s" state.',
                 $transition->getName(),
@@ -125,7 +125,7 @@ class StateMachine implements StateMachineInterface
             return call_user_func($transition->getGuard());
         }
 
-        if (!$this->currentState->can($transition)) {
+        if (!in_array($transition->getName(), $this->getCurrentState()->getTransitions())) {
             return false;
         }
 

@@ -111,6 +111,8 @@ class State implements StateInterface
 
     /**
      * @{inheritDoc}
+     *
+     * @deprecated Deprecated since version 1.0.0-BETA2. Use {@link StateMachine::can($transition)} instead.
      */
     public function can($transition)
     {

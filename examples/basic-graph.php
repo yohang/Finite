@@ -58,8 +58,8 @@ var_dump($stateMachine->getCurrentState()->has('printable'));
 
 // Available transitions
 var_dump($stateMachine->getCurrentState()->getTransitions());
-var_dump($stateMachine->getCurrentState()->can('propose'));
-var_dump($stateMachine->getCurrentState()->can('accept'));
+var_dump($stateMachine->can('propose'));
+var_dump($stateMachine->can('accept'));
 
 // Apply transitions
 try {

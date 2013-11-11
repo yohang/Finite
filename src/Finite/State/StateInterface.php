@@ -63,6 +63,8 @@ interface StateInterface
      * @param string|\Finite\Transition\TransitionInterface $transition
      *
      * @return boolean
+     *
+     * @deprecated Deprecated since version 1.0.0-BETA2. Use {@link StateMachine::can($transition)} instead.
      */
     public function can($transition);
 

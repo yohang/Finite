@@ -45,20 +45,30 @@ class ListenableStateMachineTest extends StateMachineTestCase
         $this->dispatcher
             ->expects($this->at(1))
             ->method('dispatch')
-            ->with('finite.pre_transition', $this->isInstanceOf('Finite\Event\TransitionEvent'));
+            ->with('finite.test_transition', $this->isInstanceOf('Finite\Event\TransitionEvent'));
 
         $this->dispatcher
             ->expects($this->at(2))
             ->method('dispatch')
-            ->with('finite.pre_transition.t23', $this->isInstanceOf('Finite\Event\TransitionEvent'));
+            ->with('finite.test_transition.t23', $this->isInstanceOf('Finite\Event\TransitionEvent'));
 
         $this->dispatcher
             ->expects($this->at(3))
             ->method('dispatch')
-            ->with('finite.post_transition', $this->isInstanceOf('Finite\Event\TransitionEvent'));
+            ->with('finite.pre_transition', $this->isInstanceOf('Finite\Event\TransitionEvent'));
 
         $this->dispatcher
             ->expects($this->at(4))
+            ->method('dispatch')
+            ->with('finite.pre_transition.t23', $this->isInstanceOf('Finite\Event\TransitionEvent'));
+
+        $this->dispatcher
+            ->expects($this->at(5))
+            ->method('dispatch')
+            ->with('finite.post_transition', $this->isInstanceOf('Finite\Event\TransitionEvent'));
+
+        $this->dispatcher
+            ->expects($this->at(6))
             ->method('dispatch')
             ->with('finite.post_transition.t23', $this->isInstanceOf('Finite\Event\TransitionEvent'));
 
