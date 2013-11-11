@@ -14,22 +14,40 @@ use Alom\Graphviz\Digraph;
  * @link http://www.graphviz.org/Gallery/directed/fsm.gv.txt
  * @author Daniel Pozzi <bonndan76@googlemail.com>
  */
-class Graphviz
+class Graphviz implements VisualisationInterface
 {
+
     /**
      * target format
      * 
      * @var string
      */
     private $type = 'dot';
-    
+
     /**
      * the graphviz graph representation
      * 
      * @var \Alom\Graphviz\Digraph
      */
     private $graph;
-    
+
+    /**
+     * visualisation options
+     * 
+     * @var \Finite\Visualisation\Configuration
+     */
+    private $configuration;
+
+    /**
+     * Constructor.
+     * 
+     * @param \Finite\Visualisation\Configuration $config
+     */
+    public function __construct(Configuration $config)
+    {
+        $this->configuration = $config;
+    }
+
     /**
      * Renders the state machine.
      * 
@@ -37,15 +55,15 @@ class Graphviz
      * @param string $target
      * @throws Exception
      */
-    public function render(StateMachineInterface $stateMachine, $target)
+    public function render(StateMachineInterface $stateMachine)
     {
-        $this->graph = new \Alom\Graphviz\Digraph('state_machine');
+        $this->graph = new Digraph('state_machine');
         $this->addNodes($stateMachine);
         $this->addEdges($stateMachine);
-        
-        $this->finalize($target);
+
+        $this->finalize($this->configuration->getTargetFile());
     }
-    
+
     /**
      * Guesses the target format based on the extension.
      * 
@@ -54,7 +72,7 @@ class Graphviz
     private function finalize($target)
     {
         $this->graph->end();
-        
+
         $this->type = pathinfo($target, PATHINFO_EXTENSION);
         if ($this->type != 'dot') {
             $this->renderDot($target);
@@ -62,7 +80,7 @@ class Graphviz
             $this->dumpGraphToFile($target);
         }
     }
-    
+
     /**
      * Executes dot
      * 
@@ -75,12 +93,12 @@ class Graphviz
         $output = 0;
         $tempFile = tempnam(sys_get_temp_dir(), 'dot');
         $this->dumpGraphToFile($tempFile);
-        exec('dot -T' . $this->type. ' -o' . $target . ' ' . $tempFile, $output, $returnVar);
+        exec('dot -T' . $this->type . ' -o' . $target . ' ' . $tempFile, $output, $returnVar);
         if ($returnVar > 0) {
             throw new Exception('Error executing dot.', Exception::CODE_DOT_ERROR);
         }
     }
-    
+
     /**
      * Write the raw dot content to the given file.
      * 
@@ -93,7 +111,7 @@ class Graphviz
             throw new Exception('Error dumping the dot content to ' . $file, 500);
         }
     }
-    
+
     /**
      * Adds the states as nodes.
      * 
@@ -106,11 +124,33 @@ class Graphviz
             $state = $stateMachine->getState($name);
             /* @var $state \Finite\State\StateInterface */
             $shape = $state->getType() != StateInterface::TYPE_NORMAL ? 'doublecircle' : 'circle';
-            $id       = $state->getName();
-            $this->graph->beginNode($id, array('shape' => $shape))->end();
+            $this->graph->beginNode(
+                $state->getName(), 
+                array('shape' => $shape, 'label' => $this->getNodeLabel($state))
+                )
+                ->end();
         }
     }
-    
+
+    /**
+     * Returns the node label.
+     * 
+     * @param \Finite\State\StateInterface $state
+     * @return string
+     */
+    private function getNodeLabel(\Finite\State\StateInterface $state)
+    {
+        $id = $state->getName();
+        $props = $state->getProperties();
+        if (count($props) > 0 && $this->configuration->renderProperties()) {
+            foreach ($props as $prop => $value) {
+                $id .= "\\n* " . $prop;
+            }
+        }
+        
+        return $id;
+    }
+
     /**
      * Adds all transitions as edges.
      * 
@@ -127,10 +167,10 @@ class Graphviz
                 $trans = $stateMachine->getTransition($name);
                 /* @var $trans Finite\Transition\TransitionInterface */
                 $this->graph->beginEdge(
-                    array($state->getName(), $trans->getState()), 
-                    array('label' => $trans->getName()))
+                        array($state->getName(), $trans->getState()), array('label' => $trans->getName()))
                     ->end();
             }
         }
     }
+
 }
