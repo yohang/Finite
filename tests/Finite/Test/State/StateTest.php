@@ -53,7 +53,7 @@ class StateTest extends \PHPUnit_Framework_TestCase
             array(array('t1', 't2'), 't2', 't3'),
         );
     }
-
+    
     /**
      * @param string $transitionName
      *

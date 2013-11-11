@@ -95,6 +95,12 @@ class StateMachine implements StateMachineInterface
      */
     public function can($transition)
     {
+        $transition = $transition instanceof TransitionInterface ? $transition : $this->getTransition($transition);
+
+        if (null !== $transition->getGuard()) {
+            return call_user_func($transition->getGuard());
+        }
+
         return $this->currentState->can($transition);
     }
 

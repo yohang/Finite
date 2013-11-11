@@ -74,6 +74,38 @@ class StateMachineTest extends StateMachineTestCase
         $this->assertFalse($this->object->can('t34'));
     }
 
+    public function testCanWithGuardReturningFalse()
+    {
+        $transition = $this->getMock('\Finite\Transition\TransitionInterface');
+        $transition->expects($this->any())
+            ->method('getGuard')
+            ->will($this->returnValue(function () {
+                return false;
+            }))
+        ;
+        
+        $transition->expects($this->atLeastOnce())->method('getName')         ->will($this->returnValue('t'));
+        $transition->expects($this->once())       ->method('getInitialStates')->will($this->returnValue(array('state1')));
+        $this->object->addTransition($transition);
+        $this->assertFalse($this->object->can($transition));
+    }
+
+    public function testCanWithGuardReturningTrue()
+    {
+        $transition = $this->getMock('\Finite\Transition\TransitionInterface');
+        $transition->expects($this->any())
+            ->method('getGuard')
+            ->will($this->returnValue(function () {
+                return true;
+            }))
+        ;
+        
+        $transition->expects($this->atLeastOnce())->method('getName')         ->will($this->returnValue('t'));
+        $transition->expects($this->once())       ->method('getInitialStates')->will($this->returnValue(array('state1')));
+        $this->object->addTransition($transition);
+        $this->assertTrue($this->object->can($transition));
+    }
+
     /**
      * @expectedException \Finite\Exception\StateException
      */

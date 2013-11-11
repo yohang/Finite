@@ -40,4 +40,11 @@ interface TransitionInterface
      * @return string
      */
     public function getName();
+
+    /**
+     * Returns the closure. If closure execution returns false, transition cannot be applied.
+     *
+     * @return callable
+     */
+    public function getGuard();
 }

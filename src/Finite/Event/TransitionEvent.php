@@ -22,7 +22,6 @@ class TransitionEvent extends StateMachineEvent
      */
     protected $transitionRejected = false;
 
-
     /**
      * @param TransitionInterface    $transition
      * @param ListenableStateMachine $stateMachine
