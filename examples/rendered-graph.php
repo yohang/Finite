@@ -53,5 +53,6 @@ $stateMachine = new Finite\StateMachine\StateMachine($document);
 $loader->load($stateMachine);
 $stateMachine->initialize();
 
-$renderer = new \Finite\Visualisation\Graphviz();
-$renderer->render($stateMachine, __DIR__ . '/rendered-graph.png');
+$config = new Finite\Visualisation\Configuration(__DIR__ . '/rendered-graph.png', true);
+$renderer = new \Finite\Visualisation\Graphviz($config);
+$renderer->render($stateMachine);
