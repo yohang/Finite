@@ -85,7 +85,7 @@ class FiniteFiniteExtensionTest extends \PHPUnit_Framework_TestCase
                             array('on' => '1_to_2', 'do' => array('@my.listener.service', 'on1To2'))
                         ),
                         'after' => array(
-                            array('from' => '-state3', 'to' => ['state2', 'state3'], 'do' => array('@my.listener.service', 'on1To2'))
+                            array('from' => '-state3', 'to' => array('state2', 'state3'), 'do' => array('@my.listener.service', 'on1To2'))
                         )
                     )
                 )
