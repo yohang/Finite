@@ -25,7 +25,8 @@
         "symfony/event-dispatcher":     "*",
         "symfony/framework-bundle":     "*",
         "symfony/security":             "*",
-        "twig/twig":                    "*"
+        "twig/twig":                    "*",
+        "alom/graphviz":                "v1.0.0"
     },
     "suggest": {
         "pimple/pimple":                "Needed for use with PimpleFactory",
