@@ -49,11 +49,11 @@ $loader = new ArrayLoader([
         ]
     ],
     'transitions' => [
-        'propose' => ['from' => ['draft'], 'to' => 'proposed'],
+        'propose' => ['from' => ['draft'],    'to' => 'proposed'],
         'accept'  => ['from' => ['proposed'], 'to' => 'accepted'],
         'reject'  => ['from' => ['proposed'], 'to' => 'draft'],
-        'publish'  => ['from' => ['accepted'], 'to' => 'published'],
-        'cheat'  => ['from' => ['draft'], 'to' => 'published'],
+        'publish' => ['from' => ['accepted'], 'to' => 'published'],
+        'cheat'   => ['from' => ['draft'],    'to' => 'published'],
     ],
 ]);
 
