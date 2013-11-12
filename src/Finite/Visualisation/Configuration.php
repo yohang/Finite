@@ -17,7 +17,7 @@ class Configuration
      * Constructor.
      *
      * @param string      $targetFile       full path to the rendered output
-     * @param bool        $renderProperties flag
+     * @param boolean     $renderProperties flag
      * @param string|null $markCurrentState fillcolor
      */
     public function __construct($targetFile, $renderProperties = false, $markCurrentState = null)
@@ -40,7 +40,7 @@ class Configuration
     /**
      * Returns whether state properties shall be rendered or not.
      *
-     * @return bool
+     * @return boolean
      */
     public function renderProperties()
     {
