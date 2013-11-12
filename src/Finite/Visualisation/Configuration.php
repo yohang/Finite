@@ -12,10 +12,10 @@ class Configuration
     private $targetFile;
     private $renderProperties;
     private $markCurrentState;
-    
+
     /**
      * Constructor.
-     * 
+     *
      * @param string      $targetFile       full path to the rendered output
      * @param bool        $renderProperties flag
      * @param string|null $markCurrentState fillcolor
@@ -26,10 +26,10 @@ class Configuration
         $this->renderProperties = (bool) $renderProperties;
         $this->markCurrentState = $markCurrentState;
     }
-    
+
     /**
      * Returns the target file path.
-     * 
+     *
      * @return string
      */
     public function getTargetFile()
@@ -39,7 +39,7 @@ class Configuration
 
     /**
      * Returns whether state properties shall be rendered or not.
-     * 
+     *
      * @return bool
      */
     public function renderProperties()
@@ -49,7 +49,7 @@ class Configuration
 
     /**
      * Returns in which color the current state shall be rendered (fillcolor) or null.
-     * 
+     *
      * @return string|null
      */
     public function markCurrentState()

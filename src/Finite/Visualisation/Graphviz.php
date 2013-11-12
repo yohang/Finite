@@ -19,28 +19,28 @@ class Graphviz implements VisualisationInterface
 
     /**
      * target format
-     * 
+     *
      * @var string
      */
     private $type = 'dot';
 
     /**
      * the graphviz graph representation
-     * 
+     *
      * @var \Alom\Graphviz\Digraph
      */
     private $graph;
 
     /**
      * visualisation options
-     * 
+     *
      * @var \Finite\Visualisation\Configuration
      */
     private $configuration;
 
     /**
      * Constructor.
-     * 
+     *
      * @param \Finite\Visualisation\Configuration $config
      */
     public function __construct(Configuration $config)
@@ -50,9 +50,9 @@ class Graphviz implements VisualisationInterface
 
     /**
      * Renders the state machine.
-     * 
-     * @param \Finite\StateMachine\StateMachineInterface $stateMachine
-     * @param string $target
+     *
+     * @param  \Finite\StateMachine\StateMachineInterface $stateMachine
+     * @param  string                                     $target
      * @throws Exception
      */
     public function render(StateMachineInterface $stateMachine)
@@ -66,7 +66,7 @@ class Graphviz implements VisualisationInterface
 
     /**
      * Guesses the target format based on the extension.
-     * 
+     *
      * @param string $target
      */
     private function finalize($target)
@@ -83,8 +83,8 @@ class Graphviz implements VisualisationInterface
 
     /**
      * Executes dot
-     * 
-     * @param string $target
+     *
+     * @param  string    $target
      * @throws Exception
      */
     private function renderDot($target)
@@ -101,8 +101,8 @@ class Graphviz implements VisualisationInterface
 
     /**
      * Write the raw dot content to the given file.
-     * 
-     * @param string $file
+     *
+     * @param  string    $file
      * @throws Exception
      */
     private function dumpGraphToFile($file)
@@ -114,7 +114,7 @@ class Graphviz implements VisualisationInterface
 
     /**
      * Adds the states as nodes.
-     * 
+     *
      * @param \Finite\StateMachine\StateMachineInterface $stateMachine
      */
     private function addNodes(StateMachineInterface $stateMachine)
@@ -124,12 +124,12 @@ class Graphviz implements VisualisationInterface
             $this->graph->beginNode($name, $this->getNodeAttributes($stateMachine, $name))->end();
         }
     }
-    
+
     /**
      * Returns the node attributes.
-     * 
-     * @param \Finite\StateMachine\StateMachineInterface $stateMachine
-     * @param string $name
+     *
+     * @param  \Finite\StateMachine\StateMachineInterface $stateMachine
+     * @param  string                                     $name
      * @return array
      */
     private function getNodeAttributes(StateMachineInterface $stateMachine, $name)
@@ -143,14 +143,14 @@ class Graphviz implements VisualisationInterface
             $data['fillcolor'] = $this->configuration->markCurrentState();
             $data['style'] = 'filled';
         }
-        
+
         return $data;
     }
 
     /**
      * Returns the node label.
-     * 
-     * @param \Finite\State\StateInterface $state
+     *
+     * @param  \Finite\State\StateInterface $state
      * @return string
      */
     private function getNodeLabel(\Finite\State\StateInterface $state)
@@ -162,13 +162,13 @@ class Graphviz implements VisualisationInterface
                 $id .= "\\n* " . $prop;
             }
         }
-        
+
         return $id;
     }
 
     /**
      * Adds all transitions as edges.
-     * 
+     *
      * @param \Finite\StateMachine\StateMachineInterface $stateMachine
      */
     private function addEdges(StateMachineInterface $stateMachine)
