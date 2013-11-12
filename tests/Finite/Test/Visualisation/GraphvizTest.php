@@ -8,52 +8,52 @@ use Finite\Visualisation\Exception;
 
 /**
  * Tests the graphviz visualisation
- * 
+ *
  * @author Daniel Pozzi <bonndan76@googlemail.com>
  */
 class GraphvizTest extends StateMachineTestCase
 {
     /**
      * system under test
-     * 
+     *
      * @var Finite\Visualisation\Graphviz
      */
     private $graphviz;
 
     private $target;
-    
+
     protected function setUp()
     {
         parent::setUp();
         $this->initialize();
-        
+
         $this->target = sys_get_temp_dir() . '/test.dot';
         @unlink($this->target);
         $this->graphviz = new Graphviz(new \Finite\Visualisation\Configuration($this->target));
     }
-    
+
     public function testDotContainsTheNodes()
     {
-        
+
         $this->graphviz->render($this->object);
         $this->assertFileExists($this->target);
-        
+
         $content = file_get_contents($this->target);
         $this->assertContains('digraph state_machine {', $content);
         $this->assertContains('"s1" [shape=doublecircle', $content, $content);
         $this->assertContains('"s5" [shape=circle', $content, $content);
     }
-    
+
     public function testDotContainsTheEdges()
     {
         $this->graphviz->render($this->object);
         $this->assertFileExists($this->target);
-        
+
         $content = file_get_contents($this->target);
         $this->assertContains('"s1" -> "s2" [label="t12"]', $content, $content);
         $this->assertContains('"s4" -> "s5"', $content, $content);
     }
-    
+
     public function testRendersProperties()
     {
         $state = new \Finite\State\State(
@@ -64,23 +64,23 @@ class GraphvizTest extends StateMachineTestCase
         );
         $this->object->addState($state);
         $this->object->addTransition('t4yas', 's4', 'YAS');
-        
+
         $config = new \Finite\Visualisation\Configuration($this->target, true);
         $this->graphviz = new Graphviz($config);
         $this->graphviz->render($this->object);
-        
+
         $content = file_get_contents($this->target);
         $this->assertContains('property1', $content, $content);
         $this->assertContains('property2', $content, $content);
     }
-    
+
     public function testMarksCurrentState()
     {
         $config = new \Finite\Visualisation\Configuration($this->target, false, 'red');
         $this->graphviz = new Graphviz($config);
         $this->graphviz->render($this->object);
-        
-        $content = file_get_contents($this->target); echo $content;
+
+        $content = file_get_contents($this->target);
         $this->assertContains('label="s2", fillcolor=red', $content, $content);
         $this->assertNotContains('label="s3", fillcolor="red"', $content, $content);
     }
@@ -94,7 +94,7 @@ class GraphvizTest extends StateMachineTestCase
         $this->graphviz->render($this->object);
         $this->assertFileExists($target);
     }
-    
+
     public function testFormatException()
     {
         $this->assertDotIsExecutable();
@@ -103,7 +103,7 @@ class GraphvizTest extends StateMachineTestCase
         $this->setExpectedException('\Finite\Visualisation\Exception', Exception::CODE_DOT_ERROR);
         $this->graphviz->render($this->object);
     }
-    
+
     private function assertDotIsExecutable()
     {
         $returnVal = shell_exec("which dot");
