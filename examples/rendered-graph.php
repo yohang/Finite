@@ -2,8 +2,17 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-// Implement your document class
-class Document implements Finite\StatefulInterface
+use Finite\Loader\ArrayLoader;
+use Finite\State\StateInterface;
+use Finite\StatefulInterface;
+use Finite\StateMachine\StateMachine;
+use Finite\Visualisation\Configuration;
+use Finite\Visualisation\Graphviz;
+
+/**
+ * Example implementation
+ */
+class Document implements StatefulInterface
 {
     private $state;
 
@@ -19,23 +28,23 @@ class Document implements Finite\StatefulInterface
 }
 
 // Configure your graph
-$loader = new Finite\Loader\ArrayLoader([
+$loader = new ArrayLoader([
     'class'  => 'Document',
     'states'  => [
         'draft' => [
-            'type'       => Finite\State\StateInterface::TYPE_INITIAL,
+            'type'       => StateInterface::TYPE_INITIAL,
             'properties' => ['deletable' => true, 'editable' => true],
         ],
         'proposed' => [
-            'type'       => Finite\State\StateInterface::TYPE_NORMAL,
+            'type'       => StateInterface::TYPE_NORMAL,
             'properties' => [],
         ],
         'accepted' => [
-            'type'       => Finite\State\StateInterface::TYPE_NORMAL,
+            'type'       => StateInterface::TYPE_NORMAL,
             'properties' => ['printable' => true],
         ],
         'published' => [
-            'type'       => Finite\State\StateInterface::TYPE_FINAL,
+            'type'       => StateInterface::TYPE_FINAL,
             'properties' => ['printable' => true],
         ]
     ],
@@ -49,10 +58,10 @@ $loader = new Finite\Loader\ArrayLoader([
 ]);
 
 $document = new Document;
-$stateMachine = new Finite\StateMachine\StateMachine($document);
+$stateMachine = new StateMachine($document);
 $loader->load($stateMachine);
 $stateMachine->initialize();
 
-$config = new Finite\Visualisation\Configuration(__DIR__ . '/rendered-graph.png', true, 'red');
-$renderer = new \Finite\Visualisation\Graphviz($config);
+$config = new Configuration(__DIR__ . '/rendered-graph.png', true, 'red');
+$renderer = new Graphviz($config);
 $renderer->render($stateMachine);
