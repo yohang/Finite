@@ -81,3 +81,31 @@ $sm->can('t34');
 
 ```
 
+
+### Rendering State Machines as Graphs
+
+You can render a state machine using Graphviz (see examples/rendered-graph.png).
+
+To obtain the source code of a directed graph in dot initialize the graphviz
+renderer with a simple configuration:
+
+```php
+use Finite\StateMachine\StateMachine;
+use Finite\Visualisation\Configuration;
+use Finite\Visualisation\Graphviz;
+use Finite\State\StateInterface;
+
+$stateMachine = new StateMachine();
+$config       = new Configuration('/path/to/output.dot');
+$renderer     = new Graphviz($config);
+$renderer->render($stateMachine);
+
+```
+
+The configuration accepts three parameters, which control the generated output:
+
+* the output file. Its filename extension (suffix) controls which output will be generated. If
+the extension is "dot", the source code will be written to the specified file. Any
+other extension must be supported by graphviz, i.e. "png", "svg" are possible, too.
+* An optional flag controlling whether the state properties shall be rendered within the label.
+* The optional fill color of init and end states.
