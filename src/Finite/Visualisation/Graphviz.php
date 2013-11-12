@@ -9,13 +9,11 @@ use Alom\Graphviz\Digraph;
 /**
  * Visualisation of a State machine using Graphviz
  *
- *
  * @link http://www.graphviz.org/Gallery/directed/fsm.gv.txt
  * @author Daniel Pozzi <bonndan76@googlemail.com>
  */
 class Graphviz implements VisualisationInterface
 {
-
     /**
      * target format
      *
