@@ -4,7 +4,6 @@ namespace Finite\Visualisation;
 
 use Finite\StateMachine\StateMachineInterface;
 use Finite\State\StateInterface;
-use Finite\Transition\TransitionInterface;
 use Alom\Graphviz\Digraph;
 
 /**
