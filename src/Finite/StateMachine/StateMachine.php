@@ -272,6 +272,14 @@ class StateMachine implements StateMachineInterface
     }
 
     /**
+     * @param EventDispatcherInterface $dispatcher
+     */
+    public function setDispatcher(EventDispatcherInterface $dispatcher)
+    {
+        $this->dispatcher = $dispatcher;
+    }
+
+    /**
      * @return EventDispatcherInterface
      */
     public function getDispatcher()
