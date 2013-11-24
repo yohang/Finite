@@ -9,32 +9,19 @@ namespace Finite\Visualisation;
  */
 class Configuration
 {
-    private $targetFile;
     private $renderProperties;
     private $markCurrentState;
 
     /**
      * Constructor.
      *
-     * @param string      $targetFile       full path to the rendered output
      * @param boolean     $renderProperties flag
      * @param string|null $markCurrentState fillcolor
      */
-    public function __construct($targetFile, $renderProperties = false, $markCurrentState = null)
+    public function __construct($renderProperties = false, $markCurrentState = null)
     {
-        $this->targetFile = $targetFile;
         $this->renderProperties = (bool) $renderProperties;
         $this->markCurrentState = $markCurrentState;
-    }
-
-    /**
-     * Returns the target file path.
-     *
-     * @return string
-     */
-    public function getTargetFile()
-    {
-        return $this->targetFile;
     }
 
     /**
