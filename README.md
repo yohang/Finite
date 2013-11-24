@@ -86,8 +86,23 @@ $sm->can('t34');
 
 You can render a state machine using Graphviz (see examples/rendered-graph.png).
 
-To obtain the source code of a directed graph in dot initialize the graphviz
-renderer with a simple configuration:
+To obtain the source code of a directed graph in dot simply initialize the graphviz renderer:
+
+```php
+use Finite\StateMachine\StateMachine;
+use Finite\Visualisation\Graphviz;
+use Finite\State\StateInterface;
+
+$stateMachine = new StateMachine();
+$renderer     = new Graphviz();
+$dotSource    = $renderer->render($stateMachine);
+
+```
+
+To change how nodes are rendered, pass a configuration. The configuration accepts two parameters which control the generated output:
+
+* An optional flag controlling whether the state properties shall be rendered within the label.
+* The optional fill color (a dot color name or e.g. hex code) of init and end states.
 
 ```php
 use Finite\StateMachine\StateMachine;
@@ -96,16 +111,10 @@ use Finite\Visualisation\Graphviz;
 use Finite\State\StateInterface;
 
 $stateMachine = new StateMachine();
-$config       = new Configuration('/path/to/output.dot');
+$config       = new Configuration(true, 'red');
 $renderer     = new Graphviz($config);
-$renderer->render($stateMachine);
+$dotSource    = $renderer->render($stateMachine);
 
 ```
 
-The configuration accepts three parameters, which control the generated output:
 
-* the output file. Its filename extension (suffix) controls which output will be generated. If
-the extension is "dot", the source code will be written to the specified file. Any
-other extension must be supported by graphviz, i.e. "png", "svg" are possible, too.
-* An optional flag controlling whether the state properties shall be rendered within the label.
-* The optional fill color of init and end states.
