@@ -26,28 +26,28 @@ class StateMachine implements StateMachineInterface
      *
      * @var StatefulInterface
      */
-    public $object;
+    protected $object;
 
     /**
      * The available states
      *
      * @var array
      */
-    public $states = array();
+    protected $states = array();
 
     /**
      * The available transitions
      *
      * @var array
      */
-    public $transitions = array();
+    protected $transitions = array();
 
     /**
      * The current state
      *
      * @var StateInterface
      */
-    public $currentState;
+    protected $currentState;
 
     /**
      * @var EventDispatcherInterface
