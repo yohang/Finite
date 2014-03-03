@@ -3,6 +3,8 @@ Finite, A Simple PHP Finite State Machine
 
 Finite is a Simple State Machine, written in PHP. It can manage any Stateful object by defining states and transitions between these states.
 
+[![Latest Stable Version](https://poser.pugx.org/yohang/finite/v/stable.png)](https://packagist.org/packages/yohang/finite) [![Total Downloads](https://poser.pugx.org/yohang/finite/downloads.png)](https://packagist.org/packages/yohang/finite) [![License](https://poser.pugx.org/yohang/finite/license.png)](https://packagist.org/packages/yohang/finite)
+
 Features
 --------
 
@@ -20,7 +22,7 @@ Getting started
 ```js
 {
       "require": {
-        "yohang/finite": "1.0.*"
+        "yohang/finite": "~1.0"
     }
 }
 ```
