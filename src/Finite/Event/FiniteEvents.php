@@ -11,6 +11,11 @@ final class FiniteEvents
 {
     const
         /**
+         * This event is thrown when an object got its initial state
+         */
+        SET_INITIAL_STATE = 'finite.set_initial_state',
+
+        /**
          * This event is thrown each time a StateMachine is initialized
          */
         INITIALIZE = 'finite.initialize',

@@ -77,6 +77,8 @@ class StateMachine implements StateMachineInterface
         if (null === $initialState) {
             $initialState = $this->findInitialState();
             $this->object->setFiniteState($initialState);
+
+            $this->dispatcher->dispatch(FiniteEvents::SET_INITIAL_STATE, new StateMachineEvent($this));
         }
 
         $this->currentState = $this->getState($initialState);
