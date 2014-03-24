@@ -55,10 +55,8 @@ class StateMachineTest extends StateMachineTestCase
     public function testInitializeWithInitialState()
     {
         $object = $this->getMock('Finite\StatefulInterface');
-        $object
-            ->expects($this->once())
-            ->method('setFiniteState')
-            ->with($this->equalTo('s1'));
+
+        $this->accessor->expects()->method('setValue')->with($this->returnValue('s1'));
 
         $this->addStates();
         $this->addTransitions();

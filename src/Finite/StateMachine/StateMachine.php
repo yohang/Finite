@@ -6,6 +6,8 @@ use Finite\Event\FiniteEvents;
 use Finite\Event\StateMachineEvent;
 use Finite\Event\TransitionEvent;
 use Finite\Exception;
+use Finite\State\Accessor\PropertyPathStateAccessor;
+use Finite\State\Accessor\StateAccessorInterface;
 use Finite\StatefulInterface;
 use Finite\State\State;
 use Finite\State\StateInterface;
@@ -55,17 +57,24 @@ class StateMachine implements StateMachineInterface
     protected $dispatcher;
 
     /**
-     * @param StatefulInterface        $object
-     * @param EventDispatcherInterface $dispatcher
+     * @var StateAccessorInterface
      */
-    public function __construct(StatefulInterface $object = null, EventDispatcherInterface $dispatcher = null)
-    {
-        $this->object     = $object;
-        $this->dispatcher = $dispatcher;
+    protected $stateAccessor;
 
-        if (null === $this->dispatcher) {
-            $this->dispatcher = new EventDispatcher;
-        }
+    /**
+     * @param object                   $object
+     * @param EventDispatcherInterface $dispatcher
+     * @param StateAccessorInterface   $stateAccessor
+     */
+    public function __construct(
+        $object = null,
+        EventDispatcherInterface $dispatcher = null,
+        StateAccessorInterface $stateAccessor = null
+    )
+    {
+        $this->object        = $object;
+        $this->dispatcher    = $dispatcher ?: new EventDispatcher;
+        $this->stateAccessor = $stateAccessor ?: new PropertyPathStateAccessor;
     }
 
     /**
@@ -73,10 +82,10 @@ class StateMachine implements StateMachineInterface
      */
     public function initialize()
     {
-        $initialState = $this->object->getFiniteState();
+        $initialState = $this->stateAccessor->getState($this->object);
         if (null === $initialState) {
             $initialState = $this->findInitialState();
-            $this->object->setFiniteState($initialState);
+            $this->stateAccessor->setState($this->object, $initialState);
 
             $this->dispatcher->dispatch(FiniteEvents::SET_INITIAL_STATE, new StateMachineEvent($this));
         }
@@ -104,14 +113,14 @@ class StateMachine implements StateMachineInterface
         }
 
         $this->dispatcher->dispatch(FiniteEvents::PRE_TRANSITION, $event);
-        $this->dispatcher->dispatch(FiniteEvents::PRE_TRANSITION.'.'.$transitionName, $event);
+        $this->dispatcher->dispatch(FiniteEvents::PRE_TRANSITION . '.' . $transitionName, $event);
 
         $returnValue = $transition->process($this);
-        $this->object->setFiniteState($transition->getState());
+        $this->stateAccessor->setState($this->object, $transition->getState());
         $this->currentState = $this->getState($transition->getState());
 
         $this->dispatcher->dispatch(FiniteEvents::POST_TRANSITION, $event);
-        $this->dispatcher->dispatch(FiniteEvents::POST_TRANSITION.'.'.$transitionName, $event);
+        $this->dispatcher->dispatch(FiniteEvents::POST_TRANSITION . '.' . $transitionName, $event);
 
         return $returnValue;
     }
@@ -133,7 +142,7 @@ class StateMachine implements StateMachineInterface
 
         $event = new TransitionEvent($this->getCurrentState(), $transition, $this);
         $this->dispatcher->dispatch(FiniteEvents::TEST_TRANSITION, $event);
-        $this->dispatcher->dispatch(FiniteEvents::TEST_TRANSITION.'.'.$transition->getName(), $event);
+        $this->dispatcher->dispatch(FiniteEvents::TEST_TRANSITION . '.' . $transition->getName(), $event);
 
         return !$event->isRejected();
     }
@@ -157,7 +166,7 @@ class StateMachine implements StateMachineInterface
     {
         if ((null === $initialState || null === $finalState) && !$transition instanceof TransitionInterface) {
             throw new \InvalidArgumentException(
-                'You must provide a TransitionInterface instance or the $transition, '.
+                'You must provide a TransitionInterface instance or the $transition, ' .
                 '$initialState and $finalState parameters'
             );
         }
@@ -197,7 +206,7 @@ class StateMachine implements StateMachineInterface
     public function getTransition($name)
     {
         if (!isset($this->transitions[$name])) {
-            throw new Exception\TransitionException('Unable to find a transition called '.$name);
+            throw new Exception\TransitionException('Unable to find a transition called ' . $name);
         }
 
         return $this->transitions[$name];
@@ -209,7 +218,7 @@ class StateMachine implements StateMachineInterface
     public function getState($name)
     {
         if (!isset($this->states[$name])) {
-            throw new Exception\StateException('Unable to find a state called '.$name);
+            throw new Exception\StateException('Unable to find a state called ' . $name);
         }
 
         return $this->states[$name];
@@ -287,5 +296,13 @@ class StateMachine implements StateMachineInterface
     public function getDispatcher()
     {
         return $this->dispatcher;
+    }
+
+    /**
+     * @param StateAccessorInterface $stateAccessor
+     */
+    public function setStateAccessor(StateAccessorInterface $stateAccessor)
+    {
+        $this->stateAccessor = $stateAccessor;
     }
 }

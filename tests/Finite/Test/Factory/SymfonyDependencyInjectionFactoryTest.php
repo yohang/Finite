@@ -14,12 +14,16 @@ class SymfonyDependencyInjectionFactoryTest extends \PHPUnit_Framework_TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected $accessor;
+
+    public function setUp()
     {
+        $this->accessor = $this->getMock('Finite\State\Accessor\StateAccessorInterface');
         $container = new ContainerBuilder;
         $container
             ->register('state_machine', 'Finite\StateMachine\StateMachine')
             ->setScope('prototype')
+            ->setArguments(array(null, null, $this->accessor))
             ->addMethodCall('addTransition', array('t12', 's1', 's2'))
             ->addMethodCall('addTransition', array('t23', 's2', 's3'));
 
@@ -29,14 +33,14 @@ class SymfonyDependencyInjectionFactoryTest extends \PHPUnit_Framework_TestCase
     public function testGet()
     {
         $object = $this->getMock('Finite\StatefulInterface');
-        $object->expects($this->once())->method('getFiniteState')->will($this->returnValue('s2'));
+        $this->accessor->expects($this->at(0))->method('getState')->will($this->returnValue('s2'));
         $sm = $this->object->get($object);
 
         $this->assertInstanceOf('Finite\StateMachine\StateMachine', $sm);
         $this->assertSame('s2', $sm->getCurrentState()->getName());
 
         $object2 = $this->getMock('Finite\StatefulInterface');
-        $object2->expects($this->once())->method('getFiniteState')->will($this->returnValue('s2'));
+        $this->accessor->expects($this->at(0))->method('getState')->will($this->returnValue('s2'));
         $sm2 = $this->object->get($object2);
 
         $this->assertNotSame($sm, $sm2);
