@@ -17,11 +17,14 @@ class ContextTest extends \PHPUnit_Framework_TestCase
      */
     protected $object;
 
+    protected $accessor;
+
     public function setUp()
     {
+        $this->accessor = $accessor = $this->getMock('Finite\State\Accessor\StateAccessorInterface');
         $container = new \Pimple(array(
-            'state_machine' => function() {
-                $sm =  new StateMachine;
+            'state_machine' => function() use ($accessor) {
+                $sm =  new StateMachine(null, null, $accessor);
                 $sm->addState(new State('s1', State::TYPE_INITIAL, array(), array('foo' => true, 'bar' => false)));
                 $sm->addTransition('t12', 's1', 's2');
                 $sm->addTransition('t23', 's2', 's3');
@@ -35,7 +38,8 @@ class ContextTest extends \PHPUnit_Framework_TestCase
 
     public function testGetStateMachine()
     {
-        $sm = $this->object->getStateMachine($this->getObjectMock());
+        $this->accessor->expects($this->once())->method('getState')->will($this->returnValue('s1'));
+        $sm = $this->object->getStateMachine($this->getMock('Finite\StatefulInterface'));
 
         $this->assertInstanceOf('Finite\StateMachine\StateMachine', $sm);
         $this->assertSame('s1', $sm->getCurrentState()->getName());
@@ -43,30 +47,29 @@ class ContextTest extends \PHPUnit_Framework_TestCase
 
     public function testGetState()
     {
-        $this->assertSame('s1', $this->object->getState($this->getObjectMock()));
+        $this->accessor->expects($this->once())->method('getState')->will($this->returnValue('s1'));
+        $this->assertSame('s1', $this->object->getState($this->getMock('Finite\StatefulInterface')));
     }
 
     public function testGetTransitions()
     {
-        $this->assertEquals(array('t12'), $this->object->getTransitions($this->getObjectMock()));
+        $this->accessor->expects($this->once())->method('getState')->will($this->returnValue('s1'));
+        $this->assertEquals(array('t12'), $this->object->getTransitions($this->getMock('Finite\StatefulInterface')));
     }
 
     public function testGetProperties()
     {
-        $this->assertEquals(array('foo' => true, 'bar' => false), $this->object->getProperties($this->getObjectMock()));
+        $this->accessor->expects($this->once())->method('getState')->will($this->returnValue('s1'));
+        $this->assertEquals(
+            array('foo' => true, 'bar' => false),
+            $this->object->getProperties($this->getMock('Finite\StatefulInterface'))
+        );
     }
 
     public function testHasProperty()
     {
-        $this->assertTrue($this->object->hasProperty($this->getObjectMock(), 'foo'));
-        $this->assertFalse($this->object->hasProperty($this->getObjectMock(), 'baz'));
-    }
-
-    private function getObjectMock()
-    {
-        $object = $this->getMock('Finite\StatefulInterface');
-        $object->expects($this->once())->method('getFiniteState')->will($this->returnValue('s1'));
-
-        return $object;
+        $this->accessor->expects($this->exactly(2))->method('getState')->will($this->returnValue('s1'));
+        $this->assertTrue($this->object->hasProperty($this->getMock('Finite\StatefulInterface'), 'foo'));
+        $this->assertFalse($this->object->hasProperty($this->getMock('Finite\StatefulInterface'), 'baz'));
     }
 }

@@ -3,6 +3,7 @@
 namespace Finite\Loader;
 
 use Finite\Event\CallbackHandler;
+use Finite\State\Accessor\PropertyPathStateAccessor;
 use Finite\StatefulInterface;
 use Finite\StateMachine\StateMachineInterface;
 use Finite\State\State;
@@ -37,9 +38,10 @@ class ArrayLoader implements LoaderInterface
         $this->callbackHandler = $handler;
         $this->config = array_merge(
             array(
-                'class'       => '',
-                'states'      => array(),
-                'transitions' => array(),
+                'class'         => '',
+                'property_path' => 'finiteState',
+                'states'        => array(),
+                'transitions'   => array(),
             ),
             $config
         );
@@ -53,6 +55,9 @@ class ArrayLoader implements LoaderInterface
         if (null === $this->callbackHandler) {
             $this->callbackHandler = new CallbackHandler($stateMachine->getDispatcher());
         }
+
+        $stateMachine->setStateAccessor(new PropertyPathStateAccessor($this->config['property_path']));
+
         $this->loadStates($stateMachine);
         $this->loadTransitions($stateMachine);
         $this->loadCallbacks($stateMachine);

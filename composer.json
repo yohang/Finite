@@ -24,6 +24,7 @@
         "pimple/pimple":                ">=1.0,<2.0",
         "symfony/dependency-injection": ">=2.1,<3.0",
         "symfony/framework-bundle":     ">=2.1,<3.0",
+        "symfony/property-access":      ">=2.2,<3.0",
         "symfony/security":             ">=2.1,<3.0",
         "twig/twig":                    ">=1.13,<2.0"
     },
