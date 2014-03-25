@@ -13,13 +13,15 @@ class SecurityAwareStateMachineTest extends \PHPUnit_Framework_TestCase
      * @var SecurityAwareStateMachine
      */
     protected $object;
+    protected $accessor;
 
-    protected function setUp()
+    public function setUp()
     {
+        $this->accessor = $this->getMock('Finite\State\Accessor\StateAccessorInterface');
         $statefulMock = $this->getMock('Finite\StatefulInterface');
-        $statefulMock->expects($this->any())->method('getFiniteState')->will($this->returnValue('s1'));
+        $this->accessor->expects($this->at(0))->method('getState')->will($this->returnValue('s1'));
 
-        $this->object = new SecurityAwareStateMachine($statefulMock);
+        $this->object = new SecurityAwareStateMachine($statefulMock, null, $this->accessor);
         $this->object->addTransition('t12', 's1', 's2');
         $this->object->addTransition('t23', 's2', 's3');
         $this->object->initialize();

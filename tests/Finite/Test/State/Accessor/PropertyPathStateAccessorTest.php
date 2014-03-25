@@ -11,19 +11,14 @@ class PropertyPathStateAccessorTest extends \PHPUnit_Framework_TestCase
      */
     protected $propertyAccessor;
 
-    /**
-     * @var PropertyPathStateAccessor
-     */
-    protected $object;
-
     protected function setUp()
     {
         $this->propertyAccessor = $this->getMock('Symfony\Component\PropertyAccess\PropertyAccessorInterface');
-        $this->object           = new PropertyPathStateAccessor($this->propertyAccessor);
     }
 
     public function testGetState()
     {
+        $object   = new PropertyPathStateAccessor('bar', $this->propertyAccessor);
         $stateful = $this->getMock('Finite\StatefulInterface');
 
         $this->propertyAccessor
@@ -32,19 +27,21 @@ class PropertyPathStateAccessorTest extends \PHPUnit_Framework_TestCase
             ->with($stateful, 'bar')
             ->will($this->returnValue('foo'));
 
-        $this->assertSame('foo', $this->object->getState($stateful, 'bar'));
+        $this->assertSame('foo', $object->getState($stateful));
 
+        $object = new PropertyPathStateAccessor('finiteState', $this->propertyAccessor);
         $this->propertyAccessor
             ->expects($this->at(0))
             ->method('getValue')
             ->with($stateful, 'finiteState')
             ->will($this->returnValue('foo'));
 
-        $this->assertSame('foo', $this->object->getState($stateful));
+        $this->assertSame('foo', $object->getState($stateful));
     }
 
     public function testSetState()
     {
+        $object   = new PropertyPathStateAccessor('bar', $this->propertyAccessor);
         $stateful = $this->getMock('Finite\StatefulInterface');
 
         $this->propertyAccessor
@@ -53,14 +50,15 @@ class PropertyPathStateAccessorTest extends \PHPUnit_Framework_TestCase
             ->with($stateful, 'bar', 'foo')
             ->will($this->returnValue('foo'));
 
-        $this->object->setState($stateful, 'foo', 'bar');
+        $object->setState($stateful, 'foo');
 
+        $object = new PropertyPathStateAccessor('finiteState', $this->propertyAccessor);
         $this->propertyAccessor
             ->expects($this->at(0))
             ->method('setValue')
             ->with($stateful, 'finiteState')
             ->will($this->returnValue('foo'));
 
-        $this->object->setState($stateful, 'foo');
+        $object->setState($stateful, 'foo');
     }
 }
