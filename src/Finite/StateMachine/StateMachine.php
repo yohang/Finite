@@ -82,6 +82,10 @@ class StateMachine implements StateMachineInterface
      */
     public function initialize()
     {
+        if (null === $this->object) {
+            throw new Exception\ObjectException('No object bound to the State Machine');
+        }
+
         $initialState = $this->stateAccessor->getState($this->object);
         if (null === $initialState) {
             $initialState = $this->findInitialState();
