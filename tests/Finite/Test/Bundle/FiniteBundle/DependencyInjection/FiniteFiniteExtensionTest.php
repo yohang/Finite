@@ -31,8 +31,6 @@ class FiniteFiniteExtensionTest extends \PHPUnit_Framework_TestCase
 
     public function testServicesSetUp()
     {
-        $config = $this->getConfig();
-
         $this->assertTrue($this->container->has('finite.factory'));
         $this->assertTrue($this->container->has('finite.state_machine'));
         $this->assertSame('prototype', $this->container->getDefinition('finite.state_machine')->getScope());
@@ -42,8 +40,52 @@ class FiniteFiniteExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->container->hasDefinition('finite.twig_extension'));
 
         $this->assertEquals(
-            $config['finite_finite']['workflow1'],
+            $this->getExpectedConfig(),
             $this->container->getDefinition('finite.loader.workflow1')->getArgument(0)
+        );
+    }
+
+    private function getExpectedConfig()
+    {
+        return array(
+            'class'         => 'Stateful1',
+            'name'          => 'default',
+            'property_path' => 'finiteState',
+            'states'        => array(
+                'state1' => array(
+                    'type'       => 'initial',
+                    'properties' => array()
+                ),
+                'state2' => array(
+                    'type'       => 'normal',
+                    'properties' => array()
+                ),
+                'state3' => array(
+                    'type'       => 'final',
+                    'properties' => array(
+                        'foo' => true,
+                        'bar' => false,
+                    )
+                )
+            ),
+            'transitions'   => array(
+                '1_to_2' => array(
+                    'from' => array('state1'),
+                    'to'   => 'state2'
+                ),
+                '2_to_3' => array(
+                    'from' => array('state2'),
+                    'to'   => 'state3'
+                ),
+            ),
+            'callbacks'     => array(
+                'before' => array(
+                    array('on' => '1_to_2', 'do' => array('@my.listener.service', 'on1To2'))
+                ),
+                'after'  => array(
+                    array('from' => '-state3', 'to' => array('state2', 'state3'), 'do' => array('@my.listener.service', 'on1To2'))
+                )
+            )
         );
     }
 
@@ -52,16 +94,10 @@ class FiniteFiniteExtensionTest extends \PHPUnit_Framework_TestCase
         return array(
             'finite_finite' => array(
                 'workflow1' => array(
-                    'class'  => 'Stateful1',
-                    'states' => array(
-                        'state1' => array(
-                            'type'       => 'initial',
-                            'properties' => array()
-                        ),
-                        'state2' => array(
-                            'type'       => 'normal',
-                            'properties' => array()
-                        ),
+                    'class'       => 'Stateful1',
+                    'states'      => array(
+                        'state1' => array('type' => 'initial'),
+                        'state2' => array('type' => 'normal'),
                         'state3' => array(
                             'type'       => 'final',
                             'properties' => array(
@@ -80,11 +116,11 @@ class FiniteFiniteExtensionTest extends \PHPUnit_Framework_TestCase
                             'to'   => 'state3'
                         ),
                     ),
-                    'callbacks' => array(
+                    'callbacks'   => array(
                         'before' => array(
                             array('on' => '1_to_2', 'do' => array('@my.listener.service', 'on1To2'))
                         ),
-                        'after' => array(
+                        'after'  => array(
                             array('from' => '-state3', 'to' => array('state2', 'state3'), 'do' => array('@my.listener.service', 'on1To2'))
                         )
                     )
