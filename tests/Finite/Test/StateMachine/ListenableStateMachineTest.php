@@ -29,7 +29,7 @@ class ListenableStateMachineTest extends StateMachineTestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->object = new ListenableStateMachine(null, $this->dispatcher);
+        $this->object = new ListenableStateMachine(null, $this->dispatcher, $this->accessor);
     }
 
     public function testInitialize()

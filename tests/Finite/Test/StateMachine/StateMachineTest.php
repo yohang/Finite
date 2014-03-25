@@ -56,7 +56,7 @@ class StateMachineTest extends StateMachineTestCase
     {
         $object = $this->getMock('Finite\StatefulInterface');
 
-        $this->accessor->expects()->method('setValue')->with($this->returnValue('s1'));
+        $this->accessor->expects($this->at(1))->method('setState')->will($this->returnValue('s1'));
 
         $this->addStates();
         $this->addTransitions();
