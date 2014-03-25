@@ -88,7 +88,7 @@ interface StateMachineInterface
     /**
      * @param StatefulInterface $object
      */
-    public function setObject(StatefulInterface $object);
+    public function setObject($object);
 
     /**
      * @return StatefulInterface

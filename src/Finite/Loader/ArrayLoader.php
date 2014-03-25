@@ -39,6 +39,7 @@ class ArrayLoader implements LoaderInterface
         $this->config = array_merge(
             array(
                 'class'         => '',
+                'graph'         => 'default',
                 'property_path' => 'finiteState',
                 'states'        => array(),
                 'transitions'   => array(),
@@ -66,11 +67,11 @@ class ArrayLoader implements LoaderInterface
     /**
      * @{inheritDoc}
      */
-    public function supports(StatefulInterface $object)
+    public function supports($object, $graph = 'default')
     {
         $reflection = new \ReflectionClass($this->config['class']);
 
-        return $reflection->isInstance($object);
+        return $reflection->isInstance($object) && $graph === $this->config['graph'];
     }
 
     /**

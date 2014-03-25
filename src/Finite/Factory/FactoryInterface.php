@@ -14,9 +14,10 @@ interface FactoryInterface
     /**
      * Returns a StateMachine instance initialized on $object
      *
-     * @param StatefulInterface $object
+     * @param object $object
+     * @param string $graph
      *
      * @return \Finite\StateMachine\StateMachineInterface
      */
-    public function get(StatefulInterface $object);
+    public function get($object, $graph = 'default');
 }
