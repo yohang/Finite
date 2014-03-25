@@ -22,7 +22,11 @@ class Configuration implements ConfigurationInterface
         $rootNode    = $treeBuilder->root('finite_finite');
         $rootProto   = $rootNode->useAttributeAsKey('name')->prototype('array')->children();
 
-        $rootProto->scalarNode('class')->isRequired()->end();
+        $rootProto
+            ->scalarNode('class')->isRequired()->end()
+            ->scalarNode('name')->defaultValue('default')->end()
+            ->scalarNode('property_path')->defaultValue('finiteState')->end();
+
         $this->addStateSection($rootProto);
         $this->addTransitionSection($rootProto);
         $this->addCallbackSection($rootProto);
