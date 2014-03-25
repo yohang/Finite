@@ -1,7 +1,7 @@
 {
     "name":        "yohang/finite",
     "description": "A simple PHP5.3+ Finite State Machine",
-    "keywords":    ["statemachine"],
+    "keywords":    ["statemachine", "workflow", "state", "transition", "symfony", "bundle"],
     "homepage":    "https://github.com/yohang/Finite",
     "type":        "library",
     "license":     "MIT",

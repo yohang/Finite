@@ -2,7 +2,6 @@
 
 namespace Finite\Event;
 
-use Finite\StatefulInterface;
 use Finite\StateMachine\StateMachineInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\OptionsResolver\Options;
@@ -54,7 +53,7 @@ class CallbackHandler
             )
         );
         $toArrayNormalizer = function (Options $options, $value) {
-            return (array)$value;
+            return (array) $value;
         };
         $this->specResolver->setNormalizers(
             array(
