@@ -30,7 +30,6 @@
     "suggest": {
         "pimple/pimple":                "Needed for use with PimpleFactory",
         "symfony/dependency-injection": "Needed for use with Symfony DependencyInjection Factory",
-        "symfony/event-dispatcher":     "Needed for using ListenableStateMachine",
         "symfony/security":             "Needed for using SecurityAwareStateMachine",
         "symfony/yaml":                 "Yaml allows you to define your State graph in YAML"
     },
