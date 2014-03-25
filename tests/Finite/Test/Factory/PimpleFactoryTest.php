@@ -3,7 +3,7 @@
 namespace Finite\Test\Factory;
 
 use Finite\Factory\PimpleFactory;
-use  Finite\StateMachine\StateMachine;
+use Finite\StateMachine\StateMachine;
 
 class PimpleFactoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -44,5 +44,24 @@ class PimpleFactoryTest extends \PHPUnit_Framework_TestCase
         $sm2 = $this->object->get($object2);
 
         $this->assertNotSame($sm, $sm2);
+    }
+
+    public function testLoad()
+    {
+        $object = $this->getMock('Finite\StatefulInterface');
+        $this->accessor->expects($this->any())->method('getState')->will($this->returnValue('s1'));
+
+        $loader1 = $this->getMock('Finite\Loader\LoaderInterface');
+        $loader1->expects($this->at(0))->method('supports')->with($object, 'foo')->will($this->returnValue(false));
+        $loader1->expects($this->at(1))->method('supports')->with($object, 'bar')->will($this->returnValue(true));
+        $loader2 = $this->getMock('Finite\Loader\LoaderInterface');
+        $loader2->expects($this->at(0))->method('supports')->with($object, 'foo')->will($this->returnValue(true));
+        $loader2->expects($this->at(1))->method('load');
+
+        $this->object->addLoader($loader1);
+        $this->object->addLoader($loader2);
+
+        $this->object->get($object, 'foo');
+        $this->object->get($object, 'bar');
     }
 }
