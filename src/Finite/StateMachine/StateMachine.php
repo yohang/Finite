@@ -241,9 +241,9 @@ class StateMachine implements StateMachineInterface
     }
 
     /**
-     * @param StatefulInterface $object
+     * {@inheritDoc}
      */
-    public function setObject(StatefulInterface $object)
+    public function setObject($object)
     {
         $this->object = $object;
     }
