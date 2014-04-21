@@ -2,6 +2,7 @@
 
 namespace Finite\StateMachine;
 
+use Finite\State\Accessor\StateAccessorInterface;
 use Finite\StatefulInterface;
 use Finite\State\StateInterface;
 use Finite\Transition\TransitionInterface;
@@ -87,7 +88,7 @@ interface StateMachineInterface
     /**
      * @param StatefulInterface $object
      */
-    public function setObject(StatefulInterface $object);
+    public function setObject($object);
 
     /**
      * @return StatefulInterface
@@ -103,4 +104,9 @@ interface StateMachineInterface
      * @return \Symfony\Component\EventDispatcher\EventDispatcherInterface
      */
     public function getDispatcher();
+
+    /**
+     * @param StateAccessorInterface $stateAccessor
+     */
+    public function setStateAccessor(StateAccessorInterface $stateAccessor);
 }

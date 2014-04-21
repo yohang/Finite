@@ -145,5 +145,9 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($this->object->supports($object));
         $this->assertFalse($this->object->supports($object2));
+
+        $alternativeLoader = new ArrayLoader(array('class' => 'Stateful1', 'graph' => 'foobar'));
+        $this->assertTrue($alternativeLoader->supports($object, 'foobar'));
+        $this->assertFalse($alternativeLoader->supports($object));
     }
 }

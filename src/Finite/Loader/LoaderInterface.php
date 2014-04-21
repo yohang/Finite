@@ -20,11 +20,12 @@ interface LoaderInterface
     public function load(StateMachineInterface $stateMachine);
 
     /**
-     * Returns if this loader supports $object
+     * Returns if this loader supports $object for $graph
      *
-     * @param StatefulInterface $object
+     * @param object $object
+     * @param string $graph
      *
      * @return boolean
      */
-    public function supports(StatefulInterface $object);
+    public function supports($object, $graph = 'default');
 }

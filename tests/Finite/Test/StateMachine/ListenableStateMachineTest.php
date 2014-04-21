@@ -21,13 +21,15 @@ class ListenableStateMachineTest extends StateMachineTestCase
      */
     protected $dispatcher;
 
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         $this->dispatcher = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcher')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->object = new ListenableStateMachine(null, $this->dispatcher);
+        $this->object = new ListenableStateMachine(null, $this->dispatcher, $this->accessor);
     }
 
     public function testInitialize()

@@ -3,7 +3,6 @@
 namespace Finite\Factory;
 
 use Finite\Loader\LoaderInterface;
-use Finite\StatefulInterface;
 use Finite\StateMachine\StateMachineInterface;
 
 /**
@@ -14,24 +13,24 @@ use Finite\StateMachine\StateMachineInterface;
 abstract class AbstractFactory implements FactoryInterface
 {
     /**
-     * @var array<StateMachineInterface>
+     * @var StateMachineInterface[]
      */
     protected $stateMachines = array();
 
     /**
-     * @var array<LoaderInterface>
+     * @var LoaderInterface[]
      */
     protected $loaders = array();
 
     /**
      * @{inheritDoc}
      */
-    public function get(StatefulInterface $object)
+    public function get($object, $graph = 'default')
     {
-        $hash = spl_object_hash($object);
+        $hash = spl_object_hash($object) . '.' . $graph;
         if (!isset($this->stateMachines[$hash])) {
             $stateMachine = $this->createStateMachine();
-            if (null !== ($loader = $this->getLoader($object))) {
+            if (null !== ($loader = $this->getLoader($object, $graph))) {
                 $loader->load($stateMachine);
             }
             $stateMachine->setObject($object);
@@ -52,14 +51,15 @@ abstract class AbstractFactory implements FactoryInterface
     }
 
     /**
-     * @param StatefulInterface $object
+     * @param object $object
+     * @param string $graph
      *
      * @return LoaderInterface|null
      */
-    protected function getLoader(StatefulInterface $object)
+    protected function getLoader($object, $graph)
     {
         foreach ($this->loaders as $loader) {
-            if ($loader->supports($object)) {
+            if ($loader->supports($object, $graph)) {
                 return $loader;
             }
         }
