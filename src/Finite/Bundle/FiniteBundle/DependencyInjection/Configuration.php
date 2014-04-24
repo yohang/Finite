@@ -24,7 +24,7 @@ class Configuration implements ConfigurationInterface
 
         $rootProto
             ->scalarNode('class')->isRequired()->end()
-            ->scalarNode('name')->defaultValue('default')->end()
+            ->scalarNode('graph')->defaultValue('default')->end()
             ->scalarNode('property_path')->defaultValue('finiteState')->end();
 
         $this->addStateSection($rootProto);
