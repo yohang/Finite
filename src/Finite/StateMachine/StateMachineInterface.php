@@ -109,4 +109,14 @@ interface StateMachineInterface
      * @param StateAccessorInterface $stateAccessor
      */
     public function setStateAccessor(StateAccessorInterface $stateAccessor);
+
+    /**
+     * @param string $graph
+     */
+    public function setGraph($graph);
+
+    /**
+     * @return string
+     */
+    public function getGraph();
 }
