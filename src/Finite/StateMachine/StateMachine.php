@@ -62,6 +62,11 @@ class StateMachine implements StateMachineInterface
     protected $stateAccessor;
 
     /**
+     * @var string
+     */
+    protected $graph;
+
+    /**
      * @param object                   $object
      * @param EventDispatcherInterface $dispatcher
      * @param StateAccessorInterface   $stateAccessor
@@ -308,5 +313,21 @@ class StateMachine implements StateMachineInterface
     public function setStateAccessor(StateAccessorInterface $stateAccessor)
     {
         $this->stateAccessor = $stateAccessor;
+    }
+
+    /**
+     * @{inheritDoc}
+     */
+    public function setGraph($graph)
+    {
+        $this->graph = $graph;
+    }
+
+    /**
+     * @{inheritDoc}
+     */
+    public function getGraph()
+    {
+        return $this->graph;
     }
 }
