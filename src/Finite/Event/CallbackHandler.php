@@ -41,6 +41,7 @@ class CallbackHandler
                 'to'           => self::ALL,
                 'exclude_from' => array(),
                 'exclude_to'   => array(),
+                'args'         => array()
             )
         );
         $this->specResolver->setAllowedTypes(
@@ -50,6 +51,7 @@ class CallbackHandler
                 'to'           => array('string', 'array'),
                 'exclude_from' => array('string', 'array'),
                 'exclude_to'   => array('string', 'array'),
+                'args'         => array('array')
             )
         );
         $toArrayNormalizer = function (Options $options, $value) {
@@ -134,7 +136,13 @@ class CallbackHandler
                 return;
             }
 
-            call_user_func($callback, $sm->getObject(), $e);
+            call_user_func_array($callback, array_merge(
+                array(
+                    $e->getStateMachine()->getObject(),
+                    $e
+                ),
+                $specs['args']
+            ));
         };
 
         $events = array($event);
