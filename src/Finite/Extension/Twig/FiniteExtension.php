@@ -90,6 +90,7 @@ class FiniteExtension extends \Twig_Extension
     {
         return $this->context->getStateMachine($object)->can($transition);
     }
+
     /**
      * @{inheritDoc}
      */
