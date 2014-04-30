@@ -81,7 +81,7 @@ $loader       = new Finite\Loader\ArrayLoader(array(
             array(
                 'to' => array('accepted'),
                 'do' => array(new \Finite\Callback\CascadeTransitionCallback($factory), 'apply'),
-                'args' => array('archive')
+                'args' => array('object', 'event', '"archive"')
             )
         )
     )
