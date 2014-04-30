@@ -36,7 +36,7 @@ class CascadeTransitionCallback
      */
     public function applySelf($object, TransitionEvent $event, $transition = null, $graph = null)
     {
-        if (null == $transition) {
+        if (null === $transition) {
             $transition = $event->getTransition()->getName();
         }
 
@@ -63,7 +63,7 @@ class CascadeTransitionCallback
         $propertyAccessor = new PropertyAccessor();
         $subject = $propertyAccessor->getValue($object, $propertyPath);
 
-        if (null == $transition) {
+        if (null === $transition) {
             $transition = $event->getTransition()->getName();
         }
 
