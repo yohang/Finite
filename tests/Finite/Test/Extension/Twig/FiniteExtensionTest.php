@@ -34,7 +34,8 @@ class FiniteExtensionTest extends \PHPUnit_Framework_TestCase
                     'state'       => '{{ finite_state(object) }}',
                     'transitions' => '{% for transition in finite_transitions(object) %}{{ transition }}{% endfor %}',
                     'properties'  => '{% for property, val in finite_properties(object) %}{{ property }}{% endfor %}',
-                    'has'         => '{{ finite_has(object, property) ? "yes" : "no" }}'
+                    'has'         => '{{ finite_has(object, property) ? "yes" : "no" }}',
+                    'can'         => '{{ finite_can(object, transition, "foo") ? "yes" : "no" }}'
                 )
             )
         );
@@ -77,6 +78,12 @@ class FiniteExtensionTest extends \PHPUnit_Framework_TestCase
         $this->accessor->expects($this->exactly(2))->method('getState')->will($this->returnValue('s1'));
         $this->assertSame('yes', $this->env->render('has', array('object' => $this->getObjectMock(), 'property' => 'foo')));
         $this->assertSame('no', $this->env->render('has', array('object' => $this->getObjectMock(), 'property' => 'baz')));
+    }
+
+    public function testCan()
+    {
+        $this->assertSame('yes', $this->env->render('can', array('object' => $this->getObjectMock(), 'transition' => 't12')));
+        $this->assertSame('no', $this->env->render('can', array('object' => $this->getObjectMock(), 'transition' => 't23')));
     }
 
     public function getObjectMock()

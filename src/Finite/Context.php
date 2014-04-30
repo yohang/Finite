@@ -27,53 +27,58 @@ class Context
 
     /**
      * @param StatefulInterface $object
+     * @param string            $graph
      *
      * @return string
      */
-    public function getState(StatefulInterface $object)
+    public function getState(StatefulInterface $object, $graph = 'default')
     {
-        return $this->getStateMachine($object)->getCurrentState()->getName();
+        return $this->getStateMachine($object, $graph)->getCurrentState()->getName();
     }
 
     /**
      * @param StatefulInterface $object
+     * @param string            $graph
      *
      * @return array<string>
      */
-    public function getTransitions(StatefulInterface $object)
+    public function getTransitions(StatefulInterface $object, $graph = 'default')
     {
-        return $this->getStateMachine($object)->getCurrentState()->getTransitions();
+        return $this->getStateMachine($object, $graph)->getCurrentState()->getTransitions();
     }
 
     /**
      * @param StatefulInterface $object
+     * @param string            $graph
      *
      * @return array<string>
      */
-    public function getProperties(StatefulInterface $object)
+    public function getProperties(StatefulInterface $object, $graph = 'default')
     {
-        return $this->getStateMachine($object)->getCurrentState()->getProperties();
+        return $this->getStateMachine($object, $graph)->getCurrentState()->getProperties();
     }
 
     /**
      * @param StatefulInterface $object
      * @param string            $property
+     * @param string            $graph
      *
      * @return bool
      */
-    public function hasProperty(StatefulInterface $object, $property)
+    public function hasProperty(StatefulInterface $object, $property, $graph = 'default')
     {
-        return $this->getStateMachine($object)->getCurrentState()->has($property);
+        return $this->getStateMachine($object, $graph)->getCurrentState()->has($property);
     }
 
     /**
      * @param StatefulInterface $object
+     * @param string            $graph
      *
      * @return \Finite\StateMachine\StateMachine
      */
-    public function getStateMachine(StatefulInterface $object)
+    public function getStateMachine(StatefulInterface $object, $graph = 'default')
     {
-        return $this->getFactory()->get($object);
+        return $this->getFactory()->get($object, $graph);
     }
 
     /**
