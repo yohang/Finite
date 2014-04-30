@@ -34,35 +34,8 @@ class CascadeTransitionCallback
      * @param string|null     $transition Transition that is to be applied (if null, same as the trigger)
      * @param string|null     $graph      Graph on which the new transition will apply (if null, same as the trigger)
      */
-    public function applySelf($object, TransitionEvent $event, $transition = null, $graph = null)
+    public function apply($object, TransitionEvent $event, $transition = null, $graph = null)
     {
-        if (null === $transition) {
-            $transition = $event->getTransition()->getName();
-        }
-
-        if (null === $graph) {
-            $sm = $event->getStateMachine();
-        } else {
-            $sm = $this->factory->get($object, $graph);
-        }
-
-        $sm->apply($transition);
-    }
-
-    /**
-     * Apply a transition on a object in the given property path
-     *
-     * @param Object          $object       Current object
-     * @param TransitionEvent $event        Transition event
-     * @param string          $propertyPath The property path for the object to apply the transition on
-     * @param string|null     $transition   Transition that is to be applied (if null, same as the trigger)
-     * @param string|null     $graph        Graph on which the new transition will apply (if null, same as the trigger)
-     */
-    public function applyProperty($object, TransitionEvent $event, $propertyPath, $transition = null, $graph = null)
-    {
-        $propertyAccessor = new PropertyAccessor();
-        $subject = $propertyAccessor->getValue($object, $propertyPath);
-
         if (null === $transition) {
             $transition = $event->getTransition()->getName();
         }
@@ -71,6 +44,6 @@ class CascadeTransitionCallback
             $graph = $event->getStateMachine()->getGraph();
         }
 
-        $this->factory->get($subject, $graph)->apply($transition);
+        $this->factory->get($object, $graph)->apply($transition);
     }
 }

@@ -25,15 +25,14 @@ class Document implements Finite\StatefulInterface
 
 // (Optional) Create a factory
 $pimple = new Pimple(array(
-        'finite.state_machine' => function () {
-            return new \Finite\StateMachine\StateMachine;
-        }
+    'finite.state_machine' => function () {
+        return new \Finite\StateMachine\StateMachine;
+    }
 ));
 $factory = new \Finite\Factory\PimpleFactory($pimple, 'finite.state_machine');
 
 // Configure your graph
 $document     = new Document;
-$stateMachine = new Finite\StateMachine\StateMachine($document);
 $loader       = new Finite\Loader\ArrayLoader(array(
     'class'       => 'Document',
     'states'      => array(
@@ -81,18 +80,17 @@ $loader       = new Finite\Loader\ArrayLoader(array(
             ),
             array(
                 'to' => array('accepted'),
-                'do' => array(new \Finite\Callback\CascadeTransitionCallback($factory), 'applySelf'),
+                'do' => array(new \Finite\Callback\CascadeTransitionCallback($factory), 'apply'),
                 'args' => array('archive')
             )
         )
     )
 ));
 
-$loader->load($stateMachine);
-$stateMachine->initialize();
-
-// (Optional) Register the loader in the factory
+// Register the loader in the factory
 $factory->addLoader($loader);
+
+$stateMachine = $factory->get($document);
 
 $stateMachine->getDispatcher()->addListener('finite.pre_transition', function(\Finite\Event\TransitionEvent $e) {
     echo 'This is a pre transition', "\n";
