@@ -35,6 +35,7 @@ class FiniteExtension extends \Twig_Extension
             'finite_transitions' => new \Twig_Function_Method($this, 'getFiniteTransitions'),
             'finite_properties'  => new \Twig_Function_Method($this, 'getFiniteProperties'),
             'finite_has'         => new \Twig_Function_Method($this, 'hasFiniteProperty'),
+            'finite_can'         => new \Twig_Function_Method($this, 'canFiniteTransition'),
         );
     }
 
@@ -79,6 +80,16 @@ class FiniteExtension extends \Twig_Extension
         return $this->context->hasProperty($object, $property);
     }
 
+    /**
+     * @param StatefulInterface $object
+     * @param $transition
+     *
+     * @return bool|mixed
+     */
+    public function canFiniteTransition(StatefulInterface $object, $transition)
+    {
+        return $this->context->getStateMachine($object)->can($transition);
+    }
     /**
      * @{inheritDoc}
      */
