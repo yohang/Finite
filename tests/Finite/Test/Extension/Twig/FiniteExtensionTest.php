@@ -35,7 +35,7 @@ class FiniteExtensionTest extends \PHPUnit_Framework_TestCase
                     'transitions' => '{% for transition in finite_transitions(object) %}{{ transition }}{% endfor %}',
                     'properties'  => '{% for property, val in finite_properties(object) %}{{ property }}{% endfor %}',
                     'has'         => '{{ finite_has(object, property) ? "yes" : "no" }}',
-                    'can'         => '{{ finite_can(object, transition) ? "yes" : "no" }}'
+                    'can'         => '{{ finite_can(object, transition, "foo") ? "yes" : "no" }}'
                 )
             )
         );

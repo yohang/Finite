@@ -41,54 +41,59 @@ class FiniteExtension extends \Twig_Extension
 
     /**
      * @param StatefulInterface $object
+     * @param string            $graph
      *
      * @return string
      */
-    public function getFiniteState(StatefulInterface $object)
+    public function getFiniteState(StatefulInterface $object, $graph = 'default')
     {
-        return $this->context->getState($object);
+        return $this->context->getState($object, $graph);
     }
 
     /**
      * @param StatefulInterface $object
+     * @param string            $graph
      *
      * @return array
      */
-    public function getFiniteTransitions(StatefulInterface $object)
+    public function getFiniteTransitions(StatefulInterface $object, $graph = 'default')
     {
-        return $this->context->getTransitions($object);
+        return $this->context->getTransitions($object, $graph);
     }
 
     /**
      * @param StatefulInterface $object
+     * @param string            $graph
      *
      * @return array
      */
-    public function getFiniteProperties(StatefulInterface $object)
+    public function getFiniteProperties(StatefulInterface $object, $graph = 'default')
     {
-        return $this->context->getProperties($object);
+        return $this->context->getProperties($object, $graph);
     }
 
     /**
      * @param StatefulInterface $object
      * @param string            $property
+     * @param string            $graph
      *
      * @return bool
      */
-    public function hasFiniteProperty(StatefulInterface $object, $property)
+    public function hasFiniteProperty(StatefulInterface $object, $property, $graph = 'default')
     {
-        return $this->context->hasProperty($object, $property);
+        return $this->context->hasProperty($object, $property, $graph);
     }
 
     /**
      * @param StatefulInterface $object
-     * @param $transition
+     * @param string            $transition
+     * @param string            $graph
      *
      * @return bool|mixed
      */
-    public function canFiniteTransition(StatefulInterface $object, $transition)
+    public function canFiniteTransition(StatefulInterface $object, $transition, $graph = 'default')
     {
-        return $this->context->getStateMachine($object)->can($transition);
+        return $this->context->getStateMachine($object, $graph)->can($transition);
     }
 
     /**
