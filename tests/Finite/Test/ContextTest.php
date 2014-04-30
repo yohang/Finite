@@ -72,4 +72,16 @@ class ContextTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->object->hasProperty($this->getMock('Finite\StatefulInterface'), 'foo'));
         $this->assertFalse($this->object->hasProperty($this->getMock('Finite\StatefulInterface'), 'baz'));
     }
+
+    public function testItRetrievesGoodStateMachine()
+    {
+        $object  = $this->getMock('Finite\StatefulInterface');
+        $factory = $this->getMock('Finite\Factory\FactoryInterface');
+        $sm      = $this->getMock('Finite\StateMachine\StateMachineInterface');
+
+        $factory->expects($this->once())->method('get')->with($object, 'foo')->will($this->returnValue($sm));
+
+        $context = new Context($factory);
+        $this->assertSame($sm, $context->getStateMachine($object, 'foo'));
+    }
 }
