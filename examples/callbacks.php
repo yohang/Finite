@@ -23,9 +23,16 @@ class Document implements Finite\StatefulInterface
     }
 }
 
+// (Optional) Create a factory
+$pimple = new Pimple(array(
+    'finite.state_machine' => function () {
+        return new \Finite\StateMachine\StateMachine;
+    }
+));
+$factory = new \Finite\Factory\PimpleFactory($pimple, 'finite.state_machine');
+
 // Configure your graph
 $document     = new Document;
-$stateMachine = new Finite\StateMachine\StateMachine($document);
 $loader       = new Finite\Loader\ArrayLoader(array(
     'class'       => 'Document',
     'states'      => array(
@@ -38,14 +45,19 @@ $loader       = new Finite\Loader\ArrayLoader(array(
             'properties' => array(),
         ),
         'accepted' => array(
-            'type'       => Finite\State\StateInterface::TYPE_FINAL,
+            'type'       => Finite\State\StateInterface::TYPE_NORMAL,
             'properties' => array('printable' => true),
+        ),
+        'archived' => array(
+            'type'       => Finite\State\StateInterface::TYPE_FINAL,
+            'properties' => array(),
         )
     ),
     'transitions' => array(
         'propose' => array('from' => array('draft'), 'to' => 'proposed'),
         'accept'  => array('from' => array('proposed'), 'to' => 'accepted'),
         'reject'  => array('from' => array('proposed'), 'to' => 'draft'),
+        'archive' => array('from' => ['accepted'], 'to' => 'archived'),
     ),
     'callbacks' => array(
         'before' => array(
@@ -65,13 +77,20 @@ $loader       = new Finite\Loader\ArrayLoader(array(
         'after' => array(
             array(
                 'to' => array('accepted'), 'do' => array($document, 'display')
+            ),
+            array(
+                'to' => array('accepted'),
+                'do' => array(new \Finite\Callback\CascadeTransitionCallback($factory), 'apply'),
+                'args' => array('object', 'event', '"archive"')
             )
         )
     )
 ));
 
-$loader->load($stateMachine);
-$stateMachine->initialize();
+// Register the loader in the factory
+$factory->addLoader($loader);
+
+$stateMachine = $factory->get($document);
 
 $stateMachine->getDispatcher()->addListener('finite.pre_transition', function(\Finite\Event\TransitionEvent $e) {
     echo 'This is a pre transition', "\n";

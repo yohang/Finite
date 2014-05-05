@@ -10,6 +10,8 @@
         <parameter key="finite.factory.class">Finite\Factory\SymfonyDependencyInjectionFactory</parameter>
         <parameter key="finite.context.class">Finite\Context</parameter>
         <parameter key="finite.twig_extension.class">Finite\Extension\Twig\FiniteExtension</parameter>
+
+        <parameter key="finite.callback.cascade_transition.class">Finite\Callback\CascadeTransitionCallback</parameter>
     </parameters>
 
     <services>
@@ -29,6 +31,9 @@
         <service id="finite.twig_extension" class="%finite.twig_extension.class%" public="false">
             <argument type="service" id="finite.context" />
             <tag name="twig.extension" />
+        </service>
+        <service id="finite.callback.cascade_transition" class="%finite.callback.cascade_transition.class%">
+            <argument type="service" id="finite.factory" />
         </service>
     </services>
 

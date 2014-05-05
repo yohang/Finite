@@ -100,6 +100,7 @@ class Configuration implements ConfigurationInterface
                         ->variableNode('do')->end()
                         ->variableNode('from')->end()
                         ->variableNode('to')->end()
+                        ->variableNode('args')->end()
                     ->end()
                 ->end()
             ->end();

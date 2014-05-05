@@ -58,7 +58,7 @@ class ArrayLoader implements LoaderInterface
         }
 
         $stateMachine->setStateAccessor(new PropertyPathStateAccessor($this->config['property_path']));
-        $stateMachine->setGraph($this->config['property_path']);
+        $stateMachine->setGraph($this->config['graph']);
 
         $this->loadStates($stateMachine);
         $this->loadTransitions($stateMachine);

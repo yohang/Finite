@@ -4,6 +4,7 @@ namespace Finite\Event;
 
 use Finite\StateMachine\StateMachineInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -41,6 +42,7 @@ class CallbackHandler
                 'to'           => self::ALL,
                 'exclude_from' => array(),
                 'exclude_to'   => array(),
+                'args'         => array('object', 'event')
             )
         );
         $this->specResolver->setAllowedTypes(
@@ -50,6 +52,7 @@ class CallbackHandler
                 'to'           => array('string', 'array'),
                 'exclude_from' => array('string', 'array'),
                 'exclude_to'   => array('string', 'array'),
+                'args'         => array('array')
             )
         );
         $toArrayNormalizer = function (Options $options, $value) {
@@ -134,7 +137,16 @@ class CallbackHandler
                 return;
             }
 
-            call_user_func($callback, $sm->getObject(), $e);
+            $expr = new ExpressionLanguage();
+
+            call_user_func_array($callback, array_map(
+                function($arg) use($expr, $e) {
+                    return $expr->evaluate($arg, array(
+                        'object' => $e->getStateMachine()->getObject(),
+                        'event'  => $e
+                    ));
+                }, $specs['args']
+            ));
         };
 
         $events = array($event);
