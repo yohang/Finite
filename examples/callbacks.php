@@ -26,49 +26,49 @@ class Document implements Finite\StatefulInterface
 // Configure your graph
 $document     = new Document;
 $stateMachine = new Finite\StateMachine\StateMachine($document);
-$loader       = new Finite\Loader\ArrayLoader([
+$loader       = new Finite\Loader\ArrayLoader(array(
     'class'       => 'Document',
-    'states'      => [
-        'draft'    => [
+    'states'      => array(
+        'draft'    => array(
             'type'       => Finite\State\StateInterface::TYPE_INITIAL,
-            'properties' => ['deletable' => true, 'editable' => true],
-        ],
-        'proposed' => [
+            'properties' => array('deletable' => true, 'editable' => true),
+        ),
+        'proposed' => array(
             'type'       => Finite\State\StateInterface::TYPE_NORMAL,
-            'properties' => [],
-        ],
-        'accepted' => [
+            'properties' => array(),
+        ),
+        'accepted' => array(
             'type'       => Finite\State\StateInterface::TYPE_FINAL,
-            'properties' => ['printable' => true],
-        ]
-    ],
-    'transitions' => [
-        'propose' => ['from' => ['draft'], 'to' => 'proposed'],
-        'accept'  => ['from' => ['proposed'], 'to' => 'accepted'],
-        'reject'  => ['from' => ['proposed'], 'to' => 'draft'],
-    ],
-    'callbacks' => [
-        'before' => [
-            [
+            'properties' => array('printable' => true),
+        )
+    ),
+    'transitions' => array(
+        'propose' => array('from' => array('draft'), 'to' => 'proposed'),
+        'accept'  => array('from' => array('proposed'), 'to' => 'accepted'),
+        'reject'  => array('from' => array('proposed'), 'to' => 'draft'),
+    ),
+    'callbacks' => array(
+        'before' => array(
+            array(
                 'from' => '-proposed',
                 'do' => function(Finite\StatefulInterface $document, \Finite\Event\TransitionEvent $e) {
                     echo 'Applying transition '.$e->getTransition()->getName(), "\n";
                 }
-            ],
-            [
+            ),
+            array(
                 'from' => 'proposed',
                 'do' => function() {
                     echo 'Applying transition from proposed state', "\n";
                 }
-            ]
-        ],
-        'after' => [
-            [
-                'to' => ['accepted'], 'do' => [$document, 'display']
-            ]
-        ]
-    ]
-]);
+            )
+        ),
+        'after' => array(
+            array(
+                'to' => array('accepted'), 'do' => array($document, 'display')
+            )
+        )
+    )
+));
 
 $loader->load($stateMachine);
 $stateMachine->initialize();

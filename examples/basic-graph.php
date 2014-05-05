@@ -21,28 +21,28 @@ class Document implements Finite\StatefulInterface
 // Configure your graph
 $document     = new Document;
 $stateMachine = new Finite\StateMachine\StateMachine($document);
-$loader       = new Finite\Loader\ArrayLoader([
+$loader       = new Finite\Loader\ArrayLoader(array(
     'class'  => 'Document',
-    'states'  => [
-        'draft' => [
+    'states'  => array(
+        'draft' => array(
             'type'       => Finite\State\StateInterface::TYPE_INITIAL,
-            'properties' => ['deletable' => true, 'editable' => true],
-        ],
-        'proposed' => [
+            'properties' => array('deletable' => true, 'editable' => true),
+        ),
+        'proposed' => array(
             'type'       => Finite\State\StateInterface::TYPE_NORMAL,
-            'properties' => [],
-        ],
-        'accepted' => [
+            'properties' => array(),
+        ),
+        'accepted' => array(
             'type'       => Finite\State\StateInterface::TYPE_FINAL,
-            'properties' => ['printable' => true],
-        ]
-    ],
-    'transitions' => [
-        'propose' => ['from' => ['draft'], 'to' => 'proposed'],
-        'accept'  => ['from' => ['proposed'], 'to' => 'accepted'],
-        'reject'  => ['from' => ['proposed'], 'to' => 'draft'],
-    ],
-]);
+            'properties' => array('printable' => true),
+        )
+    ),
+    'transitions' => array(
+        'propose' => array('from' => array('draft'), 'to' => 'proposed'),
+        'accept'  => array('from' => array('proposed'), 'to' => 'accepted'),
+        'reject'  => array('from' => array('proposed'), 'to' => 'draft'),
+    ),
+));
 
 $loader->load($stateMachine);
 $stateMachine->initialize();
