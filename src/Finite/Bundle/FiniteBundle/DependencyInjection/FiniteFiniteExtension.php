@@ -29,8 +29,10 @@ class FiniteFiniteExtension extends Extension
 
         foreach ($config as $key => $stateMachineConfig) {
             $definition = clone $container->getDefinition('finite.array_loader');
-            $serviceId  = 'finite.loader.'.$key;
             $definition->addArgument($stateMachineConfig);
+            $definition->addTag('finite.loader');
+
+            $serviceId  = 'finite.loader.'.$key;
             $container->setDefinition($serviceId, $definition);
 
             $factoryDefinition->addMethodCall('addLoader', array(new Reference($serviceId)));
