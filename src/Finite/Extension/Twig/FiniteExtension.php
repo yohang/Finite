@@ -3,7 +3,6 @@
 namespace Finite\Extension\Twig;
 
 use Finite\Context;
-use Finite\StatefulInterface;
 
 /**
  * The Finite Twig extension
@@ -40,58 +39,58 @@ class FiniteExtension extends \Twig_Extension
     }
 
     /**
-     * @param StatefulInterface $object
-     * @param string            $graph
+     * @param object $object
+     * @param string $graph
      *
      * @return string
      */
-    public function getFiniteState(StatefulInterface $object, $graph = 'default')
+    public function getFiniteState($object, $graph = 'default')
     {
         return $this->context->getState($object, $graph);
     }
 
     /**
-     * @param StatefulInterface $object
-     * @param string            $graph
+     * @param object $object
+     * @param string $graph
      *
      * @return array
      */
-    public function getFiniteTransitions(StatefulInterface $object, $graph = 'default')
+    public function getFiniteTransitions($object, $graph = 'default')
     {
         return $this->context->getTransitions($object, $graph);
     }
 
     /**
-     * @param StatefulInterface $object
-     * @param string            $graph
+     * @param object $object
+     * @param string $graph
      *
      * @return array
      */
-    public function getFiniteProperties(StatefulInterface $object, $graph = 'default')
+    public function getFiniteProperties($object, $graph = 'default')
     {
         return $this->context->getProperties($object, $graph);
     }
 
     /**
-     * @param StatefulInterface $object
-     * @param string            $property
-     * @param string            $graph
+     * @param object $object
+     * @param string $property
+     * @param string $graph
      *
      * @return bool
      */
-    public function hasFiniteProperty(StatefulInterface $object, $property, $graph = 'default')
+    public function hasFiniteProperty($object, $property, $graph = 'default')
     {
         return $this->context->hasProperty($object, $property, $graph);
     }
 
     /**
-     * @param StatefulInterface $object
-     * @param string            $transition
-     * @param string            $graph
+     * @param object $object
+     * @param string $transition
+     * @param string $graph
      *
      * @return bool|mixed
      */
-    public function canFiniteTransition(StatefulInterface $object, $transition, $graph = 'default')
+    public function canFiniteTransition($object, $transition, $graph = 'default')
     {
         return $this->context->getStateMachine($object, $graph)->can($transition);
     }

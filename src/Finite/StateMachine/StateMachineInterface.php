@@ -3,7 +3,6 @@
 namespace Finite\StateMachine;
 
 use Finite\State\Accessor\StateAccessorInterface;
-use Finite\StatefulInterface;
 use Finite\State\StateInterface;
 use Finite\Transition\TransitionInterface;
 
@@ -86,12 +85,12 @@ interface StateMachineInterface
     public function getStates();
 
     /**
-     * @param StatefulInterface $object
+     * @param object $object
      */
     public function setObject($object);
 
     /**
-     * @return StatefulInterface
+     * @return object
      */
     public function getObject();
 
