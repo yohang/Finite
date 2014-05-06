@@ -4,7 +4,6 @@ namespace Finite\Loader;
 
 use Finite\Event\CallbackHandler;
 use Finite\State\Accessor\PropertyPathStateAccessor;
-use Finite\StatefulInterface;
 use Finite\StateMachine\StateMachineInterface;
 use Finite\State\State;
 use Finite\State\StateInterface;

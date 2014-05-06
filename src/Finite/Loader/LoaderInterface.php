@@ -2,7 +2,6 @@
 
 namespace Finite\Loader;
 
-use Finite\StatefulInterface;
 use Finite\StateMachine\StateMachineInterface;
 
 /**

@@ -2,8 +2,6 @@
 
 namespace Finite\Factory;
 
-use Finite\StatefulInterface;
-
 /**
  * The base interface for Finite's State Machine Factory
  *
