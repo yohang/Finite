@@ -94,12 +94,14 @@ class Configuration implements ConfigurationInterface
     {
         $callbacks
             ->arrayNode($type)
+                ->useAttributeAsKey('name')
                 ->prototype('array')
                     ->children()
                         ->scalarNode('on')->end()
                         ->variableNode('do')->end()
                         ->variableNode('from')->end()
                         ->variableNode('to')->end()
+                        ->scalarNode('disabled')->defaultValue(false)->end()
                     ->end()
                 ->end()
             ->end();

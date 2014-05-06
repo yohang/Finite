@@ -28,6 +28,8 @@ class FiniteFiniteExtension extends Extension
         $factoryDefinition = $container->getDefinition('finite.factory');
 
         foreach ($config as $key => $stateMachineConfig) {
+            $stateMachineConfig = $this->removeDisabledCallbacks($stateMachineConfig);
+
             $definition = clone $container->getDefinition('finite.array_loader');
             $definition->addArgument($stateMachineConfig);
             $definition->addTag('finite.loader');
@@ -39,5 +41,29 @@ class FiniteFiniteExtension extends Extension
         }
 
         $container->removeDefinition('finite.array_loader');
+    }
+
+    /**
+     * Remove callback entries where index 'disabled' is set to true
+     *
+     * @param array $config
+     *
+     * @return array
+     */
+    protected function removeDisabledCallbacks(array $config)
+    {
+        if (!isset($config['callbacks'])) {
+            return $config;
+        }
+
+        foreach (array('before', 'after') as $position) {
+            foreach ($config['callbacks'][$position] as $i => $callback) {
+                if ($callback['disabled']) {
+                    unset($config['callbacks'][$position][$i]);
+                }
+            }
+        }
+
+        return $config;
     }
 }
