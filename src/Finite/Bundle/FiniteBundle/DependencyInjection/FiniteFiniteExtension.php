@@ -31,6 +31,7 @@ class FiniteFiniteExtension extends Extension
             $definition = clone $container->getDefinition('finite.array_loader');
             $definition->addArgument($stateMachineConfig);
             $definition->addTag('finite.loader');
+            $definition->setLazy(true);
 
             $serviceId  = 'finite.loader.'.$key;
             $container->setDefinition($serviceId, $definition);
