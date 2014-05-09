@@ -29,7 +29,7 @@ class FiniteFiniteExtension extends Extension
 
         foreach ($config as $key => $stateMachineConfig) {
             $definition = clone $container->getDefinition('finite.array_loader');
-            $definition->addArgument($stateMachineConfig);
+            $definition->replaceArgument(0, $stateMachineConfig);
             $definition->addTag('finite.loader');
             $definition->setLazy(true);
 

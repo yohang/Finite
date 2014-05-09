@@ -10,10 +10,14 @@
         <parameter key="finite.factory.class">Finite\Factory\SymfonyDependencyInjectionFactory</parameter>
         <parameter key="finite.context.class">Finite\Context</parameter>
         <parameter key="finite.twig_extension.class">Finite\Extension\Twig\FiniteExtension</parameter>
+        <parameter key="finite.container_aware_callback_handler.class">Finite\Bundle\FiniteBundle\ContainerAwareCallbackHandler</parameter>
     </parameters>
 
     <services>
-        <service id="finite.array_loader" class="%finite.array_loader.class%" public="false" />
+        <service id="finite.array_loader" class="%finite.array_loader.class%" public="false">
+            <argument type="collection"></argument>
+            <argument type="service" id="finite.container_aware_callback_handler" />
+        </service>
         <service id="finite.state_machine" class="%finite.state_machine.class%" scope="prototype">
             <call method="setDispatcher">
                 <argument type="service" id="event_dispatcher" />
@@ -29,6 +33,12 @@
         <service id="finite.twig_extension" class="%finite.twig_extension.class%" public="false">
             <argument type="service" id="finite.context" />
             <tag name="twig.extension" />
+        </service>
+        <service id="finite.container_aware_callback_handler" class="%finite.container_aware_callback_handler.class%">
+            <argument type="service" id="event_dispatcher" />
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
         </service>
     </services>
 
