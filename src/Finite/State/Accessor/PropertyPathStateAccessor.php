@@ -2,6 +2,8 @@
 
 namespace Finite\State\Accessor;
 
+use Finite\Exception\NoSuchPropertyException;
+use Symfony\Component\PropertyAccess\Exception\NoSuchPropertyException as SymfonyNoSuchPropertyException;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
@@ -37,7 +39,15 @@ class PropertyPathStateAccessor implements StateAccessorInterface
      */
     public function getState($object)
     {
-        return $this->propertyAccessor->getValue($object, $this->propertyPath);
+        try {
+            return $this->propertyAccessor->getValue($object, $this->propertyPath);
+        } catch (SymfonyNoSuchPropertyException $e) {
+            throw new NoSuchPropertyException(sprintf(
+                'Property path "%s" on object "%s" does not exist.',
+                $this->propertyPath,
+                get_class($object)
+            ), $e->getCode(), $e);
+        }
     }
 
     /**
@@ -45,6 +55,14 @@ class PropertyPathStateAccessor implements StateAccessorInterface
      */
     public function setState(&$object, $value)
     {
-        $this->propertyAccessor->setValue($object, $this->propertyPath, $value);
+        try {
+            $this->propertyAccessor->setValue($object, $this->propertyPath, $value);
+        } catch (SymfonyNoSuchPropertyException $e) {
+            throw new NoSuchPropertyException(sprintf(
+                'Property path "%s" on object "%s" does not exist.',
+                $this->propertyPath,
+                get_class($object)
+            ), $e->getCode(), $e);
+        }
     }
 }
