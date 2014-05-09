@@ -115,9 +115,11 @@ class StateMachine implements StateMachineInterface
         $event      = new TransitionEvent($this->getCurrentState(), $transition, $this);
         if (!$this->can($transition)) {
             throw new Exception\StateException(sprintf(
-                'The "%s" transition can not be applied to the "%s" state.',
+                'The "%s" transition can not be applied to the "%s" state of object "%s" with graph "%s".',
                 $transition->getName(),
-                $this->currentState->getName()
+                $this->currentState->getName(),
+                get_class($this->getObject()),
+                $this->getGraph()
             ));
         }
 
@@ -215,7 +217,12 @@ class StateMachine implements StateMachineInterface
     public function getTransition($name)
     {
         if (!isset($this->transitions[$name])) {
-            throw new Exception\TransitionException('Unable to find a transition called ' . $name);
+            throw new Exception\TransitionException(sprintf(
+                'Unable to find a transition called "%s" on object "%s" with graph "%s".',
+                $name,
+                get_class($this->getObject()),
+                $this->getGraph()
+            ));
         }
 
         return $this->transitions[$name];
@@ -227,7 +234,12 @@ class StateMachine implements StateMachineInterface
     public function getState($name)
     {
         if (!isset($this->states[$name])) {
-            throw new Exception\StateException('Unable to find a state called ' . $name);
+            throw new Exception\StateException(sprintf(
+                'Unable to find a state called "%s" on object "%s" with graph "%s".',
+                $name,
+                get_class($this->getObject()),
+                $this->getGraph()
+            ));
         }
 
         return $this->states[$name];
@@ -288,7 +300,11 @@ class StateMachine implements StateMachineInterface
             }
         }
 
-        throw new Exception\StateException('No initial state found.');
+        throw new Exception\StateException(sprintf(
+            'No initial state found on object "%s" with graph "%s".',
+            get_class($this->getObject()),
+            $this->getGraph()
+        ));
     }
 
     /**
