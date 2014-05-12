@@ -2,6 +2,8 @@
 
 namespace Finite\State\Accessor;
 
+use Finite\Exception\NoSuchPropertyException;
+
 /**
  * Base interface for state accessors
  *
@@ -14,6 +16,8 @@ interface StateAccessorInterface
      *
      * @param object $object
      *
+     * @throws NoSuchPropertyException
+     *
      * @return string
      */
     public function getState($object);
@@ -23,6 +27,8 @@ interface StateAccessorInterface
      *
      * @param object $object
      * @param string $value
+     *
+     * @throws NoSuchPropertyException
      */
     public function setState(&$object, $value);
 }

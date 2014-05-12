@@ -91,7 +91,15 @@ class StateMachine implements StateMachineInterface
             throw new Exception\ObjectException('No object bound to the State Machine');
         }
 
-        $initialState = $this->stateAccessor->getState($this->object);
+        try {
+            $initialState = $this->stateAccessor->getState($this->object);
+        } catch (Exception\NoSuchPropertyException $e) {
+            throw new Exception\ObjectException(sprintf(
+               'StateMachine can\'t be initialized because the defined property_path of object "%s" does not exist.',
+                get_class($this->object)
+            ), $e->getCode(), $e);
+        }
+
         if (null === $initialState) {
             $initialState = $this->findInitialState();
             $this->stateAccessor->setState($this->object, $initialState);
