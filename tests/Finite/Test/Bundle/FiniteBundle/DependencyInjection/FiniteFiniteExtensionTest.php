@@ -80,10 +80,10 @@ class FiniteFiniteExtensionTest extends \PHPUnit_Framework_TestCase
             ),
             'callbacks'     => array(
                 'before' => array(
-                    array('on' => '1_to_2', 'do' => array('@my.listener.service', 'on1To2'))
+                    'callback1' => array('on' => '1_to_2', 'do' => array('@my.listener.service', 'on1To2'), 'disabled' => false)
                 ),
                 'after'  => array(
-                    array('from' => '-state3', 'to' => array('state2', 'state3'), 'do' => array('@my.listener.service', 'on1To2'))
+                    'callback2' => array('from' => '-state3', 'to' => array('state2', 'state3'), 'do' => array('@my.listener.service', 'on1To2'), 'disabled' => false)
                 )
             )
         );
@@ -118,10 +118,11 @@ class FiniteFiniteExtensionTest extends \PHPUnit_Framework_TestCase
                     ),
                     'callbacks'   => array(
                         'before' => array(
-                            array('on' => '1_to_2', 'do' => array('@my.listener.service', 'on1To2'))
+                            'callback1' => array('on' => '1_to_2', 'do' => array('@my.listener.service', 'on1To2'))
                         ),
                         'after'  => array(
-                            array('from' => '-state3', 'to' => array('state2', 'state3'), 'do' => array('@my.listener.service', 'on1To2'))
+                            'callback2' => array('from' => '-state3', 'to' => array('state2', 'state3'), 'do' => array('@my.listener.service', 'on1To2')),
+                            'callback3' => array('disabled' => true)
                         )
                     )
                 )
