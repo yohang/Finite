@@ -23,8 +23,6 @@
         "symfony/property-access":  "~2.3"
     },
     "require-dev": {
-        "pdepend/pdepend":              "~1.1",
-        "phpmd/phpmd":                  "~1.5",
         "phpunit/phpunit":              "~3.7",
         "pimple/pimple":                "~1.0",
         "symfony/dependency-injection": "~2.1",
