@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "f39a30accaca02e9e0edcec8f2c5e558",
+    "hash": "a8c65080441c5c9c90ab594d550a9a2b",
     "packages": [
         {
             "name": "symfony/event-dispatcher",
@@ -1651,7 +1651,7 @@
     "minimum-stability": "stable",
     "stability-flags": [],
     "platform": {
-        "php": ">=5.3.0"
+        "php": ">=5.3.3"
     },
     "platform-dev": []
 }
