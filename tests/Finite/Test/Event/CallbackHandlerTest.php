@@ -2,6 +2,8 @@
 
 namespace Finite\Test\Event;
 
+use Finite\Event\Callback\Callback;
+use Finite\Event\Callback\CallbackBuilder;
 use Finite\Event\CallbackHandler;
 use Finite\Event\FiniteEvents;
 use Finite\Event\TransitionEvent;
@@ -38,9 +40,11 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
         $this->dispatcher
             ->expects($this->once())
             ->method('addListener')
-            ->with(FiniteEvents::PRE_TRANSITION, $this->isInstanceOf('Closure'));
+            ->with(FiniteEvents::PRE_TRANSITION, $this->isInstanceOf('Finite\Event\Callback\Callback'));
 
-        $this->object->addBefore($this->statemachine, function() {});
+        $this->object->addBefore(
+            CallbackBuilder::create($this->statemachine)->setCallable(function() {})->getCallback()
+        );
     }
 
     public function testItAttachsGivenPreTransition()
@@ -48,9 +52,14 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
         $this->dispatcher
             ->expects($this->once())
             ->method('addListener')
-            ->with(FiniteEvents::PRE_TRANSITION.'.t12', $this->isInstanceOf('Closure'));
+            ->with(FiniteEvents::PRE_TRANSITION, $this->isInstanceOf('Finite\Event\Callback\Callback'));
 
-        $this->object->addBefore($this->statemachine, function() {}, array('on' => 't12'));
+        $this->object->addBefore(
+            CallbackBuilder::create($this->statemachine)
+                ->setCallable(function() {})
+                ->addOn('t12')
+                ->getCallback()
+        );
     }
 
     public function testItAttachsPreTransitionWithToSpec()
@@ -66,6 +75,7 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
         $e1->expects($this->any())->method('getStateMachine')->will($this->returnValue($this->statemachine));
         $e2->expects($this->any())->method('getStateMachine')->will($this->returnValue($this->statemachine));
         $e1->expects($this->any())->method('getInitialState')->will($this->returnValue($state));
+        $e2->expects($this->any())->method('getInitialState')->will($this->returnValue($state));
         $transitionOk->expects($this->any())->method('getState')->will($this->returnValue('foobar'));
         $transitionNotOk->expects($this->any())->method('getState')->will($this->returnValue('bazqux'));
         $e1->expects($this->any())->method('getTransition')->will($this->returnValue($transitionOk));
@@ -77,18 +87,21 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
             ->with(
                 FiniteEvents::PRE_TRANSITION,
                 $this->logicalAnd(
-                    $this->isInstanceOf('Closure'),
-                    $this->callback(function(\Closure $c) use ($e1, $e2) { $c($e1); $c($e2); return true; })
+                    $this->isInstanceOf('Finite\Event\Callback\Callback'),
+                    $this->callback(function(Callback $c) use ($e1, $e2) { $c($e1); $c($e2); return true; })
                 )
             );
 
-        $that    = $this;
+        $that = $this;
         $this->object->addBefore(
-            $this->statemachine,
-            function($object, TransitionEvent $event) use ($that, $stateful) {
-                $that->assertSame('foobar', $event->getTransition()->getState());
-            },
-            array('to' => 'foobar')
+            CallbackBuilder::create($this->statemachine)
+                ->addTo('foobar')
+                ->setCallable(
+                    function($object, TransitionEvent $event) use ($that, $stateful) {
+                        $that->assertSame('foobar', $event->getTransition()->getState());
+                    }
+                )
+                ->getCallback()
         );
     }
 
@@ -117,18 +130,21 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
             ->with(
                 FiniteEvents::PRE_TRANSITION,
                 $this->logicalAnd(
-                    $this->isInstanceOf('Closure'),
-                    $this->callback(function(\Closure $c) use ($e1, $e2) { $c($e1); $c($e2); return true; })
+                    $this->isInstanceOf('Finite\Event\Callback\Callback'),
+                    $this->callback(function(Callback $c) use ($e1, $e2) { $c($e1); $c($e2); return true; })
                 )
             );
 
         $that = $this;
         $this->object->addBefore(
-            $this->statemachine,
-            function($object, TransitionEvent $event) use ($that, $stateful) {
-                $that->assertSame('foobar', $event->getInitialState()->getName());
-            },
-            array('from' => 'foobar')
+            CallbackBuilder::create($this->statemachine)
+                ->addFrom('foobar')
+                ->setCallable(
+                    function($object, TransitionEvent $event) use ($that, $stateful) {
+                        $that->assertSame('foobar', $event->getInitialState()->getName());
+                    }
+                )
+                ->getCallback()
         );
     }
 
@@ -157,18 +173,21 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
             ->with(
                 FiniteEvents::PRE_TRANSITION,
                 $this->logicalAnd(
-                    $this->isInstanceOf('Closure'),
-                    $this->callback(function(\Closure $c) use ($e1, $e2) { $c($e1); $c($e2); return true; })
+                    $this->isInstanceOf('Finite\Event\Callback\Callback'),
+                    $this->callback(function(Callback $c) use ($e1, $e2) { $c($e1); $c($e2); return true; })
                 )
             );
 
-        $that = $this;
+        $that = $this;;
         $this->object->addBefore(
-            $this->statemachine,
-            function($object, TransitionEvent $event) use ($that, $stateful) {
-                $that->assertSame('foobar', $event->getInitialState()->getName());
-            },
-            array('from' => array('all', '-bazqux'))
+            CallbackBuilder::create($this->statemachine)
+                ->addFrom('-bazqux')
+                ->setCallable(
+                    function ($object, TransitionEvent $event) use ($that, $stateful) {
+                        $that->assertSame('foobar', $event->getInitialState()->getName());
+                    }
+                )
+                ->getCallback()
         );
     }
 
@@ -197,19 +216,22 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
             ->with(
                 FiniteEvents::PRE_TRANSITION,
                 $this->logicalAnd(
-                    $this->isInstanceOf('Closure'),
-                    $this->callback(function(\Closure $c) use ($e1, $e2) { $c($e1); $c($e2); return true; })
+                    $this->isInstanceOf('Finite\Event\Callback\Callback'),
+                    $this->callback(function(Callback $c) use ($e1, $e2) { $c($e1); $c($e2); return true; })
                 )
             );
 
-        $that    = $this;
+        $that = $this;
         $this->object->addBefore(
-            $this->statemachine,
-            function($object, TransitionEvent $event) use ($that, $stateful) {
-                $that->assertSame($object, $stateful);
-                $that->assertSame('foobar', $event->getTransition()->getState());
-            },
-            array('to' => '-bazqux')
+            CallbackBuilder::create($this->statemachine)
+                ->addTo('-bazqux')
+                ->setCallable(
+                    function($object, TransitionEvent $event) use ($that, $stateful) {
+                        $that->assertSame($object, $stateful);
+                        $that->assertSame('foobar', $event->getTransition()->getState());
+                    }
+                )
+                ->getCallback()
         );
     }
 }
