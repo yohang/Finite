@@ -136,17 +136,17 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
         $this->callbackHandler
             ->expects($this->at(0))
             ->method('addBefore')
-            ->with($sm, $beforeMiddleize, array('on' => 'middleize'));
+            ->with($this->isInstanceOf('Finite\Event\Callback\Callback'));
 
         $this->callbackHandler
             ->expects($this->at(1))
             ->method('addBefore')
-            ->with($sm, $fromStartToOtherThanMiddle, array('from' => 'start', 'to' => '-middle'));
+            ->with($this->isInstanceOf('Finite\Event\Callback\Callback'));
 
         $this->callbackHandler
             ->expects($this->at(2))
             ->method('addAfter')
-            ->with($sm, $allTimes, array());
+            ->with($this->isInstanceOf('Finite\Event\Callback\Callback'));
 
         $this->object->load($sm);
     }
