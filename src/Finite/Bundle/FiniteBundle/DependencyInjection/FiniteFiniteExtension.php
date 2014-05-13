@@ -33,7 +33,11 @@ class FiniteFiniteExtension extends Extension
             $definition = clone $container->getDefinition('finite.array_loader');
             $definition->addArgument($stateMachineConfig);
             $definition->addTag('finite.loader');
-            $definition->setLazy(true);
+
+            // setLazy method wasn't available before 2.3, FiniteBundle requirement is ~2.1
+            if (method_exists($definition, 'setLazy')) {
+                $definition->setLazy(true);
+            }
 
             $serviceId  = 'finite.loader.'.$key;
             $container->setDefinition($serviceId, $definition);
