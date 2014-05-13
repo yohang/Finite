@@ -2,6 +2,7 @@
 
 namespace Finite\Event;
 
+use Finite\Event\Callback\Callback;
 use Finite\Event\Callback\CallbackSpecification;
 use Finite\StateMachine\StateMachineInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -94,26 +95,17 @@ class CallbackHandler
     /**
      * @param StateMachineInterface $sm
      * @param string                $event
-     * @param callable              $callback
+     * @param callable              $callable
      * @param array                 $specs
      *
      * @return CallbackHandler
      */
-    protected function add(StateMachineInterface $sm, $event, $callback, array $specs)
+    protected function add(StateMachineInterface $sm, $event, $callable, array $specs)
     {
-        $specs        = $this->specResolver->resolve($specs);
-        $callbackSpec = new CallbackSpecification($specs['from'], $specs['to'], $specs['on'], $callback);
+        $specs    = $this->specResolver->resolve($specs);
+        $callback = new Callback(new CallbackSpecification($sm, $specs['from'], $specs['to'], $specs['on']), $callable);
 
-        $listener = function (TransitionEvent $e) use ($callbackSpec, $sm) {
-            if (!($sm === $e->getStateMachine() && $callbackSpec->isSatisfiedBy($e))) {
-
-                return;
-            }
-
-            call_user_func($callbackSpec->getCallback(), $sm->getObject(), $e);
-        };
-
-        $this->dispatcher->addListener($event, $listener);
+        $this->dispatcher->addListener($event, $callback);
 
         return $this;
     }

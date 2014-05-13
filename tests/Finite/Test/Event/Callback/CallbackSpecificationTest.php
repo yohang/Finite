@@ -21,13 +21,13 @@ class CallbackSpecificationTest extends \PHPUnit_Framework_TestCase
 
     public function testItIsSatisfiedByFrom()
     {
-        $spec = new CallbackSpecification(array('s1', 's2'), array(), array(), function() {});
+        $spec = new CallbackSpecification($this->stateMachine, array('s1', 's2'), array(), array());
 
         $this->assertTrue($spec->isSatisfiedBy($this->getTransitionEvent('s1', 't12', 's2')));
         $this->assertTrue($spec->isSatisfiedBy($this->getTransitionEvent('s2', 't23', 's3')));
         $this->assertFalse($spec->isSatisfiedBy($this->getTransitionEvent('s3', 't34', 's4')));
 
-        $spec = new CallbackSpecification(array('-s3'), array(), array(), function() {});
+        $spec = new CallbackSpecification($this->stateMachine, array('-s3'), array(), array());
 
         $this->assertTrue($spec->isSatisfiedBy($this->getTransitionEvent('s1', 't12', 's2')));
         $this->assertTrue($spec->isSatisfiedBy($this->getTransitionEvent('s2', 't23', 's3')));
@@ -36,13 +36,13 @@ class CallbackSpecificationTest extends \PHPUnit_Framework_TestCase
 
     public function testItIsSatisfiedByTo()
     {
-        $spec = new CallbackSpecification(array(), array('s2', 's3'), array(), function() {});
+        $spec = new CallbackSpecification($this->stateMachine, array(), array('s2', 's3'), array());
 
         $this->assertTrue($spec->isSatisfiedBy($this->getTransitionEvent('s1', 't12', 's2')));
         $this->assertTrue($spec->isSatisfiedBy($this->getTransitionEvent('s2', 't23', 's3')));
         $this->assertFalse($spec->isSatisfiedBy($this->getTransitionEvent('s3', 't34', 's4')));
 
-        $spec = new CallbackSpecification(array(), array('-s4'), array(), function() {});
+        $spec = new CallbackSpecification($this->stateMachine, array(), array('-s4'), array());
 
         $this->assertTrue($spec->isSatisfiedBy($this->getTransitionEvent('s1', 't12', 's2')));
         $this->assertTrue($spec->isSatisfiedBy($this->getTransitionEvent('s2', 't23', 's3')));
@@ -51,13 +51,13 @@ class CallbackSpecificationTest extends \PHPUnit_Framework_TestCase
 
     public function testItIsSatisfiedByOn()
     {
-        $spec = new CallbackSpecification(array(), array(), array('t12', 't23'), function() {});
+        $spec = new CallbackSpecification($this->stateMachine, array(), array(), array('t12', 't23'));
 
         $this->assertTrue($spec->isSatisfiedBy($this->getTransitionEvent('s1', 't12', 's2')));
         $this->assertTrue($spec->isSatisfiedBy($this->getTransitionEvent('s2', 't23', 's3')));
         $this->assertFalse($spec->isSatisfiedBy($this->getTransitionEvent('s3', 't34', 's4')));
 
-        $spec = new CallbackSpecification(array(), array(), array('-t34'), function() {});
+        $spec = new CallbackSpecification($this->stateMachine, array(), array(), array('-t34'));
 
         $this->assertTrue($spec->isSatisfiedBy($this->getTransitionEvent('s1', 't12', 's2')));
         $this->assertTrue($spec->isSatisfiedBy($this->getTransitionEvent('s2', 't23', 's3')));

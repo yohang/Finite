@@ -19,11 +19,4 @@ interface CallbackSpecificationInterface
      * @return boolean
      */
     public function isSatisfiedBy(TransitionEvent $event);
-
-    /**
-     * Return the callback carried by the specification
-     *
-     * @return callable
-     */
-    public function getCallback();
 }

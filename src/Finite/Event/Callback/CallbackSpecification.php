@@ -4,6 +4,7 @@ namespace Finite\Event\Callback;
 
 use Finite\Event\CallbackHandler;
 use Finite\Event\TransitionEvent;
+use Finite\StateMachine\StateMachineInterface;
 
 /**
  * Concrete implementation of CallbackSpecification
@@ -18,24 +19,22 @@ class CallbackSpecification implements CallbackSpecificationInterface
     private $specs = array();
 
     /**
-     * @var callable
+     * @var StateMachineInterface
      */
-    private $callback;
+    private $stateMachine;
 
     /**
-     * @param array    $from
-     * @param array    $to
-     * @param array    $on
-     * @param callable $callback
+     * @param StateMachineInterface $sm
+     * @param array                 $from
+     * @param array                 $to
+     * @param array                 $on
      */
-    public function __construct(array $from, array $to, array $on, $callback)
+    public function __construct(StateMachineInterface $sm, array $from, array $to, array $on)
     {
-        $isExclusion = function ($str) {
-            return 0 === strpos($str, '-');
-        };
-        $removeDash  = function ($str) {
-            return substr($str, 1);
-        };
+        $this->stateMachine = $sm;
+
+        $isExclusion = function ($str) { return 0 === strpos($str, '-'); };
+        $removeDash  = function ($str) { return substr($str, 1); };
 
         foreach (array('from', 'to', 'on') as $clause) {
             $excludedClause = 'excluded_' . $clause;
@@ -50,8 +49,6 @@ class CallbackSpecification implements CallbackSpecificationInterface
                 $this->specs[$clause] = array();
             }
         }
-
-        $this->callback = $callback;
     }
 
     /**
@@ -60,17 +57,10 @@ class CallbackSpecification implements CallbackSpecificationInterface
     public function isSatisfiedBy(TransitionEvent $event)
     {
         return
+            $event->getStateMachine() === $this->stateMachine &&
             $this->supportClause('from', $event->getInitialState()) &&
             $this->supportClause('to', $event->getTransition()->getState()) &&
             $this->supportClause('on', $event->getTransition()->getName());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getCallback()
-    {
-        return $this->callback;
     }
 
     /**
