@@ -11,8 +11,6 @@ use Finite\Event\TransitionEvent;
  */
 interface CallbackSpecificationInterface
 {
-    const ALL = 'all';
-
     /**
      * Return if this callback carried by this spec should be called on this event
      *
@@ -20,5 +18,12 @@ interface CallbackSpecificationInterface
      *
      * @return boolean
      */
-    public function supports(TransitionEvent $event);
+    public function isSatisfiedBy(TransitionEvent $event);
+
+    /**
+     * Return the callback carried by the specification
+     *
+     * @return callable
+     */
+    public function getCallback();
 }

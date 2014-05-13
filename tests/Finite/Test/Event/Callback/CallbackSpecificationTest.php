@@ -19,49 +19,49 @@ class CallbackSpecificationTest extends \PHPUnit_Framework_TestCase
         $this->stateMachine = $this->getMock('Finite\StateMachine\StateMachine');
     }
 
-    public function testItSupportsFrom()
+    public function testItIsSatisfiedByFrom()
     {
         $spec = new CallbackSpecification(array('s1', 's2'), array(), array(), function() {});
 
-        $this->assertTrue($spec->supports($this->getTransitionEvent('s1', 't12', 's2')));
-        $this->assertTrue($spec->supports($this->getTransitionEvent('s2', 't23', 's3')));
-        $this->assertFalse($spec->supports($this->getTransitionEvent('s3', 't34', 's4')));
+        $this->assertTrue($spec->isSatisfiedBy($this->getTransitionEvent('s1', 't12', 's2')));
+        $this->assertTrue($spec->isSatisfiedBy($this->getTransitionEvent('s2', 't23', 's3')));
+        $this->assertFalse($spec->isSatisfiedBy($this->getTransitionEvent('s3', 't34', 's4')));
 
         $spec = new CallbackSpecification(array('-s3'), array(), array(), function() {});
 
-        $this->assertTrue($spec->supports($this->getTransitionEvent('s1', 't12', 's2')));
-        $this->assertTrue($spec->supports($this->getTransitionEvent('s2', 't23', 's3')));
-        $this->assertFalse($spec->supports($this->getTransitionEvent('s3', 't34', 's4')));
+        $this->assertTrue($spec->isSatisfiedBy($this->getTransitionEvent('s1', 't12', 's2')));
+        $this->assertTrue($spec->isSatisfiedBy($this->getTransitionEvent('s2', 't23', 's3')));
+        $this->assertFalse($spec->isSatisfiedBy($this->getTransitionEvent('s3', 't34', 's4')));
     }
 
-    public function testItSupportsTo()
+    public function testItIsSatisfiedByTo()
     {
         $spec = new CallbackSpecification(array(), array('s2', 's3'), array(), function() {});
 
-        $this->assertTrue($spec->supports($this->getTransitionEvent('s1', 't12', 's2')));
-        $this->assertTrue($spec->supports($this->getTransitionEvent('s2', 't23', 's3')));
-        $this->assertFalse($spec->supports($this->getTransitionEvent('s3', 't34', 's4')));
+        $this->assertTrue($spec->isSatisfiedBy($this->getTransitionEvent('s1', 't12', 's2')));
+        $this->assertTrue($spec->isSatisfiedBy($this->getTransitionEvent('s2', 't23', 's3')));
+        $this->assertFalse($spec->isSatisfiedBy($this->getTransitionEvent('s3', 't34', 's4')));
 
         $spec = new CallbackSpecification(array(), array('-s4'), array(), function() {});
 
-        $this->assertTrue($spec->supports($this->getTransitionEvent('s1', 't12', 's2')));
-        $this->assertTrue($spec->supports($this->getTransitionEvent('s2', 't23', 's3')));
-        $this->assertFalse($spec->supports($this->getTransitionEvent('s3', 't34', 's4')));
+        $this->assertTrue($spec->isSatisfiedBy($this->getTransitionEvent('s1', 't12', 's2')));
+        $this->assertTrue($spec->isSatisfiedBy($this->getTransitionEvent('s2', 't23', 's3')));
+        $this->assertFalse($spec->isSatisfiedBy($this->getTransitionEvent('s3', 't34', 's4')));
     }
 
-    public function testItSupportsOn()
+    public function testItIsSatisfiedByOn()
     {
         $spec = new CallbackSpecification(array(), array(), array('t12', 't23'), function() {});
 
-        $this->assertTrue($spec->supports($this->getTransitionEvent('s1', 't12', 's2')));
-        $this->assertTrue($spec->supports($this->getTransitionEvent('s2', 't23', 's3')));
-        $this->assertFalse($spec->supports($this->getTransitionEvent('s3', 't34', 's4')));
+        $this->assertTrue($spec->isSatisfiedBy($this->getTransitionEvent('s1', 't12', 's2')));
+        $this->assertTrue($spec->isSatisfiedBy($this->getTransitionEvent('s2', 't23', 's3')));
+        $this->assertFalse($spec->isSatisfiedBy($this->getTransitionEvent('s3', 't34', 's4')));
 
         $spec = new CallbackSpecification(array(), array(), array('-t34'), function() {});
 
-        $this->assertTrue($spec->supports($this->getTransitionEvent('s1', 't12', 's2')));
-        $this->assertTrue($spec->supports($this->getTransitionEvent('s2', 't23', 's3')));
-        $this->assertFalse($spec->supports($this->getTransitionEvent('s3', 't34', 's4')));
+        $this->assertTrue($spec->isSatisfiedBy($this->getTransitionEvent('s1', 't12', 's2')));
+        $this->assertTrue($spec->isSatisfiedBy($this->getTransitionEvent('s2', 't23', 's3')));
+        $this->assertFalse($spec->isSatisfiedBy($this->getTransitionEvent('s3', 't34', 's4')));
     }
 
     /**
