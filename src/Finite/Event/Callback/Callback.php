@@ -32,6 +32,14 @@ class Callback implements CallbackInterface
     }
 
     /**
+     * @return CallbackSpecificationInterface
+     */
+    public function getSpecification()
+    {
+        return $this->specification;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function call($object, TransitionEvent $event)
