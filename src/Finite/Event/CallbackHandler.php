@@ -2,6 +2,7 @@
 
 namespace Finite\Event;
 
+use Finite\Event\Callback\CallbackSpecification;
 use Finite\StateMachine\StateMachineInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\OptionsResolver\Options;
@@ -14,6 +15,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CallbackHandler
 {
+    /**
+     * @deprecated To be removed in 2.0
+     */
     const ALL = 'all';
 
     /**
@@ -93,78 +97,24 @@ class CallbackHandler
      * @param callable              $callback
      * @param array                 $specs
      *
-     * @return $this
+     * @return CallbackHandler
      */
     protected function add(StateMachineInterface $sm, $event, $callback, array $specs)
     {
-        $specs    = $this->processSpecs($specs);
-        $listener = function (TransitionEvent $e) use ($sm, $callback, $specs) {
-            if ($sm !== $e->getStateMachine()) {
+        $specs        = $this->specResolver->resolve($specs);
+        $callbackSpec = new CallbackSpecification($specs['from'], $specs['to'], $specs['on'], $callback);
+
+        $listener = function (TransitionEvent $e) use ($callbackSpec, $sm) {
+            if (!($sm === $e->getStateMachine() && $callbackSpec->isSatisfiedBy($e))) {
+
                 return;
             }
 
-            if (!(
-                in_array(CallbackHandler::ALL, $specs['to']) ||
-                in_array($e->getTransition()->getState(), $specs['to'])
-            )
-            ) {
-                return;
-            }
-
-            if (!(
-                in_array(CallbackHandler::ALL, $specs['from']) ||
-                in_array($e->getInitialState()->getName(), $specs['from'])
-            )
-            ) {
-                return;
-            }
-
-            if (in_array($e->getTransition()->getState(), $specs['exclude_to'])) {
-                return;
-            }
-
-            if (in_array($e->getInitialState()->getName(), $specs['exclude_from'])) {
-                return;
-            }
-
-            call_user_func($callback, $sm->getObject(), $e);
+            call_user_func($callbackSpec->getCallback(), $sm->getObject(), $e);
         };
 
-        $events = array($event);
-        if (count($specs['on']) > 0 && !in_array(self::ALL, $specs['on'])) {
-            $events = array_map(function ($v) use ($event) {
-                return $event . '.' . $v;
-            }, $specs['on']);
-        }
-
-        foreach ($events as $event) {
-            $this->dispatcher->addListener($event, $listener);
-        }
+        $this->dispatcher->addListener($event, $listener);
 
         return $this;
-    }
-
-    /**
-     * @param array $specs
-     *
-     * @return array
-     */
-    protected function processSpecs(array $specs)
-    {
-        $specs = $this->specResolver->resolve($specs);
-        foreach (array('from', 'to') as $target) {
-            foreach ($specs[$target] as $key => $state) {
-                if ($state[0] === '-') {
-                    $specs['exclude_' . $target][] = substr($state, 1);
-                    unset($specs[$target][$key]);
-                }
-            }
-
-            if (0 === count($specs[$target])) {
-                $specs[$target][] = self::ALL;
-            }
-        }
-
-        return $specs;
     }
 }

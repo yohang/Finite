@@ -2,6 +2,7 @@
 
 namespace Finite\Event\Callback;
 
+use Finite\Event\CallbackHandler;
 use Finite\Event\TransitionEvent;
 
 /**
@@ -42,6 +43,12 @@ class CallbackSpecification implements CallbackSpecificationInterface
             $this->specs[$excludedClause] = array_filter(${$clause}, $isExclusion);
             $this->specs[$clause]         = array_diff(${$clause}, $this->specs[$excludedClause]);
             $this->specs[$excludedClause] = array_map($removeDash, $this->specs[$excludedClause]);
+
+            // For compatibility with old CallbackHandler.
+            // To be removed in 2.0
+            if (in_array(CallbackHandler::ALL, $this->specs[$clause])) {
+                $this->specs[$clause] = array();
+            }
         }
 
         $this->callback = $callback;
@@ -50,12 +57,20 @@ class CallbackSpecification implements CallbackSpecificationInterface
     /**
      * {@inheritDoc}
      */
-    public function supports(TransitionEvent $event)
+    public function isSatisfiedBy(TransitionEvent $event)
     {
         return
             $this->supportClause('from', $event->getInitialState()) &&
             $this->supportClause('to', $event->getTransition()->getState()) &&
             $this->supportClause('on', $event->getTransition()->getName());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getCallback()
+    {
+        return $this->callback;
     }
 
     /**
