@@ -58,7 +58,7 @@ class CallbackSpecification implements CallbackSpecificationInterface
     {
         return
             $event->getStateMachine() === $this->stateMachine &&
-            $this->supportClause('from', $event->getInitialState()) &&
+            $this->supportClause('from', $event->getInitialState()->getName()) &&
             $this->supportClause('to', $event->getTransition()->getState()) &&
             $this->supportClause('on', $event->getTransition()->getName());
     }
