@@ -27,13 +27,13 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
 
         $this->object = new ArrayLoader(
             array(
-                'class'       => 'Stateful1',
-                'states'      => array(
+                'class'         => 'Stateful1',
+                'states'        => array(
                     'start'  => array('type' => 'initial', 'properties' => array('foo' => true, 'bar' => false)),
                     'middle' => array('type' => 'normal', 'properties' => array()),
                     'end'    => array('type' => 'final', 'properties' => array()),
                 ),
-                'transitions' => array(
+                'transitions'   => array(
                     'middleize' => array(
                         'from' => array('start'),
                         'to'   => 'middle'
@@ -51,9 +51,23 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
     public function testLoad()
     {
         $sm = $this->getMock('Finite\StateMachine\StateMachine');
+        $sm->expects($this->once())->method('setStateAccessor');
+        $sm->expects($this->once())->method('setGraph');
         $sm->expects($this->exactly(3))->method('addState');
         $sm->expects($this->exactly(2))->method('addTransition');
         $this->object->load($sm);
+    }
+
+    public function testLoadGraph()
+    {
+        $sm = $this->getMock('Finite\StateMachine\StateMachine');
+
+        $graphName = 'foobar';
+        $loader = new ArrayLoader(array('class' => 'Stateful1', 'graph' => $graphName), $this->callbackHandler);
+
+        $sm->expects($this->once())->method('setGraph')->with($graphName);
+
+        $loader->load($sm);
     }
 
     public function testLoadWithMissingOptions()
@@ -87,13 +101,12 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
         $this->object->load($sm);
     }
 
-
     public function testLoadCallbacks()
     {
-        $sm = $this->getMock('Finite\StateMachine\StateMachine');
-        $allTimes                   = function() {};
-        $beforeMiddleize            = function() {};
-        $fromStartToOtherThanMiddle = function() {};
+        $sm                         = $this->getMock('Finite\StateMachine\StateMachine');
+        $allTimes                   = function () {};
+        $beforeMiddleize            = function () {};
+        $fromStartToOtherThanMiddle = function () {};
 
         $this->object = new ArrayLoader(
             array(
@@ -104,15 +117,15 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
                     'end'    => array('type' => 'final'),
                 ),
                 'transitions' => array(
-                    'middleize' => array('from' => 'start', 'to'   => 'middle'),
+                    'middleize' => array('from' => 'start', 'to' => 'middle'),
                     'finish'    => array('from' => array('middle'), 'to' => 'end')
                 ),
-                'callbacks' => array(
+                'callbacks'   => array(
                     'before' => array(
-                        array('on'   => 'middleize', 'do' => $beforeMiddleize),
+                        array('on' => 'middleize', 'do' => $beforeMiddleize),
                         array('from' => 'start', 'to' => '-middle', 'do' => $fromStartToOtherThanMiddle)
                     ),
-                    'after' => array(
+                    'after'  => array(
                         array('do' => $allTimes)
                     )
                 )
