@@ -2,6 +2,8 @@
 
 namespace Finite\Factory;
 
+use Finite\StateMachine\StateMachineInterface;
+
 /**
  * The base interface for Finite's State Machine Factory
  *
@@ -15,7 +17,7 @@ interface FactoryInterface
      * @param object $object
      * @param string $graph
      *
-     * @return \Finite\StateMachine\StateMachineInterface
+     * @return StateMachineInterface
      */
     public function get($object, $graph = 'default');
 }

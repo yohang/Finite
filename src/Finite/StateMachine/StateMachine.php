@@ -8,7 +8,6 @@ use Finite\Event\TransitionEvent;
 use Finite\Exception;
 use Finite\State\Accessor\PropertyPathStateAccessor;
 use Finite\State\Accessor\StateAccessorInterface;
-use Finite\StatefulInterface;
 use Finite\State\State;
 use Finite\State\StateInterface;
 use Finite\Transition\Transition;
@@ -26,7 +25,7 @@ class StateMachine implements StateMachineInterface
     /**
      * The stateful object
      *
-     * @var StatefulInterface
+     * @var object
      */
     protected $object;
 
