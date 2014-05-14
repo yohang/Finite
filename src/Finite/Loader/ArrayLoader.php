@@ -170,7 +170,7 @@ class ArrayLoader implements LoaderInterface
             )
         );
         $toArrayNormalizer = function (Options $options, $value) {
-            return (array)$value;
+            return (array) $value;
         };
         $resolver->setNormalizers(
             array(

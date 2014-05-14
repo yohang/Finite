@@ -12,12 +12,6 @@ use Finite\Event\TransitionEvent;
 interface CallbackInterface
 {
     /**
-     * @param object          $object
-     * @param TransitionEvent $event
-     */
-    public function call($object, TransitionEvent $event);
-
-    /**
      * @param TransitionEvent $event
      */
     public function __invoke(TransitionEvent $event);
