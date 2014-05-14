@@ -31,7 +31,7 @@ class FiniteFiniteExtension extends Extension
             $stateMachineConfig = $this->removeDisabledCallbacks($stateMachineConfig);
 
             $definition = clone $container->getDefinition('finite.array_loader');
-            $definition->addArgument($stateMachineConfig);
+            $definition->replaceArgument(0, $stateMachineConfig);
             $definition->addTag('finite.loader');
 
             // setLazy method wasn't available before 2.3, FiniteBundle requirement is ~2.1

@@ -3,6 +3,8 @@
 namespace Finite\Loader;
 
 use Finite\Event\Callback\CallbackBuilder;
+use Finite\Event\Callback\CallbackBuilderFactory;
+use Finite\Event\Callback\CallbackBuilderFactoryInterface;
 use Finite\Event\CallbackHandler;
 use Finite\State\Accessor\PropertyPathStateAccessor;
 use Finite\StateMachine\StateMachineInterface;
@@ -30,12 +32,19 @@ class ArrayLoader implements LoaderInterface
     private $callbackHandler;
 
     /**
-     * @param array           $config
-     * @param CallbackHandler $handler
+     * @var CallbackBuilderFactoryInterface
      */
-    public function __construct(array $config, CallbackHandler $handler = null)
+    private $callbackBuilderFactory;
+
+    /**
+     * @param array                           $config
+     * @param CallbackHandler                 $handler
+     * @param CallbackBuilderFactoryInterface $callbackBuilderFactory
+     */
+    public function __construct(array $config, CallbackHandler $handler = null, CallbackBuilderFactoryInterface $callbackBuilderFactory = null)
     {
-        $this->callbackHandler = $handler;
+        $this->callbackHandler        = $handler;
+        $this->callbackBuilderFactory = $callbackBuilderFactory;
         $this->config = array_merge(
             array(
                 'class'         => '',
@@ -55,6 +64,10 @@ class ArrayLoader implements LoaderInterface
     {
         if (null === $this->callbackHandler) {
             $this->callbackHandler = new CallbackHandler($stateMachine->getDispatcher());
+        }
+
+        if (null === $this->callbackBuilderFactory) {
+            $this->callbackBuilderFactory = new CallbackBuilderFactory;
         }
 
         $stateMachine->setStateAccessor(new PropertyPathStateAccessor($this->config['property_path']));
@@ -137,7 +150,7 @@ class ArrayLoader implements LoaderInterface
         foreach ($this->config['callbacks'][$position] as $specs) {
             $specs = $resolver->resolve($specs);
 
-            $callback = CallbackBuilder::create($stateMachine)
+            $callback = $this->callbackBuilderFactory->createBuilder($stateMachine)
                 ->setFrom($specs['from'])
                 ->setTo($specs['to'])
                 ->setOn($specs['on'])
