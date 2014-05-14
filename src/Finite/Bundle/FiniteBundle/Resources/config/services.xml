@@ -10,10 +10,20 @@
         <parameter key="finite.factory.class">Finite\Factory\SymfonyDependencyInjectionFactory</parameter>
         <parameter key="finite.context.class">Finite\Context</parameter>
         <parameter key="finite.twig_extension.class">Finite\Extension\Twig\FiniteExtension</parameter>
+        <parameter key="finite.callback.handler.class">Finite\Event\CallbackHandler</parameter>
+        <parameter key="finite.callback.builder.factory.class">Finite\Event\Callback\CallbackBuilderFactory</parameter>
     </parameters>
 
     <services>
-        <service id="finite.array_loader" class="%finite.array_loader.class%" public="false" />
+        <service id="finite.callback.handler" class="%finite.callback.handler.class%">
+            <argument type="service" id="event_dispatcher" />
+        </service>
+        <service id="finite.callback.builder.factory" class="%finite.callback.builder.factory.class%" />
+        <service id="finite.array_loader" class="%finite.array_loader.class%" public="false">
+            <argument type="collection" />
+            <argument type="service" id="finite.callback.handler" />
+            <argument type="service" id="finite.callback.builder.factory" />
+        </service>
         <service id="finite.state_machine" class="%finite.state_machine.class%" scope="prototype">
             <call method="setDispatcher">
                 <argument type="service" id="event_dispatcher" />
