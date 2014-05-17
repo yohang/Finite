@@ -104,8 +104,10 @@ class CallbackHandler
      */
     protected function add(StateMachineInterface $sm, $event, $callback, array $specs)
     {
-        $specs    = $this->processSpecs($specs);
-        $listener = function (TransitionEvent $e) use ($sm, $callback, $specs) {
+        $specs = $this->processSpecs($specs);
+        $that  = $this;
+
+        $listener = function (TransitionEvent $e) use ($sm, $callback, $specs, $that) {
             if ($sm !== $e->getStateMachine()) {
                 return;
             }
@@ -134,7 +136,7 @@ class CallbackHandler
                 return;
             }
 
-            call_user_func($callback, $sm->getObject(), $e);
+            $that->call($callback, $sm->getObject(), $e);
         };
 
         $events = array($event);
@@ -173,5 +175,17 @@ class CallbackHandler
         }
 
         return $specs;
+    }
+
+    /**
+     * Call the callable
+     *
+     * @param Callable        $callback
+     * @param object          $object
+     * @param TransitionEvent $e
+     */
+    public function call($callback, $object, TransitionEvent $e)
+    {
+        call_user_func($callback, $object, $e);
     }
 }
