@@ -11,7 +11,7 @@ namespace Finite;
 interface StatefulInterface
 {
     /**
-     * Sets the object state
+     * Gets the object state
      *
      * @return string
      */
