@@ -28,7 +28,7 @@ Getting started
 ```js
 {
       "require": {
-        "yohang/finite": "~1.1"
+        "yohang/finite": "~1.0"
     }
 }
 ```
