@@ -29,8 +29,8 @@ class ArrayLoader implements LoaderInterface
     private $callbackHandler;
 
     /**
-     * @param CallbackHandler $handler
      * @param array           $config
+     * @param CallbackHandler $handler
      */
     public function __construct(array $config, CallbackHandler $handler = null)
     {
