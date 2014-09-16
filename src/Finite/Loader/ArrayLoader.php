@@ -140,6 +140,7 @@ class ArrayLoader implements LoaderInterface
         foreach ($this->config['callbacks'][$position] as $specs) {
             $callback = $specs['do'];
             unset($specs['do']);
+            unset($specs['disabled']);
 
             $this->callbackHandler->$method($stateMachine, $callback, $specs);
         }
