@@ -80,6 +80,7 @@ class StateMachineTest extends StateMachineTestCase
 
     public function testCanWithGuardReturningFalse()
     {
+        $this->initialize();
         $transition = $this->getMock('\Finite\Transition\TransitionInterface');
         $transition->expects($this->any())
             ->method('getGuard')
@@ -89,13 +90,19 @@ class StateMachineTest extends StateMachineTestCase
         ;
 
         $transition->expects($this->atLeastOnce())->method('getName')         ->will($this->returnValue('t'));
-        $transition->expects($this->once())       ->method('getInitialStates')->will($this->returnValue(array('state1')));
+        $transition->expects($this->once())       ->method('getInitialStates')->will($this->returnValue(array('s2')));
+
+        $this->addStates();
         $this->object->addTransition($transition);
+        $this->object->setObject($this->getStatefulObjectMock());
+        $this->object->initialize();
+
         $this->assertFalse($this->object->can($transition));
     }
 
     public function testCanWithGuardReturningTrue()
     {
+        $this->initialize();
         $transition = $this->getMock('\Finite\Transition\TransitionInterface');
         $transition->expects($this->any())
             ->method('getGuard')
@@ -105,9 +112,47 @@ class StateMachineTest extends StateMachineTestCase
         ;
 
         $transition->expects($this->atLeastOnce())->method('getName')         ->will($this->returnValue('t'));
-        $transition->expects($this->once())       ->method('getInitialStates')->will($this->returnValue(array('state1')));
+        $transition->expects($this->once())       ->method('getInitialStates')->will($this->returnValue(array('s2')));
+
+        $this->addStates();
         $this->object->addTransition($transition);
+        $this->object->setObject($this->getStatefulObjectMock());
+        $this->object->initialize();
+
         $this->assertTrue($this->object->can($transition));
+    }
+
+    public function testCanWithApprovableTransitionReturningFalse()
+    {
+        $this->initialize();
+        $transition = $this->getMock('\Finite\Transition\ApprovableTransitionInterface');
+
+        $transition->expects($this->once())->method('getState')->will($this->returnValue('s3'));
+        $transition->expects($this->once())->method('isApproved')->will($this->returnValue(false));
+        $transition->expects($this->atLeastOnce())->method('getName')->will($this->returnValue('t'));
+        $transition->expects($this->once())->method('getInitialStates')->will($this->returnValue(array('s2')));
+
+        $this->object->addTransition($transition);
+
+        $this->assertFalse($this->object->can($transition));
+    }
+
+    public function testCanWithApprovableTransitionReturningTrue()
+    {
+        $this->initialize();
+        $transition = $this->getMock('\Finite\Transition\ApprovableTransitionInterface');
+        $transition->expects($this->once())
+            ->method('isApproved')
+            ->will($this->returnValue(true));
+
+        $transition->expects($this->atLeastOnce())->method('getName')->will($this->returnValue('t'));
+        $transition->expects($this->once())->method('getInitialStates')->will($this->returnValue(array('s2')));
+
+        $this->object->addTransition($transition);
+        $this->object->setObject($this->getStatefulObjectMock());
+        $this->object->initialize();
+
+        $this->assertTrue($this->object->can('t'));
     }
 
     /**
