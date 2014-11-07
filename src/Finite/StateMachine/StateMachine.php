@@ -240,6 +240,8 @@ class StateMachine implements StateMachineInterface
      */
     public function getState($name)
     {
+        $name = (string) $name;
+
         if (!isset($this->states[$name])) {
             throw new Exception\StateException(sprintf(
                 'Unable to find a state called "%s" on object "%s" with graph "%s".',

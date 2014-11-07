@@ -164,4 +164,14 @@ class StateMachineTest extends StateMachineTestCase
 
         $this->assertSame(array('t12', 't23', 't34', 't45'), $this->object->getTransitions());
     }
+
+    public function testGetStateFromObject()
+    {
+        $this->initialize();
+
+        $state = $this->getMock('stdClass', ['__toString']);
+        $state->expects($this->once())->method('__toString')->will($this->returnValue('s1'));
+
+        $this->assertInstanceOf('Finite\State\State', $this->object->getState($state));
+    }
 }
