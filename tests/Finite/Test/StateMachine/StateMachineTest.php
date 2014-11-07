@@ -169,7 +169,7 @@ class StateMachineTest extends StateMachineTestCase
     {
         $this->initialize();
 
-        $state = $this->getMock('stdClass', ['__toString']);
+        $state = $this->getMock('stdClass', array('__toString'));
         $state->expects($this->once())->method('__toString')->will($this->returnValue('s1'));
 
         $this->assertInstanceOf('Finite\State\State', $this->object->getState($state));
