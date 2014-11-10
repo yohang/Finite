@@ -3,7 +3,7 @@
 As the second argument, StateManager#apply will accept an array of parameters to be passed to the dispatched event, and accessible by the listeners.
 
 ```php
-$stateManager->apply('some_event', ['something' => $value]);
+$stateManager->apply('some_event', array('something' => $value));
 ```
 
 In your listeners you just have to call ```$event->getParameters``` to access the passed data.
@@ -50,7 +50,7 @@ class TransitionListener
         $entity = $event->getStateMachine()->getObject();
 
         $resolver = new OptionsResolver();
-        $resolver->setRequired(['something']);
+        $resolver->setRequired(array('something'));
 
         $params = $resolver->resolve($event->getParameters());
 
