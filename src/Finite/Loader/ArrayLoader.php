@@ -98,16 +98,27 @@ class ArrayLoader implements LoaderInterface
      */
     private function loadTransitions(StateMachineInterface $stateMachine)
     {
-        $resolver = new OptionsResolver;
+        $resolver = new OptionsResolver();
         $resolver->setRequired(array('from', 'to'));
-        $resolver->setDefaults(array('guard' => null));
+        $resolver->setDefaults(array('guard' => null, 'event_options_resolver' => null));
 
         $resolver->setNormalizer('from', function (Options $options, $v) { return (array) $v; });
         $resolver->setNormalizer('guard', function (Options $options, $v) { return !isset($v) ? null : $v; });
+        $resolver->setNormalizer('event_options_resolver', function (Options $options, $v) {
+            return $v instanceof OptionsResolver ? $v : null;
+        });
 
         foreach ($this->config['transitions'] as $transition => $config) {
             $config = $resolver->resolve($config);
-            $stateMachine->addTransition(new Transition($transition, $config['from'], $config['to'], $config['guard']));
+            $stateMachine->addTransition(
+                new Transition(
+                    $transition,
+                    $config['from'],
+                    $config['to'],
+                    $config['guard'],
+                    $config['event_options_resolver']
+                )
+            );
         }
     }
 
