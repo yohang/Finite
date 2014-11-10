@@ -116,10 +116,10 @@ class StateMachine implements StateMachineInterface
      *
      * @throws Exception\StateException
      */
-    public function apply($transitionName)
+    public function apply($transitionName, array $parameters = array())
     {
         $transition = $this->getTransition($transitionName);
-        $event      = new TransitionEvent($this->getCurrentState(), $transition, $this);
+        $event      = new TransitionEvent($this->getCurrentState(), $transition, $this, $parameters);
         if (!$this->can($transition)) {
             throw new Exception\StateException(sprintf(
                 'The "%s" transition can not be applied to the "%s" state of object "%s" with graph "%s".',
