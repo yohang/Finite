@@ -104,7 +104,7 @@ class ArrayLoader implements LoaderInterface
     {
         $resolver = new OptionsResolver;
         $resolver->setRequired(array('from', 'to'));
-        $resolver->setOptional(array('guard'));
+        $resolver->setDefaults(array('guard' => null));
         $resolver->setNormalizers(array(
             'from' => function (Options $options, $v) { return (array) $v; },
             'guard' => function (Options $options, $v) { return !isset($v) ? null : $v; }
