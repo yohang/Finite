@@ -2,7 +2,7 @@
 
 namespace Finite\Transition;
 
-use Finite\StateMachine\StateMachine;
+use Finite\StateMachine\StateMachineInterface;
 use Finite\State\StateInterface;
 
 /**
@@ -82,7 +82,7 @@ class Transition implements TransitionInterface
     /**
      * @{inheritDoc}
      */
-    public function process(StateMachine $stateMachine)
+    public function process(StateMachineInterface $stateMachine)
     {
     }
 

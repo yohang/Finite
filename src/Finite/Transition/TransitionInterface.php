@@ -2,7 +2,7 @@
 
 namespace Finite\Transition;
 
-use  Finite\StateMachine\StateMachine;
+use  Finite\StateMachine\StateMachineInterface;
 
 /**
  * The base Transition interface
@@ -28,11 +28,11 @@ interface TransitionInterface
     /**
      * Process the transition
      *
-     * @param StateMachine $stateMachine
+     * @param StateMachineInterface $stateMachine
      *
      * @return mixed
      */
-    public function process(StateMachine $stateMachine);
+    public function process(StateMachineInterface $stateMachine);
 
     /**
      * Returns the name of the transition
