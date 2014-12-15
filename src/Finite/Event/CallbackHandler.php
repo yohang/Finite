@@ -6,7 +6,6 @@ use Finite\StateMachine\StateMachineInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Manage callback-to-event bindings by trigger spec definition
@@ -23,7 +22,7 @@ class CallbackHandler
     protected $dispatcher;
 
     /**
-     * @var OptionsResolverInterface
+     * @var OptionsResolver
      */
     protected $specResolver;
 
