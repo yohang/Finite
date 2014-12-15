@@ -33,13 +33,18 @@ class Transition implements TransitionInterface
      * @var callable
      */
     protected $guard;
+    
+    /**
+     * @var array
+     */
+    protected $properties;     
 
     /**
      * @param string       $name
      * @param string|array $initialStates
      * @param string       $state
      */
-    public function __construct($name, $initialStates, $state, $guard = null)
+    public function __construct($name, $initialStates, $state, $guard = null, $properties = array())
     {
         if (null !== $guard && !is_callable($guard)) {
             throw new \InvalidArgumentException('Invalid callable guard argument passed to Transition::__construct().');
@@ -48,7 +53,8 @@ class Transition implements TransitionInterface
         $this->name          = $name;
         $this->state         = $state;
         $this->initialStates = (array) $initialStates;
-        $this->guard = $guard;
+        $this->guard         = $guard;
+        $this->properties    = $properties;
     }
 
     /**
@@ -109,4 +115,35 @@ class Transition implements TransitionInterface
     {
         return $this->getName();
     }
+    /**
+     * @{inheritDoc}
+     */
+    public function has($property)
+    {
+        return array_key_exists($property, $this->properties);
+    }
+
+    /**
+     * @{inheritDoc}
+     */
+    public function get($property, $default = null)
+    {
+        return $this->has($property) ? $this->properties[$property] : $default;
+    }
+
+    /**
+     * @{inheritDoc}
+     */
+    public function getProperties()
+    {
+        return $this->properties;
+    }
+
+    /**
+     * @param array $properties
+     */
+    public function setProperties(array $properties)
+    {
+        $this->properties = $properties;
+    }  
 }
