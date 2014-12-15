@@ -60,7 +60,7 @@ interface TransitionInterface
      *
      * @return mixed
      */
-    public function get($property);    
+    public function get($property, $defaultValue = null);    
 
     /**
      * Returns optional transition properties
