@@ -70,6 +70,11 @@ class Configuration implements ConfigurationInterface
                             ->prototype('variable')->end()
                         ->end()
                         ->scalarNode('to')->end()
+                        ->arrayNode('properties')
+                            ->useAttributeAsKey('name')
+                            ->defaultValue(array())
+                            ->prototype('variable')->end()
+                        ->end()
                     ->end()
                 ->end()
             ->end();
