@@ -47,4 +47,25 @@ interface TransitionInterface
      * @return callable
      */
     public function getGuard();
+    
+    /**
+     * @param string $property
+     *
+     * @return boolean
+     */
+    public function has($property);
+
+    /**
+     * @param string $property
+     *
+     * @return mixed
+     */
+    public function get($property);    
+
+    /**
+     * Returns optional transition properties
+     *
+     * @return mixed
+     */
+    public function getProperties();       
 }
