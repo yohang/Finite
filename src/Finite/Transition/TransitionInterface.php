@@ -47,4 +47,9 @@ interface TransitionInterface
      * @return callable
      */
     public function getGuard();
+
+    /**
+     * @return \Symfony\Component\OptionsResolver\OptionsResolver
+     */
+    public function getEventOptionsResolver();
 }

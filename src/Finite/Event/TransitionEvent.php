@@ -47,7 +47,12 @@ class TransitionEvent extends StateMachineEvent
     ) {
         $this->transition   = $transition;
         $this->initialState = $initialState;
-        $this->parameters   = $parameters;
+
+        if ($transition->getEventOptionsResolver() != null) {
+            $parameters = $transition->getEventOptionsResolver()->resolve($parameters);
+        }
+
+        $this->parameters = $parameters;
 
         parent::__construct($stateMachine);
     }

@@ -4,6 +4,7 @@ namespace Finite\Transition;
 
 use Finite\StateMachine\StateMachineInterface;
 use Finite\State\StateInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * The base Transition class.
@@ -35,20 +36,33 @@ class Transition implements TransitionInterface
     protected $guard;
 
     /**
-     * @param string       $name
-     * @param string|array $initialStates
-     * @param string       $state
+     * @var OptionsResolver
      */
-    public function __construct($name, $initialStates, $state, $guard = null)
-    {
+    protected $eventOptionsResolver;
+
+    /**
+     * @param string          $name
+     * @param string|array    $initialStates
+     * @param string          $state
+     * @param callable|null   $guard
+     * @param OptionsResolver $eventOptionsResolver
+     */
+    public function __construct(
+        $name,
+        $initialStates,
+        $state,
+        $guard = null,
+        OptionsResolver $eventOptionsResolver = null
+    ) {
         if (null !== $guard && !is_callable($guard)) {
             throw new \InvalidArgumentException('Invalid callable guard argument passed to Transition::__construct().');
         }
 
-        $this->name          = $name;
-        $this->state         = $state;
+        $this->name = $name;
+        $this->state = $state;
         $this->initialStates = (array) $initialStates;
         $this->guard = $guard;
+        $this->eventOptionsResolver = $eventOptionsResolver;
     }
 
     /**
@@ -108,5 +122,13 @@ class Transition implements TransitionInterface
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * @return OptionsResolver
+     */
+    public function getEventOptionsResolver()
+    {
+        return $this->eventOptionsResolver;
     }
 }

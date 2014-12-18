@@ -30,31 +30,16 @@ class TransitionListener
 }
 ```
 
-**TIP:** Use the OptionResolver symfony component to specify required and optional parameters.
+**TIP:** Use the OptionsResolver Symfony component to handle required and optional parameters by setting it in your transition settings.
 
 ```php
-<?php
+$resolver = new OptionsResolver(); // ...
 
-namespace My\AwesomeBundle\EventListener;
-
-use Finite\Event\TransitionEvent;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-
-class TransitionListener
-{
-    /**
-     * @param TransitionEvent $event
-     */
-    public function someEvent(TransitionEvent $event)
-    {
-        $entity = $event->getStateMachine()->getObject();
-
-        $resolver = new OptionsResolver();
-        $resolver->setRequired(array('something'));
-
-        $params = $resolver->resolve($event->getParameters());
-
-        $entity->setSomething($params['something']);
-    }
-}
+'transitions' => array(
+    'finish'    => array(
+        'from' => array('middle'),
+        'to'   => 'end',
+        'event_options_resolver' => $resolver,
+    )
+)
 ```
