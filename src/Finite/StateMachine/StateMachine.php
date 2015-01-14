@@ -205,7 +205,14 @@ class StateMachine implements StateMachineInterface
         } catch (Exception\StateException $e) {
             $this->addState($transition->getState());
         }
-        foreach ($transition->getInitialStates() as $state) {
+        
+        $transitionInitialStates = $transition->getInitialStates();
+        // If first state is * it means any state including self
+        if ($transitionInitialStates[0] == '*') {
+            $transitionInitialStates = $this->states;
+        }
+
+        foreach ($transitionInitialStates as $state) {
             try {
                 $this->getState($state);
             } catch (Exception\StateException $e) {
