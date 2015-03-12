@@ -1,7 +1,7 @@
 <?php
 namespace Finite\Transition;
 
-use Finite\StateMachine\StateMachine;
+use Finite\StateMachine\StateMachineInterface;
 use Finite\Transition\TransitionInterface;
 
 /**
@@ -16,5 +16,5 @@ interface ApprovableTransitionInterface extends TransitionInterface
      *
      * @return bool True if transition is approved
      */
-    public function isApproved(StateMachine $stateMachine);
+    public function isApproved(StateMachineInterface $stateMachine);
 }

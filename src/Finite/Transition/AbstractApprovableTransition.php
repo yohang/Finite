@@ -1,7 +1,7 @@
 <?php
 namespace Finite\Transition;
 
-use Finite\StateMachine\StateMachine;
+use Finite\StateMachine\StateMachineInterface;
 use Finite\Transition\Transition;
 use Finite\Transition\ApprovableTransitionInterface;
 
@@ -12,5 +12,5 @@ use Finite\Transition\ApprovableTransitionInterface;
  */
 abstract class AbstractApprovableTransition extends Transition implements ApprovableTransitionInterface
 {
-    abstract public function isApproved(StateMachine $stateMachine);
+    abstract public function isApproved(StateMachineInterface $stateMachine);
 }
