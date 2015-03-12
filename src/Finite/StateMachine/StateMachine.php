@@ -12,6 +12,7 @@ use Finite\State\State;
 use Finite\State\StateInterface;
 use Finite\Transition\Transition;
 use Finite\Transition\TransitionInterface;
+use Finite\Transition\ApprovableTransitionInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -150,12 +151,18 @@ class StateMachine implements StateMachineInterface
     {
         $transition = $transition instanceof TransitionInterface ? $transition : $this->getTransition($transition);
 
+        if (!in_array($transition->getName(), $this->getCurrentState()->getTransitions())) {
+            return false;
+        }
+
         if (null !== $transition->getGuard()) {
             return call_user_func($transition->getGuard(), $this);
         }
 
-        if (!in_array($transition->getName(), $this->getCurrentState()->getTransitions())) {
-            return false;
+        if ($transition instanceof ApprovableTransitionInterface) {
+            if (!$transition->isApproved($this)) {
+                return false;
+            }
         }
 
         $event = new TransitionEvent($this->getCurrentState(), $transition, $this);
