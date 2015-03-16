@@ -81,15 +81,11 @@ class ArrayLoader implements LoaderInterface
     {
         $resolver = new OptionsResolver;
         $resolver->setDefaults(array('type' => StateInterface::TYPE_NORMAL, 'properties' => array()));
-        $resolver->setAllowedValues(
-            array(
-                'type' => array(
-                    StateInterface::TYPE_INITIAL,
-                    StateInterface::TYPE_NORMAL,
-                    StateInterface::TYPE_FINAL
-                )
-            )
-        );
+        $resolver->setAllowedValues('type', array(
+            StateInterface::TYPE_INITIAL,
+            StateInterface::TYPE_NORMAL,
+            StateInterface::TYPE_FINAL
+        ));
 
         foreach ($this->config['states'] as $state => $config) {
             $config = $resolver->resolve($config);
