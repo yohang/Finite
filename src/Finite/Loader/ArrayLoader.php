@@ -52,9 +52,9 @@ class ArrayLoader implements LoaderInterface
      */
     public function load(StateMachineInterface $stateMachine)
     {
-        if (null === $this->callbackHandler) {
+        //if (null === $this->callbackHandler) {
             $this->callbackHandler = new CallbackHandler($stateMachine->getDispatcher());
-        }
+        //}
 
         $stateMachine->setStateAccessor(new PropertyPathStateAccessor($this->config['property_path']));
         $stateMachine->setGraph($this->config['graph']);
