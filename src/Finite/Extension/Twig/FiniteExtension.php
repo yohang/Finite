@@ -30,11 +30,11 @@ class FiniteExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'finite_state'       => new \Twig_Function_Method($this, 'getFiniteState'),
-            'finite_transitions' => new \Twig_Function_Method($this, 'getFiniteTransitions'),
-            'finite_properties'  => new \Twig_Function_Method($this, 'getFiniteProperties'),
-            'finite_has'         => new \Twig_Function_Method($this, 'hasFiniteProperty'),
-            'finite_can'         => new \Twig_Function_Method($this, 'canFiniteTransition'),
+            new \Twig_SimpleFunction('finite_state', [$this, 'getFiniteState']),
+            new \Twig_SimpleFunction('finite_transitions', [$this, 'getFiniteTransitions']),
+            new \Twig_SimpleFunction('finite_properties', [$this, 'getFiniteProperties']),
+            new \Twig_SimpleFunction('finite_has', [$this, 'hasFiniteProperty']),
+            new \Twig_SimpleFunction('finite_can', [$this, 'canFiniteTransition']),
         );
     }
 
