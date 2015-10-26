@@ -55,15 +55,12 @@ class CallbackHandler
         $toArrayNormalizer = function (Options $options, $value) {
             return (array) $value;
         };
-        $this->specResolver->setNormalizers(
-            array(
-                'on'           => $toArrayNormalizer,
-                'from'         => $toArrayNormalizer,
-                'to'           => $toArrayNormalizer,
-                'exclude_to'   => $toArrayNormalizer,
-                'exclude_from' => $toArrayNormalizer,
-            )
-        );
+
+        $this->specResolver->setNormalizer('on', $toArrayNormalizer);
+        $this->specResolver->setNormalizer('from', $toArrayNormalizer);
+        $this->specResolver->setNormalizer('to', $toArrayNormalizer);
+        $this->specResolver->setNormalizer('exclude_to', $toArrayNormalizer);
+        $this->specResolver->setNormalizer('exclude_from', $toArrayNormalizer);
     }
 
     /**

@@ -105,10 +105,9 @@ class ArrayLoader implements LoaderInterface
         $resolver = new OptionsResolver;
         $resolver->setRequired(array('from', 'to'));
         $resolver->setDefaults(array('guard' => null));
-        $resolver->setNormalizers(array(
-            'from' => function (Options $options, $v) { return (array) $v; },
-            'guard' => function (Options $options, $v) { return !isset($v) ? null : $v; }
-        ));
+
+        $resolver->setNormalizer('from', function (Options $options, $v) { return (array) $v; });
+        $resolver->setNormalizer('guard', function (Options $options, $v) { return !isset($v) ? null : $v; });
 
         foreach ($this->config['transitions'] as $transition => $config) {
             $config = $resolver->resolve($config);
