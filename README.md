@@ -33,6 +33,12 @@ Getting started
 }
 ```
 
+or 
+
+```
+composer require yohang/finite
+```
+
 ### Define your Stateful Object
 Your stateful object just need to implement the `StatefulInterface` Interface.
 
