@@ -95,7 +95,7 @@ class CallbackHandler
      *
      * @return CallbackHandler
      */
-    protected function add($smOrCallback, $event, $callable = null, array $specs = null)
+    protected function add($smOrCallback, $event, $callable = null, array $specs = array())
     {
         if ($smOrCallback instanceof Callback) {
             $this->dispatcher->addListener($event, $smOrCallback);

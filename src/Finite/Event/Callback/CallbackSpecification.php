@@ -58,9 +58,9 @@ class CallbackSpecification implements CallbackSpecificationInterface
     {
         return
             $event->getStateMachine() === $this->stateMachine &&
-            $this->supportClause('from', $event->getInitialState()->getName()) &&
-            $this->supportClause('to', $event->getTransition()->getState()) &&
-            $this->supportClause('on', $event->getTransition()->getName());
+            $this->supportsClause('from', $event->getInitialState()->getName()) &&
+            $this->supportsClause('to', $event->getTransition()->getState()) &&
+            $this->supportsClause('on', $event->getTransition()->getName());
     }
 
     /**
@@ -69,7 +69,7 @@ class CallbackSpecification implements CallbackSpecificationInterface
      *
      * @return bool
      */
-    private function supportClause($clause, $property)
+    private function supportsClause($clause, $property)
     {
         $excludedClause = 'excluded_' . $clause;
 

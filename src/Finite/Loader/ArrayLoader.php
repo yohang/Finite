@@ -175,23 +175,16 @@ class ArrayLoader implements LoaderInterface
 
         $resolver->setRequired(array('do'));
 
-        $resolver->setAllowedTypes(
-            array(
-                'on'   => array('string', 'array'),
-                'from' => array('string', 'array'),
-                'to'   => array('string', 'array'),
-            )
-        );
+        $resolver->setAllowedTypes('on',   array('string', 'array'));
+        $resolver->setAllowedTypes('from', array('string', 'array'));
+        $resolver->setAllowedTypes('to',   array('string', 'array'));
+
         $toArrayNormalizer = function (Options $options, $value) {
             return (array) $value;
         };
-        $resolver->setNormalizers(
-            array(
-                'on'   => $toArrayNormalizer,
-                'from' => $toArrayNormalizer,
-                'to'   => $toArrayNormalizer,
-            )
-        );
+        $resolver->setNormalizer('on',  $toArrayNormalizer);
+        $resolver->setNormalizer('from', $toArrayNormalizer);
+        $resolver->setNormalizer('to',   $toArrayNormalizer);
 
         return $resolver;
     }
