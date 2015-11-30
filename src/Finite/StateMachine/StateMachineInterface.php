@@ -22,19 +22,21 @@ interface StateMachineInterface
      * Apply a transition
      *
      * @param string $transitionName
+     * @param array  $parameters
      *
      * @return mixed
      */
-    public function apply($transitionName);
+    public function apply($transitionName, array $parameters = array());
 
     /**
      * Returns if the transition is applicable
      *
      * @param string|TransitionInterface $transition
+     * @param array                       $parameters
      *
      * @return bool
      */
-    public function can($transition);
+    public function can($transition, array $parameters = array());
 
     /**
      * @param string|StateInterface $state

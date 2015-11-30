@@ -3,6 +3,8 @@
 namespace Finite\Test\Loader;
 
 use Finite\Loader\ArrayLoader;
+use Finite\StateMachine\StateMachine;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
@@ -149,6 +151,36 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
             ->with($sm, $allTimes, array());
 
         $this->object->load($sm);
+    }
+
+    public function testLoadWithProperties()
+    {
+        $sm = new StateMachine();
+
+        $this->object = new ArrayLoader(
+            array(
+                'class'       => 'Stateful1',
+                'states'      => array(
+                    'start'  => array('type' => 'initial', 'properties' => array('foo' => true, 'bar' => false)),
+                    'end'    => array('type' => 'final'),
+                ),
+                'transitions' => array(
+                    'finish'    => array(
+                        'from' => array('middle'),
+                        'to'   => 'end',
+                        'properties' => array('default' => 'default'),
+                        'configure_properties' => function (OptionsResolver $optionsResolver) {
+                            $optionsResolver->setRequired('required');
+                        },
+                    )
+                ),
+            ),
+            $this->callbackHandler
+        );
+
+        $this->object->load($sm);
+
+
     }
 
     public function testSupports()

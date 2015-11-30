@@ -29,9 +29,9 @@ class SecurityAwareStateMachine extends StateMachine
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
-    public function can($transition)
+    public function can($transition, array $parameters = array())
     {
         $transition = $transition instanceof TransitionInterface ? $transition : $this->getTransition($transition);
 
@@ -39,6 +39,6 @@ class SecurityAwareStateMachine extends StateMachine
             return false;
         }
 
-        return parent::can($transition);
+        return parent::can($transition, $parameters);
     }
 }

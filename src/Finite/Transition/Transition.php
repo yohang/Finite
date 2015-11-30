@@ -4,6 +4,7 @@ namespace Finite\Transition;
 
 use Finite\StateMachine\StateMachineInterface;
 use Finite\State\StateInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * The base Transition class.
@@ -12,7 +13,7 @@ use Finite\State\StateInterface;
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  * @author Michal Dabrowski <dabrowski@brillante.pl>
  */
-class Transition implements TransitionInterface
+class Transition implements TransitionInterface, PropertiesAwareTransitionInterface
 {
     /**
      * @var array
@@ -35,20 +36,33 @@ class Transition implements TransitionInterface
     protected $guard;
 
     /**
-     * @param string       $name
-     * @param string|array $initialStates
-     * @param string       $state
+     * @var OptionsResolver
      */
-    public function __construct($name, $initialStates, $state, $guard = null)
-    {
+    protected $propertiesOptionsResolver;
+
+    /**
+     * @param string          $name
+     * @param string|array    $initialStates
+     * @param string          $state
+     * @param callable|null   $guard
+     * @param OptionsResolver $propertiesOptionsResolver
+     */
+    public function __construct(
+        $name,
+        $initialStates,
+        $state,
+        $guard = null,
+        OptionsResolver $propertiesOptionsResolver = null
+    ) {
         if (null !== $guard && !is_callable($guard)) {
             throw new \InvalidArgumentException('Invalid callable guard argument passed to Transition::__construct().');
         }
 
-        $this->name          = $name;
-        $this->state         = $state;
+        $this->name = $name;
+        $this->state = $state;
         $this->initialStates = (array) $initialStates;
         $this->guard = $guard;
+        $this->propertiesOptionsResolver = $propertiesOptionsResolver ?: new OptionsResolver;
     }
 
     /**
@@ -64,7 +78,7 @@ class Transition implements TransitionInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     public function getInitialStates()
     {
@@ -72,7 +86,7 @@ class Transition implements TransitionInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     public function getState()
     {
@@ -80,14 +94,14 @@ class Transition implements TransitionInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     public function process(StateMachineInterface $stateMachine)
     {
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     public function getName()
     {
@@ -100,6 +114,14 @@ class Transition implements TransitionInterface
     public function getGuard()
     {
         return $this->guard;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function resolveProperties(array $properties)
+    {
+        return $this->propertiesOptionsResolver->resolve($properties);
     }
 
     /**
