@@ -2,6 +2,7 @@
 
 namespace Finite\Test\StateMachine;
 
+use Finite\State\State;
 use Finite\StateMachine\StateMachine;
 use Finite\Test\StateMachineTestCase;
 
@@ -85,8 +86,7 @@ class StateMachineTest extends StateMachineTestCase
             ->method('getGuard')
             ->will($this->returnValue(function () {
                 return false;
-            }))
-        ;
+            }));
 
         $transition->expects($this->atLeastOnce())->method('getName')         ->will($this->returnValue('t'));
         $transition->expects($this->once())       ->method('getInitialStates')->will($this->returnValue(array('state1')));
@@ -101,12 +101,17 @@ class StateMachineTest extends StateMachineTestCase
             ->method('getGuard')
             ->will($this->returnValue(function () {
                 return true;
-            }))
-        ;
+            }));
 
+        $stateful = $this->getMock('Finite\StatefulInterface');
+        $this->object->addState(new State('state1', State::TYPE_INITIAL));
+
+        $this->object->setObject($stateful);
+        $this->object->initialize();
         $transition->expects($this->atLeastOnce())->method('getName')         ->will($this->returnValue('t'));
         $transition->expects($this->once())       ->method('getInitialStates')->will($this->returnValue(array('state1')));
         $this->object->addTransition($transition);
+
         $this->assertTrue($this->object->can($transition));
     }
 

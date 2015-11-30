@@ -150,10 +150,8 @@ class StateMachine implements StateMachineInterface
     {
         $transition = $transition instanceof TransitionInterface ? $transition : $this->getTransition($transition);
 
-        if (null !== $transition->getGuard()) {
-            if(!$return = call_user_func($transition->getGuard(), $this)) {
-                return false;
-            };
+        if (null !== $transition->getGuard() && !call_user_func($transition->getGuard(), $this)) {
+            return false;
         }
 
         if (!in_array($transition->getName(), $this->getCurrentState()->getTransitions())) {
