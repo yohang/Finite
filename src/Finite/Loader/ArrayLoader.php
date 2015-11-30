@@ -102,7 +102,7 @@ class ArrayLoader implements LoaderInterface
         $resolver->setRequired(array('from', 'to'));
         $resolver->setDefaults(array('guard' => null, 'configure_properties' => null, 'properties' => array()));
 
-        $resolver->setAllowedTypes('configure_properties', ['null', 'callable']);
+        $resolver->setAllowedTypes('configure_properties', array('null', 'callable'));
 
         $resolver->setNormalizer('from', function (Options $options, $v) { return (array) $v; });
         $resolver->setNormalizer('guard', function (Options $options, $v) { return !isset($v) ? null : $v; });
