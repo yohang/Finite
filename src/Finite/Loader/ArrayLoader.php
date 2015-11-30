@@ -2,7 +2,6 @@
 
 namespace Finite\Loader;
 
-use Finite\Event\Callback\CallbackBuilder;
 use Finite\Event\Callback\CallbackBuilderFactory;
 use Finite\Event\Callback\CallbackBuilderFactoryInterface;
 use Finite\Event\CallbackHandler;
