@@ -35,6 +35,11 @@ Getting started
 }
 ```
 
+### Version note :
+
+If your are using this library in a Symfony project, 1.1 version is only compatible with Symfony `>=2.6`.
+1.0 is compatible with Symfony `>=2.3, <2.6`.
+
 ### Define your Stateful Object
 Your stateful object just need to implement the `StatefulInterface` Interface.
 
