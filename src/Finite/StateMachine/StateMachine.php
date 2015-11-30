@@ -120,7 +120,11 @@ class StateMachine implements StateMachineInterface
     {
         $transition = $this->getTransition($transitionName);
         $event      = new TransitionEvent($this->getCurrentState(), $transition, $this);
-        if (!$this->can($transition)) {
+        
+        $this->dispatcher->dispatch(FiniteEvents::PRE_TRANSITION, $event);
+        $this->dispatcher->dispatch(FiniteEvents::PRE_TRANSITION.'.'.$transitionName, $event);
+
+        if (!$this->can($event->getTransition()) || $event->isRejected()) {
             throw new Exception\StateException(sprintf(
                 'The "%s" transition can not be applied to the "%s" state of object "%s" with graph "%s".',
                 $transition->getName(),
@@ -129,9 +133,6 @@ class StateMachine implements StateMachineInterface
                 $this->getGraph()
             ));
         }
-
-        $this->dispatcher->dispatch(FiniteEvents::PRE_TRANSITION, $event);
-        $this->dispatcher->dispatch(FiniteEvents::PRE_TRANSITION . '.' . $transitionName, $event);
 
         $returnValue = $transition->process($this);
         $this->stateAccessor->setState($this->object, $transition->getState());
