@@ -1,13 +1,26 @@
-branches:
-    only:
-        - master
 language: php
 php:
-    - 5.3.3
     - 5.3
     - 5.4
     - 5.5
     - 5.6
+    - 7
     - hhvm
-before_script:
-    - composer --no-interaction --prefer-source install
+
+before_install:
+  - composer self-update
+
+install:
+  - travis_retry composer install --no-interaction --prefer-source
+
+script:
+  - ./bin/phpunit
+
+notifications:
+  email: false
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/b24dffd84a9159f9cce5
+    on_success: change
+    on_failure: always
+    on_start:   never
