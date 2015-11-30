@@ -4,3 +4,4 @@ bin
 composer.phar
 composer.lock
 cache.properties
+coverage.clover
