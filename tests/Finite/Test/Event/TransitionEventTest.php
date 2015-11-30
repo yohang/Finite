@@ -6,21 +6,43 @@ use Finite\Event\TransitionEvent;
 
 class TransitionEventTest extends \PHPUnit_Framework_TestCase
 {
-    public function testOptionsResolver()
+    /**
+     * @var Finite\Transition\Transition
+     */
+    protected $transition;
+
+    /**
+     * @var TransitionEvent
+     */
+    protected $object;
+
+    protected function setUp()
     {
-        $resolver = $this->getMock('Symfony\Component\OptionsResolver\OptionsResolver');
-        $resolver->expects($this->once())->method('resolve')->will($this->returnValue(array('returned' => 1)));
+        $this->transition = $this->getMockBuilder('Finite\Transition\Transition')->disableOriginalConstructor()->getMock();
 
-        $transition = $this->getMockBuilder('Finite\Transition\Transition')->disableOriginalConstructor()->getMock();
-        $transition->expects($this->exactly(2))->method('getEventOptionsResolver')->will($this->returnValue($resolver));
+        $this->transition
+            ->expects($this->once())
+            ->method('resolveProperties')
+            ->with($this->isType('array'))
+            ->will($this->returnValue(array('returned' => 1)));
 
-        $event = new TransitionEvent(
+        $this->object = new TransitionEvent(
             $this->getMockBuilder('Finite\State\State')->disableOriginalConstructor()->getMock(),
-            $transition,
+            $this->transition,
             $this->getMockBuilder('Finite\StateMachine\StateMachine')->disableOriginalConstructor()->getMock(),
             array()
         );
+    }
 
-        $this->assertSame(array('returned' => 1), $event->getParameters());
+    public function testItResolveProperties()
+    {
+        $this->assertSame(array('returned' => 1), $this->object->getProperties());
+    }
+
+    public function testPropertyGetters()
+    {
+        $this->assertSame(1, $this->object->get('returned'));
+        $this->assertTrue($this->object->has('returned'));
+        $this->assertNull($this->object->get('foo', null));
     }
 }

@@ -153,10 +153,9 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
         $this->object->load($sm);
     }
 
-    public function testLoadWithOptionsResolver()
+    public function testLoadWithProperties()
     {
         $sm = new StateMachine();
-        $resolver = new OptionsResolver();
 
         $this->object = new ArrayLoader(
             array(
@@ -169,7 +168,10 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
                     'finish'    => array(
                         'from' => array('middle'),
                         'to'   => 'end',
-                        'event_options_resolver' => $resolver,
+                        'properties' => array('default' => 'default'),
+                        'configure_properties' => function (OptionsResolver $optionsResolver) {
+                            $optionsResolver->setRequired('required');
+                        },
                     )
                 ),
             ),
@@ -178,38 +180,7 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
 
         $this->object->load($sm);
 
-        $this->assertInstanceOf(
-            'Symfony\Component\OptionsResolver\OptionsResolver',
-            $sm->getTransition('finish')->getEventOptionsResolver()
-        );
-    }
 
-    public function testLoadWithOptionsResolverNotResolver()
-    {
-        $sm = new StateMachine();
-        $notAResolver = new StateMachine();
-
-        $this->object = new ArrayLoader(
-            array(
-                'class'       => 'Stateful1',
-                'states'      => array(
-                    'start'  => array('type' => 'initial', 'properties' => array('foo' => true, 'bar' => false)),
-                    'end'    => array('type' => 'final'),
-                ),
-                'transitions' => array(
-                    'finish'    => array(
-                        'from' => array('middle'),
-                        'to'   => 'end',
-                        'event_options_resolver' => $notAResolver,
-                    )
-                ),
-            ),
-            $this->callbackHandler
-        );
-
-        $this->object->load($sm);
-
-        $this->assertNull($sm->getTransition('finish')->getEventOptionsResolver());
     }
 
     public function testSupports()

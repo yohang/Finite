@@ -73,11 +73,13 @@ class FiniteFiniteExtensionTest extends \PHPUnit_Framework_TestCase
             'transitions'   => array(
                 '1_to_2' => array(
                     'from' => array('state1'),
-                    'to'   => 'state2'
+                    'to'   => 'state2',
+                    'properties' => array()
                 ),
                 '2_to_3' => array(
                     'from' => array('state2'),
-                    'to'   => 'state3'
+                    'to'   => 'state3',
+                    'properties' => array('foo' => 'bar')
                 ),
             ),
             'callbacks'     => array(
@@ -115,7 +117,8 @@ class FiniteFiniteExtensionTest extends \PHPUnit_Framework_TestCase
                         ),
                         '2_to_3' => array(
                             'from' => array('state2'),
-                            'to'   => 'state3'
+                            'to'   => 'state3',
+                            'properties' => array('foo' => 'bar'),
                         ),
                     ),
                     'callbacks'   => array(

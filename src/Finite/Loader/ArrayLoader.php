@@ -100,12 +100,22 @@ class ArrayLoader implements LoaderInterface
     {
         $resolver = new OptionsResolver();
         $resolver->setRequired(array('from', 'to'));
-        $resolver->setDefaults(array('guard' => null, 'event_options_resolver' => null));
+        $resolver->setDefaults(array('guard' => null, 'configure_properties' => null, 'properties' => array()));
+
+        $resolver->setAllowedTypes('configure_properties', ['null', 'callable']);
 
         $resolver->setNormalizer('from', function (Options $options, $v) { return (array) $v; });
         $resolver->setNormalizer('guard', function (Options $options, $v) { return !isset($v) ? null : $v; });
-        $resolver->setNormalizer('event_options_resolver', function (Options $options, $v) {
-            return $v instanceof OptionsResolver ? $v : null;
+        $resolver->setNormalizer('configure_properties', function (Options $options, $v) {
+            $resolver = new OptionsResolver;
+
+            $resolver->setDefaults($options['properties']);
+
+            if (is_callable($v)) {
+                $v($resolver);
+            }
+
+            return $resolver;
         });
 
         foreach ($this->config['transitions'] as $transition => $config) {
@@ -116,7 +126,7 @@ class ArrayLoader implements LoaderInterface
                     $config['from'],
                     $config['to'],
                     $config['guard'],
-                    $config['event_options_resolver']
+                    $config['configure_properties']
                 )
             );
         }

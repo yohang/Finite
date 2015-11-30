@@ -32,10 +32,11 @@ interface StateMachineInterface
      * Returns if the transition is applicable
      *
      * @param string|TransitionInterface $transition
+     * @param array                       $parameters
      *
      * @return bool
      */
-    public function can($transition);
+    public function can($transition, array $parameters = array());
 
     /**
      * @param string|StateInterface $state
