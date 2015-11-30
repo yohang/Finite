@@ -2,4 +2,5 @@ vendor
 build
 bin
 composer.phar
+composer.lock
 cache.properties

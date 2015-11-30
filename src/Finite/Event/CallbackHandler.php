@@ -6,7 +6,6 @@ use Finite\StateMachine\StateMachineInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Manage callback-to-event bindings by trigger spec definition
@@ -23,7 +22,7 @@ class CallbackHandler
     protected $dispatcher;
 
     /**
-     * @var OptionsResolverInterface
+     * @var OptionsResolver
      */
     protected $specResolver;
 
@@ -43,27 +42,21 @@ class CallbackHandler
                 'exclude_to'   => array(),
             )
         );
-        $this->specResolver->setAllowedTypes(
-            array(
-                'on'           => array('string', 'array'),
-                'from'         => array('string', 'array'),
-                'to'           => array('string', 'array'),
-                'exclude_from' => array('string', 'array'),
-                'exclude_to'   => array('string', 'array'),
-            )
-        );
+        $this->specResolver->setAllowedTypes('on', array('string', 'array'));
+        $this->specResolver->setAllowedTypes('from', array('string', 'array'));
+        $this->specResolver->setAllowedTypes('to', array('string', 'array'));
+        $this->specResolver->setAllowedTypes('exclude_from', array('string', 'array'));
+        $this->specResolver->setAllowedTypes('exclude_to', array('string', 'array'));
+
         $toArrayNormalizer = function (Options $options, $value) {
             return (array) $value;
         };
-        $this->specResolver->setNormalizers(
-            array(
-                'on'           => $toArrayNormalizer,
-                'from'         => $toArrayNormalizer,
-                'to'           => $toArrayNormalizer,
-                'exclude_to'   => $toArrayNormalizer,
-                'exclude_from' => $toArrayNormalizer,
-            )
-        );
+
+        $this->specResolver->setNormalizer('on', $toArrayNormalizer);
+        $this->specResolver->setNormalizer('from', $toArrayNormalizer);
+        $this->specResolver->setNormalizer('to', $toArrayNormalizer);
+        $this->specResolver->setNormalizer('exclude_to', $toArrayNormalizer);
+        $this->specResolver->setNormalizer('exclude_from', $toArrayNormalizer);
     }
 
     /**
