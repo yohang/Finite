@@ -28,9 +28,15 @@ Getting started
 ```js
 {
       "require": {
-        "yohang/finite": "~1.1"
+        "yohang/finite": "^1.0"
     }
 }
+```
+
+or 
+
+```
+composer require yohang/finite
 ```
 
 ### Define your Stateful Object
