@@ -24,7 +24,7 @@ class TransitionTest extends \PHPUnit_Framework_TestCase
         $this->optionsResolver = $this->getMockBuilder('Symfony\Component\OptionsResolver\OptionsResolver')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->object = new Transition('transition', ['s1'], 's2', null, $this->optionsResolver);
+        $this->object = new Transition('transition', array('s1'), 's2', null, $this->optionsResolver);
     }
 
     public function testItResolvesOptions()
@@ -33,8 +33,8 @@ class TransitionTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('resolve')
             ->with($this->isType('array'))
-            ->will($this->returnValue(['foo' => 'bar']));
+            ->will($this->returnValue(array('foo' => 'bar')));
 
-        $this->assertSame(['foo' => 'bar'], $this->object->resolveProperties(['baz' => 'qux']));
+        $this->assertSame(array('foo' => 'bar'), $this->object->resolveProperties(array('baz' => 'qux')));
     }
 }
