@@ -30,10 +30,10 @@ before or after the transition apply, and their definition use the following pat
 <?php
 
 $definition = [
-    'from' => 'all',  // a string or an array of string that represent the initial states that trigger the callback. 'all' for All.
-    'to'   => 'all',  // a string or an array of string that represent the target states that trigger the callback. 'all' for All.
-    'on'   => 'all',  // a string or an array of string that represent the transition names that trigger the callback. 'all' for All.
-    'do'   => function(Finite\Event\TransitionEvent $e) {
+    'from' => [],  // a string or an array of string that represent the initial states that trigger the callback. Empty for All.
+    'to'   => [],  // a string or an array of string that represent the target states that trigger the callback. Empty for All.
+    'on'   => [],  // a string or an array of string that represent the transition names that trigger the callback. Empty for All.
+    'do'   => function($object, Finite\Event\TransitionEvent $e) {
         // The callback
     }
 ];
@@ -48,7 +48,7 @@ By default, callbacks matchs all the events.
 <?php
 
 [
-    'from' => ['all', '-proposed'], 'do'   => function(Finite\Event\TransitionEvent $e) {}
+    'from' => ['all', '-proposed'], 'do'   => function($object, Finite\Event\TransitionEvent $e) {}
 ];
 {% endhighlight %}
 
@@ -76,7 +76,7 @@ $loader       = new Finite\Loader\ArrayLoader([
         ]
     ],
     'transitions' => [
-        'propose' => ['from' => ['draft'], 'to' => 'proposed'],
+        'propose' => ['from' => ['draft'], 'to' => 'proposed', 'properties' => ['foo' => 'bar']],
         'accept'  => ['from' => ['proposed'], 'to' => 'accepted'],
         'reject'  => ['from' => ['proposed'], 'to' => 'draft'],
     ],
@@ -86,6 +86,9 @@ $loader       = new Finite\Loader\ArrayLoader([
                 'from' => '-proposed',
                 'do'   => function(\Finite\Event\TransitionEvent $e) {
                     echo 'Applying transition '.$e->getTransition()->getName(), "\n";
+                    if ($e->has('foo')) {
+                        echo "Parameter \"foo\" is defined\n";
+                    }
                 }
             ],
             [
@@ -105,12 +108,14 @@ $loader       = new Finite\Loader\ArrayLoader([
 
 $stateMachine->apply('propose');
 // => "Applying transition propose"
+// => "Parameter "foo" is defined"
 
 $stateMachine->apply('reject');
 // => "Applying transition from proposed state"
 
 $stateMachine->apply('propose');
 // => "Applying transition propose"
+// => "Parameter "foo" is defined"
 
 $stateMachine->apply('accept');
 // => "Applying transition from proposed state"
