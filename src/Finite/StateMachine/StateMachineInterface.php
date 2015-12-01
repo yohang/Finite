@@ -7,19 +7,19 @@ use Finite\State\StateInterface;
 use Finite\Transition\TransitionInterface;
 
 /**
- * The Finite State Machine base Interface
+ * The Finite State Machine base Interface.
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
 interface StateMachineInterface
 {
     /**
-     * Initialize the State Machine current state
+     * Initialize the State Machine current state.
      */
     public function initialize();
 
     /**
-     * Apply a transition
+     * Apply a transition.
      *
      * @param string $transitionName
      * @param array  $parameters
@@ -29,10 +29,10 @@ interface StateMachineInterface
     public function apply($transitionName, array $parameters = array());
 
     /**
-     * Returns if the transition is applicable
+     * Returns if the transition is applicable.
      *
      * @param string|TransitionInterface $transition
-     * @param array                       $parameters
+     * @param array                      $parameters
      *
      * @return bool
      */
@@ -53,7 +53,7 @@ interface StateMachineInterface
     public function addTransition($transition, $initialState = null, $finalState = null);
 
     /**
-     * Returns a transition by its name
+     * Returns a transition by its name.
      *
      * @param string $name
      *
@@ -73,14 +73,14 @@ interface StateMachineInterface
     public function getState($name);
 
     /**
-     * Returns an array containing all the transitions names
+     * Returns an array containing all the transitions names.
      *
      * @return array<string>
      */
     public function getTransitions();
 
     /**
-     * Returns an array containing all the states names
+     * Returns an array containing all the states names.
      *
      * @return array<string>
      */

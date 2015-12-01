@@ -8,7 +8,7 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 /**
- * Property path implementation of state accessor
+ * Property path implementation of state accessor.
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
@@ -30,12 +30,12 @@ class PropertyPathStateAccessor implements StateAccessorInterface
      */
     public function __construct($propertyPath = 'finiteState', PropertyAccessorInterface $propertyAccessor = null)
     {
-        $this->propertyPath     = $propertyPath;
+        $this->propertyPath = $propertyPath;
         $this->propertyAccessor = $propertyAccessor ?: PropertyAccess::createPropertyAccessor();
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getState($object)
     {
@@ -51,7 +51,7 @@ class PropertyPathStateAccessor implements StateAccessorInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function setState(&$object, $value)
     {

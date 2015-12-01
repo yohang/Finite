@@ -4,7 +4,6 @@ namespace Finite\StateMachine;
 
 use Finite\Transition\TransitionInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * Security Aware state machine.
@@ -30,7 +29,7 @@ class SecurityAwareStateMachine extends StateMachine
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function can($transition, array $parameters = array())
     {

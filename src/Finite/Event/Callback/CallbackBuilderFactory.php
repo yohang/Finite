@@ -5,14 +5,14 @@ namespace Finite\Event\Callback;
 use Finite\StateMachine\StateMachineInterface;
 
 /**
- * Concrete implementation of CallbackBuilder factory
+ * Concrete implementation of CallbackBuilder factory.
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
 class CallbackBuilderFactory implements CallbackBuilderFactoryInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function createBuilder(StateMachineInterface $stateMachine)
     {

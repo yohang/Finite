@@ -6,7 +6,7 @@ use Finite\Exception\FactoryException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * A concrete implementation of State Machine Factory using the sf2 DIC
+ * A concrete implementation of State Machine Factory using the sf2 DIC.
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
@@ -29,7 +29,7 @@ class SymfonyDependencyInjectionFactory extends AbstractFactory
     public function __construct(ContainerInterface $container, $key)
     {
         $this->container = $container;
-        $this->key       = $key;
+        $this->key = $key;
 
         if (!$container->has($key)) {
             throw new FactoryException(
@@ -42,7 +42,7 @@ class SymfonyDependencyInjectionFactory extends AbstractFactory
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     protected function createStateMachine()
     {

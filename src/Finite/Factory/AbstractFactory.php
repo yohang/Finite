@@ -6,7 +6,7 @@ use Finite\Loader\LoaderInterface;
 use Finite\StateMachine\StateMachineInterface;
 
 /**
- * The abstract base class for state machine factories
+ * The abstract base class for state machine factories.
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
@@ -23,11 +23,11 @@ abstract class AbstractFactory implements FactoryInterface
     protected $loaders = array();
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function get($object, $graph = 'default')
     {
-        $hash = spl_object_hash($object) . '.' . $graph;
+        $hash = spl_object_hash($object).'.'.$graph;
         if (!isset($this->stateMachines[$hash])) {
             $stateMachine = $this->createStateMachine();
             if (null !== ($loader = $this->getLoader($object, $graph))) {
@@ -64,11 +64,11 @@ abstract class AbstractFactory implements FactoryInterface
             }
         }
 
-        return null;
+        return;
     }
 
     /**
-     * Creates an instance of StateMachine
+     * Creates an instance of StateMachine.
      *
      * @return StateMachineInterface
      */

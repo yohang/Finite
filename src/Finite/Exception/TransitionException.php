@@ -3,7 +3,7 @@
 namespace Finite\Exception;
 
 /**
- * A transition exception
+ * A transition exception.
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */

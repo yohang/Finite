@@ -9,14 +9,14 @@ use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
- * This is the class that loads and manages your bundle configuration
+ * This is the class that loads and manages your bundle configuration.
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
 class FiniteFiniteExtension extends Extension
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -39,7 +39,7 @@ class FiniteFiniteExtension extends Extension
                 $definition->setLazy(true);
             }
 
-            $serviceId  = 'finite.loader.'.$key;
+            $serviceId = 'finite.loader.'.$key;
             $container->setDefinition($serviceId, $definition);
 
             $factoryDefinition->addMethodCall('addLoader', array(new Reference($serviceId)));
@@ -49,7 +49,7 @@ class FiniteFiniteExtension extends Extension
     }
 
     /**
-     * Remove callback entries where index 'disabled' is set to true
+     * Remove callback entries where index 'disabled' is set to true.
      *
      * @param array $config
      *

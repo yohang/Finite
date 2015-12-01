@@ -5,7 +5,7 @@ namespace Finite\Event\Callback;
 use Finite\StateMachine\StateMachineInterface;
 
 /**
- * Builds a Callback instance
+ * Builds a Callback instance.
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
@@ -46,10 +46,10 @@ class CallbackBuilder
     public function __construct(StateMachineInterface $sm, array $from = array(), array $to = array(), array $on = array(), $callable = null)
     {
         $this->stateMachine = $sm;
-        $this->from         = $from;
-        $this->to           = $to;
-        $this->on           = $on;
-        $this->callable     = $callable;
+        $this->from = $from;
+        $this->to = $to;
+        $this->on = $on;
+        $this->callable = $callable;
     }
 
     /**

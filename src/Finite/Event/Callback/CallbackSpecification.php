@@ -7,7 +7,7 @@ use Finite\Event\TransitionEvent;
 use Finite\StateMachine\StateMachineInterface;
 
 /**
- * Concrete implementation of CallbackSpecification
+ * Concrete implementation of CallbackSpecification.
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
@@ -34,13 +34,13 @@ class CallbackSpecification implements CallbackSpecificationInterface
         $this->stateMachine = $sm;
 
         $isExclusion = function ($str) { return 0 === strpos($str, '-'); };
-        $removeDash  = function ($str) { return substr($str, 1); };
+        $removeDash = function ($str) { return substr($str, 1); };
 
         foreach (array('from', 'to', 'on') as $clause) {
-            $excludedClause = 'excluded_' . $clause;
+            $excludedClause = 'excluded_'.$clause;
 
             $this->specs[$excludedClause] = array_filter(${$clause}, $isExclusion);
-            $this->specs[$clause]         = array_diff(${$clause}, $this->specs[$excludedClause]);
+            $this->specs[$clause] = array_diff(${$clause}, $this->specs[$excludedClause]);
             $this->specs[$excludedClause] = array_map($removeDash, $this->specs[$excludedClause]);
 
             // For compatibility with old CallbackHandler.
@@ -52,7 +52,7 @@ class CallbackSpecification implements CallbackSpecificationInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function isSatisfiedBy(TransitionEvent $event)
     {
@@ -71,7 +71,7 @@ class CallbackSpecification implements CallbackSpecificationInterface
      */
     private function supportsClause($clause, $property)
     {
-        $excludedClause = 'excluded_' . $clause;
+        $excludedClause = 'excluded_'.$clause;
 
         return
             (0 === count($this->specs[$clause]) || in_array($property, $this->specs[$clause])) &&

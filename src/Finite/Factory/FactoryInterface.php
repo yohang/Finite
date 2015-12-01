@@ -5,14 +5,14 @@ namespace Finite\Factory;
 use Finite\StateMachine\StateMachineInterface;
 
 /**
- * The base interface for Finite's State Machine Factory
+ * The base interface for Finite's State Machine Factory.
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
 interface FactoryInterface
 {
     /**
-     * Returns a StateMachine instance initialized on $object
+     * Returns a StateMachine instance initialized on $object.
      *
      * @param object $object
      * @param string $graph

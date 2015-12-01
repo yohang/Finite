@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * The base Transition class.
- * Feel free to extend it to fit to your needs
+ * Feel free to extend it to fit to your needs.
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  * @author Michal Dabrowski <dabrowski@brillante.pl>
@@ -62,7 +62,7 @@ class Transition implements TransitionInterface, PropertiesAwareTransitionInterf
         $this->state = $state;
         $this->initialStates = (array) $initialStates;
         $this->guard = $guard;
-        $this->propertiesOptionsResolver = $propertiesOptionsResolver ?: new OptionsResolver;
+        $this->propertiesOptionsResolver = $propertiesOptionsResolver ?: new OptionsResolver();
     }
 
     /**
@@ -78,7 +78,7 @@ class Transition implements TransitionInterface, PropertiesAwareTransitionInterf
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getInitialStates()
     {
@@ -86,7 +86,7 @@ class Transition implements TransitionInterface, PropertiesAwareTransitionInterf
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getState()
     {
@@ -94,14 +94,14 @@ class Transition implements TransitionInterface, PropertiesAwareTransitionInterf
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function process(StateMachineInterface $stateMachine)
     {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -117,7 +117,7 @@ class Transition implements TransitionInterface, PropertiesAwareTransitionInterf
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function resolveProperties(array $properties)
     {

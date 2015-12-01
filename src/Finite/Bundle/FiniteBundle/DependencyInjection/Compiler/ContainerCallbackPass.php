@@ -7,7 +7,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * Replace '@xxx' with the defined service if exists in loader configs
+ * Replace '@xxx' with the defined service if exists in loader configs.
  *
  * @author Alexandre Bacco <alexandre.bacco@gmail.com>
  */

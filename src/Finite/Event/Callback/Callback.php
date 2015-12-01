@@ -5,8 +5,6 @@ namespace Finite\Event\Callback;
 use Finite\Event\TransitionEvent;
 
 /**
- *
- *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
 class Callback implements CallbackInterface
@@ -28,7 +26,7 @@ class Callback implements CallbackInterface
     public function __construct(CallbackSpecificationInterface $callbackSpecification, $callable)
     {
         $this->specification = $callbackSpecification;
-        $this->callable      = $callable;
+        $this->callable = $callable;
     }
 
     /**
@@ -40,7 +38,7 @@ class Callback implements CallbackInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function __invoke(TransitionEvent $event)
     {
@@ -50,7 +48,7 @@ class Callback implements CallbackInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function call($object, TransitionEvent $event)
     {

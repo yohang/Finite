@@ -3,7 +3,7 @@
 namespace Finite\Exception;
 
 /**
- * The base Finite Exception class
+ * The base Finite Exception class.
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */

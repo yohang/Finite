@@ -2,31 +2,31 @@
 
 namespace Finite\Transition;
 
-use  Finite\StateMachine\StateMachineInterface;
+use Finite\StateMachine\StateMachineInterface;
 
 /**
- * The base Transition interface
+ * The base Transition interface.
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
 interface TransitionInterface
 {
     /**
-     * Returns the array of states that supports this transition
+     * Returns the array of states that supports this transition.
      *
      * @return array
      */
     public function getInitialStates();
 
     /**
-     * Returns the state resulting of this transition
+     * Returns the state resulting of this transition.
      *
      * @return string
      */
     public function getState();
 
     /**
-     * Process the transition
+     * Process the transition.
      *
      * @param StateMachineInterface $stateMachine
      *
@@ -35,7 +35,7 @@ interface TransitionInterface
     public function process(StateMachineInterface $stateMachine);
 
     /**
-     * Returns the name of the transition
+     * Returns the name of the transition.
      *
      * @return string
      */

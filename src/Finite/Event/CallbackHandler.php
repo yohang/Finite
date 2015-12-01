@@ -10,7 +10,7 @@ use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Manage callback-to-event bindings by trigger spec definition
+ * Manage callback-to-event bindings by trigger spec definition.
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
@@ -36,13 +36,13 @@ class CallbackHandler
      */
     public function __construct(EventDispatcherInterface $dispatcher)
     {
-        $this->dispatcher   = $dispatcher;
-        $this->specResolver = new OptionsResolver;
+        $this->dispatcher = $dispatcher;
+        $this->specResolver = new OptionsResolver();
         $this->specResolver->setDefaults(
             array(
-                'on'           => self::ALL,
-                'from'         => self::ALL,
-                'to'           => self::ALL,
+                'on' => self::ALL,
+                'from' => self::ALL,
+                'to' => self::ALL,
             )
         );
 
@@ -108,7 +108,7 @@ class CallbackHandler
             E_USER_DEPRECATED
         );
 
-        $specs    = $this->specResolver->resolve($specs);
+        $specs = $this->specResolver->resolve($specs);
         $callback = CallbackBuilder::create($smOrCallback, $specs['from'], $specs['to'], $specs['on'], $callable)->getCallback();
 
         $this->dispatcher->addListener($event, $callback);

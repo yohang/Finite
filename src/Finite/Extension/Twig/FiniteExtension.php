@@ -5,7 +5,7 @@ namespace Finite\Extension\Twig;
 use Finite\Context;
 
 /**
- * The Finite Twig extension
+ * The Finite Twig extension.
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
@@ -25,7 +25,7 @@ class FiniteExtension extends \Twig_Extension
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function getFunctions()
     {
@@ -96,7 +96,7 @@ class FiniteExtension extends \Twig_Extension
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {

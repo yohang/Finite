@@ -2,7 +2,6 @@
 
 namespace Finite\Loader;
 
-use Finite\Event\Callback\CallbackBuilder;
 use Finite\Event\Callback\CallbackBuilderFactory;
 use Finite\Event\Callback\CallbackBuilderFactoryInterface;
 use Finite\Event\CallbackHandler;
@@ -15,7 +14,7 @@ use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Loads a StateMachine from an array
+ * Loads a StateMachine from an array.
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
@@ -43,22 +42,22 @@ class ArrayLoader implements LoaderInterface
      */
     public function __construct(array $config, CallbackHandler $handler = null, CallbackBuilderFactoryInterface $callbackBuilderFactory = null)
     {
-        $this->callbackHandler        = $handler;
+        $this->callbackHandler = $handler;
         $this->callbackBuilderFactory = $callbackBuilderFactory;
         $this->config = array_merge(
             array(
-                'class'         => '',
-                'graph'         => 'default',
+                'class' => '',
+                'graph' => 'default',
                 'property_path' => 'finiteState',
-                'states'        => array(),
-                'transitions'   => array(),
+                'states' => array(),
+                'transitions' => array(),
             ),
             $config
         );
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function load(StateMachineInterface $stateMachine)
     {
@@ -67,7 +66,7 @@ class ArrayLoader implements LoaderInterface
         }
 
         if (null === $this->callbackBuilderFactory) {
-            $this->callbackBuilderFactory = new CallbackBuilderFactory;
+            $this->callbackBuilderFactory = new CallbackBuilderFactory();
         }
 
         $stateMachine->setStateAccessor(new PropertyPathStateAccessor($this->config['property_path']));
@@ -79,7 +78,7 @@ class ArrayLoader implements LoaderInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function supports($object, $graph = 'default')
     {
@@ -93,12 +92,12 @@ class ArrayLoader implements LoaderInterface
      */
     private function loadStates(StateMachineInterface $stateMachine)
     {
-        $resolver = new OptionsResolver;
+        $resolver = new OptionsResolver();
         $resolver->setDefaults(array('type' => StateInterface::TYPE_NORMAL, 'properties' => array()));
         $resolver->setAllowedValues('type', array(
             StateInterface::TYPE_INITIAL,
             StateInterface::TYPE_NORMAL,
-            StateInterface::TYPE_FINAL
+            StateInterface::TYPE_FINAL,
         ));
 
         foreach ($this->config['states'] as $state => $config) {
@@ -121,7 +120,7 @@ class ArrayLoader implements LoaderInterface
         $resolver->setNormalizer('from', function (Options $options, $v) { return (array) $v; });
         $resolver->setNormalizer('guard', function (Options $options, $v) { return !isset($v) ? null : $v; });
         $resolver->setNormalizer('configure_properties', function (Options $options, $v) {
-            $resolver = new OptionsResolver;
+            $resolver = new OptionsResolver();
 
             $resolver->setDefaults($options['properties']);
 
@@ -166,7 +165,7 @@ class ArrayLoader implements LoaderInterface
             return;
         }
 
-        $method   = 'add'.ucfirst($position);
+        $method = 'add'.ucfirst($position);
         $resolver = $this->getCallbacksResolver();
         foreach ($this->config['callbacks'][$position] as $specs) {
             $specs = $resolver->resolve($specs);
@@ -184,13 +183,13 @@ class ArrayLoader implements LoaderInterface
 
     private function getCallbacksResolver()
     {
-        $resolver = new OptionsResolver;
+        $resolver = new OptionsResolver();
 
         $resolver->setDefaults(
             array(
-                'on'   => array(),
+                'on' => array(),
                 'from' => array(),
-                'to'   => array(),
+                'to' => array(),
             )
         );
 

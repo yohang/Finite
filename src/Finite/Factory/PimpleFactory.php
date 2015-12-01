@@ -5,7 +5,7 @@ namespace Finite\Factory;
 use Pimple;
 
 /**
- * A concrete implementation of State Machine Factory using Pimple
+ * A concrete implementation of State Machine Factory using Pimple.
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
@@ -28,11 +28,11 @@ class PimpleFactory extends AbstractFactory
     public function __construct(Pimple $container, $id)
     {
         $this->container = $container;
-        $this->id        = $id;
+        $this->id = $id;
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     protected function createStateMachine()
     {

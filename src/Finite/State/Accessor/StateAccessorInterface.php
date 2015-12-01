@@ -5,14 +5,14 @@ namespace Finite\State\Accessor;
 use Finite\Exception\NoSuchPropertyException;
 
 /**
- * Base interface for state accessors
+ * Base interface for state accessors.
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
 interface StateAccessorInterface
 {
     /**
-     * Retrieves the current state from the given object
+     * Retrieves the current state from the given object.
      *
      * @param object $object
      *
@@ -23,7 +23,7 @@ interface StateAccessorInterface
     public function getState($object);
 
     /**
-     * Set the state of the object to the given property path
+     * Set the state of the object to the given property path.
      *
      * @param object $object
      * @param string $value

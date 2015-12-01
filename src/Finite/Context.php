@@ -7,7 +7,7 @@ use Finite\StateMachine\StateMachine;
 
 /**
  * The Finite context.
- * It provides easy ways to deal with Stateful objects, and factory
+ * It provides easy ways to deal with Stateful objects, and factory.
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */

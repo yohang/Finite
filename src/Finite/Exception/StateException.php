@@ -3,7 +3,7 @@
 namespace Finite\Exception;
 
 /**
- * A state exception
+ * A state exception.
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */

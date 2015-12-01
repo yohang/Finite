@@ -11,7 +11,7 @@ use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 use Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException;
 
 /**
- * The event object which is thrown on transitions actions
+ * The event object which is thrown on transitions actions.
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
@@ -23,7 +23,7 @@ class TransitionEvent extends StateMachineEvent
     protected $transition;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $transitionRejected = false;
 
@@ -51,9 +51,9 @@ class TransitionEvent extends StateMachineEvent
         StateMachine $stateMachine,
         array $properties = array()
     ) {
-        $this->transition   = $transition;
+        $this->transition = $transition;
         $this->initialState = $initialState;
-        $this->properties   = $properties;
+        $this->properties = $properties;
 
         if ($transition instanceof PropertiesAwareTransitionInterface) {
             try {

@@ -6,7 +6,7 @@ use Finite\StateMachine\StateMachine;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
- * The event object which is thrown on state machine actions
+ * The event object which is thrown on state machine actions.
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */

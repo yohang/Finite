@@ -6,7 +6,7 @@ use Finite\Transition\TransitionInterface;
 
 /**
  * The base State class.
- * Feel free to extend it to fit to your needs
+ * Feel free to extend it to fit to your needs.
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  * @author Michal Dabrowski <dabrowski@brillante.pl>
@@ -14,21 +14,21 @@ use Finite\Transition\TransitionInterface;
 class State implements StateInterface
 {
     /**
-     * The state type
+     * The state type.
      *
      * @var int
      */
     protected $type;
 
     /**
-     * The transition name
+     * The transition name.
      *
      * @var array
      */
     protected $transitions;
 
     /**
-     * The state name
+     * The state name.
      *
      * @var string
      */
@@ -41,14 +41,14 @@ class State implements StateInterface
 
     public function __construct($name, $type = self::TYPE_NORMAL, array $transitions = array(), array $properties = array())
     {
-        $this->name        = $name;
-        $this->type        = $type;
+        $this->name = $name;
+        $this->type = $type;
         $this->transitions = $transitions;
-        $this->properties  = $properties;
+        $this->properties = $properties;
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function isInitial()
     {
@@ -56,7 +56,7 @@ class State implements StateInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function isFinal()
     {
@@ -64,7 +64,7 @@ class State implements StateInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function isNormal()
     {
@@ -72,7 +72,7 @@ class State implements StateInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function getType()
     {
@@ -102,7 +102,7 @@ class State implements StateInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function getTransitions()
     {
@@ -110,7 +110,7 @@ class State implements StateInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      *
      * @deprecated Deprecated since version 1.0.0-BETA2. Use {@link StateMachine::can($transition)} instead.
      */
@@ -124,7 +124,7 @@ class State implements StateInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function has($property)
     {
@@ -132,7 +132,7 @@ class State implements StateInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function get($property, $default = null)
     {
@@ -140,7 +140,7 @@ class State implements StateInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function getProperties()
     {
@@ -148,7 +148,7 @@ class State implements StateInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {

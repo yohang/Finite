@@ -5,7 +5,7 @@ namespace Finite\Event\Callback;
 use Finite\Event\TransitionEvent;
 
 /**
- * Base interface for callbacks
+ * Base interface for callbacks.
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
