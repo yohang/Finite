@@ -42,18 +42,18 @@ class Callback implements CallbackInterface
     /**
      * {@inheritDoc}
      */
-    public function call($object, TransitionEvent $event)
-    {
-        return call_user_func($this->callable, $object, $event);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function __invoke(TransitionEvent $event)
     {
         if ($this->specification->isSatisfiedBy($event)) {
             $this->call($event->getStateMachine()->getObject(), $event);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function call($object, TransitionEvent $event)
+    {
+        return call_user_func($this->callable, $object, $event);
     }
 }

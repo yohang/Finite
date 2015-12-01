@@ -9,18 +9,6 @@ use Finite\Event\Callback\Callback;
  */
 class CallbackTest extends \PHPUnit_Framework_TestCase
 {
-    public function testItCallsCallable()
-    {
-        $spec         = $this->getMockBuilder('Finite\Event\Callback\CallbackSpecification')->disableOriginalConstructor()->getMock();
-        $callableMock = $this->getMockBuilder('\stdClass')->setMethods(array('call'))->getMock();
-        $event        = $this->getMockBuilder('Finite\Event\TransitionEvent')->disableOriginalConstructor()->getMock();
-
-        $callableMock->expects($this->once())->method('call');
-
-        $callback = new Callback($spec, array($callableMock, 'call'));
-        $callback->call(new \stdClass, $event);
-    }
-
     public function testInvokeWithGoodSpec()
     {
         $spec         = $this->getMockBuilder('Finite\Event\Callback\CallbackSpecification')->disableOriginalConstructor()->getMock();
