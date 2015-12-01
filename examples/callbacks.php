@@ -73,9 +73,19 @@ $loader       = new Finite\Loader\ArrayLoader(array(
 $loader->load($stateMachine);
 $stateMachine->initialize();
 
-$stateMachine->getDispatcher()->addListener('finite.pre_transition', function(\Finite\Event\TransitionEvent $e) {
+$stateMachine->getDispatcher()->addListener(\Finite\Event\FiniteEvents::PRE_TRANSITION, function(\Finite\Event\TransitionEvent $e) {
     echo 'This is a pre transition', "\n";
 });
+
+$foobar = 42;
+$stateMachine->getDispatcher()->addListener(
+    \Finite\Event\FiniteEvents::POST_TRANSITION,
+    \Finite\Event\Callback\CallbackBuilder::create($stateMachine)
+        ->setCallable(function () use ($foobar) {
+            echo "\$foobar is ${foobar} and this is a post transition\n";
+        })
+        ->getCallback()
+);
 
 $stateMachine->apply('propose');
 $stateMachine->apply('reject');

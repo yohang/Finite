@@ -38,6 +38,8 @@ class FiniteFiniteExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->container->hasDefinition('finite.loader.workflow1'));
         $this->assertTrue($this->container->hasDefinition('finite.context'));
         $this->assertTrue($this->container->hasDefinition('finite.twig_extension'));
+        $this->assertTrue($this->container->hasDefinition('finite.callback.handler'));
+        $this->assertTrue($this->container->hasDefinition('finite.callback.builder.factory'));
 
         $this->assertTrue($this->container->getDefinition('finite.loader.workflow1')->isLazy());
 
