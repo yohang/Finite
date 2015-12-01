@@ -24,7 +24,7 @@
             <argument type="service" id="finite.callback.handler" />
             <argument type="service" id="finite.callback.builder.factory" />
         </service>
-        <service id="finite.state_machine" class="%finite.state_machine.class%" scope="prototype">
+        <service id="finite.state_machine" class="%finite.state_machine.class%" shared="false">
             <call method="setDispatcher">
                 <argument type="service" id="event_dispatcher" />
             </call>

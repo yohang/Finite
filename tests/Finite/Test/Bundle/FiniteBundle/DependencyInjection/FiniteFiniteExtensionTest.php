@@ -33,7 +33,7 @@ class FiniteFiniteExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertTrue($this->container->has('finite.factory'));
         $this->assertTrue($this->container->has('finite.state_machine'));
-        $this->assertSame('prototype', $this->container->getDefinition('finite.state_machine')->getScope());
+        $this->assertFalse($this->container->getDefinition('finite.state_machine')->isShared());
         $this->assertFalse($this->container->hasDefinition('finite.array_loader'));
         $this->assertTrue($this->container->hasDefinition('finite.loader.workflow1'));
         $this->assertTrue($this->container->hasDefinition('finite.context'));
