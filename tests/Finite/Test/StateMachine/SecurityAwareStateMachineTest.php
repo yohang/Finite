@@ -29,7 +29,7 @@ class SecurityAwareStateMachineTest extends \PHPUnit_Framework_TestCase
 
     public function testCan()
     {
-        $securityMock = $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
+        $securityMock = $this->getMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         $this->object->setSecurityContext($securityMock);
 
         $that     = $this;

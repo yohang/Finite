@@ -3,6 +3,7 @@
 namespace Finite\StateMachine;
 
 use Finite\Transition\TransitionInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
@@ -16,16 +17,16 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
 class SecurityAwareStateMachine extends StateMachine
 {
     /**
-     * @var SecurityContextInterface
+     * @var AuthorizationCheckerInterface
      */
-    protected $securityContext;
+    protected $authorizationChecker;
 
     /**
-     * @param SecurityContextInterface $securityContext
+     * @param AuthorizationCheckerInterface $authorizationChecker
      */
-    public function setSecurityContext(SecurityContextInterface $securityContext)
+    public function setSecurityContext(AuthorizationCheckerInterface $authorizationChecker)
     {
-        $this->securityContext = $securityContext;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
@@ -35,7 +36,7 @@ class SecurityAwareStateMachine extends StateMachine
     {
         $transition = $transition instanceof TransitionInterface ? $transition : $this->getTransition($transition);
 
-        if (!$this->securityContext->isGranted($transition->getName(), $this->getObject())) {
+        if (!$this->authorizationChecker->isGranted($transition->getName(), $this->getObject())) {
             return false;
         }
 

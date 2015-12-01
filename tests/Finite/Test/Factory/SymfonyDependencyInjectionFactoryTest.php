@@ -22,7 +22,7 @@ class SymfonyDependencyInjectionFactoryTest extends \PHPUnit_Framework_TestCase
         $container = new ContainerBuilder;
         $container
             ->register('state_machine', 'Finite\StateMachine\StateMachine')
-            ->setScope('prototype')
+            ->setShared(false)
             ->setArguments(array(null, null, $this->accessor))
             ->addMethodCall('addTransition', array('t12', 's1', 's2'))
             ->addMethodCall('addTransition', array('t23', 's2', 's3'));
@@ -47,7 +47,7 @@ class SymfonyDependencyInjectionFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Finite\Exception\FactoryException
+     * @expectedException \Finite\Exception\FactoryException
      */
     public function testNoService()
     {
