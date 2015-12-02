@@ -120,4 +120,15 @@ interface StateMachineInterface
      * @return string
      */
     public function getGraph();
+
+    /**
+     * Find a state which have a given property, with an optional given value.
+     * It is useful for looking for objects having a given property in database for example.
+     *
+     * @param string $property
+     * @param mixed  $value
+     *
+     * @return bool
+     */
+    public function findStateWithProperty($property, $value = null);
 }

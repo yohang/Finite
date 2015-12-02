@@ -36,10 +36,10 @@ class StateMachineTestCase extends \PHPUnit_Framework_TestCase
     {
         return array(
             array(new State('s1', State::TYPE_INITIAL)),
-            array('s2'),
+            array(new State('s2', State::TYPE_NORMAL, array(), array('visible' => true))),
             array('s3'),
-            array('s4'),
-            array('s5'),
+            array(new State('s4', State::TYPE_NORMAL, array(), array('visible' => true))),
+            array(new State('s5', State::TYPE_FINAL, array(), array('visible' => false))),
         );
     }
 

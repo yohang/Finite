@@ -363,4 +363,32 @@ class StateMachine implements StateMachineInterface
     {
         return $this->graph;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function findStateWithProperty($property, $value = null)
+    {
+        return array_keys(
+            array_map(
+                function (State $state) {
+                    return $state->getName();
+                },
+                array_filter(
+                    $this->states,
+                    function (State $state) use ($property, $value) {
+                        if (!$state->has($property)) {
+                            return false;
+                        }
+
+                        if (null !== $value && $state->get($property) !== $value) {
+                            return false;
+                        }
+
+                        return true;
+                    }
+                )
+            )
+        );
+    }
 }

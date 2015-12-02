@@ -238,4 +238,15 @@ class StateMachineTest extends StateMachineTestCase
         $this->assertSame('s3', $this->object->getCurrentState()->getName());
     }
 
+    public function testItFindsStatesByPropertyName()
+    {
+        $this->initialize();
+        $this->assertSame(array('s2', 's4', 's5'), $this->object->findStateWithProperty('visible'));
+    }
+
+    public function testItFindsStatesByPropertyValue()
+    {
+        $this->initialize();
+        $this->assertSame(array('s2', 's4'), $this->object->findStateWithProperty('visible', true));
+    }
 }
