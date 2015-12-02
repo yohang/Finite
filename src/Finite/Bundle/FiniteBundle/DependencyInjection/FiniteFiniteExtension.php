@@ -27,6 +27,13 @@ class FiniteFiniteExtension extends Extension
         $loader->load('services.xml');
         $factoryDefinition = $container->getDefinition('finite.factory');
 
+        $smDefinition = $container->getDefinition('finite.state_machine');
+        if (method_exists($smDefinition, 'setShared')) {
+            $smDefinition->setShared(false);
+        } else {
+            $smDefinition->setScope('prototype');
+        }
+
         foreach ($config as $key => $stateMachineConfig) {
             $stateMachineConfig = $this->removeDisabledCallbacks($stateMachineConfig);
 

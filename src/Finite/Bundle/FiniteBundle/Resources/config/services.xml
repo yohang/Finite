@@ -24,7 +24,8 @@
             <argument type="service" id="finite.callback.handler" />
             <argument type="service" id="finite.callback.builder.factory" />
         </service>
-        <service id="finite.state_machine" class="%finite.state_machine.class%" shared="false">
+        <service id="finite.state_machine" class="%finite.state_machine.class%">
+            <!-- shared="false" is defined in DependencyInjection extension as Symfony < 2.8 needs scope="prototype" -->
             <call method="setDispatcher">
                 <argument type="service" id="event_dispatcher" />
             </call>
