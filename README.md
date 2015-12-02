@@ -24,6 +24,11 @@ Features
 * Custom state graph loaders
 * Twig Extension
 
+Documentation
+-------------
+
+[Documentation for master (1.1)](http://finite.readthedocs.org/en/master/)
+
 Getting started
 ---------------
 
