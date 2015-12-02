@@ -52,12 +52,13 @@ class FiniteExtension extends \Twig_Extension
     /**
      * @param object $object
      * @param string $graph
+     * @param bool   $as_object
      *
      * @return array
      */
-    public function getFiniteTransitions($object, $graph = 'default')
+    public function getFiniteTransitions($object, $graph = 'default', $as_object = false)
     {
-        return $this->context->getTransitions($object, $graph);
+        return $this->context->getTransitions($object, $graph, $as_object);
     }
 
     /**

@@ -40,12 +40,24 @@ class Context
     /**
      * @param object $object
      * @param string $graph
+     * @param bool   $asObject
      *
      * @return array<string>
      */
-    public function getTransitions($object, $graph = 'default')
+    public function getTransitions($object, $graph = 'default', $asObject = false)
     {
-        return $this->getStateMachine($object, $graph)->getCurrentState()->getTransitions();
+        if (!$asObject) {
+            return $this->getStateMachine($object, $graph)->getCurrentState()->getTransitions();
+        }
+
+        $stateMachine = $this->getStateMachine($object, $graph);
+
+        return array_map(
+            function ($transition) use ($stateMachine) {
+                return $stateMachine->getTransition($transition);
+            },
+            $stateMachine->getCurrentState()->getTransitions()
+        );
     }
 
     /**
