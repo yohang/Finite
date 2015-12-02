@@ -2,12 +2,14 @@
 
 namespace Finite\State;
 
+use Finite\PropertiesAwareInterface;
+
 /**
  * The base State Interface.
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-interface StateInterface
+interface StateInterface extends PropertiesAwareInterface
 {
     const
         TYPE_INITIAL = 'initial',
@@ -67,25 +69,4 @@ interface StateInterface
      * @deprecated Deprecated since version 1.0.0-BETA2. Use {@link StateMachine::can($transition)} instead.
      */
     public function can($transition);
-
-    /**
-     * @param string $property
-     *
-     * @return bool
-     */
-    public function has($property);
-
-    /**
-     * @param string $property
-     *
-     * @return mixed
-     */
-    public function get($property);
-
-    /**
-     * Returns optional state properties.
-     *
-     * @return mixed
-     */
-    public function getProperties();
 }

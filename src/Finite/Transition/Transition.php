@@ -2,8 +2,11 @@
 
 namespace Finite\Transition;
 
+use Finite\Exception\TransitionException;
 use Finite\StateMachine\StateMachineInterface;
 use Finite\State\StateInterface;
+use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
+use Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -13,7 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  * @author Michal Dabrowski <dabrowski@brillante.pl>
  */
-class Transition implements TransitionInterface, PropertiesAwareTransitionInterface
+class Transition implements PropertiesAwareTransitionInterface
 {
     /**
      * @var array
@@ -121,7 +124,54 @@ class Transition implements TransitionInterface, PropertiesAwareTransitionInterf
      */
     public function resolveProperties(array $properties)
     {
-        return $this->propertiesOptionsResolver->resolve($properties);
+        try {
+            return $this->propertiesOptionsResolver->resolve($properties);
+        } catch (MissingOptionsException $e) {
+            throw new TransitionException(
+                'Testing or applying this transition need a parameter. Provide it or set it optional.',
+                $e->getCode(),
+                $e
+            );
+        } catch (UndefinedOptionsException $e) {
+            throw new TransitionException(
+                'You provided an unknown property to test() or apply(). Remove it or declare it in your graph.',
+                $e->getCode(),
+                $e
+            );
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function has($property)
+    {
+        return array_key_exists($property, $this->getProperties());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function get($property, $default = null)
+    {
+        $properties = $this->getProperties();
+
+        return $this->has($property) ? $properties[$property] : $default;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getProperties()
+    {
+        $missingOptions = $this->propertiesOptionsResolver->getMissingOptions();
+
+        return array_diff_key(
+            $this->propertiesOptionsResolver->resolve(
+                array_combine($missingOptions, array_fill(0, count($missingOptions), null))
+            ),
+            array_combine($missingOptions, $missingOptions)
+        );
     }
 
     /**

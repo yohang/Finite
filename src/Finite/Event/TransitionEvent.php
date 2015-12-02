@@ -2,13 +2,10 @@
 
 namespace Finite\Event;
 
-use Finite\Exception\TransitionException;
 use Finite\State\StateInterface;
 use Finite\StateMachine\StateMachine;
 use Finite\Transition\PropertiesAwareTransitionInterface;
 use Finite\Transition\TransitionInterface;
-use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
-use Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException;
 
 /**
  * The event object which is thrown on transitions actions.
@@ -42,8 +39,6 @@ class TransitionEvent extends StateMachineEvent
      * @param TransitionInterface $transition
      * @param StateMachine        $stateMachine
      * @param array               $properties
-     *
-     * @throws TransitionException
      */
     public function __construct(
         StateInterface $initialState,
@@ -56,21 +51,7 @@ class TransitionEvent extends StateMachineEvent
         $this->properties = $properties;
 
         if ($transition instanceof PropertiesAwareTransitionInterface) {
-            try {
-                $this->properties = $transition->resolveProperties($properties);
-            } catch (MissingOptionsException $e) {
-                throw new TransitionException(
-                    'Testing or applying this transition need a parameter. Provide it or set it optional.',
-                    $e->getCode(),
-                    $e
-                );
-            } catch (UndefinedOptionsException $e) {
-                throw new TransitionException(
-                    'You provided an unknown property to test() or apply(). Remove it or declare it in your graph.',
-                    $e->getCode(),
-                    $e
-                );
-            }
+            $this->properties = $transition->resolveProperties($properties);
         }
 
         parent::__construct($stateMachine);
