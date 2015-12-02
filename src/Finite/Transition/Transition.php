@@ -165,11 +165,12 @@ class Transition implements PropertiesAwareTransitionInterface
     public function getProperties()
     {
         $missingOptions = $this->propertiesOptionsResolver->getMissingOptions();
-        $options        = array();
 
-        if (count($missingOptions) > 0) {
-            $options = array_combine($missingOptions, array_fill(0, count($missingOptions), null));
+        if (0 === count($missingOptions)) {
+            return $this->propertiesOptionsResolver->resolve(array());
         }
+
+        $options = array_combine($missingOptions, array_fill(0, count($missingOptions), null));
 
         return array_diff_key(
             $this->propertiesOptionsResolver->resolve($options),
