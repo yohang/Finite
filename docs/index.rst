@@ -2,12 +2,13 @@ Finite
 ======
 
 .. toctree::
-       :numbered:
-       :maxdepth: 1 
-       
-       examples/basic_graph
-       examples/callbacks
-       examples/transition-properties
+    :numbered:
+    :maxdepth: 1
+
+    usage/symfony
+    examples/basic_graph
+    examples/callbacks
+    examples/transition-properties
 
 A PHP Finite State Machine
 --------------------------
@@ -47,6 +48,8 @@ Define your workflow / state graph
     $stateMachine->setObject($document);
     $stateMachine->initialize();
 
+
+.. _index_define_your_object:
 
 Define your object
 ^^^^^^^^^^^^^^^^^^
