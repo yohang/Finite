@@ -129,21 +129,13 @@ class StateMachine implements StateMachineInterface
             ));
         }
 
-        $this->dispatcher->dispatch(FiniteEvents::PRE_TRANSITION, $event);
-        $this->dispatcher->dispatch(FiniteEvents::PRE_TRANSITION.'.'.$transitionName, $event);
-        if (null !== $this->getGraph()) {
-            $this->dispatcher->dispatch(FiniteEvents::PRE_TRANSITION.'.'.$this->getGraph().'.'.$transition->getName(), $event);
-        }
+        $this->dispatchTransitionEvent($transition, $event, FiniteEvents::PRE_TRANSITION);
 
         $returnValue = $transition->process($this);
         $this->stateAccessor->setState($this->object, $transition->getState());
         $this->currentState = $this->getState($transition->getState());
 
-        $this->dispatcher->dispatch(FiniteEvents::POST_TRANSITION, $event);
-        $this->dispatcher->dispatch(FiniteEvents::POST_TRANSITION.'.'.$transitionName, $event);
-        if (null !== $this->getGraph()) {
-            $this->dispatcher->dispatch(FiniteEvents::POST_TRANSITION.'.'.$this->getGraph().'.'.$transition->getName(), $event);
-        }
+        $this->dispatchTransitionEvent($transition, $event, FiniteEvents::POST_TRANSITION);
 
         return $returnValue;
     }
@@ -164,11 +156,7 @@ class StateMachine implements StateMachineInterface
         }
 
         $event = new TransitionEvent($this->getCurrentState(), $transition, $this, $parameters);
-        $this->dispatcher->dispatch(FiniteEvents::TEST_TRANSITION, $event);
-        $this->dispatcher->dispatch(FiniteEvents::TEST_TRANSITION.'.'.$transition->getName(), $event);
-        if (null !== $this->getGraph()) {
-            $this->dispatcher->dispatch(FiniteEvents::TEST_TRANSITION.'.'.$this->getGraph().'.'.$transition->getName(), $event);
-        }
+        $this->dispatchTransitionEvent($transition, $event, FiniteEvents::TEST_TRANSITION);
 
         return !$event->isRejected();
     }
@@ -390,5 +378,21 @@ class StateMachine implements StateMachineInterface
                 )
             )
         );
+    }
+
+    /**
+     * Dispatches event for the transition
+     *
+     * @param TransitionInterface $transition
+     * @param TransitionEvent $event
+     * @param type $transitionState
+     */
+    private function dispatchTransitionEvent(TransitionInterface $transition, TransitionEvent $event, $transitionState)
+    {
+        $this->dispatcher->dispatch($transitionState, $event);
+        $this->dispatcher->dispatch($transitionState.'.'.$transition->getName(), $event);
+        if (null !== $this->getGraph()) {
+            $this->dispatcher->dispatch($transitionState.'.'.$this->getGraph().'.'.$transition->getName(), $event);
+        }
     }
 }
