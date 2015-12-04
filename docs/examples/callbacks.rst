@@ -135,11 +135,17 @@ Here is the available events :
 .. code-block:: text
 
     finite.initialize      => Dispatched at State Machine initialization
+    finite.test_transition => Dispatched when testing if a transition can be applied
     finite.pre_transition  => Dispatched before a transition
     finite.post_transition => Dispatched after a transition
 
+    finite.test_transition.{transitionName} => Dispatched when testing if a specific transition can be applied
     finite.pre_transition.{transitionName}  => Dispatched before a specific transition
     finite.post_transition.{transitionName} => Dispatched after a specific transition
+    
+    finite.test_transition.{graph}.{transitionName} => Dispatched when testing if a specific transition  in a specific graph can be applied
+    finite.pre_transition.{graph}.{transitionName}  => Dispatched before a specific transition in a specific graph
+    finite.post_transition.{graph}.{transitionName} => Dispatched after a specific transition in a specific graph
 
 
 Example :
@@ -155,3 +161,22 @@ Example :
     $stateMachine->apply('propose');
     // => "This is a pre transition"
 
+Example testing transitions:
+^^^^^^^^^
+
+.. code-block:: php
+
+    <?php
+
+    $stateMachine->getDispatcher()->addListener('finite.test_transition', function(\Finite\Event\TransitionEvent $e) {
+        $e->reject();
+    });
+    
+    try {
+        $stateMachine->apply('propose');
+    } 
+    catch (Finite\StateMachine\Exception\StateException $e) {
+        echo 'The transition did not apply', "\n";
+    }
+    
+    // => "The transition did not apply"
