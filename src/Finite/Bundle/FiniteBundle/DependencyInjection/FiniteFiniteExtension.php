@@ -73,6 +73,7 @@ class FiniteFiniteExtension extends Extension
                 if ($callback['disabled']) {
                     unset($config['callbacks'][$position][$i]);
                 }
+                unset($config['callbacks'][$position][$i]['disabled']);
             }
         }
 
