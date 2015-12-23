@@ -86,10 +86,10 @@ class FiniteFiniteExtensionTest extends \PHPUnit_Framework_TestCase
             ),
             'callbacks'     => array(
                 'before' => array(
-                    'callback1' => array('on' => '1_to_2', 'do' => array('@my.listener.service', 'on1To2'), 'disabled' => false)
+                    'callback1' => array('on' => '1_to_2', 'do' => array('@my.listener.service', 'on1To2'))
                 ),
                 'after'  => array(
-                    'callback2' => array('from' => '-state3', 'to' => array('state2', 'state3'), 'do' => array('@my.listener.service', 'on1To2'), 'disabled' => false)
+                    'callback2' => array('from' => '-state3', 'to' => array('state2', 'state3'), 'do' => array('@my.listener.service', 'on1To2'))
                 )
             )
         );
