@@ -3,7 +3,6 @@
 namespace Finite;
 
 use Finite\Factory\FactoryInterface;
-use Finite\StateMachine\StateMachine;
 
 /**
  * The Finite context.
@@ -11,7 +10,7 @@ use Finite\StateMachine\StateMachine;
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class Context
+class Context implements ContextInterface
 {
     /**
      * @var FactoryInterface
@@ -27,10 +26,7 @@ class Context
     }
 
     /**
-     * @param object $object
-     * @param string $graph
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getState($object, $graph = 'default')
     {
@@ -38,11 +34,7 @@ class Context
     }
 
     /**
-     * @param object $object
-     * @param string $graph
-     * @param bool   $asObject
-     *
-     * @return array<string>
+     * {@inheritdoc}
      */
     public function getTransitions($object, $graph = 'default', $asObject = false)
     {
@@ -61,10 +53,7 @@ class Context
     }
 
     /**
-     * @param object $object
-     * @param string $graph
-     *
-     * @return array<string>
+     * {@inheritdoc}
      */
     public function getProperties($object, $graph = 'default')
     {
@@ -72,11 +61,7 @@ class Context
     }
 
     /**
-     * @param object $object
-     * @param string $property
-     * @param string $graph
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function hasProperty($object, $property, $graph = 'default')
     {
@@ -84,10 +69,7 @@ class Context
     }
 
     /**
-     * @param object $object
-     * @param string $graph
-     *
-     * @return StateMachine
+     * {@inheritdoc}
      */
     public function getStateMachine($object, $graph = 'default')
     {

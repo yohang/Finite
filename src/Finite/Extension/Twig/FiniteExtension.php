@@ -2,7 +2,7 @@
 
 namespace Finite\Extension\Twig;
 
-use Finite\Context;
+use Finite\ContextInterface;
 
 /**
  * The Finite Twig extension.
@@ -12,14 +12,14 @@ use Finite\Context;
 class FiniteExtension extends \Twig_Extension
 {
     /**
-     * @var Context
+     * @var ContextInterface
      */
     protected $context;
 
     /**
-     * @param Context $context
+     * @param ContextInterface $context
      */
-    public function __construct(Context $context)
+    public function __construct(ContextInterface $context)
     {
         $this->context = $context;
     }
