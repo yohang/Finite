@@ -53,3 +53,4 @@ interface ContextInterface
      */
     public function getStateMachine($object, $graph = 'default');
 }
+
