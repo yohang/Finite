@@ -339,6 +339,14 @@ class StateMachine implements StateMachineInterface
     /**
      * {@inheritdoc}
      */
+    public function hasStateAccessor()
+    {
+        return null !== $this->stateAccessor;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function setGraph($graph)
     {
         $this->graph = $graph;
