@@ -112,6 +112,11 @@ interface StateMachineInterface
     public function setStateAccessor(StateAccessorInterface $stateAccessor);
 
     /**
+     * @return bool
+     */
+    public function hasStateAccessor();
+
+    /**
      * @param string $graph
      */
     public function setGraph($graph);

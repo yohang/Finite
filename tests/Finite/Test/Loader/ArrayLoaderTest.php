@@ -179,8 +179,18 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->object->load($sm);
+    }
 
+    public function testLoadWithCustomStateAccessor()
+    {
+        $sa = $this->getMock('Finite\State\Accessor\PropertyPathStateAccessor', array(), array(), 'CustomAccessor');
 
+        $sm = new StateMachine;
+        $sm->setStateAccessor($sa);
+
+        $this->object->load($sm);
+
+        $this->assertAttributeInstanceOf('CustomAccessor', 'stateAccessor', $sm);
     }
 
     public function testSupports()
