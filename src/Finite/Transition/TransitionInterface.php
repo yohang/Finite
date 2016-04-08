@@ -47,4 +47,10 @@ interface TransitionInterface
      * @return callable
      */
     public function getGuard();
+
+    /**
+     * Returns properties in the transition.
+     * return mixed
+     */
+    public function getProperties();
 }
