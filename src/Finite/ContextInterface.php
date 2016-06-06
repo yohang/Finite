@@ -5,7 +5,7 @@ namespace Finite;
 use Finite\StateMachine\StateMachineInterface;
 
 /**
- * Interface that all class that have properties must implements
+ * Interface that represents the contract between context
  *
  * @author Luis Henrique Mulinari <luis.mulinari@gmail.com>
  */
