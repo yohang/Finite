@@ -408,7 +408,7 @@ class StateMachine implements StateMachineInterface
     public function getCallbacks()
     {
         if (empty($this->callbacks)) {
-            $this->generateCallbacks();
+            $this->setCallbacks();
         }
 
         return $this->callbacks;
@@ -417,7 +417,7 @@ class StateMachine implements StateMachineInterface
     /**
      * @return array
      */
-    protected function generateCallbacks()
+    protected function setCallbacks()
     {
         $listeners = [
             FiniteEvents::PRE_TRANSITION,
@@ -431,21 +431,7 @@ class StateMachine implements StateMachineInterface
 
             foreach ($events as $event) {
                 if ($event instanceof Callback) {
-                    $eventCallbacks = $event->getCallbacks();
-                    $clauses = $event->getSpecification()->getClauses();
-
-                    $callback = [
-                        'class' => get_class($eventCallbacks[0]),
-                        'method' => $eventCallbacks[1],
-                    ];
-
-                    foreach ($clauses as $clauseKey => $clauseValue) {
-                        if (!empty($clauseValue)) {
-                            foreach ($clauseValue as $name) {
-                                $callbacks[$name][$listener][$clauseKey][] = $callback;
-                            }
-                        }
-                    }
+                    $callbacks = array_merge($callbacks, $this->getCallbackData($event, $listener));
                 }
             }
         }
@@ -453,5 +439,40 @@ class StateMachine implements StateMachineInterface
         $this->callbacks = $callbacks;
 
         return $this->callbacks;
+    }
+
+    /**
+     * @param Callback $event
+     * @param string $listener
+     *
+     * @return array
+     */
+    protected function getCallbackData(Callback $event, $listener)
+    {
+        $eventCallbacks = $event->getCallbacks();
+        $clauses = $event->getSpecification()->getClauses();
+
+        $callback = [
+            'class' => get_class($eventCallbacks[0]),
+            'method' => $eventCallbacks[1],
+        ];
+
+        $callbacks = [];
+
+        foreach ($clauses as $clauseKey => $clauseValue) {
+            if (!empty($clauseValue)) {
+                foreach ($clauseValue as $name) {
+                    $callbacks[] = [
+                        'name' => $name,
+                        'listener' => $listener,
+                        'clause' => $clauseKey,
+                        'class' => $callback['class'],
+                        'method' => $callback['method'],
+                    ];
+                }
+            }
+        }
+
+        return $callbacks;
     }
 }
