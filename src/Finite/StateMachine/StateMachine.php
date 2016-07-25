@@ -2,6 +2,7 @@
 
 namespace Finite\StateMachine;
 
+use Finite\Event\Callback\Callback;
 use Finite\Event\FiniteEvents;
 use Finite\Event\StateMachineEvent;
 use Finite\Event\TransitionEvent;
@@ -66,6 +67,11 @@ class StateMachine implements StateMachineInterface
     protected $graph;
 
     /**
+     * @var array
+     */
+    protected $callbacks = [];
+
+    /**
      * @param object                   $object
      * @param EventDispatcherInterface $dispatcher
      * @param StateAccessorInterface   $stateAccessor
@@ -93,7 +99,7 @@ class StateMachine implements StateMachineInterface
             $initialState = $this->stateAccessor->getState($this->object);
         } catch (Exception\NoSuchPropertyException $e) {
             throw new Exception\ObjectException(sprintf(
-               'StateMachine can\'t be initialized because the defined property_path of object "%s" does not exist.',
+                'StateMachine can\'t be initialized because the defined property_path of object "%s" does not exist.',
                 get_class($this->object)
             ), $e->getCode(), $e);
         }
@@ -394,5 +400,58 @@ class StateMachine implements StateMachineInterface
         if (null !== $this->getGraph()) {
             $this->dispatcher->dispatch($transitionState.'.'.$this->getGraph().'.'.$transition->getName(), $event);
         }
+    }
+
+    /**
+     * @return array
+     */
+    public function getCallbacks()
+    {
+        if (empty($this->callbacks)) {
+            $this->generateCallbacks();
+        }
+
+        return $this->callbacks;
+    }
+
+    /**
+     * @return array
+     */
+    protected function generateCallbacks()
+    {
+        $listeners = [
+            FiniteEvents::PRE_TRANSITION,
+            FiniteEvents::POST_TRANSITION,
+        ];
+
+        $callbacks = [];
+
+        foreach ($listeners as $listener) {
+            $events = $this->getDispatcher()->getListeners($listener);
+
+            foreach ($events as $event) {
+                if ($event instanceof Callback) {
+                    $eventCallbacks = $event->getCallbacks();
+                    $clauses = $event->getSpecification()->getClauses();
+
+                    $callback = [
+                        'class' => get_class($eventCallbacks[0]),
+                        'method' => $eventCallbacks[1],
+                    ];
+
+                    foreach ($clauses as $clauseKey => $clauseValue) {
+                        if (!empty($clauseValue)) {
+                            foreach ($clauseValue as $name) {
+                                $callbacks[$name][$listener][$clauseKey][] = $callback;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        $this->callbacks = $callbacks;
+
+        return $this->callbacks;
     }
 }

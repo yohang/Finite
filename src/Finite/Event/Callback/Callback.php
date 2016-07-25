@@ -15,15 +15,15 @@ class Callback implements CallbackInterface
     private $specification;
 
     /**
-     * @var callable
+     * @var array callable
      */
     private $callable;
 
     /**
      * @param CallbackSpecificationInterface $callbackSpecification
-     * @param callable                       $callable
+     * @param array $callable
      */
-    public function __construct(CallbackSpecificationInterface $callbackSpecification, $callable)
+    public function __construct(CallbackSpecificationInterface $callbackSpecification, array $callable)
     {
         $this->specification = $callbackSpecification;
         $this->callable = $callable;
@@ -35,6 +35,22 @@ class Callback implements CallbackInterface
     public function getSpecification()
     {
         return $this->specification;
+    }
+
+    /**
+     * @return array callable
+     */
+    public function getCallbacks()
+    {
+        return $this->callable;
+    }
+
+    /**
+     * @return array
+     */
+    public function getClauses()
+    {
+        return $this->specification->getClauses();
     }
 
     /**

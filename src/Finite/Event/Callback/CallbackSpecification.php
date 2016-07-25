@@ -64,6 +64,14 @@ class CallbackSpecification implements CallbackSpecificationInterface
     }
 
     /**
+     * @return array
+     */
+    public function getClauses()
+    {
+        return $this->specs;
+    }
+
+    /**
      * @param string $clause
      * @param string $property
      *
