@@ -36,7 +36,7 @@ class CallbackSpecification implements CallbackSpecificationInterface
         $isExclusion = function ($str) { return 0 === strpos($str, '-'); };
         $removeDash = function ($str) { return substr($str, 1); };
 
-        foreach (array('from', 'to', 'on') as $clause) {
+        foreach (array(Callback::CLAUSE_FROM, Callback::CLAUSE_TO, Callback::CLAUSE_ON) as $clause) {
             $excludedClause = 'excluded_'.$clause;
 
             $this->specs[$excludedClause] = array_filter(${$clause}, $isExclusion);
@@ -58,9 +58,9 @@ class CallbackSpecification implements CallbackSpecificationInterface
     {
         return
             $event->getStateMachine() === $this->stateMachine &&
-            $this->supportsClause('from', $event->getInitialState()->getName()) &&
-            $this->supportsClause('to', $event->getTransition()->getState()) &&
-            $this->supportsClause('on', $event->getTransition()->getName());
+            $this->supportsClause(Callback::CLAUSE_FROM, $event->getInitialState()->getName()) &&
+            $this->supportsClause(Callback::CLAUSE_TO, $event->getTransition()->getState()) &&
+            $this->supportsClause(Callback::CLAUSE_ON, $event->getTransition()->getName());
     }
 
     /**

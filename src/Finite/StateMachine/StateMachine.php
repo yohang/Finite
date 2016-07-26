@@ -407,72 +407,14 @@ class StateMachine implements StateMachineInterface
      */
     public function getCallbacks()
     {
-        if (empty($this->callbacks)) {
-            $this->setCallbacks();
-        }
-
         return $this->callbacks;
     }
 
     /**
      * @return array
      */
-    protected function setCallbacks()
+    public function setCallbacks($callbacks)
     {
-        $listeners = [
-            FiniteEvents::PRE_TRANSITION,
-            FiniteEvents::POST_TRANSITION,
-        ];
-
-        $callbacks = [];
-
-        foreach ($listeners as $listener) {
-            $events = $this->getDispatcher()->getListeners($listener);
-
-            foreach ($events as $event) {
-                if ($event instanceof Callback) {
-                    $callbacks = array_merge($callbacks, $this->getCallbackData($event, $listener));
-                }
-            }
-        }
-
         $this->callbacks = $callbacks;
-
-        return $this->callbacks;
-    }
-
-    /**
-     * @param Callback $event
-     * @param string $listener
-     *
-     * @return array
-     */
-    protected function getCallbackData(Callback $event, $listener)
-    {
-        $eventCallbacks = $event->getCallbacks();
-        $clauses = $event->getSpecification()->getClauses();
-
-        $callback = [
-            'class' => get_class($eventCallbacks[0]),
-            'method' => $eventCallbacks[1],
-        ];
-
-        $callbacks = [];
-
-        foreach ($clauses as $clauseKey => $clauseValue) {
-            if (!empty($clauseValue)) {
-                foreach ($clauseValue as $name) {
-                    $callbacks[] = [
-                        'name' => $name,
-                        'listener' => $listener,
-                        'clause' => $clauseKey,
-                        'class' => $callback['class'],
-                        'method' => $callback['method'],
-                    ];
-                }
-            }
-        }
-
-        return $callbacks;
     }
 }

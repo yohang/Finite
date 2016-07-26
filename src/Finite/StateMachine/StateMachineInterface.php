@@ -135,5 +135,10 @@ interface StateMachineInterface
     /**
      * @return array
      */
+    public function setCallbacks($callbacks);
+
+    /**
+     * @return array
+     */
     public function getCallbacks();
 }

@@ -44,18 +44,25 @@ class Transition implements PropertiesAwareTransitionInterface
     protected $propertiesOptionsResolver;
 
     /**
+     * @var array
+     */
+    protected $callbacks;
+
+    /**
      * @param string          $name
      * @param string|array    $initialStates
      * @param string          $state
      * @param callable|null   $guard
      * @param OptionsResolver $propertiesOptionsResolver
+     * @param array           $callbacks
      */
     public function __construct(
         $name,
         $initialStates,
         $state,
         $guard = null,
-        OptionsResolver $propertiesOptionsResolver = null
+        OptionsResolver $propertiesOptionsResolver = null,
+        array $callbacks = []
     ) {
         if (null !== $guard && !is_callable($guard)) {
             throw new \InvalidArgumentException('Invalid callable guard argument passed to Transition::__construct().');
@@ -66,6 +73,7 @@ class Transition implements PropertiesAwareTransitionInterface
         $this->initialStates = (array) $initialStates;
         $this->guard = $guard;
         $this->propertiesOptionsResolver = $propertiesOptionsResolver ?: new OptionsResolver();
+        $this->callbacks = $callbacks;
     }
 
     /**
@@ -176,6 +184,14 @@ class Transition implements PropertiesAwareTransitionInterface
             $this->propertiesOptionsResolver->resolve($options),
             array_combine($missingOptions, $missingOptions)
         );
+    }
+
+    /**
+     * @return array
+     */
+    public function getCallbacks()
+    {
+        return $this->callbacks;
     }
 
     /**

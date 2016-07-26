@@ -40,23 +40,23 @@ class CallbackHandler
         $this->specResolver = new OptionsResolver();
         $this->specResolver->setDefaults(
             array(
-                'on' => self::ALL,
-                'from' => self::ALL,
-                'to' => self::ALL,
+                Callback::CLAUSE_ON => self::ALL,
+                Callback::CLAUSE_FROM => self::ALL,
+                Callback::CLAUSE_TO => self::ALL,
             )
         );
 
-        $this->specResolver->setAllowedTypes('on', array('string', 'array'));
-        $this->specResolver->setAllowedTypes('from', array('string', 'array'));
-        $this->specResolver->setAllowedTypes('to', array('string', 'array'));
+        $this->specResolver->setAllowedTypes(Callback::CLAUSE_ON, array('string', 'array'));
+        $this->specResolver->setAllowedTypes(Callback::CLAUSE_FROM, array('string', 'array'));
+        $this->specResolver->setAllowedTypes(Callback::CLAUSE_TO, array('string', 'array'));
 
         $toArrayNormalizer = function (Options $options, $value) {
             return (array) $value;
         };
 
-        $this->specResolver->setNormalizer('on', $toArrayNormalizer);
-        $this->specResolver->setNormalizer('from', $toArrayNormalizer);
-        $this->specResolver->setNormalizer('to', $toArrayNormalizer);
+        $this->specResolver->setNormalizer(Callback::CLAUSE_ON, $toArrayNormalizer);
+        $this->specResolver->setNormalizer(Callback::CLAUSE_FROM, $toArrayNormalizer);
+        $this->specResolver->setNormalizer(Callback::CLAUSE_TO, $toArrayNormalizer);
     }
 
     /**
@@ -109,7 +109,7 @@ class CallbackHandler
         );
 
         $specs = $this->specResolver->resolve($specs);
-        $callback = CallbackBuilder::create($smOrCallback, $specs['from'], $specs['to'], $specs['on'], $callable)->getCallback();
+        $callback = CallbackBuilder::create($smOrCallback, $specs[Callback::CLAUSE_FROM], $specs[Callback::CLAUSE_TO], $specs[Callback::CLAUSE_ON], $callable)->getCallback();
 
         $this->dispatcher->addListener($event, $callback);
 
