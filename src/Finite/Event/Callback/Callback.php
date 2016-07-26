@@ -9,19 +9,26 @@ use Finite\Event\TransitionEvent;
  */
 class Callback implements CallbackInterface
 {
+    const CLAUSE_AFTER = 'after';
+    const CLAUSE_BEFORE = 'before';
+    const CLAUSE_FROM = 'from';
+    const CLAUSE_TO = 'to';
+    const CLAUSE_ON = 'on';
+    const CLAUSE_DO = 'do';
+
     /**
      * @var CallbackSpecificationInterface
      */
     private $specification;
 
     /**
-     * @var callable
+     * @var array callable
      */
     private $callable;
 
     /**
      * @param CallbackSpecificationInterface $callbackSpecification
-     * @param callable                       $callable
+     * @param $callable
      */
     public function __construct(CallbackSpecificationInterface $callbackSpecification, $callable)
     {
@@ -35,6 +42,22 @@ class Callback implements CallbackInterface
     public function getSpecification()
     {
         return $this->specification;
+    }
+
+    /**
+     * @return array callable
+     */
+    public function getCallbacks()
+    {
+        return $this->callable;
+    }
+
+    /**
+     * @return array
+     */
+    public function getClauses()
+    {
+        return $this->specification->getClauses();
     }
 
     /**
