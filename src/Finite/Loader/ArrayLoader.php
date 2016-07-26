@@ -120,9 +120,12 @@ class ArrayLoader implements LoaderInterface
         $callbacks = [];
 
         foreach ($this->config['callbacks'][$position] as $callbackName => $callback) {
-            foreach ([Callback::CLAUSE_FROM, 'to', 'on'] as $caluse) {
-                if (!empty($callback[$caluse][1]) && $callback[$caluse][1] == $triggerName) {
-                    $callbacks[] = [$callbackName => $callback];
+            foreach ([Callback::CLAUSE_FROM, Callback::CLAUSE_TO, Callback::CLAUSE_ON] as $clause) {
+                if (!empty($callback[$clause])) {
+                    if ((is_string($callback[$clause]) && $callback[$clause] === $triggerName)
+                        || (is_array($callback[$clause]) && in_array($triggerName, $callback[$clause]))) {
+                        $callbacks[] = [$callbackName => $callback];
+                    }
                 }
             }
         }
