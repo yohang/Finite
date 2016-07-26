@@ -2,6 +2,7 @@
 
 namespace Finite\Loader;
 
+use Finite\Event\Callback\Callback;
 use Finite\Event\Callback\CallbackBuilderFactory;
 use Finite\Event\Callback\CallbackBuilderFactoryInterface;
 use Finite\Event\CallbackHandler;
@@ -75,9 +76,9 @@ class ArrayLoader implements LoaderInterface
 
         $stateMachine->setGraph($this->config['graph']);
 
+        $this->loadCallbacks($stateMachine);
         $this->loadStates($stateMachine);
         $this->loadTransitions($stateMachine);
-        $this->loadCallbacks($stateMachine);
     }
 
     /**
@@ -88,6 +89,51 @@ class ArrayLoader implements LoaderInterface
         $reflection = new \ReflectionClass($this->config['class']);
 
         return $reflection->isInstance($object) && $graph === $this->config['graph'];
+    }
+
+    /**
+     * @param $triggerName
+     *
+     * @return array
+     */
+    protected function findCallbacksByTrigger($triggerName)
+    {
+        $callbacks = [];
+
+        foreach ([Callback::CLAUSE_BEFORE, Callback::CLAUSE_AFTER] as $position) {
+            $callbacks[$position] = [];
+
+            $callbacks[$position] = array_merge(
+                $callbacks[$position],
+                $this->findCallbacksByTriggerAndPosition($triggerName, $position)
+            );
+        }
+
+        return $callbacks;
+    }
+
+    /**
+     * @param $triggerName
+     * @param $position
+     *
+     * @return array
+     */
+    protected function findCallbacksByTriggerAndPosition($triggerName, $position)
+    {
+        $callbacks = [];
+
+        foreach ($this->config['callbacks'][$position] as $callbackName => $callback) {
+            foreach ([Callback::CLAUSE_FROM, Callback::CLAUSE_TO, Callback::CLAUSE_ON] as $clause) {
+                if (!empty($callback[$clause])) {
+                    if ((is_string($callback[$clause]) && $callback[$clause] === $triggerName)
+                        || (is_array($callback[$clause]) && in_array($triggerName, $callback[$clause]))) {
+                        $callbacks[] = [$callbackName => $callback];
+                    }
+                }
+            }
+        }
+
+        return $callbacks;
     }
 
     /**
@@ -105,7 +151,13 @@ class ArrayLoader implements LoaderInterface
 
         foreach ($this->config['states'] as $state => $config) {
             $config = $resolver->resolve($config);
-            $stateMachine->addState(new State($state, $config['type'], array(), $config['properties']));
+            $stateMachine->addState(new State(
+                $state,
+                $config['type'],
+                [],
+                $config['properties'],
+                $this->findCallbacksByTrigger($state)
+            ));
         }
     }
 
@@ -115,12 +167,12 @@ class ArrayLoader implements LoaderInterface
     private function loadTransitions(StateMachineInterface $stateMachine)
     {
         $resolver = new OptionsResolver();
-        $resolver->setRequired(array('from', 'to'));
+        $resolver->setRequired(array(Callback::CLAUSE_FROM, Callback::CLAUSE_TO));
         $resolver->setDefaults(array('guard' => null, 'configure_properties' => null, 'properties' => array()));
 
         $resolver->setAllowedTypes('configure_properties', array('null', 'callable'));
 
-        $resolver->setNormalizer('from', function (Options $options, $v) { return (array) $v; });
+        $resolver->setNormalizer(Callback::CLAUSE_FROM, function (Options $options, $v) { return (array) $v; });
         $resolver->setNormalizer('guard', function (Options $options, $v) { return !isset($v) ? null : $v; });
         $resolver->setNormalizer('configure_properties', function (Options $options, $v) {
             $resolver = new OptionsResolver();
@@ -139,10 +191,11 @@ class ArrayLoader implements LoaderInterface
             $stateMachine->addTransition(
                 new Transition(
                     $transition,
-                    $config['from'],
+                    $config[Callback::CLAUSE_FROM],
                     $config['to'],
                     $config['guard'],
-                    $config['configure_properties']
+                    $config['configure_properties'],
+                    $this->findCallbacksByTrigger($transition)
                 )
             );
         }
@@ -157,7 +210,9 @@ class ArrayLoader implements LoaderInterface
             return;
         }
 
-        foreach (array('before', 'after') as $position) {
+        $stateMachine->setCallbacks($this->config['callbacks']);
+
+        foreach (array(Callback::CLAUSE_BEFORE, Callback::CLAUSE_AFTER) as $position) {
             $this->loadCallbacksFor($position, $stateMachine);
         }
     }
@@ -174,10 +229,10 @@ class ArrayLoader implements LoaderInterface
             $specs = $resolver->resolve($specs);
 
             $callback = $this->callbackBuilderFactory->createBuilder($stateMachine)
-                ->setFrom($specs['from'])
-                ->setTo($specs['to'])
-                ->setOn($specs['on'])
-                ->setCallable($specs['do'])
+                ->setFrom($specs[Callback::CLAUSE_FROM])
+                ->setTo($specs[Callback::CLAUSE_TO])
+                ->setOn($specs[Callback::CLAUSE_ON])
+                ->setCallable($specs[Callback::CLAUSE_DO])
                 ->getCallback();
 
             $this->callbackHandler->$method($callback);
@@ -190,24 +245,24 @@ class ArrayLoader implements LoaderInterface
 
         $resolver->setDefaults(
             array(
-                'on' => array(),
-                'from' => array(),
-                'to' => array(),
+                Callback::CLAUSE_ON => array(),
+                Callback::CLAUSE_FROM => array(),
+                Callback::CLAUSE_TO => array(),
             )
         );
 
-        $resolver->setRequired(array('do'));
+        $resolver->setRequired(array(Callback::CLAUSE_DO));
 
-        $resolver->setAllowedTypes('on',   array('string', 'array'));
-        $resolver->setAllowedTypes('from', array('string', 'array'));
-        $resolver->setAllowedTypes('to',   array('string', 'array'));
+        $resolver->setAllowedTypes(Callback::CLAUSE_ON,   array('string', 'array'));
+        $resolver->setAllowedTypes(Callback::CLAUSE_FROM, array('string', 'array'));
+        $resolver->setAllowedTypes(Callback::CLAUSE_TO,   array('string', 'array'));
 
         $toArrayNormalizer = function (Options $options, $value) {
             return (array) $value;
         };
-        $resolver->setNormalizer('on',  $toArrayNormalizer);
-        $resolver->setNormalizer('from', $toArrayNormalizer);
-        $resolver->setNormalizer('to',   $toArrayNormalizer);
+        $resolver->setNormalizer(Callback::CLAUSE_ON,  $toArrayNormalizer);
+        $resolver->setNormalizer(Callback::CLAUSE_FROM, $toArrayNormalizer);
+        $resolver->setNormalizer(Callback::CLAUSE_TO,   $toArrayNormalizer);
 
         return $resolver;
     }

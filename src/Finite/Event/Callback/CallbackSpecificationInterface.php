@@ -19,4 +19,9 @@ interface CallbackSpecificationInterface
      * @return bool
      */
     public function isSatisfiedBy(TransitionEvent $event);
+
+    /**
+     * @return array
+     */
+    public function getClauses();
 }

@@ -2,6 +2,7 @@
 
 namespace Finite\StateMachine;
 
+use Finite\Event\Callback\Callback;
 use Finite\Event\FiniteEvents;
 use Finite\Event\StateMachineEvent;
 use Finite\Event\TransitionEvent;
@@ -66,6 +67,11 @@ class StateMachine implements StateMachineInterface
     protected $graph;
 
     /**
+     * @var array
+     */
+    protected $callbacks = [];
+
+    /**
      * @param object                   $object
      * @param EventDispatcherInterface $dispatcher
      * @param StateAccessorInterface   $stateAccessor
@@ -93,7 +99,7 @@ class StateMachine implements StateMachineInterface
             $initialState = $this->stateAccessor->getState($this->object);
         } catch (Exception\NoSuchPropertyException $e) {
             throw new Exception\ObjectException(sprintf(
-               'StateMachine can\'t be initialized because the defined property_path of object "%s" does not exist.',
+                'StateMachine can\'t be initialized because the defined property_path of object "%s" does not exist.',
                 get_class($this->object)
             ), $e->getCode(), $e);
         }
@@ -402,5 +408,21 @@ class StateMachine implements StateMachineInterface
         if (null !== $this->getGraph()) {
             $this->dispatcher->dispatch($transitionState.'.'.$this->getGraph().'.'.$transition->getName(), $event);
         }
+    }
+
+    /**
+     * @return array
+     */
+    public function getCallbacks()
+    {
+        return $this->callbacks;
+    }
+
+    /**
+     * @return array
+     */
+    public function setCallbacks($callbacks)
+    {
+        $this->callbacks = $callbacks;
     }
 }

@@ -136,4 +136,14 @@ interface StateMachineInterface
      * @return bool
      */
     public function findStateWithProperty($property, $value = null);
+
+    /**
+     * @return array
+     */
+    public function setCallbacks($callbacks);
+
+    /**
+     * @return array
+     */
+    public function getCallbacks();
 }

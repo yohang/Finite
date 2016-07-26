@@ -69,4 +69,9 @@ interface StateInterface extends PropertiesAwareInterface
      * @deprecated Deprecated since version 1.0.0-BETA2. Use {@link StateMachine::can($transition)} instead.
      */
     public function can($transition);
+
+    /**
+     * @return array
+     */
+    public function getCallbacks();
 }

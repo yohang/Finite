@@ -2,6 +2,7 @@
 
 namespace Finite\Bundle\FiniteBundle\DependencyInjection;
 
+use Finite\Event\Callback\Callback;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
@@ -68,7 +69,7 @@ class FiniteFiniteExtension extends Extension
             return $config;
         }
 
-        foreach (array('before', 'after') as $position) {
+        foreach (array(Callback::CLAUSE_BEFORE, Callback::CLAUSE_AFTER) as $position) {
             foreach ($config['callbacks'][$position] as $i => $callback) {
                 if ($callback['disabled']) {
                     unset($config['callbacks'][$position][$i]);
