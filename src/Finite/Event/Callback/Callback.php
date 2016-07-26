@@ -28,9 +28,9 @@ class Callback implements CallbackInterface
 
     /**
      * @param CallbackSpecificationInterface $callbackSpecification
-     * @param array $callable
+     * @param $callable
      */
-    public function __construct(CallbackSpecificationInterface $callbackSpecification, array $callable)
+    public function __construct(CallbackSpecificationInterface $callbackSpecification, $callable)
     {
         $this->specification = $callbackSpecification;
         $this->callable = $callable;
