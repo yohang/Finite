@@ -119,6 +119,10 @@ class ArrayLoader implements LoaderInterface
     {
         $callbacks = [];
 
+        if (empty($this->config['callbacks'][$position])) {
+            return $callbacks;
+        }
+
         foreach ($this->config['callbacks'][$position] as $callbackName => $callback) {
             foreach ([Callback::CLAUSE_FROM, Callback::CLAUSE_TO, Callback::CLAUSE_ON] as $clause) {
                 if (!empty($callback[$clause])) {
