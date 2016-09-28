@@ -76,7 +76,7 @@ Example
     $context = $this->get('finite.context');
     $context->getState($document); // return "draft", or… the current state if different
     $context->getProperties($document); // array:1 [ 'visible' => false ]
-    $context->getTransitions($document); // array:2 [ 0 => "propose", 1 => "refuse" ]
+    $context->getTransitionNames($document); // array:2 [ 0 => "propose", 1 => "refuse" ]
     $context->hasProperty($document, 'visible'); // true
     $context->getFactory(); // Return an instance of FiniteFactory, used to instantiate the state machine
     $context->getStateMachine($document); // Returns a initialized StateMachine instance for $document

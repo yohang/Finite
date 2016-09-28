@@ -160,14 +160,14 @@ class StateMachineTest extends StateMachineTestCase
     {
         $this->initialize();
 
-        $this->assertSame(array('s1', 's2', 's3', 's4', 's5'), $this->object->getStates());
+        $this->assertSame(array('s1', 's2', 's3', 's4', 's5'), $this->object->getStateNames());
     }
 
     public function testGetTransitions()
     {
         $this->initialize();
 
-        $this->assertSame(array('t12', 't23', 't34', 't45'), $this->object->getTransitions());
+        $this->assertSame(array('t12', 't23', 't34', 't45'), $this->object->getTransitionNames());
     }
 
     public function testGetStateFromObject()
@@ -241,12 +241,12 @@ class StateMachineTest extends StateMachineTestCase
     public function testItFindsStatesByPropertyName()
     {
         $this->initialize();
-        $this->assertSame(array('s2', 's4', 's5'), $this->object->findStateWithProperty('visible'));
+        $this->assertSame(array('s2', 's4', 's5'), $this->object->findStateNamesWithProperty('visible'));
     }
 
     public function testItFindsStatesByPropertyValue()
     {
         $this->initialize();
-        $this->assertSame(array('s2', 's4'), $this->object->findStateWithProperty('visible', true));
+        $this->assertSame(array('s2', 's4'), $this->object->findStateNamesWithProperty('visible', true));
     }
 }

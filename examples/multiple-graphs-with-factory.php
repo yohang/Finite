@@ -95,7 +95,7 @@ var_dump($paymentStateMachine->getCurrentState()->getName());
 var_dump($paymentStateMachine->getCurrentState()->getProperties());
 
 // Available transitions
-var_dump($paymentStateMachine->getCurrentState()->getTransitions());
+var_dump($paymentStateMachine->getCurrentState()->getTransitionNames());
 var_dump($paymentStateMachine->can('accept'));
 $paymentStateMachine->apply('accept');
 var_dump($paymentStateMachine->getCurrentState()->getName());

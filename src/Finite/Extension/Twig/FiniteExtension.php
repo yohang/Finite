@@ -58,7 +58,7 @@ class FiniteExtension extends \Twig_Extension
      */
     public function getFiniteTransitions($object, $graph = 'default', $as_object = false)
     {
-        return $this->context->getTransitions($object, $graph, $as_object);
+        return $this->context->getTransitionNames($object, $graph, $as_object);
     }
 
     /**
