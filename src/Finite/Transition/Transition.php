@@ -99,7 +99,7 @@ class Transition implements PropertiesAwareTransitionInterface
     /**
      * {@inheritdoc}
      */
-    public function process(StateMachineInterface $stateMachine)
+    public function process(StateMachineInterface $stateMachine, array $parameters)
     {
     }
 
