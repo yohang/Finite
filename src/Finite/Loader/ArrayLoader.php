@@ -61,9 +61,9 @@ class ArrayLoader implements LoaderInterface
      */
     public function load(StateMachineInterface $stateMachine)
     {
-        if (null === $this->callbackHandler) {
+        //if (null === $this->callbackHandler) {
             $this->callbackHandler = new CallbackHandler($stateMachine->getDispatcher());
-        }
+        //}
 
         if (null === $this->callbackBuilderFactory) {
             $this->callbackBuilderFactory = new CallbackBuilderFactory();
