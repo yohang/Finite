@@ -28,6 +28,13 @@ class State implements StateInterface
     protected $transitions;
 
     /**
+     * Callbacks of the state
+     *
+     * @var array
+     */
+    protected $callbacks;
+
+    /**
      * The state name.
      *
      * @var string
@@ -39,12 +46,27 @@ class State implements StateInterface
      */
     protected $properties;
 
-    public function __construct($name, $type = self::TYPE_NORMAL, array $transitions = array(), array $properties = array())
-    {
+    /**
+     * State constructor.
+     *
+     * @param $name
+     * @param string $type
+     * @param array $transitions
+     * @param array $properties
+     * @param array $callbacks
+     */
+    public function __construct(
+        $name,
+        $type = self::TYPE_NORMAL,
+        array $transitions = [],
+        array $properties = [],
+        array $callbacks = []
+    ) {
         $this->name = $name;
         $this->type = $type;
         $this->transitions = $transitions;
         $this->properties = $properties;
+        $this->callbacks = $callbacks;
     }
 
     /**
@@ -161,6 +183,14 @@ class State implements StateInterface
     public function setProperties(array $properties)
     {
         $this->properties = $properties;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCallbacks()
+    {
+        return $this->callbacks;
     }
 
     /**

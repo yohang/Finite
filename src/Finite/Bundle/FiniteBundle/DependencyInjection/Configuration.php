@@ -2,6 +2,7 @@
 
 namespace Finite\Bundle\FiniteBundle\DependencyInjection;
 
+use Finite\Event\Callback\Callback;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -86,8 +87,8 @@ class Configuration implements ConfigurationInterface
     protected function addCallbackSection(NodeBuilder $rootProto)
     {
         $callbacks = $rootProto->arrayNode('callbacks')->children();
-        $this->addSubCallbackSection($callbacks, 'before');
-        $this->addSubCallbackSection($callbacks, 'after');
+        $this->addSubCallbackSection($callbacks, Callback::CLAUSE_BEFORE);
+        $this->addSubCallbackSection($callbacks, Callback::CLAUSE_AFTER);
         $callbacks->end()->end();
     }
 
