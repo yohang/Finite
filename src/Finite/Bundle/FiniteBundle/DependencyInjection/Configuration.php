@@ -53,7 +53,8 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-            ->end();
+            ->end()
+        ;
     }
 
     /**
@@ -77,7 +78,8 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-            ->end();
+            ->end()
+        ;
     }
 
     /**
@@ -109,6 +111,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('disabled')->defaultValue(false)->end()
                     ->end()
                 ->end()
-            ->end();
+            ->end()
+        ;
     }
 }

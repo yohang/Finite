@@ -99,4 +99,3 @@ var_dump($paymentStateMachine->getCurrentState()->getTransitions());
 var_dump($paymentStateMachine->can('accept'));
 $paymentStateMachine->apply('accept');
 var_dump($paymentStateMachine->getCurrentState()->getName());
-

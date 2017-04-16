@@ -35,8 +35,8 @@ Getting started
 ### Installation (via composer)
 ```js
 {
-      "require": {
-        "yohang/finite": "~1.1"
+    "require": {
+        "yohang/finite": "~1.0.3"
     }
 }
 ```
@@ -54,16 +54,16 @@ use Finite\StatefulInterface;
 
 class Document implements StatefulInterface
 {
-        private $state;
-        public function setFiniteState($state)
-        {
-                $this->state = $state;
-        }
-
-        public function getFiniteState()
-        {
-            return $this->state;
-        }
+    private $state;
+    public function setFiniteState($state)
+    {
+        $this->state = $state;
+    }
+    
+    public function getFiniteState()
+    {
+        return $this->state;
+    }
 }
 ```
 
@@ -99,6 +99,5 @@ $sm->getCurrentState();
 
 // Can we process a transition ?
 $sm->can('t34');
-
 ```
 

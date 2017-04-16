@@ -321,7 +321,7 @@ class StateMachine implements StateMachineInterface
     }
 
     /**
-     * @return EventDispatcherInterface
+     * @{inheritDoc}
      */
     public function getDispatcher()
     {
@@ -329,7 +329,7 @@ class StateMachine implements StateMachineInterface
     }
 
     /**
-     * @param StateAccessorInterface $stateAccessor
+     * @{inheritDoc}
      */
     public function setStateAccessor(StateAccessorInterface $stateAccessor)
     {
