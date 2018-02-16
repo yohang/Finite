@@ -24,17 +24,17 @@
             <argument type="service" id="finite.callback.handler" />
             <argument type="service" id="finite.callback.builder.factory" />
         </service>
-        <service id="finite.state_machine" class="%finite.state_machine.class%">
+        <service id="finite.state_machine" class="%finite.state_machine.class%" public="true">
             <!-- shared="false" is defined in DependencyInjection extension as Symfony < 2.8 needs scope="prototype" -->
             <call method="setDispatcher">
                 <argument type="service" id="event_dispatcher" />
             </call>
         </service>
-        <service id="finite.factory" class="%finite.factory.class%">
+        <service id="finite.factory" class="%finite.factory.class%" public="true">
             <argument type="service" id="service_container" />
             <argument>finite.state_machine</argument>
         </service>
-        <service id="finite.context" class="%finite.context.class%">
+        <service id="finite.context" class="%finite.context.class%" public="true">
             <argument type="service" id="finite.factory" />
         </service>
         <service id="finite.twig_extension" class="%finite.twig_extension.class%" public="false">
