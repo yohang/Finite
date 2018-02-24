@@ -57,7 +57,7 @@ interface StateInterface extends PropertiesAwareInterface
      *
      * @return array
      */
-    public function getTransitions();
+    public function getTransitionNames();
 
     /**
      * Returns if this state can run $transition.

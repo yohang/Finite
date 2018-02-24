@@ -54,14 +54,14 @@ class ContextTest extends \PHPUnit_Framework_TestCase
     public function testGetTransitions()
     {
         $this->accessor->expects($this->once())->method('getState')->will($this->returnValue('s1'));
-        $this->assertEquals(array('t12'), $this->object->getTransitions($this->getMock('Finite\StatefulInterface')));
+        $this->assertEquals(array('t12'), $this->object->getTransitionNames($this->getMock('Finite\StatefulInterface')));
     }
 
     public function testGetTransitionObjects()
     {
         $this->accessor->expects($this->once())->method('getState')->will($this->returnValue('s1'));
 
-        $transitions = $this->object->getTransitions($this->getMock('Finite\StatefulInterface'), 'default', true);
+        $transitions = $this->object->getTransitionNames($this->getMock('Finite\StatefulInterface'), 'default', true);
 
         $this->assertCount(1, $transitions);
         $this->assertInstanceOf('Finite\Transition\TransitionInterface', $transitions[0]);

@@ -104,7 +104,7 @@ class State implements StateInterface
     /**
      * {@inheritdoc}
      */
-    public function getTransitions()
+    public function getTransitionNames()
     {
         return $this->transitions;
     }

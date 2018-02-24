@@ -27,9 +27,9 @@ class StateTest extends \PHPUnit_Framework_TestCase
         $this->object->addTransition($this->getTransitionMock('transition-2'));
         $this->object->addTransition('transition-3');
 
-        $this->assertContains('transition-1', $this->object->getTransitions());
-        $this->assertContains('transition-2', $this->object->getTransitions());
-        $this->assertContains('transition-3', $this->object->getTransitions());
+        $this->assertContains('transition-1', $this->object->getTransitionNames());
+        $this->assertContains('transition-2', $this->object->getTransitionNames());
+        $this->assertContains('transition-3', $this->object->getTransitionNames());
     }
 
     /**
@@ -53,7 +53,7 @@ class StateTest extends \PHPUnit_Framework_TestCase
             array(array('t1', 't2'), 't2', 't3'),
         );
     }
-    
+
     /**
      * @param string $transitionName
      *

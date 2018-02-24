@@ -44,10 +44,10 @@ class Context
      *
      * @return array<string>
      */
-    public function getTransitions($object, $graph = 'default', $asObject = false)
+    public function getTransitionNames($object, $graph = 'default', $asObject = false)
     {
         if (!$asObject) {
-            return $this->getStateMachine($object, $graph)->getCurrentState()->getTransitions();
+            return $this->getStateMachine($object, $graph)->getCurrentState()->getTransitionNames();
         }
 
         $stateMachine = $this->getStateMachine($object, $graph);
@@ -56,7 +56,7 @@ class Context
             function ($transition) use ($stateMachine) {
                 return $stateMachine->getTransition($transition);
             },
-            $stateMachine->getCurrentState()->getTransitions()
+            $stateMachine->getCurrentState()->getTransitionNames()
         );
     }
 

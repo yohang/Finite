@@ -75,14 +75,14 @@ interface StateMachineInterface
     /**
      * Returns an array containing all the transitions names.
      *
-     * @return array<string>
+     * @return TransitionInterface[]
      */
     public function getTransitions();
 
     /**
      * Returns an array containing all the states names.
      *
-     * @return array<string>
+     * @return StateInterface[]
      */
     public function getStates();
 
@@ -133,7 +133,7 @@ interface StateMachineInterface
      * @param string $property
      * @param mixed  $value
      *
-     * @return bool
+     * @return StateInterface[]
      */
-    public function findStateWithProperty($property, $value = null);
+    public function findStatesWithProperty($property, $value = null);
 }

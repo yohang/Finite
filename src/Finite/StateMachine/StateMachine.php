@@ -99,7 +99,7 @@ class StateMachine implements StateMachineInterface
         }
 
         if (null === $initialState) {
-            $initialState = $this->findInitialState();
+            $initialState = current($this->findStateNamesWithType(StateInterface::TYPE_INITIAL));
             $this->stateAccessor->setState($this->object, $initialState);
 
             $this->dispatcher->dispatch(FiniteEvents::SET_INITIAL_STATE, new StateMachineEvent($this));
@@ -151,7 +151,7 @@ class StateMachine implements StateMachineInterface
             return false;
         }
 
-        if (!in_array($transition->getName(), $this->getCurrentState()->getTransitions())) {
+        if (!in_array($transition->getName(), $this->getCurrentState()->getTransitionNames())) {
             return false;
         }
 
@@ -255,13 +255,29 @@ class StateMachine implements StateMachineInterface
      */
     public function getTransitions()
     {
-        return array_keys($this->transitions);
+        return $this->transitions;
     }
 
     /**
      * {@inheritdoc}
      */
     public function getStates()
+    {
+        return $this->states;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTransitionNames()
+    {
+        return array_keys($this->transitions);
+    }
+
+    /**
+     * @return array
+     */
+    public function getStateNames()
     {
         return array_keys($this->states);
     }
@@ -288,28 +304,6 @@ class StateMachine implements StateMachineInterface
     public function getCurrentState()
     {
         return $this->currentState;
-    }
-
-    /**
-     * Find and return the Initial state if exists.
-     *
-     * @return string
-     *
-     * @throws Exception\StateException
-     */
-    protected function findInitialState()
-    {
-        foreach ($this->states as $state) {
-            if (State::TYPE_INITIAL === $state->getType()) {
-                return $state->getName();
-            }
-        }
-
-        throw new Exception\StateException(sprintf(
-            'No initial state found on object "%s" with graph "%s".',
-            get_class($this->getObject()),
-            $this->getGraph()
-        ));
     }
 
     /**
@@ -361,31 +355,78 @@ class StateMachine implements StateMachineInterface
     }
 
     /**
+     * @param string $type
+     *
+     * @return State[]
+     * @throws Exception\StateException
+     */
+    public function findStatesWithType($type)
+    {
+        $states = [];
+
+        foreach ($this->states as $state) {
+            if ($type === $state->getType()) {
+                $states[$state->getName()] = $state;
+            }
+        }
+
+        if (true === empty($states)) {
+            throw new Exception\StateException(sprintf(
+                'No %s state found on object "%s" with graph "%s".',
+                $type,
+                get_class($this->getObject()),
+                $this->getGraph()
+            ));
+        }
+
+        return $states;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return array
+     */
+    public function findStateNamesWithType($type)
+    {
+        return array_keys($this->findStatesWithType($type));
+    }
+
+    /**
      * {@inheritDoc}
      */
-    public function findStateWithProperty($property, $value = null)
+    public function findStatesWithProperty($property, $value = null)
     {
-        return array_keys(
-            array_map(
-                function (State $state) {
-                    return $state->getName();
-                },
-                array_filter(
-                    $this->states,
-                    function (State $state) use ($property, $value) {
-                        if (!$state->has($property)) {
-                            return false;
-                        }
-
-                        if (null !== $value && $state->get($property) !== $value) {
-                            return false;
-                        }
-
-                        return true;
+        return array_map(
+            function (State $state) {
+                return $state->getName();
+            },
+            array_filter(
+                $this->states,
+                function (State $state) use ($property, $value) {
+                    if (!$state->has($property)) {
+                        return false;
                     }
-                )
+
+                    if (null !== $value && $state->get($property) !== $value) {
+                        return false;
+                    }
+
+                    return true;
+                }
             )
         );
+    }
+
+    /**
+     * @param string $property
+     * @param mixed  $value
+     *
+     * @return array
+     */
+    public function findStateNamesWithProperty($property, $value = null)
+    {
+        return array_keys($this->findStatesWithProperty($property, $value));
     }
 
     /**

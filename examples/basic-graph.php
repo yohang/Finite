@@ -57,7 +57,7 @@ var_dump($stateMachine->getCurrentState()->has('deletable'));
 var_dump($stateMachine->getCurrentState()->has('printable'));
 
 // Available transitions
-var_dump($stateMachine->getCurrentState()->getTransitions());
+var_dump($stateMachine->getCurrentState()->getTransitionNames());
 var_dump($stateMachine->can('propose'));
 var_dump($stateMachine->can('accept'));
 
