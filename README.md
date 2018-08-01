@@ -10,8 +10,6 @@ Finite is a Simple State Machine, written in PHP. It can manage any Stateful obj
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/yohang/Finite/badges/quality-score.png?s=d6b74d46e3e3f66431270ec39204d98764cb12cb)](https://scrutinizer-ci.com/g/yohang/Finite/)
 [![Code Coverage](https://scrutinizer-ci.com/g/yohang/Finite/badges/coverage.png?s=e1399f90a2ea42f4973e8bd79056540ff8de0ce4)](https://scrutinizer-ci.com/g/yohang/Finite/)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/394f3a8e-e6c5-4102-8979-d389db2d0293/mini.png)](https://insight.sensiolabs.com/projects/394f3a8e-e6c5-4102-8979-d389db2d0293)
-[![Dependency Status](https://www.versioneye.com/php/yohang:finite/1.0.3/badge.svg)](https://www.versioneye.com/php/yohang:finite/1.0.3)
-[![Reference Status](https://www.versioneye.com/php/yohang:finite/reference_badge.svg?style=flat)](https://www.versioneye.com/php/yohang:finite/references)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/yohang/Finite?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 Features
