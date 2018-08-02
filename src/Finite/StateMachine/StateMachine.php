@@ -223,7 +223,7 @@ class StateMachine implements StateMachineInterface
             throw new Exception\TransitionException(sprintf(
                 'Unable to find a transition called "%s" on object "%s" with graph "%s".',
                 $name,
-                get_class($this->getObject()),
+                ($object = $this->getObject()) ? get_class($object) : 'null',
                 $this->getGraph()
             ));
         }
@@ -242,7 +242,7 @@ class StateMachine implements StateMachineInterface
             throw new Exception\StateException(sprintf(
                 'Unable to find a state called "%s" on object "%s" with graph "%s".',
                 $name,
-                get_class($this->getObject()),
+                ($object = $this->getObject()) ? get_class($this->getObject()) : 'null',
                 $this->getGraph()
             ));
         }
@@ -307,7 +307,7 @@ class StateMachine implements StateMachineInterface
 
         throw new Exception\StateException(sprintf(
             'No initial state found on object "%s" with graph "%s".',
-            get_class($this->getObject()),
+            ($object = $this->getObject()) ? get_class($object) : 'null',
             $this->getGraph()
         ));
     }
