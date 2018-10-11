@@ -23,7 +23,7 @@
         "symfony/property-access":  "^2.6|^3.0|^4.0"
     },
     "require-dev": {
-        "phpunit/phpunit":              "^4.0",
+        "phpunit/phpunit":              "^4.8.36",
         "pimple/pimple":                "^1.0",
         "symfony/dependency-injection": "^2.6|^3.0|^4.0",
         "symfony/framework-bundle":     "^2.6|^3.0|^4.0",

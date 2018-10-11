@@ -3,12 +3,13 @@
 namespace Finite\Test;
 
 use Finite\State\State;
-use  Finite\StateMachine\StateMachine;
+use Finite\StateMachine\StateMachine;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class StateMachineTestCase extends \PHPUnit_Framework_TestCase
+class StateMachineTestCase extends TestCase
 {
     /**
      * @var StateMachine

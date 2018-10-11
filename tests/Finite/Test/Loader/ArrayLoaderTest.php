@@ -5,11 +5,12 @@ namespace Finite\Test\Loader;
 use Finite\Loader\ArrayLoader;
 use Finite\StateMachine\StateMachine;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
+class ArrayLoaderTest extends TestCase
 {
     /**
      * @var ArrayLoader

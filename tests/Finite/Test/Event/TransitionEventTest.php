@@ -3,8 +3,9 @@
 namespace Finite\Test\Event;
 
 use Finite\Event\TransitionEvent;
+use PHPUnit\Framework\TestCase;
 
-class TransitionEventTest extends \PHPUnit_Framework_TestCase
+class TransitionEventTest extends TestCase
 {
     /**
      * @var Finite\Transition\Transition

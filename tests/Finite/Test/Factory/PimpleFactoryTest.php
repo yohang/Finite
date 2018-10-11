@@ -4,8 +4,9 @@ namespace Finite\Test\Factory;
 
 use Finite\Factory\PimpleFactory;
 use Finite\StateMachine\StateMachine;
+use PHPUnit\Framework\TestCase;
 
-class PimpleFactoryTest extends \PHPUnit_Framework_TestCase
+class PimpleFactoryTest extends TestCase
 {
     /**
      * @var PimpleFactory

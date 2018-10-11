@@ -4,13 +4,14 @@ namespace Finite\Test;
 
 use Finite\Context;
 use Finite\Factory\PimpleFactory;
-use  Finite\StateMachine\StateMachine;
+use Finite\StateMachine\StateMachine;
 use Finite\State\State;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class ContextTest extends \PHPUnit_Framework_TestCase
+class ContextTest extends TestCase
 {
     /**
      * @var Context
