@@ -4,8 +4,9 @@ namespace Finite\Test\State\Accessor;
 
 use Finite\State\Accessor\PropertyPathStateAccessor;
 use Symfony\Component\PropertyAccess\Exception\NoSuchPropertyException;
+use PHPUnit\Framework\TestCase;
 
-class PropertyPathStateAccessorTest extends \PHPUnit_Framework_TestCase
+class PropertyPathStateAccessorTest extends TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject

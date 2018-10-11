@@ -3,11 +3,12 @@
 namespace Finite\Test\StateMachine;
 
 use Finite\StateMachine\SecurityAwareStateMachine;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class SecurityAwareStateMachineTest extends \PHPUnit_Framework_TestCase
+class SecurityAwareStateMachineTest extends TestCase
 {
     /**
      * @var SecurityAwareStateMachine

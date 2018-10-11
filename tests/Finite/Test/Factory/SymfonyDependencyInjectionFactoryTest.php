@@ -3,11 +3,12 @@
 namespace Finite\Test\Factory;
 
 use Finite\Factory\SymfonyDependencyInjectionFactory;
-use  Finite\StateMachine\StateMachine;
+use Finite\StateMachine\StateMachine;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use PHPUnit\Framework\TestCase;
 
-class SymfonyDependencyInjectionFactoryTest extends \PHPUnit_Framework_TestCase
+class SymfonyDependencyInjectionFactoryTest extends TestCase
 {
     /**
      * @var PimpleFactory

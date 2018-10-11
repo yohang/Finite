@@ -5,13 +5,14 @@ namespace Finite\Test\Extension\Twig;
 use Finite\Context;
 use Finite\Extension\Twig\FiniteExtension;
 use Finite\Factory\PimpleFactory;
-use  Finite\StateMachine\StateMachine;
+use Finite\StateMachine\StateMachine;
 use Finite\State\State;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class FiniteExtensionTest extends \PHPUnit_Framework_TestCase
+class FiniteExtensionTest extends TestCase
 {
     /**
      * @var \Twig_Environment

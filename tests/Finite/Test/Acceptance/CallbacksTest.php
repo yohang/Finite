@@ -4,11 +4,12 @@ namespace Finite\Test\Acceptance;
 
 use Finite\Loader\ArrayLoader;
 use Finite\StateMachine\StateMachine;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class CallbacksTest extends \PHPUnit_Framework_TestCase
+class CallbacksTest extends TestCase
 {
     /**
      * @var StateMachine

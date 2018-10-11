@@ -7,11 +7,12 @@ use Finite\Event\Callback\CallbackBuilder;
 use Finite\Event\CallbackHandler;
 use Finite\Event\FiniteEvents;
 use Finite\Event\TransitionEvent;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
+class CallbackHandlerTest extends TestCase
 {
     /**
      * @var CallbackHandler

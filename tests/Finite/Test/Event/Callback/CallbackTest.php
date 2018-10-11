@@ -3,11 +3,12 @@
 namespace Finite\Test\Event\Callback;
 
 use Finite\Event\Callback\Callback;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class CallbackTest extends \PHPUnit_Framework_TestCase
+class CallbackTest extends TestCase
 {
     public function testInvokeWithGoodSpec()
     {
