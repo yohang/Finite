@@ -36,7 +36,10 @@
         "symfony/yaml":     "Yaml allows you to define your State graph in YAML"
     },
     "autoload": {
-        "psr-0": { "Finite": "src/" }
+        "psr-4": { "Finite\\": "src/Finite/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "Finite\\Test\\": "tests/Finite/Test/" }
     },
     "config": {
         "bin-dir":"bin"
