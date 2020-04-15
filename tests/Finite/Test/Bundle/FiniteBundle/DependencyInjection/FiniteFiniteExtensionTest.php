@@ -3,6 +3,7 @@
 namespace Finite\Test\Bundle\FiniteBundle\DependencyInjection;
 
 use Finite\Bundle\FiniteBundle\DependencyInjection\FiniteFiniteExtension;
+use PHPUnit_Framework_TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
@@ -10,7 +11,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class FiniteFiniteExtensionTest extends \PHPUnit_Framework_TestCase
+class FiniteFiniteExtensionTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var FiniteFiniteExtension
@@ -24,7 +25,7 @@ class FiniteFiniteExtensionTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->object    = new FiniteFiniteExtension;
+        $this->object = new FiniteFiniteExtension;
         $this->container = new ContainerBuilder;
         $this->object->load($this->getConfig(), $this->container);
     }
@@ -51,89 +52,89 @@ class FiniteFiniteExtensionTest extends \PHPUnit_Framework_TestCase
 
     private function getExpectedConfig()
     {
-        return array(
-            'class'         => 'Stateful1',
-            'graph'         => 'default',
+        return [
+            'class' => 'Stateful1',
+            'graph' => 'default',
             'property_path' => 'finiteState',
-            'states'        => array(
-                'state1' => array(
-                    'type'       => 'initial',
-                    'properties' => array()
-                ),
-                'state2' => array(
-                    'type'       => 'normal',
-                    'properties' => array()
-                ),
-                'state3' => array(
-                    'type'       => 'final',
-                    'properties' => array(
+            'states' => [
+                'state1' => [
+                    'type' => 'initial',
+                    'properties' => [],
+                ],
+                'state2' => [
+                    'type' => 'normal',
+                    'properties' => [],
+                ],
+                'state3' => [
+                    'type' => 'final',
+                    'properties' => [
                         'foo' => true,
                         'bar' => false,
-                    )
-                )
-            ),
-            'transitions'   => array(
-                '1_to_2' => array(
-                    'from' => array('state1'),
-                    'to'   => 'state2',
-                    'properties' => array()
-                ),
-                '2_to_3' => array(
-                    'from' => array('state2'),
-                    'to'   => 'state3',
-                    'properties' => array('foo' => 'bar')
-                ),
-            ),
-            'callbacks'     => array(
-                'before' => array(
-                    'callback1' => array('on' => '1_to_2', 'do' => array('@my.listener.service', 'on1To2'))
-                ),
-                'after'  => array(
-                    'callback2' => array('from' => '-state3', 'to' => array('state2', 'state3'), 'do' => array('@my.listener.service', 'on1To2'))
-                )
-            )
-        );
+                    ],
+                ],
+            ],
+            'transitions' => [
+                '1_to_2' => [
+                    'from' => ['state1'],
+                    'to' => 'state2',
+                    'properties' => [],
+                ],
+                '2_to_3' => [
+                    'from' => ['state2'],
+                    'to' => 'state3',
+                    'properties' => ['foo' => 'bar'],
+                ],
+            ],
+            'callbacks' => [
+                'before' => [
+                    'callback1' => ['on' => '1_to_2', 'do' => ['@my.listener.service', 'on1To2']],
+                ],
+                'after' => [
+                    'callback2' => ['from' => '-state3', 'to' => ['state2', 'state3'], 'do' => ['@my.listener.service', 'on1To2']],
+                ],
+            ],
+        ];
     }
 
     private function getConfig()
     {
-        return array(
-            'finite_finite' => array(
-                'workflow1' => array(
-                    'class'       => 'Stateful1',
-                    'states'      => array(
-                        'state1' => array('type' => 'initial'),
-                        'state2' => array('type' => 'normal'),
-                        'state3' => array(
-                            'type'       => 'final',
-                            'properties' => array(
+        return [
+            'finite_finite' => [
+                'workflow1' => [
+                    'class' => 'Stateful1',
+                    'states' => [
+                        'state1' => ['type' => 'initial'],
+                        'state2' => ['type' => 'normal'],
+                        'state3' => [
+                            'type' => 'final',
+                            'properties' => [
                                 'foo' => true,
                                 'bar' => false,
-                            )
-                        )
-                    ),
-                    'transitions' => array(
-                        '1_to_2' => array(
-                            'from' => array('state1'),
-                            'to'   => 'state2'
-                        ),
-                        '2_to_3' => array(
-                            'from' => array('state2'),
-                            'to'   => 'state3',
-                            'properties' => array('foo' => 'bar'),
-                        ),
-                    ),
-                    'callbacks'   => array(
-                        'before' => array(
-                            'callback1' => array('on' => '1_to_2', 'do' => array('@my.listener.service', 'on1To2'))
-                        ),
-                        'after'  => array(
-                            'callback2' => array('from' => '-state3', 'to' => array('state2', 'state3'), 'do' => array('@my.listener.service', 'on1To2')),
-                            'callback3' => array('disabled' => true)
-                        )
-                    )
-                )
-            )
-        );
+                            ],
+                        ],
+                    ],
+                    'transitions' => [
+                        '1_to_2' => [
+                            'from' => ['state1'],
+                            'to' => 'state2',
+                        ],
+                        '2_to_3' => [
+                            'from' => ['state2'],
+                            'to' => 'state3',
+                            'properties' => ['foo' => 'bar'],
+                        ],
+                    ],
+                    'callbacks' => [
+                        'before' => [
+                            'callback1' => ['on' => '1_to_2', 'do' => ['@my.listener.service', 'on1To2']],
+                        ],
+                        'after' => [
+                            'callback2' => ['from' => '-state3', 'to' => ['state2', 'state3'], 'do' => ['@my.listener.service', 'on1To2']],
+                            'callback3' => ['disabled' => true],
+                        ],
+                    ],
+                ],
+            ],
+        ];
     }
 }

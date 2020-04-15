@@ -3,11 +3,15 @@
 namespace Finite\Test\Event;
 
 use Finite\Event\TransitionEvent;
+use Finite\State\State;
+use Finite\StateMachine\StateMachine;
+use Finite\Transition\Transition;
+use PHPUnit_Framework_TestCase;
 
-class TransitionEventTest extends \PHPUnit_Framework_TestCase
+class TransitionEventTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var Finite\Transition\Transition
+     * @var \Finite\Transition\Transition
      */
     protected $transition;
 
@@ -18,25 +22,26 @@ class TransitionEventTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->transition = $this->getMockBuilder('Finite\Transition\Transition')->disableOriginalConstructor()->getMock();
+        $this->transition = $this->getMockBuilder(Transition::class)->disableOriginalConstructor()->getMock();
 
         $this->transition
             ->expects($this->once())
             ->method('resolveProperties')
-            ->with($this->isType('array'))
-            ->will($this->returnValue(array('returned' => 1)));
+            ->with(...[$this->isType('array')])
+            ->willReturn(['returned' => 1])
+        ;
 
         $this->object = new TransitionEvent(
-            $this->getMockBuilder('Finite\State\State')->disableOriginalConstructor()->getMock(),
+            $this->getMockBuilder(State::class)->disableOriginalConstructor()->getMock(),
             $this->transition,
-            $this->getMockBuilder('Finite\StateMachine\StateMachine')->disableOriginalConstructor()->getMock(),
-            array()
+            $this->getMockBuilder(StateMachine::class)->disableOriginalConstructor()->getMock(),
+            []
         );
     }
 
     public function testItResolveProperties()
     {
-        $this->assertSame(array('returned' => 1), $this->object->getProperties());
+        $this->assertSame(['returned' => 1], $this->object->getProperties());
     }
 
     public function testPropertyGetters()

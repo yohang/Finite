@@ -4,11 +4,13 @@ namespace Finite\Test\Acceptance;
 
 use Finite\Loader\ArrayLoader;
 use Finite\StateMachine\StateMachine;
+use PHPUnit_Framework_TestCase;
+use stdClass;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class CallbacksTest extends \PHPUnit_Framework_TestCase
+class CallbacksTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var StateMachine
@@ -29,86 +31,93 @@ class CallbacksTest extends \PHPUnit_Framework_TestCase
 
     protected $alternativeObject;
 
+    /**
+     * @throws \Finite\Exception\ObjectException
+     */
     protected function setUp()
     {
-        $this->object              = new \stdClass;
+        $this->object = new stdClass;
         $this->object->finiteState = null;
 
-        $this->alternativeObject              = new \stdClass;
+        $this->alternativeObject = new stdClass;
         $this->alternativeObject->finiteState = null;
 
-        $this->stateMachine            = new StateMachine($this->object);
+        $this->stateMachine = new StateMachine($this->object);
         $this->alternativeStateMachine = new StateMachine($this->alternativeObject, $this->stateMachine->getDispatcher());
 
         $this->callbacksMock = $this
-            ->getMockBuilder('\stdClass')
+            ->getMockBuilder(stdClass::class)
             ->setMethods(
-                array(
+                [
                     'afterItWasProposed',
                     'afterItWasProposedOrReviewed',
                     'afterItWasAnythingButProposed',
                     'onReview',
-                    'afterItLeavesReviewed'
-                )
+                    'afterItLeavesReviewed',
+                ]
             )
-            ->getMock();
+            ->getMock()
+        ;
 
-        $states = array(
-            'draft'     => array('type' => 'initial'),
-            'proposed'  => array(),
-            'reviewed'  => array(),
-            'published' => array('type' => 'final'),
-            'declined'  => array('type' => 'final'),
-        );
+        $states = [
+            'draft' => ['type' => 'initial'],
+            'proposed' => [],
+            'reviewed' => [],
+            'published' => ['type' => 'final'],
+            'declined' => ['type' => 'final'],
+        ];
 
-        $transitions = array(
-            'propose'         => array('from' => 'draft', 'to' => 'proposed'),
-            'return_to_draft' => array('from' => 'proposed', 'to' => 'draft'),
-            'review'          => array('from' => 'proposed', 'to' => 'reviewed'),
-            'publish'         => array('from' => 'reviewed', 'to' => 'published'),
-            'decline'         => array('from' => array('proposed', 'reviewed'), 'to' => 'declined'),
-        );
+        $transitions = [
+            'propose' => ['from' => 'draft', 'to' => 'proposed'],
+            'return_to_draft' => ['from' => 'proposed', 'to' => 'draft'],
+            'review' => ['from' => 'proposed', 'to' => 'reviewed'],
+            'publish' => ['from' => 'reviewed', 'to' => 'published'],
+            'decline' => ['from' => ['proposed', 'reviewed'], 'to' => 'declined'],
+        ];
 
         $loader = new ArrayLoader(
-            array(
-                'states'      => $states,
+            [
+                'states' => $states,
                 'transitions' => $transitions,
-                'callbacks'   => array(
-                    'after' => array(
-                        array(
+                'callbacks' => [
+                    'after' => [
+                        [
                             'to' => 'proposed',
-                            'do' => array($this->callbacksMock, 'afterItWasProposed'),
-                        ),
-                        array(
-                            'to' => array('proposed', 'reviewed'),
-                            'do' => array($this->callbacksMock, 'afterItWasProposedOrReviewed'),
-                        ),
-                        array(
-                            'to' => array('-proposed'),
-                            'do' => array($this->callbacksMock, 'afterItWasAnythingButProposed'),
-                        ),
-                        array(
+                            'do' => [$this->callbacksMock, 'afterItWasProposed'],
+                        ],
+                        [
+                            'to' => ['proposed', 'reviewed'],
+                            'do' => [$this->callbacksMock, 'afterItWasProposedOrReviewed'],
+                        ],
+                        [
+                            'to' => ['-proposed'],
+                            'do' => [$this->callbacksMock, 'afterItWasAnythingButProposed'],
+                        ],
+                        [
                             'on' => 'review',
-                            'do' => array($this->callbacksMock, 'onReview'),
-                        ),
-                        array(
+                            'do' => [$this->callbacksMock, 'onReview'],
+                        ],
+                        [
                             'from' => 'reviewed',
-                            'do'   => array($this->callbacksMock, 'afterItLeavesReviewed'),
-                        ),
-                    )
-                )
-            )
+                            'do' => [$this->callbacksMock, 'afterItLeavesReviewed'],
+                        ],
+                    ],
+                ],
+            ]
         );
 
         $loader->load($this->stateMachine);
         $this->stateMachine->initialize();
 
-        $alternativeLoader = new ArrayLoader(array('states' => $states, 'transitions' => $transitions));
+        $alternativeLoader = new ArrayLoader(['states' => $states, 'transitions' => $transitions]);
 
         $alternativeLoader->load($this->alternativeStateMachine);
         $this->alternativeStateMachine->initialize();
     }
 
+    /**
+     * @throws \Finite\Exception\StateException
+     */
     public function test()
     {
         $this->callbacksMock->expects($this->once())->method('afterItWasProposed');

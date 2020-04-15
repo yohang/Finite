@@ -1,3 +1,4 @@
+.idea
 vendor
 build
 bin
@@ -6,3 +7,4 @@ composer.lock
 cache.properties
 coverage.clover
 docs/_build
+Makefile
