@@ -16,7 +16,10 @@ use Finite\Transition\TransitionInterface;
  */
 class StateMachineTest extends StateMachineTestCase
 {
-    public function testAddState()
+    /**
+     * @throws \Finite\Exception\TransitionException
+     */
+    public function testAddState(): void
     {
         $this->object->addState('foo');
         $this->assertInstanceOf(StateInterface::class, $this->object->getState('foo'));
@@ -32,7 +35,10 @@ class StateMachineTest extends StateMachineTestCase
         $this->assertInstanceOf(StateInterface::class, $this->object->getState('bar'));
     }
 
-    public function testAddTransition()
+    /**
+     * @throws \Finite\Exception\TransitionException
+     */
+    public function testAddTransition(): void
     {
         $this->object->addTransition('t12', 'state1', 'state2');
         $this->assertInstanceOf(TransitionInterface::class, $this->object->getTransition('t12'));
@@ -49,7 +55,10 @@ class StateMachineTest extends StateMachineTestCase
         $this->assertInstanceOf(StateInterface::class, $this->object->getState('state3'));
     }
 
-    public function testInitialize()
+    /**
+     * @throws \Finite\Exception\ObjectException
+     */
+    public function testInitialize(): void
     {
         $this->dispatcher
             ->expects($this->once())
@@ -60,7 +69,10 @@ class StateMachineTest extends StateMachineTestCase
         $this->initialize();
     }
 
-    public function testInitializeWithInitialState()
+    /**
+     * @throws \Finite\Exception\ObjectException
+     */
+    public function testInitializeWithInitialState(): void
     {
         $object = $this->createMock(StatefulInterface::class);
 
@@ -72,27 +84,33 @@ class StateMachineTest extends StateMachineTestCase
         $this->object->initialize();
     }
 
-    public function testGetCurrentState()
+    /**
+     * @throws \Finite\Exception\ObjectException
+     */
+    public function testGetCurrentState(): void
     {
         $this->initialize();
         $this->assertInstanceOf(StateInterface::class, $this->object->getCurrentState());
         $this->assertSame('s2', $this->object->getCurrentState()->getName());
     }
 
-    public function testCan()
+    /**
+     * @throws \Finite\Exception\ObjectException
+     */
+    public function testCan(): void
     {
         $this->initialize();
         $this->assertTrue($this->object->can('t23'));
         $this->assertFalse($this->object->can('t34'));
     }
 
-    public function testCanWithGuardReturningFalse()
+    public function testCanWithGuardReturningFalse(): void
     {
         $transition = $this->createMock(TransitionInterface::class);
         $transition->expects($this->any())
             ->method('getGuard')
             ->willReturn(
-                function () {
+                static function () {
                     return false;
                 }
             )
@@ -101,16 +119,20 @@ class StateMachineTest extends StateMachineTestCase
         $transition->expects($this->atLeastOnce())->method('getName')->willReturn('t');
         $transition->expects($this->once())->method('getInitialStates')->willReturn(['state1']);
         $this->object->addTransition($transition);
+
         $this->assertFalse($this->object->can($transition));
     }
 
-    public function testCanWithGuardReturningTrue()
+    /**
+     * @throws \Finite\Exception\ObjectException
+     */
+    public function testCanWithGuardReturningTrue(): void
     {
         $transition = $this->createMock(TransitionInterface::class);
         $transition->expects($this->any())
             ->method('getGuard')
             ->willReturn(
-                function () {
+                static function () {
                     return true;
                 }
             )
@@ -128,7 +150,11 @@ class StateMachineTest extends StateMachineTestCase
         $this->assertTrue($this->object->can($transition));
     }
 
-    public function testApply()
+    /**
+     * @throws \Finite\Exception\ObjectException
+     * @throws \Finite\Exception\StateException
+     */
+    public function testApply(): void
     {
         $this->expectException(StateException::class);
 
@@ -174,21 +200,31 @@ class StateMachineTest extends StateMachineTestCase
         $this->object->apply('t23');
     }
 
-    public function testGetStates()
+    /**
+     * @throws \Finite\Exception\ObjectException
+     */
+    public function testGetStates(): void
     {
         $this->initialize();
 
         $this->assertSame(['s1', 's2', 's3', 's4', 's5'], $this->object->getStates());
     }
 
-    public function testGetTransitions()
+    /**
+     * @throws \Finite\Exception\ObjectException
+     */
+    public function testGetTransitions(): void
     {
         $this->initialize();
 
         $this->assertSame(['t12', 't23', 't34', 't45'], $this->object->getTransitions());
     }
 
-    public function testGetStateFromObject()
+    /**
+     * @throws \Finite\Exception\ObjectException
+     * @throws \Finite\Exception\TransitionException
+     */
+    public function testGetStateFromObject(): void
     {
         $this->initialize();
 
@@ -203,8 +239,11 @@ class StateMachineTest extends StateMachineTestCase
 
     /**
      * Test events with a named statemachine
+     *
+     * @throws \Finite\Exception\ObjectException
+     * @throws \Finite\Exception\StateException
      */
-    public function testApplyWithGraph()
+    public function testApplyWithGraph(): void
     {
         $this->dispatcher
             ->expects($this->at(1))
@@ -267,13 +306,19 @@ class StateMachineTest extends StateMachineTestCase
         $this->assertSame('s3', $this->object->getCurrentState()->getName());
     }
 
-    public function testItFindsStatesByPropertyName()
+    /**
+     * @throws \Finite\Exception\ObjectException
+     */
+    public function testItFindsStatesByPropertyName(): void
     {
         $this->initialize();
         $this->assertSame(['s2', 's4', 's5'], $this->object->findStateWithProperty('visible'));
     }
 
-    public function testItFindsStatesByPropertyValue()
+    /**
+     * @throws \Finite\Exception\ObjectException
+     */
+    public function testItFindsStatesByPropertyValue(): void
     {
         $this->initialize();
         $this->assertSame(['s2', 's4'], $this->object->findStateWithProperty('visible', true));

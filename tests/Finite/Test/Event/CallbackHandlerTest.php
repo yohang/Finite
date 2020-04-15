@@ -11,13 +11,13 @@ use Finite\State\StateInterface;
 use Finite\StatefulInterface;
 use Finite\StateMachine\StateMachineInterface;
 use Finite\Transition\TransitionInterface;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class CallbackHandlerTest extends PHPUnit_Framework_TestCase
+class CallbackHandlerTest extends TestCase
 {
     /**
      * @var CallbackHandler
@@ -25,23 +25,23 @@ class CallbackHandlerTest extends PHPUnit_Framework_TestCase
     protected $object;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     protected $dispatcher;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     protected $statemachine;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->dispatcher = $this->createMock(EventDispatcher::class);
         $this->statemachine = $this->createMock(StateMachineInterface::class);
         $this->object = new CallbackHandler($this->dispatcher);
     }
 
-    public function testItAttachsAllPreTransition()
+    public function testItAttachsAllPreTransition(): void
     {
         $this->dispatcher
             ->expects($this->once())
@@ -57,7 +57,7 @@ class CallbackHandlerTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testItAttachsGivenPreTransition()
+    public function testItAttachsGivenPreTransition(): void
     {
         $this->dispatcher
             ->expects($this->once())
@@ -76,7 +76,7 @@ class CallbackHandlerTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testItAttachsPreTransitionWithToSpec()
+    public function testItAttachsPreTransitionWithToSpec(): void
     {
         $transitionOk = $this->createMock(TransitionInterface::class);
         $transitionNotOk = $this->createMock(TransitionInterface::class);
@@ -121,15 +121,17 @@ class CallbackHandlerTest extends PHPUnit_Framework_TestCase
             CallbackBuilder::create($this->statemachine)
                 ->addTo('foobar')
                 ->setCallable(
-                    static function ($object, TransitionEvent $event) use ($that, $stateful) {
+                    static function ($object, TransitionEvent $event) use ($that) {
                         $that->assertSame('foobar', $event->getTransition()->getState());
+
+                        $that->assertInstanceOf(StatefulInterface::class, $object);
                     }
                 )
                 ->getCallback()
         );
     }
 
-    public function testItAttachsPreTransitionWithFromSpec()
+    public function testItAttachsPreTransitionWithFromSpec(): void
     {
         $e1 = $this->getMockBuilder(TransitionEvent::class)->disableOriginalConstructor()->getMock();
         $e2 = $this->getMockBuilder(TransitionEvent::class)->disableOriginalConstructor()->getMock();
@@ -174,15 +176,17 @@ class CallbackHandlerTest extends PHPUnit_Framework_TestCase
             CallbackBuilder::create($this->statemachine)
                 ->addFrom('foobar')
                 ->setCallable(
-                    static function ($object, TransitionEvent $event) use ($that, $stateful) {
+                    static function ($object, TransitionEvent $event) use ($that) {
                         $that->assertSame('foobar', $event->getInitialState()->getName());
+
+                        $that->assertInstanceOf(StatefulInterface::class, $object);
                     }
                 )
                 ->getCallback()
         );
     }
 
-    public function testItAttachsPreTransitionWithExcludeFromSpec()
+    public function testItAttachsPreTransitionWithExcludeFromSpec(): void
     {
         $e1 = $this->getMockBuilder(TransitionEvent::class)->disableOriginalConstructor()->getMock();
         $e2 = $this->getMockBuilder(TransitionEvent::class)->disableOriginalConstructor()->getMock();
@@ -227,15 +231,17 @@ class CallbackHandlerTest extends PHPUnit_Framework_TestCase
             CallbackBuilder::create($this->statemachine)
                 ->addFrom('-bazqux')
                 ->setCallable(
-                    static function ($object, TransitionEvent $event) use ($that, $stateful) {
+                    static function ($object, TransitionEvent $event) use ($that) {
                         $that->assertSame('foobar', $event->getInitialState()->getName());
+
+                        $that->assertInstanceOf(StatefulInterface::class, $object);
                     }
                 )
                 ->getCallback()
         );
     }
 
-    public function testItAttachsPreTransitionWithExcludeToSpec()
+    public function testItAttachsPreTransitionWithExcludeToSpec(): void
     {
         $transitionOk = $this->createMock(TransitionInterface::class);
         $transitionNotOk = $this->createMock(TransitionInterface::class);

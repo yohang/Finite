@@ -6,13 +6,13 @@ use Finite\Event\Callback\Callback;
 use Finite\Event\Callback\CallbackSpecification;
 use Finite\Event\TransitionEvent;
 use Finite\StateMachine\StateMachine;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class CallbackTest extends PHPUnit_Framework_TestCase
+class CallbackTest extends TestCase
 {
     public function testInvokeWithGoodSpec()
     {

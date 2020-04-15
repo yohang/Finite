@@ -6,13 +6,13 @@ use Finite\Event\Callback\Callback;
 use Finite\Event\Callback\CallbackBuilder;
 use Finite\Event\Callback\CallbackSpecification;
 use Finite\StateMachine\StateMachine;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class CallbackBuilderTest extends PHPUnit_Framework_TestCase
+class CallbackBuilderTest extends TestCase
 {
     public function testItBuildsCallback()
     {

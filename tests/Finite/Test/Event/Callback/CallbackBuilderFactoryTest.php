@@ -5,12 +5,12 @@ namespace Finite\Test\Event\Callback;
 use Finite\Event\Callback\CallbackBuilder;
 use Finite\Event\Callback\CallbackBuilderFactory;
 use Finite\StateMachine\StateMachineInterface;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class CallbackBuilderFactoryTest extends PHPUnit_Framework_TestCase
+class CallbackBuilderFactoryTest extends TestCase
 {
     public function testItConstructsCallbackBuilder()
     {

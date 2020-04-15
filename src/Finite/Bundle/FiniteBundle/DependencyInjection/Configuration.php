@@ -16,16 +16,17 @@ class Configuration implements ConfigurationInterface
     /**
      * {@inheritdoc}
      */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('finite_finite');
+        $treeBuilder = new TreeBuilder('finite_finite');
+        $rootNode = $treeBuilder->getRootNode();
         $rootProto = $rootNode->useAttributeAsKey('name')->prototype('array')->children();
 
         $rootProto
             ->scalarNode('class')->isRequired()->end()
             ->scalarNode('graph')->defaultValue('default')->end()
-            ->scalarNode('property_path')->defaultValue('finiteState')->end();
+            ->scalarNode('property_path')->defaultValue('finiteState')->end()
+        ;
 
         $this->addStateSection($rootProto);
         $this->addTransitionSection($rootProto);
@@ -38,52 +39,54 @@ class Configuration implements ConfigurationInterface
     /**
      * @param NodeBuilder $rootProto
      */
-    protected function addStateSection(NodeBuilder $rootProto)
+    protected function addStateSection(NodeBuilder $rootProto): void
     {
         $rootProto
             ->arrayNode('states')
-                ->useAttributeAsKey('name')
-                ->prototype('array')
-                    ->children()
-                        ->scalarNode('type')->defaultValue('normal')->end()
-                        ->arrayNode('properties')
-                            ->useAttributeAsKey('name')
-                            ->defaultValue(array())
-                            ->prototype('variable')->end()
-                        ->end()
-                    ->end()
-                ->end()
-            ->end();
+            ->useAttributeAsKey('name')
+            ->prototype('array')
+            ->children()
+            ->scalarNode('type')->defaultValue('normal')->end()
+            ->arrayNode('properties')
+            ->useAttributeAsKey('name')
+            ->defaultValue([])
+            ->prototype('variable')->end()
+            ->end()
+            ->end()
+            ->end()
+            ->end()
+        ;
     }
 
     /**
      * @param NodeBuilder $rootProto
      */
-    protected function addTransitionSection(NodeBuilder $rootProto)
+    protected function addTransitionSection(NodeBuilder $rootProto): void
     {
         $rootProto
             ->arrayNode('transitions')
-                ->useAttributeAsKey('name')
-                ->prototype('array')
-                    ->children()
-                        ->arrayNode('from')
-                            ->prototype('variable')->end()
-                        ->end()
-                        ->scalarNode('to')->end()
-                        ->arrayNode('properties')
-                            ->useAttributeAsKey('name')
-                            ->defaultValue(array())
-                            ->prototype('variable')->end()
-                        ->end()
-                    ->end()
-                ->end()
-            ->end();
+            ->useAttributeAsKey('name')
+            ->prototype('array')
+            ->children()
+            ->arrayNode('from')
+            ->prototype('variable')->end()
+            ->end()
+            ->scalarNode('to')->end()
+            ->arrayNode('properties')
+            ->useAttributeAsKey('name')
+            ->defaultValue([])
+            ->prototype('variable')->end()
+            ->end()
+            ->end()
+            ->end()
+            ->end()
+        ;
     }
 
     /**
      * @param NodeBuilder $rootProto
      */
-    protected function addCallbackSection(NodeBuilder $rootProto)
+    protected function addCallbackSection(NodeBuilder $rootProto): void
     {
         $callbacks = $rootProto->arrayNode('callbacks')->children();
         $this->addSubCallbackSection($callbacks, 'before');
@@ -95,20 +98,21 @@ class Configuration implements ConfigurationInterface
      * @param NodeBuilder $callbacks
      * @param string      $type
      */
-    private function addSubCallbackSection(NodeBuilder $callbacks, $type)
+    private function addSubCallbackSection(NodeBuilder $callbacks, $type): void
     {
         $callbacks
             ->arrayNode($type)
-                ->useAttributeAsKey('name')
-                ->prototype('array')
-                    ->children()
-                        ->scalarNode('on')->end()
-                        ->variableNode('do')->end()
-                        ->variableNode('from')->end()
-                        ->variableNode('to')->end()
-                        ->scalarNode('disabled')->defaultValue(false)->end()
-                    ->end()
-                ->end()
-            ->end();
+            ->useAttributeAsKey('name')
+            ->prototype('array')
+            ->children()
+            ->scalarNode('on')->end()
+            ->variableNode('do')->end()
+            ->variableNode('from')->end()
+            ->variableNode('to')->end()
+            ->scalarNode('disabled')->defaultValue(false)->end()
+            ->end()
+            ->end()
+            ->end()
+        ;
     }
 }

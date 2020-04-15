@@ -5,13 +5,13 @@ namespace Finite\Test\StateMachine;
 use Finite\State\Accessor\StateAccessorInterface;
 use Finite\StatefulInterface;
 use Finite\StateMachine\SecurityAwareStateMachine;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class SecurityAwareStateMachineTest extends PHPUnit_Framework_TestCase
+class SecurityAwareStateMachineTest extends TestCase
 {
     /**
      * @var SecurityAwareStateMachine
@@ -23,7 +23,7 @@ class SecurityAwareStateMachineTest extends PHPUnit_Framework_TestCase
     /**
      * @throws \Finite\Exception\ObjectException
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->accessor = $this->createMock(StateAccessorInterface::class);
         $statefulMock = $this->createMock(StatefulInterface::class);
@@ -38,7 +38,7 @@ class SecurityAwareStateMachineTest extends PHPUnit_Framework_TestCase
         $this->object->initialize();
     }
 
-    public function testCan()
+    public function testCan(): void
     {
         $securityMock = $this->createMock(AuthorizationCheckerInterface::class);
         $this->object->setSecurityContext($securityMock);

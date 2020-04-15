@@ -7,10 +7,10 @@ use Finite\Factory\SymfonyDependencyInjectionFactory;
 use Finite\State\Accessor\StateAccessorInterface;
 use Finite\StatefulInterface;
 use Finite\StateMachine\StateMachine;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class SymfonyDependencyInjectionFactoryTest extends PHPUnit_Framework_TestCase
+class SymfonyDependencyInjectionFactoryTest extends TestCase
 {
     /**
      * @var \Finite\Factory\PimpleFactory
@@ -22,7 +22,7 @@ class SymfonyDependencyInjectionFactoryTest extends PHPUnit_Framework_TestCase
     /**
      * @throws \Finite\Exception\FactoryException
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->accessor = $this->createMock(StateAccessorInterface::class);
         $container = new ContainerBuilder;
@@ -37,7 +37,7 @@ class SymfonyDependencyInjectionFactoryTest extends PHPUnit_Framework_TestCase
         $this->object = new SymfonyDependencyInjectionFactory($container, 'state_machine');
     }
 
-    public function testGet()
+    public function testGet(): void
     {
         $object = $this->createMock(StatefulInterface::class);
 
@@ -61,7 +61,7 @@ class SymfonyDependencyInjectionFactoryTest extends PHPUnit_Framework_TestCase
     /**
      * @throws \Finite\Exception\FactoryException
      */
-    public function testNoService()
+    public function testNoService(): void
     {
         $this->expectException(FactoryException::class);
 

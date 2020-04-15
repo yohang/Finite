@@ -3,7 +3,7 @@
 namespace Finite\Test\Bundle\FiniteBundle\DependencyInjection;
 
 use Finite\Bundle\FiniteBundle\DependencyInjection\FiniteFiniteExtension;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class FiniteFiniteExtensionTest extends PHPUnit_Framework_TestCase
+class FiniteFiniteExtensionTest extends TestCase
 {
     /**
      * @var FiniteFiniteExtension
@@ -23,14 +23,14 @@ class FiniteFiniteExtensionTest extends PHPUnit_Framework_TestCase
      */
     protected $container;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new FiniteFiniteExtension;
         $this->container = new ContainerBuilder;
         $this->object->load($this->getConfig(), $this->container);
     }
 
-    public function testServicesSetUp()
+    public function testServicesSetUp(): void
     {
         $this->assertTrue($this->container->has('finite.factory'));
         $this->assertTrue($this->container->has('finite.state_machine'));
@@ -50,7 +50,7 @@ class FiniteFiniteExtensionTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    private function getExpectedConfig()
+    private function getExpectedConfig(): array
     {
         return [
             'class' => 'Stateful1',
@@ -96,7 +96,7 @@ class FiniteFiniteExtensionTest extends PHPUnit_Framework_TestCase
         ];
     }
 
-    private function getConfig()
+    private function getConfig(): array
     {
         return [
             'finite_finite' => [

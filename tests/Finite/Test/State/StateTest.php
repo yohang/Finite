@@ -4,44 +4,51 @@ namespace Finite\Test\State;
 
 use Finite\State\State;
 use Finite\Transition\TransitionInterface;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
- *
- *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class StateTest extends PHPUnit_Framework_TestCase
+class StateTest extends TestCase
 {
     /**
      * @var State
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new State('test');
     }
 
-    public function testAddTransition()
+    public function testSetTransitions(): void
+    {
+        $this->assertCount(0, $this->object->getTransitions());
+
+        $this->object->setTransitions(['transition-1', 'transition-2']);
+
+        $this->assertCount(2, $this->object->getTransitions());
+    }
+
+    public function testAddTransition(): void
     {
         $this->object->addTransition($this->getTransitionMock('transition-1'));
         $this->object->addTransition($this->getTransitionMock('transition-2'));
         $this->object->addTransition('transition-3');
 
-        $this->assertContains('transition-1', $this->object->getTransitions());
-        $this->assertContains('transition-2', $this->object->getTransitions());
-        $this->assertContains('transition-3', $this->object->getTransitions());
+        $this->assertEquals(0, array_search('transition-1', $this->object->getTransitions(), true));
+        $this->assertEquals(1, array_search('transition-2', $this->object->getTransitions(), true));
+        $this->assertEquals(2, array_search('transition-3', $this->object->getTransitions(), true));
     }
 
     /**
      * @depends      testAddTransition
-     * @dataProvider testCanDataProvider
+     * @dataProvider canDataProvider
      * @param $transitions
      * @param $can
      * @param $cannot
      */
-    public function testCan($transitions, $can, $cannot)
+    public function testCan($transitions, $can, $cannot): void
     {
         foreach ($transitions as $transition) {
             $this->object->addTransition($transition);
@@ -51,7 +58,7 @@ class StateTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($this->object->can($cannot));
     }
 
-    public function testCanDataProvider()
+    public function canDataProvider(): array
     {
         return [
             [['t1', 't2', 't3'], 't3', 't4'],
@@ -62,7 +69,7 @@ class StateTest extends PHPUnit_Framework_TestCase
     /**
      * @param string $transitionName
      *
-     * @return \Finite\Transition\TransitionInterface|\PHPUnit_Framework_MockObject_Builder_InvocationMocker|\PHPUnit_Framework_MockObject_MockObject
+     * @return \Finite\Transition\TransitionInterface|\PHPUnit\Framework\MockObject\Builder\InvocationMocker|\PHPUnit\Framework\MockObject\MockObject
      */
     private function getTransitionMock($transitionName)
     {
@@ -74,5 +81,17 @@ class StateTest extends PHPUnit_Framework_TestCase
         ;
 
         return $transition;
+    }
+
+    /**
+     * @covers \Finite\State\State::setProperties
+     */
+    public function testSetProperties(): void
+    {
+        $state = new State('state');
+
+        $state->setProperties(['a', 'b']);
+
+        $this->assertEquals(['a', 'b'], $state->getProperties());
     }
 }

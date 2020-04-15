@@ -6,9 +6,9 @@ use Finite\Event\TransitionEvent;
 use Finite\State\State;
 use Finite\StateMachine\StateMachine;
 use Finite\Transition\Transition;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class TransitionEventTest extends PHPUnit_Framework_TestCase
+class TransitionEventTest extends TestCase
 {
     /**
      * @var \Finite\Transition\Transition
@@ -20,7 +20,7 @@ class TransitionEventTest extends PHPUnit_Framework_TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->transition = $this->getMockBuilder(Transition::class)->disableOriginalConstructor()->getMock();
 
@@ -39,12 +39,12 @@ class TransitionEventTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testItResolveProperties()
+    public function testItResolveProperties(): void
     {
         $this->assertSame(['returned' => 1], $this->object->getProperties());
     }
 
-    public function testPropertyGetters()
+    public function testPropertyGetters(): void
     {
         $this->assertSame(1, $this->object->get('returned'));
         $this->assertTrue($this->object->has('returned'));

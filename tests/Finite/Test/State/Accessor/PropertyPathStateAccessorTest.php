@@ -4,18 +4,18 @@ namespace Finite\Test\State\Accessor;
 
 use Finite\State\Accessor\PropertyPathStateAccessor;
 use Finite\StatefulInterface;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\PropertyAccess\Exception\NoSuchPropertyException;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
-class PropertyPathStateAccessorTest extends PHPUnit_Framework_TestCase
+class PropertyPathStateAccessorTest extends TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     protected $propertyAccessor;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->propertyAccessor = $this->createMock(PropertyAccessorInterface::class);
     }
@@ -23,7 +23,7 @@ class PropertyPathStateAccessorTest extends PHPUnit_Framework_TestCase
     /**
      * @throws \Finite\Exception\NoSuchPropertyException
      */
-    public function testGetState()
+    public function testGetState(): void
     {
         $object = new PropertyPathStateAccessor('bar', $this->propertyAccessor);
         $stateful = $this->createMock(StatefulInterface::class);
@@ -51,7 +51,7 @@ class PropertyPathStateAccessorTest extends PHPUnit_Framework_TestCase
     /**
      * @throws \Finite\Exception\NoSuchPropertyException
      */
-    public function testSetState()
+    public function testSetState(): void
     {
         $object = new PropertyPathStateAccessor('bar', $this->propertyAccessor);
         $stateful = $this->createMock(StatefulInterface::class);
@@ -79,7 +79,7 @@ class PropertyPathStateAccessorTest extends PHPUnit_Framework_TestCase
     /**
      * @throws \Finite\Exception\NoSuchPropertyException
      */
-    public function testSetOnUnknownProperty()
+    public function testSetOnUnknownProperty(): void
     {
         $this->expectException(\Finite\Exception\NoSuchPropertyException::class);
 
@@ -99,7 +99,7 @@ class PropertyPathStateAccessorTest extends PHPUnit_Framework_TestCase
     /**
      * @throws \Finite\Exception\NoSuchPropertyException
      */
-    public function testGetOnUnknownProperty()
+    public function testGetOnUnknownProperty(): void
     {
         $this->expectException(\Finite\Exception\NoSuchPropertyException::class);
 

@@ -6,13 +6,13 @@ use Finite\State\Accessor\StateAccessorInterface;
 use Finite\State\State;
 use Finite\StatefulInterface;
 use Finite\StateMachine\StateMachine;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class StateMachineTestCase extends PHPUnit_Framework_TestCase
+class StateMachineTestCase extends TestCase
 {
     /**
      * @var StateMachine
@@ -20,13 +20,13 @@ class StateMachineTestCase extends PHPUnit_Framework_TestCase
     protected $object;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     protected $dispatcher;
 
     protected $accessor;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->accessor = $this->createMock(StateAccessorInterface::class);
         $this->dispatcher = $this->getMockBuilder(EventDispatcher::class)
@@ -37,7 +37,7 @@ class StateMachineTestCase extends PHPUnit_Framework_TestCase
         $this->object = new StateMachine(null, $this->dispatcher, $this->accessor);
     }
 
-    public function statesProvider()
+    public function statesProvider(): array
     {
         return [
             [new State('s1', State::TYPE_INITIAL)],
@@ -48,7 +48,7 @@ class StateMachineTestCase extends PHPUnit_Framework_TestCase
         ];
     }
 
-    public function transitionsProvider()
+    public function transitionsProvider(): array
     {
         return [
             ['t12', 's1', 's2'],
@@ -58,14 +58,14 @@ class StateMachineTestCase extends PHPUnit_Framework_TestCase
         ];
     }
 
-    protected function addStates()
+    protected function addStates(): void
     {
         foreach ($this->statesProvider() as $state) {
             $this->object->addState($state[0]);
         }
     }
 
-    protected function addTransitions()
+    protected function addTransitions(): void
     {
         foreach ($this->transitionsProvider() as $transitions) {
             $this->object->addTransition($transitions[0], $transitions[1], $transitions[2]);
@@ -75,7 +75,7 @@ class StateMachineTestCase extends PHPUnit_Framework_TestCase
     /**
      * @throws \Finite\Exception\ObjectException
      */
-    protected function initialize()
+    protected function initialize(): void
     {
         $this->addStates();
         $this->addTransitions();

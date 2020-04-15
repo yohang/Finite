@@ -7,21 +7,21 @@ use Finite\Event\TransitionEvent;
 use Finite\State\State;
 use Finite\StateMachine\StateMachine;
 use Finite\Transition\Transition;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class CallbackSpecificationTest extends PHPUnit_Framework_TestCase
+class CallbackSpecificationTest extends TestCase
 {
     private $stateMachine;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->stateMachine = $this->createMock(StateMachine::class);
     }
 
-    public function testItIsSatisfiedByFrom()
+    public function testItIsSatisfiedByFrom(): void
     {
         $spec = new CallbackSpecification($this->stateMachine, ['s1', 's2'], [], []);
 
@@ -36,7 +36,7 @@ class CallbackSpecificationTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($spec->isSatisfiedBy($this->getTransitionEvent('s3', 't34', 's4')));
     }
 
-    public function testItIsSatisfiedByTo()
+    public function testItIsSatisfiedByTo(): void
     {
         $spec = new CallbackSpecification($this->stateMachine, [], ['s2', 's3'], []);
 
@@ -51,7 +51,7 @@ class CallbackSpecificationTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($spec->isSatisfiedBy($this->getTransitionEvent('s3', 't34', 's4')));
     }
 
-    public function testItIsSatisfiedByOn()
+    public function testItIsSatisfiedByOn(): void
     {
         $spec = new CallbackSpecification($this->stateMachine, [], [], ['t12', 't23']);
 
@@ -73,7 +73,7 @@ class CallbackSpecificationTest extends PHPUnit_Framework_TestCase
      *
      * @return TransitionEvent
      */
-    private function getTransitionEvent($fromState, $transition, $toState)
+    private function getTransitionEvent($fromState, $transition, $toState): TransitionEvent
     {
         return new TransitionEvent(
             new State($fromState),

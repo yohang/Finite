@@ -4,7 +4,7 @@ namespace Finite\Test\Bundle\FiniteBundle\DependencyInjection\Compiler;
 
 use Closure;
 use Finite\Bundle\FiniteBundle\DependencyInjection\Compiler\ContainerCallbackPass;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
@@ -14,21 +14,21 @@ use Symfony\Component\DependencyInjection\Reference;
  *
  * @author Alexandre Bacco <alexandre.bacco@gmail.com>
  */
-class ContainerCallbackPassTest extends PHPUnit_Framework_TestCase
+class ContainerCallbackPassTest extends TestCase
 {
     /**
      * @var ContainerBuilder
      */
     protected $container;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->container = new ContainerBuilder;
 
         $this->load($this->container);
     }
 
-    public function testPass()
+    public function testPass(): void
     {
         $config = $this->container->getDefinition('loader')->getArgument(0);
         $this->assertEquals('@my_service', $config['callbacks']['before'][0]['do'][0]);
@@ -44,7 +44,7 @@ class ContainerCallbackPassTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Closure::class, $newConfig['callbacks']['after'][0]['do']);
     }
 
-    private function load(ContainerBuilder $container)
+    private function load(ContainerBuilder $container): void
     {
         $loader = new Definition();
         $loader->addTag('finite.loader');

@@ -1,4 +1,5 @@
 .idea
+.phpunit.result.cache
 vendor
 build
 bin

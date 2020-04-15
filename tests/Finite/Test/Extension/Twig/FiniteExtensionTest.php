@@ -9,7 +9,7 @@ use Finite\State\Accessor\StateAccessorInterface;
 use Finite\State\State;
 use Finite\StatefulInterface;
 use Finite\StateMachine\StateMachine;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Pimple;
 use Twig_Environment;
 use Twig_Loader_Array;
@@ -17,7 +17,7 @@ use Twig_Loader_Array;
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class FiniteExtensionTest extends PHPUnit_Framework_TestCase
+class FiniteExtensionTest extends TestCase
 {
     /**
      * @var \Twig_Environment
@@ -25,13 +25,13 @@ class FiniteExtensionTest extends PHPUnit_Framework_TestCase
     protected $env;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     protected $context;
 
     protected $accessor;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->accessor = $accessor = $this->createMock(StateAccessorInterface::class);
         $this->env = new Twig_Environment(
@@ -68,7 +68,7 @@ class FiniteExtensionTest extends PHPUnit_Framework_TestCase
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function testState()
+    public function testState(): void
     {
         $this->accessor->expects($this->once())->method('getState')->willReturn('s1');
         $this->assertSame('s1', $this->env->render('state', ['object' => $this->getObjectMock()]));
@@ -79,7 +79,7 @@ class FiniteExtensionTest extends PHPUnit_Framework_TestCase
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function testTransitions()
+    public function testTransitions(): void
     {
         $this->accessor->expects($this->once())->method('getState')->willReturn('s1');
         $this->assertSame('t12', $this->env->render('transitions', ['object' => $this->getObjectMock()]));
@@ -90,7 +90,7 @@ class FiniteExtensionTest extends PHPUnit_Framework_TestCase
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function testProperties()
+    public function testProperties(): void
     {
         $this->accessor->expects($this->once())->method('getState')->willReturn('s1');
         $this->assertSame('foobar', $this->env->render('properties', ['object' => $this->getObjectMock()]));
@@ -101,7 +101,7 @@ class FiniteExtensionTest extends PHPUnit_Framework_TestCase
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function testHas()
+    public function testHas(): void
     {
         $this->accessor->expects($this->exactly(2))->method('getState')->willReturn('s1');
         $this->assertSame('yes', $this->env->render('has', ['object' => $this->getObjectMock(), 'property' => 'foo']));
@@ -113,7 +113,7 @@ class FiniteExtensionTest extends PHPUnit_Framework_TestCase
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function testCan()
+    public function testCan(): void
     {
         $this->assertSame('yes', $this->env->render('can', ['object' => $this->getObjectMock(), 'transition' => 't12']));
         $this->assertSame('no', $this->env->render('can', ['object' => $this->getObjectMock(), 'transition' => 't23']));

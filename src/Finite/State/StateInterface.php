@@ -11,11 +11,10 @@ use Finite\PropertiesAwareInterface;
  */
 interface StateInterface extends PropertiesAwareInterface
 {
-    const
+    public const
         TYPE_INITIAL = 'initial',
         TYPE_NORMAL = 'normal',
-        TYPE_FINAL = 'final'
-    ;
+        TYPE_FINAL = 'final';
 
     /**
      * Returns the state name.

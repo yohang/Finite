@@ -8,13 +8,13 @@ use Finite\Loader\ArrayLoader;
 use Finite\State\Accessor\PropertyPathStateAccessor;
 use Finite\StatefulInterface;
 use Finite\StateMachine\StateMachine;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class ArrayLoaderTest extends PHPUnit_Framework_TestCase
+class ArrayLoaderTest extends TestCase
 {
     /**
      * @var ArrayLoader
@@ -22,11 +22,11 @@ class ArrayLoaderTest extends PHPUnit_Framework_TestCase
     protected $object;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     protected $callbackHandler;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->callbackHandler = $this->getMockBuilder(CallbackHandler::class)
             ->disableOriginalConstructor()
@@ -56,7 +56,7 @@ class ArrayLoaderTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testLoad()
+    public function testLoad(): void
     {
         $sm = $this->createMock(StateMachine::class);
         $sm->expects($this->once())->method('setStateAccessor');
@@ -66,7 +66,7 @@ class ArrayLoaderTest extends PHPUnit_Framework_TestCase
         $this->object->load($sm);
     }
 
-    public function testLoadGraph()
+    public function testLoadGraph(): void
     {
         $sm = $this->createMock(StateMachine::class);
 
@@ -78,7 +78,7 @@ class ArrayLoaderTest extends PHPUnit_Framework_TestCase
         $loader->load($sm);
     }
 
-    public function testLoadWithMissingOptions()
+    public function testLoadWithMissingOptions(): void
     {
         $sm = $this->createMock(StateMachine::class);
 
@@ -109,7 +109,7 @@ class ArrayLoaderTest extends PHPUnit_Framework_TestCase
         $this->object->load($sm);
     }
 
-    public function testLoadCallbacks()
+    public function testLoadCallbacks(): void
     {
         $sm = $this->createMock(StateMachine::class);
         $allTimes = static function () {
@@ -165,7 +165,7 @@ class ArrayLoaderTest extends PHPUnit_Framework_TestCase
         $this->object->load($sm);
     }
 
-    public function testLoadWithProperties()
+    public function testLoadWithProperties(): void
     {
         $sm = new StateMachine();
 
@@ -191,9 +191,15 @@ class ArrayLoaderTest extends PHPUnit_Framework_TestCase
         );
 
         $this->object->load($sm);
+
+        $this->assertCount(1, $sm->getTransitions());
+        $this->assertCount(3, $sm->getStates());
     }
 
-    public function testLoadWithCustomStateAccessor()
+    /**
+     * @covers \Finite\StateMachine\StateMachine::getStateAccessor
+     */
+    public function testLoadWithCustomStateAccessor(): void
     {
         $sa = $this->getMockBuilder(PropertyPathStateAccessor::class)
             ->setMockClassName('CustomAccessor')
@@ -205,10 +211,10 @@ class ArrayLoaderTest extends PHPUnit_Framework_TestCase
 
         $this->object->load($sm);
 
-        $this->assertAttributeInstanceOf('CustomAccessor', 'stateAccessor', $sm);
+        $this->assertInstanceOf('CustomAccessor', $sm->getStateAccessor());
     }
 
-    public function testSupports()
+    public function testSupports(): void
     {
         $object = $this->getMockBuilder(StatefulInterface::class)
             ->setMockClassName('Stateful1')

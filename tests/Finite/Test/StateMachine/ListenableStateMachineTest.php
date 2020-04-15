@@ -23,7 +23,7 @@ class ListenableStateMachineTest extends StateMachineTestCase
      */
     protected $dispatcher;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -38,7 +38,7 @@ class ListenableStateMachineTest extends StateMachineTestCase
     /**
      * @throws \Finite\Exception\ObjectException
      */
-    public function testInitialize()
+    public function testInitialize(): void
     {
         $this->dispatcher
             ->expects($this->once())
@@ -53,7 +53,7 @@ class ListenableStateMachineTest extends StateMachineTestCase
      * @throws \Finite\Exception\ObjectException
      * @throws \Finite\Exception\StateException
      */
-    public function testApply()
+    public function testApply(): void
     {
         $this->dispatcher
             ->expects($this->at(1))
@@ -98,7 +98,7 @@ class ListenableStateMachineTest extends StateMachineTestCase
     /**
      * @throws \Finite\Exception\ObjectException
      */
-    public function testCan()
+    public function testCan(): void
     {
         $this->dispatcher
             ->expects($this->at(1))
@@ -120,7 +120,7 @@ class ListenableStateMachineTest extends StateMachineTestCase
     /**
      * @throws \Finite\Exception\ObjectException
      */
-    public function testCanWithListener()
+    public function testCanWithListener(): void
     {
         $this->dispatcher
             ->expects($this->at(1))
@@ -150,7 +150,7 @@ class ListenableStateMachineTest extends StateMachineTestCase
         $this->assertFalse($this->object->can('t23'));
     }
 
-    public function getObject()
+    public function getObject(): ListenableStateMachine
     {
         return $this->object;
     }

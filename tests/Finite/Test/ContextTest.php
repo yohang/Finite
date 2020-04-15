@@ -11,13 +11,13 @@ use Finite\StatefulInterface;
 use Finite\StateMachine\StateMachine;
 use Finite\StateMachine\StateMachineInterface;
 use Finite\Transition\TransitionInterface;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Pimple;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class ContextTest extends PHPUnit_Framework_TestCase
+class ContextTest extends TestCase
 {
     /**
      * @var Context
@@ -26,7 +26,7 @@ class ContextTest extends PHPUnit_Framework_TestCase
 
     protected $accessor;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->accessor = $accessor = $this->createMock(StateAccessorInterface::class);
         $container = new Pimple(
@@ -45,7 +45,7 @@ class ContextTest extends PHPUnit_Framework_TestCase
         $this->object = new Context(new PimpleFactory($container, 'state_machine'));
     }
 
-    public function testGetStateMachine()
+    public function testGetStateMachine(): void
     {
         $this->accessor->expects($this->once())->method('getState')->willReturn('s1');
         $sm = $this->object->getStateMachine($this->createMock(StatefulInterface::class));
@@ -54,19 +54,19 @@ class ContextTest extends PHPUnit_Framework_TestCase
         $this->assertSame('s1', $sm->getCurrentState()->getName());
     }
 
-    public function testGetState()
+    public function testGetState(): void
     {
         $this->accessor->expects($this->once())->method('getState')->willReturn('s1');
         $this->assertSame('s1', $this->object->getState($this->createMock(StatefulInterface::class)));
     }
 
-    public function testGetTransitions()
+    public function testGetTransitions(): void
     {
         $this->accessor->expects($this->once())->method('getState')->willReturn('s1');
         $this->assertEquals(['t12'], $this->object->getTransitions($this->createMock(StatefulInterface::class)));
     }
 
-    public function testGetTransitionObjects()
+    public function testGetTransitionObjects(): void
     {
         $this->accessor->expects($this->once())->method('getState')->willReturn('s1');
 
@@ -76,7 +76,7 @@ class ContextTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(TransitionInterface::class, $transitions[0]);
     }
 
-    public function testGetProperties()
+    public function testGetProperties(): void
     {
         $this->accessor->expects($this->once())->method('getState')->willReturn('s1');
         $this->assertEquals(
@@ -85,14 +85,14 @@ class ContextTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testHasProperty()
+    public function testHasProperty(): void
     {
         $this->accessor->expects($this->exactly(2))->method('getState')->willReturn('s1');
         $this->assertTrue($this->object->hasProperty($this->createMock(StatefulInterface::class), 'foo'));
         $this->assertFalse($this->object->hasProperty($this->createMock(StatefulInterface::class), 'baz'));
     }
 
-    public function testItRetrievesGoodStateMachine()
+    public function testItRetrievesGoodStateMachine(): void
     {
         $object = $this->createMock(StatefulInterface::class);
         $factory = $this->createMock(FactoryInterface::class);

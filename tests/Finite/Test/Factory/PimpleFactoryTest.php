@@ -7,10 +7,10 @@ use Finite\Loader\LoaderInterface;
 use Finite\State\Accessor\StateAccessorInterface;
 use Finite\StatefulInterface;
 use Finite\StateMachine\StateMachine;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Pimple;
 
-class PimpleFactoryTest extends PHPUnit_Framework_TestCase
+class PimpleFactoryTest extends TestCase
 {
     /**
      * @var PimpleFactory
@@ -19,7 +19,7 @@ class PimpleFactoryTest extends PHPUnit_Framework_TestCase
 
     protected $accessor;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->accessor = $accessor = $this->createMock(StateAccessorInterface::class);
         $container = new Pimple(
@@ -37,7 +37,7 @@ class PimpleFactoryTest extends PHPUnit_Framework_TestCase
         $this->object = new PimpleFactory($container, 'state_machine');
     }
 
-    public function testGet()
+    public function testGet(): void
     {
         $object = $this->createMock(StatefulInterface::class);
         $this->accessor->expects($this->at(0))->method('getState')->willReturn('s2');
@@ -53,11 +53,10 @@ class PimpleFactoryTest extends PHPUnit_Framework_TestCase
         $this->assertNotSame($sm, $sm2);
     }
 
-    public function testLoad()
+    public function testLoad(): void
     {
         $object = $this->createMock(StatefulInterface::class);
         $this->accessor
-            ->expects($this->any())
             ->method('getState')
             ->willReturn('s1')
         ;

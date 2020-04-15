@@ -3,13 +3,13 @@
 namespace Finite\Test\Transition;
 
 use Finite\Transition\Transition;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @author Yohan Giarelli <yohan@giarel.li>
  */
-class TransitionTest extends PHPUnit_Framework_TestCase
+class TransitionTest extends TestCase
 {
     /**
      * @var Transition
@@ -21,7 +21,7 @@ class TransitionTest extends PHPUnit_Framework_TestCase
      */
     protected $optionsResolver;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->optionsResolver = $this->getMockBuilder(OptionsResolver::class)
             ->disableOriginalConstructor()
@@ -33,7 +33,7 @@ class TransitionTest extends PHPUnit_Framework_TestCase
     /**
      * @throws \Finite\Exception\TransitionException
      */
-    public function testItResolvesOptions()
+    public function testItResolvesOptions(): void
     {
         $this->optionsResolver
             ->expects($this->once())
@@ -45,7 +45,7 @@ class TransitionTest extends PHPUnit_Framework_TestCase
         $this->assertSame(['foo' => 'bar'], $this->object->resolveProperties(['baz' => 'qux']));
     }
 
-    public function testItReturnsDefaultOptions()
+    public function testItReturnsDefaultOptions(): void
     {
         $resolver = new OptionsResolver;
         $resolver->setDefaults(['p1' => 'foo', 'p2' => 'bar']);
@@ -57,7 +57,7 @@ class TransitionTest extends PHPUnit_Framework_TestCase
         $this->assertSame('bar', $transition->get('p2'));
     }
 
-    public function testItReturnsDefaultOptionsWhenSomeRequired()
+    public function testItReturnsDefaultOptionsWhenSomeRequired(): void
     {
         $resolver = new OptionsResolver;
         $resolver->setDefaults(['p1' => 'foo', 'p2' => 'bar']);

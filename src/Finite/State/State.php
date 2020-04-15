@@ -39,7 +39,7 @@ class State implements StateInterface
      */
     protected $properties;
 
-    public function __construct($name, $type = self::TYPE_NORMAL, array $transitions = array(), array $properties = array())
+    public function __construct($name, $type = self::TYPE_NORMAL, array $transitions = [], array $properties = [])
     {
         $this->name = $name;
         $this->type = $type;
@@ -120,7 +120,7 @@ class State implements StateInterface
             $transition = $transition->getName();
         }
 
-        return in_array($transition, $this->transitions);
+        return in_array($transition, $this->transitions, true);
     }
 
     /**

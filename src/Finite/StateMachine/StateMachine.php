@@ -127,7 +127,7 @@ class StateMachine implements StateMachineInterface
                     'The "%s" transition can not be applied to the "%s" state of object "%s" with graph "%s".',
                     $transition->getName(),
                     $this->currentState->getName(),
-                    get_class($this->getObject()),
+                    $this->getObject() ? get_class($this->getObject()) : 'undefined',
                     $this->getGraph()
                 )
             );
@@ -316,7 +316,7 @@ class StateMachine implements StateMachineInterface
         throw new Exception\StateException(
             sprintf(
                 'No initial state found on object "%s" with graph "%s".',
-                get_class($this->getObject()),
+                $this->getObject() ? get_class($this->getObject()) : 'undefined',
                 $this->getGraph()
             )
         );
@@ -344,6 +344,11 @@ class StateMachine implements StateMachineInterface
     public function setStateAccessor(StateAccessorInterface $stateAccessor)
     {
         $this->stateAccessor = $stateAccessor;
+    }
+
+    public function getStateAccessor(): ?StateAccessorInterface
+    {
+        return $this->stateAccessor;
     }
 
     /**
@@ -403,7 +408,7 @@ class StateMachine implements StateMachineInterface
      *
      * @param TransitionInterface $transition
      * @param TransitionEvent     $event
-     * @param type                $transitionState
+     * @param string              $transitionState
      */
     private function dispatchTransitionEvent(TransitionInterface $transition, TransitionEvent $event, $transitionState)
     {
