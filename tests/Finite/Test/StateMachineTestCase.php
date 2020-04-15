@@ -2,13 +2,17 @@
 
 namespace Finite\Test;
 
+use Finite\State\Accessor\StateAccessorInterface;
 use Finite\State\State;
-use  Finite\StateMachine\StateMachine;
+use Finite\StatefulInterface;
+use Finite\StateMachine\StateMachine;
+use PHPUnit_Framework_TestCase;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class StateMachineTestCase extends \PHPUnit_Framework_TestCase
+class StateMachineTestCase extends PHPUnit_Framework_TestCase
 {
     /**
      * @var StateMachine
@@ -24,33 +28,34 @@ class StateMachineTestCase extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->accessor = $this->getMock('Finite\State\Accessor\StateAccessorInterface');
-        $this->dispatcher = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcher')
+        $this->accessor = $this->createMock(StateAccessorInterface::class);
+        $this->dispatcher = $this->getMockBuilder(EventDispatcher::class)
             ->disableOriginalConstructor()
-            ->getMock();
+            ->getMock()
+        ;
 
         $this->object = new StateMachine(null, $this->dispatcher, $this->accessor);
     }
 
     public function statesProvider()
     {
-        return array(
-            array(new State('s1', State::TYPE_INITIAL)),
-            array(new State('s2', State::TYPE_NORMAL, array(), array('visible' => true))),
-            array('s3'),
-            array(new State('s4', State::TYPE_NORMAL, array(), array('visible' => true))),
-            array(new State('s5', State::TYPE_FINAL, array(), array('visible' => false))),
-        );
+        return [
+            [new State('s1', State::TYPE_INITIAL)],
+            [new State('s2', State::TYPE_NORMAL, [], ['visible' => true])],
+            ['s3'],
+            [new State('s4', State::TYPE_NORMAL, [], ['visible' => true])],
+            [new State('s5', State::TYPE_FINAL, [], ['visible' => false])],
+        ];
     }
 
     public function transitionsProvider()
     {
-        return array(
-            array('t12', 's1', 's2'),
-            array('t23', 's2', 's3'),
-            array('t34', 's3', 's4'),
-            array('t45', 's4', 's5'),
-        );
+        return [
+            ['t12', 's1', 's2'],
+            ['t23', 's2', 's3'],
+            ['t34', 's3', 's4'],
+            ['t45', 's4', 's5'],
+        ];
     }
 
     protected function addStates()
@@ -67,6 +72,9 @@ class StateMachineTestCase extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @throws \Finite\Exception\ObjectException
+     */
     protected function initialize()
     {
         $this->addStates();
@@ -77,8 +85,8 @@ class StateMachineTestCase extends \PHPUnit_Framework_TestCase
 
     protected function getStatefulObjectMock()
     {
-        $mock = $this->getMock('Finite\StatefulInterface');
-        $this->accessor->expects($this->at(0))->method('getState')->will($this->returnValue('s2'));
+        $mock = $this->createMock(StatefulInterface::class);
+        $this->accessor->expects($this->at(0))->method('getState')->willReturn('s2');
 
         return $mock;
     }

@@ -1,11 +1,13 @@
 language: php
 sudo: false
 php:
-    - 5.5
-    - 5.6
-    - 7.0
-    - 7.1
-    - hhvm
+  - 5.6
+  - 7.0
+  - 7.1
+  - 7.2
+  - 7.3
+  - 7.4
+  - hhvm
 
 before_install:
   - composer self-update
@@ -17,8 +19,8 @@ script:
   - ./bin/phpunit --coverage-clover=coverage.clover
 
 after_script:
-    - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then wget https://scrutinizer-ci.com/ocular.phar; fi
-    - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi
+  - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then wget https://scrutinizer-ci.com/ocular.phar; fi
+  - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi
 
 notifications:
   email: false

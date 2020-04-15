@@ -2,24 +2,35 @@
 
 namespace Finite\Test\StateMachine;
 
+use Finite\State\Accessor\StateAccessorInterface;
+use Finite\StatefulInterface;
 use Finite\StateMachine\SecurityAwareStateMachine;
+use PHPUnit_Framework_TestCase;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class SecurityAwareStateMachineTest extends \PHPUnit_Framework_TestCase
+class SecurityAwareStateMachineTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var SecurityAwareStateMachine
      */
     protected $object;
+
     protected $accessor;
 
+    /**
+     * @throws \Finite\Exception\ObjectException
+     */
     public function setUp()
     {
-        $this->accessor = $this->getMock('Finite\State\Accessor\StateAccessorInterface');
-        $statefulMock = $this->getMock('Finite\StatefulInterface');
-        $this->accessor->expects($this->at(0))->method('getState')->will($this->returnValue('s1'));
+        $this->accessor = $this->createMock(StateAccessorInterface::class);
+        $statefulMock = $this->createMock(StatefulInterface::class);
+        $this->accessor->expects($this->at(0))
+            ->method('getState')
+            ->willReturn('s1')
+        ;
 
         $this->object = new SecurityAwareStateMachine($statefulMock, null, $this->accessor);
         $this->object->addTransition('t12', 's1', 's2');
@@ -29,19 +40,20 @@ class SecurityAwareStateMachineTest extends \PHPUnit_Framework_TestCase
 
     public function testCan()
     {
-        $securityMock = $this->getMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
+        $securityMock = $this->createMock(AuthorizationCheckerInterface::class);
         $this->object->setSecurityContext($securityMock);
 
-        $that     = $this;
+        $that = $this;
         $stateful = $this->object->getObject();
-        $addIsGrandedExpectation = function($return, $transition) use ($that, $securityMock, $stateful) {
+        $addIsGrandedExpectation = static function ($return, $transition) use ($that, $securityMock, $stateful) {
             static $at = 0;
 
             $securityMock
                 ->expects($that->at($at++))
                 ->method('isGranted')
-                ->with($transition, $stateful)
-                ->will($that->returnValue($return));
+                ->with(...[$transition, $stateful])
+                ->willReturn($return)
+            ;
         };
 
         $addIsGrandedExpectation(true, 't12');
@@ -54,5 +66,4 @@ class SecurityAwareStateMachineTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->object->can('t12'));
         $this->assertFalse($this->object->can('t23'));
     }
-
 }

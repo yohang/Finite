@@ -3,13 +3,15 @@
 namespace Finite\Test\State;
 
 use Finite\State\State;
+use Finite\Transition\TransitionInterface;
+use PHPUnit_Framework_TestCase;
 
 /**
  *
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class StateTest extends \PHPUnit_Framework_TestCase
+class StateTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var State
@@ -35,6 +37,9 @@ class StateTest extends \PHPUnit_Framework_TestCase
     /**
      * @depends      testAddTransition
      * @dataProvider testCanDataProvider
+     * @param $transitions
+     * @param $can
+     * @param $cannot
      */
     public function testCan($transitions, $can, $cannot)
     {
@@ -48,24 +53,24 @@ class StateTest extends \PHPUnit_Framework_TestCase
 
     public function testCanDataProvider()
     {
-        return array(
-            array(array('t1', 't2', 't3'), 't3', 't4'),
-            array(array('t1', 't2'), 't2', 't3'),
-        );
+        return [
+            [['t1', 't2', 't3'], 't3', 't4'],
+            [['t1', 't2'], 't2', 't3'],
+        ];
     }
-    
+
     /**
      * @param string $transitionName
      *
-     * @return \PHPUnit_Framework_MockObject_Builder_InvocationMocker
+     * @return \Finite\Transition\TransitionInterface|\PHPUnit_Framework_MockObject_Builder_InvocationMocker|\PHPUnit_Framework_MockObject_MockObject
      */
     private function getTransitionMock($transitionName)
     {
-        $transition = $this->getMock('\Finite\Transition\TransitionInterface');
+        $transition = $this->createMock(TransitionInterface::class);
 
         $transition->expects($this->once())
             ->method('getName')
-            ->will($this->returnValue($transitionName))
+            ->willReturn($transitionName)
         ;
 
         return $transition;
