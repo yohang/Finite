@@ -155,7 +155,7 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
 
     public function testLoadWithProperties()
     {
-        $sm = new StateMachine();
+        $sm = new StateMachine($this->getMock('Finite\StatefulInterface'));
 
         $this->object = new ArrayLoader(
             array(
