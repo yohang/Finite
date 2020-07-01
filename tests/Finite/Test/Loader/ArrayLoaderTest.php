@@ -53,7 +53,6 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
     public function testLoad()
     {
         $sm = $this->getMock('Finite\StateMachine\StateMachine');
-        $sm->expects($this->once())->method('setStateAccessor');
         $sm->expects($this->once())->method('setGraph');
         $sm->expects($this->exactly(3))->method('addState');
         $sm->expects($this->exactly(2))->method('addTransition');
@@ -204,5 +203,64 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
         $alternativeLoader = new ArrayLoader(array('class' => 'Stateful1', 'graph' => 'foobar'));
         $this->assertTrue($alternativeLoader->supports($object, 'foobar'));
         $this->assertFalse($alternativeLoader->supports($object));
+    }
+
+    public function testDefaultPropertyPath()
+    {
+        $arrayLoader = new ArrayLoader(
+            array(
+                'class'         => 'Finite\StatefulInterface',
+                'states'        => array(
+                    'begin'  => array('type' => 'initial', 'properties' => array()),
+                    'end' => array('type' => 'final', 'properties' => array()),
+                ),
+                'transitions'   => array(
+                    'finish'    => array(
+                        'from' => array('begin'),
+                        'to'   => 'end'
+                    )
+                )
+            ),
+            $this->callbackHandler
+        );
+
+        $stateMachine = new StateMachine($this->getMock('Finite\StatefulInterface'));
+
+        $arrayLoader->load($stateMachine);
+
+        $this->assertAttributeInstanceOf('Finite\State\Accessor\PropertyPathStateAccessor', 'stateAccessor', $stateMachine);
+        $stateAccessor = $this->readAttribute($stateMachine, 'stateAccessor');
+
+        $this->assertAttributeEquals('finiteState', 'propertyPath', $stateAccessor);
+    }
+
+    public function testCustomPropertyPath()
+    {
+        $arrayLoader = new ArrayLoader(
+            array(
+                'class'         => 'Finite\StatefulInterface',
+                'property_path' => 'customField',
+                'states'        => array(
+                    'begin'  => array('type' => 'initial', 'properties' => array()),
+                    'end' => array('type' => 'final', 'properties' => array()),
+                ),
+                'transitions'   => array(
+                    'finish'    => array(
+                        'from' => array('begin'),
+                        'to'   => 'end'
+                    )
+                )
+            ),
+            $this->callbackHandler
+        );
+
+        $stateMachine = new StateMachine($this->getMock('Finite\StatefulInterface'));
+
+        $arrayLoader->load($stateMachine);
+
+        $this->assertAttributeInstanceOf('Finite\State\Accessor\PropertyPathStateAccessor', 'stateAccessor', $stateMachine);
+        $stateAccessor = $this->readAttribute($stateMachine, 'stateAccessor');
+
+        $this->assertAttributeEquals('customField', 'propertyPath', $stateAccessor);
     }
 }
