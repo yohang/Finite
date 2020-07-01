@@ -48,7 +48,6 @@ class ArrayLoader implements LoaderInterface
             array(
                 'class' => '',
                 'graph' => 'default',
-                'property_path' => 'finiteState',
                 'states' => array(),
                 'transitions' => array(),
             ),
@@ -69,7 +68,11 @@ class ArrayLoader implements LoaderInterface
             $this->callbackBuilderFactory = new CallbackBuilderFactory();
         }
 
-        if (!$stateMachine->hasStateAccessor()) {
+        if (
+            isset($this->config['property_path'])
+            && is_string($this->config['property_path'])
+            && !empty($this->config['property_path'])
+        ) {
             $stateMachine->setStateAccessor(new PropertyPathStateAccessor($this->config['property_path']));
         }
 

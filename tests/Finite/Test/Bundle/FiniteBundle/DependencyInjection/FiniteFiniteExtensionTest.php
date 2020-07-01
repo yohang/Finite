@@ -54,7 +54,6 @@ class FiniteFiniteExtensionTest extends \PHPUnit_Framework_TestCase
         return array(
             'class'         => 'Stateful1',
             'graph'         => 'default',
-            'property_path' => 'finiteState',
             'states'        => array(
                 'state1' => array(
                     'type'       => 'initial',
