@@ -7,29 +7,31 @@ use Finite\Extension\Twig\FiniteExtension;
 use Finite\Factory\PimpleFactory;
 use  Finite\StateMachine\StateMachine;
 use Finite\State\State;
+use PHPUnit\Framework\TestCase;
+use Finite\State\Accessor\StateAccessorInterface;
+use Finite\StatefulInterface;
+use Twig\Environment;
+use Twig\Loader\ArrayLoader;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class FiniteExtensionTest extends \PHPUnit_Framework_TestCase
+class FiniteExtensionTest extends TestCase
 {
     /**
      * @var \Twig_Environment
      */
     protected $env;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
     protected $context;
 
     protected $accessor;
 
-    public function setUp()
+    public function setUp(): void
     {
-        $this->accessor = $accessor = $this->getMock('Finite\State\Accessor\StateAccessorInterface');
-        $this->env = new \Twig_Environment(
-            new \Twig_Loader_Array(
+        $this->accessor = $accessor = $this->getMockBuilder(StateAccessorInterface::class)->getMock();
+        $this->env = new Environment(
+            new ArrayLoader(
                 array(
                     'state'       => '{{ finite_state(object) }}',
                     'transitions' => '{% for transition in finite_transitions(object) %}{{ transition }}{% endfor %}',
@@ -88,7 +90,7 @@ class FiniteExtensionTest extends \PHPUnit_Framework_TestCase
 
     public function getObjectMock()
     {
-        $mock = $this->getMock('Finite\StatefulInterface');
+        $mock = $this->getMockBuilder(StatefulInterface::class)->getMock();
 
         return $mock;
     }

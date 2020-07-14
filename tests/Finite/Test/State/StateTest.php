@@ -3,20 +3,22 @@
 namespace Finite\Test\State;
 
 use Finite\State\State;
+use PHPUnit\Framework\MockObject\Builder\InvocationMocker;
+use PHPUnit\Framework\TestCase;
 
 /**
  *
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class StateTest extends \PHPUnit_Framework_TestCase
+class StateTest extends TestCase
 {
     /**
      * @var State
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new State('test');
     }
@@ -57,11 +59,11 @@ class StateTest extends \PHPUnit_Framework_TestCase
     /**
      * @param string $transitionName
      *
-     * @return \PHPUnit_Framework_MockObject_Builder_InvocationMocker
+     * @return InvocationMocker
      */
     private function getTransitionMock($transitionName)
     {
-        $transition = $this->getMock('\Finite\Transition\TransitionInterface');
+        $transition = $this->getMockBuilder('\Finite\Transition\TransitionInterface')->getMock();
 
         $transition->expects($this->once())
             ->method('getName')

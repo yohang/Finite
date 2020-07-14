@@ -30,6 +30,7 @@ abstract class AbstractFactory implements FactoryInterface
         $hash = spl_object_hash($object).'.'.$graph;
         if (!isset($this->stateMachines[$hash])) {
             $stateMachine = $this->createStateMachine();
+
             if (null !== ($loader = $this->getLoader($object, $graph))) {
                 $loader->load($stateMachine);
             }
@@ -38,6 +39,7 @@ abstract class AbstractFactory implements FactoryInterface
 
             $this->stateMachines[$hash] = $stateMachine;
         }
+
 
         return $this->stateMachines[$hash];
     }

@@ -4,11 +4,12 @@ namespace Finite\Test\Acceptance;
 
 use Finite\Loader\ArrayLoader;
 use Finite\StateMachine\StateMachine;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class CallbacksTest extends \PHPUnit_Framework_TestCase
+class CallbacksTest extends TestCase
 {
     /**
      * @var StateMachine
@@ -20,16 +21,14 @@ class CallbacksTest extends \PHPUnit_Framework_TestCase
      */
     protected $alternativeStateMachine;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
+
     protected $callbacksMock;
 
     protected $object;
 
     protected $alternativeObject;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object              = new \stdClass;
         $this->object->finiteState = null;
@@ -41,7 +40,7 @@ class CallbacksTest extends \PHPUnit_Framework_TestCase
         $this->alternativeStateMachine = new StateMachine($this->alternativeObject, $this->stateMachine->getDispatcher());
 
         $this->callbacksMock = $this
-            ->getMockBuilder('\stdClass')
+            ->getMockBuilder(\stdClass::class)
             ->setMethods(
                 array(
                     'afterItWasProposed',

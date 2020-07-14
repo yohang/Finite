@@ -4,11 +4,13 @@ namespace Finite\Test;
 
 use Finite\State\State;
 use  Finite\StateMachine\StateMachine;
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class StateMachineTestCase extends \PHPUnit_Framework_TestCase
+class StateMachineTestCase extends TestCase
 {
     /**
      * @var StateMachine
@@ -16,15 +18,15 @@ class StateMachineTestCase extends \PHPUnit_Framework_TestCase
     protected $object;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var MockObject
      */
     protected $dispatcher;
 
     protected $accessor;
 
-    public function setUp()
+    public function setUp(): void
     {
-        $this->accessor = $this->getMock('Finite\State\Accessor\StateAccessorInterface');
+        $this->accessor = $this->getMockBuilder('Finite\State\Accessor\StateAccessorInterface')->getMock();
         $this->dispatcher = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcher')
             ->disableOriginalConstructor()
             ->getMock();
@@ -77,7 +79,7 @@ class StateMachineTestCase extends \PHPUnit_Framework_TestCase
 
     protected function getStatefulObjectMock()
     {
-        $mock = $this->getMock('Finite\StatefulInterface');
+        $mock = $this->getMockBuilder('Finite\StatefulInterface')->getMock();
         $this->accessor->expects($this->at(0))->method('getState')->will($this->returnValue('s2'));
 
         return $mock;

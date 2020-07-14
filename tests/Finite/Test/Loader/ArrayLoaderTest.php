@@ -5,25 +5,25 @@ namespace Finite\Test\Loader;
 use Finite\Loader\ArrayLoader;
 use Finite\StateMachine\StateMachine;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use PHPUnit\Framework\TestCase;
+use Finite\Event\CallbackHandler;
+use Finite\State\Accessor\PropertyPathStateAccessor;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
+class ArrayLoaderTest extends TestCase
 {
     /**
      * @var ArrayLoader
      */
     protected $object;
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
     protected $callbackHandler;
 
-    protected function setUp()
+    protected function setUp(): void
     {
-        $this->callbackHandler = $this->getMockBuilder('Finite\Event\CallbackHandler')
+        $this->callbackHandler = $this->getMockBuilder(CallbackHandler::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -52,7 +52,7 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
 
     public function testLoad()
     {
-        $sm = $this->getMock('Finite\StateMachine\StateMachine');
+        $sm = $this->getMockBuilder(StateMachine::class)->getMock();
         $sm->expects($this->once())->method('setStateAccessor');
         $sm->expects($this->once())->method('setGraph');
         $sm->expects($this->exactly(3))->method('addState');
@@ -62,7 +62,7 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
 
     public function testLoadGraph()
     {
-        $sm = $this->getMock('Finite\StateMachine\StateMachine');
+        $sm = $this->getMockBuilder(StateMachine::class)->getMock();
 
         $graphName = 'foobar';
         $loader = new ArrayLoader(array('class' => 'Stateful1', 'graph' => $graphName), $this->callbackHandler);
@@ -74,7 +74,7 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
 
     public function testLoadWithMissingOptions()
     {
-        $sm = $this->getMock('Finite\StateMachine\StateMachine');
+        $sm = $this->getMockBuilder(StateMachine::class)->getMock();
 
         $this->object = new ArrayLoader(
             array(
@@ -105,7 +105,7 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
 
     public function testLoadCallbacks()
     {
-        $sm                         = $this->getMock('Finite\StateMachine\StateMachine');
+        $sm                         = $this->getMockBuilder(StateMachine::class)->getMock();
         $allTimes                   = function () {};
         $beforeMiddleize            = function () {};
         $fromStartToOtherThanMiddle = function () {};
@@ -183,7 +183,9 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
 
     public function testLoadWithCustomStateAccessor()
     {
-        $sa = $this->getMock('Finite\State\Accessor\PropertyPathStateAccessor', array(), array(), 'CustomAccessor');
+        $sa = $this->getMockBuilder(PropertyPathStateAccessor::class)
+            ->setMockClassName('CustomAccessor')
+            ->getMock();
 
         $sm = new StateMachine;
         $sm->setStateAccessor($sa);
@@ -195,8 +197,13 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
 
     public function testSupports()
     {
-        $object  = $this->getMock('Finite\StatefulInterface', array(), array(), 'Stateful1');
-        $object2 = $this->getMock('Finite\StatefulInterface', array(), array(), 'Stateful2');
+        $object  = $this->getMockBuilder('Finite\StatefulInterface')
+            ->setMockClassName('Stateful1')
+            ->getMock();
+
+        $object2 = $this->getMockBuilder('Finite\StatefulInterface')
+            ->setMockClassName('Stateful2')
+            ->getMock();
 
         $this->assertTrue($this->object->supports($object));
         $this->assertFalse($this->object->supports($object2));
