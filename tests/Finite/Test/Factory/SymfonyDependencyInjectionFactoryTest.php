@@ -6,8 +6,11 @@ use Finite\Factory\SymfonyDependencyInjectionFactory;
 use  Finite\StateMachine\StateMachine;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use PHPUnit\Framework\TestCase;
+use Finite\State\Accessor\StateAccessorInterface;
+use Finite\StatefulInterface;
 
-class SymfonyDependencyInjectionFactoryTest extends \PHPUnit_Framework_TestCase
+class SymfonyDependencyInjectionFactoryTest extends TestCase
 {
     /**
      * @var PimpleFactory
@@ -16,12 +19,12 @@ class SymfonyDependencyInjectionFactoryTest extends \PHPUnit_Framework_TestCase
 
     protected $accessor;
 
-    public function setUp()
+    public function setUp(): void
     {
-        $this->accessor = $this->getMock('Finite\State\Accessor\StateAccessorInterface');
+        $this->accessor = $this->getMockBuilder(StateAccessorInterface::class)->getMock();
         $container = new ContainerBuilder;
         $container
-            ->register('state_machine', 'Finite\StateMachine\StateMachine')
+            ->register('state_machine', StateMachine::class)
             ->setShared(false)
             ->setArguments(array(null, null, $this->accessor))
             ->addMethodCall('addTransition', array('t12', 's1', 's2'))
@@ -32,14 +35,14 @@ class SymfonyDependencyInjectionFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testGet()
     {
-        $object = $this->getMock('Finite\StatefulInterface');
+        $object = $this->getMockBuilder(StatefulInterface::class)->getMock();
         $this->accessor->expects($this->at(0))->method('getState')->will($this->returnValue('s2'));
         $sm = $this->object->get($object);
 
-        $this->assertInstanceOf('Finite\StateMachine\StateMachine', $sm);
+        $this->assertInstanceOf(StateMachine::class, $sm);
         $this->assertSame('s2', $sm->getCurrentState()->getName());
 
-        $object2 = $this->getMock('Finite\StatefulInterface');
+        $object2 = $this->getMockBuilder(StatefulInterface::class)->getMock();
         $this->accessor->expects($this->at(0))->method('getState')->will($this->returnValue('s2'));
         $sm2 = $this->object->get($object2);
 

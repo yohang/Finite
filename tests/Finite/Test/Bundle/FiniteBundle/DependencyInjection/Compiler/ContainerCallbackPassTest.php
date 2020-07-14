@@ -6,20 +6,21 @@ use Finite\Bundle\FiniteBundle\DependencyInjection\Compiler\ContainerCallbackPas
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test of ContainerCallbackPass
  *
  * @author Alexandre Bacco <alexandre.bacco@gmail.com>
  */
-class ContainerCallbackPassTest extends \PHPUnit_Framework_TestCase
+class ContainerCallbackPassTest extends TestCase
 {
     /**
      * @var ContainerBuilder
      */
     protected $container;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->container = new ContainerBuilder;
 

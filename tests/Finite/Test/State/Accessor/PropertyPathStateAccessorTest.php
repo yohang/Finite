@@ -4,23 +4,25 @@ namespace Finite\Test\State\Accessor;
 
 use Finite\State\Accessor\PropertyPathStateAccessor;
 use Symfony\Component\PropertyAccess\Exception\NoSuchPropertyException;
+use PHPUnit\Framework\TestCase;
+use Finite\StatefulInterface;
 
-class PropertyPathStateAccessorTest extends \PHPUnit_Framework_TestCase
+class PropertyPathStateAccessorTest extends TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $propertyAccessor;
 
-    protected function setUp()
+    protected function setUp(): void
     {
-        $this->propertyAccessor = $this->getMock('Symfony\Component\PropertyAccess\PropertyAccessorInterface');
+        $this->propertyAccessor = $this->getMockBuilder('Symfony\Component\PropertyAccess\PropertyAccessorInterface')->getMock();
     }
 
     public function testGetState()
     {
         $object   = new PropertyPathStateAccessor('bar', $this->propertyAccessor);
-        $stateful = $this->getMock('Finite\StatefulInterface');
+        $stateful = $this->getMockBuilder('Finite\StatefulInterface')->getMock();
 
         $this->propertyAccessor
             ->expects($this->at(0))
@@ -43,7 +45,7 @@ class PropertyPathStateAccessorTest extends \PHPUnit_Framework_TestCase
     public function testSetState()
     {
         $object   = new PropertyPathStateAccessor('bar', $this->propertyAccessor);
-        $stateful = $this->getMock('Finite\StatefulInterface');
+        $stateful = $this->getMockBuilder('Finite\StatefulInterface')->getMock();
 
         $this->propertyAccessor
             ->expects($this->at(0))
@@ -69,7 +71,7 @@ class PropertyPathStateAccessorTest extends \PHPUnit_Framework_TestCase
     public function testSetOnUnknownProperty()
     {
         $object   = new PropertyPathStateAccessor('bar', $this->propertyAccessor);
-        $stateful = $this->getMock('Finite\StatefulInterface');
+        $stateful = $this->getMockBuilder(StatefulInterface::class)->getMock();
 
         $this->propertyAccessor
             ->expects($this->once())
@@ -87,7 +89,7 @@ class PropertyPathStateAccessorTest extends \PHPUnit_Framework_TestCase
     public function testGetOnUnknownProperty()
     {
         $object   = new PropertyPathStateAccessor('bar', $this->propertyAccessor);
-        $stateful = $this->getMock('Finite\StatefulInterface');
+        $stateful = $this->getMockBuilder('Finite\StatefulInterface')->getMock();
 
         $this->propertyAccessor
             ->expects($this->once())

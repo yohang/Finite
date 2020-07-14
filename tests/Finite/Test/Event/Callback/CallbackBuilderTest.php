@@ -3,20 +3,24 @@
 namespace Finite\Test\Event\Callback;
 
 use Finite\Event\Callback\CallbackBuilder;
+use PHPUnit\Framework\TestCase;
+use Finite\StateMachine\StateMachine;
+use Finite\Event\Callback\Callback;
+use Finite\Event\Callback\CallbackSpecification;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class CallbackBuilderTest extends \PHPUnit_Framework_TestCase
+class CallbackBuilderTest extends TestCase
 {
     public function testItBuildsCallback()
     {
         $stateMachine = $this
-            ->getMockBuilder('Finite\StateMachine\StateMachine')
+            ->getMockBuilder(StateMachine::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $callableMock = $this->getMockBuilder('\stdClass')->setMethods(array('call'))->getMock();
+        $callableMock = $this->getMockBuilder(\stdClass::class)->setMethods(array('call'))->getMock();
 
         $callback = CallbackBuilder::create($stateMachine, array($callableMock, 'call'))
             ->setFrom(array('s1'))
@@ -27,7 +31,7 @@ class CallbackBuilderTest extends \PHPUnit_Framework_TestCase
             ->addOn('t23')
             ->getCallback();
 
-        $this->assertInstanceOf('Finite\Event\Callback\Callback', $callback);
-        $this->assertInstanceOf('Finite\Event\Callback\CallbackSpecification', $callback->getSpecification());
+        $this->assertInstanceOf(Callback::class, $callback);
+        $this->assertInstanceOf(CallbackSpecification::class, $callback->getSpecification());
     }
 }

@@ -3,8 +3,12 @@
 namespace Finite\Test\Event;
 
 use Finite\Event\TransitionEvent;
+use PHPUnit\Framework\TestCase;
+use Finite\Transition\Transition;
+use Finite\State\State;
+use Finite\StateMachine\StateMachine;
 
-class TransitionEventTest extends \PHPUnit_Framework_TestCase
+class TransitionEventTest extends TestCase
 {
     /**
      * @var Finite\Transition\Transition
@@ -16,9 +20,9 @@ class TransitionEventTest extends \PHPUnit_Framework_TestCase
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
-        $this->transition = $this->getMockBuilder('Finite\Transition\Transition')->disableOriginalConstructor()->getMock();
+        $this->transition = $this->getMockBuilder(Transition::class)->disableOriginalConstructor()->getMock();
 
         $this->transition
             ->expects($this->once())
@@ -27,9 +31,9 @@ class TransitionEventTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(array('returned' => 1)));
 
         $this->object = new TransitionEvent(
-            $this->getMockBuilder('Finite\State\State')->disableOriginalConstructor()->getMock(),
+            $this->getMockBuilder(State::class)->disableOriginalConstructor()->getMock(),
             $this->transition,
-            $this->getMockBuilder('Finite\StateMachine\StateMachine')->disableOriginalConstructor()->getMock(),
+            $this->getMockBuilder(StateMachine::class)->disableOriginalConstructor()->getMock(),
             array()
         );
     }
