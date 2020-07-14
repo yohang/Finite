@@ -10,6 +10,8 @@ use Finite\State\State;
 use PHPUnit\Framework\TestCase;
 use Finite\State\Accessor\StateAccessorInterface;
 use Finite\StatefulInterface;
+use Twig\Environment;
+use Twig\Loader\ArrayLoader;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
@@ -28,8 +30,8 @@ class FiniteExtensionTest extends TestCase
     public function setUp(): void
     {
         $this->accessor = $accessor = $this->getMockBuilder(StateAccessorInterface::class)->getMock();
-        $this->env = new \Twig_Environment(
-            new \Twig_Loader_Array(
+        $this->env = new Environment(
+            new ArrayLoader(
                 array(
                     'state'       => '{{ finite_state(object) }}',
                     'transitions' => '{% for transition in finite_transitions(object) %}{{ transition }}{% endfor %}',

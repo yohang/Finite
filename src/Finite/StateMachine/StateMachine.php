@@ -3,6 +3,8 @@
 namespace Finite\StateMachine;
 
 use Finite\Event\FiniteEvents;
+use Finite\Event\Initialize;
+use Finite\Event\SetInitialState;
 use Finite\Event\StateMachineEvent;
 use Finite\Event\TransitionEvent;
 use Finite\Exception;
@@ -102,12 +104,12 @@ class StateMachine implements StateMachineInterface
             $initialState = $this->findInitialState();
             $this->stateAccessor->setState($this->object, $initialState);
 
-            $this->dispatcher->dispatch(FiniteEvents::SET_INITIAL_STATE, new StateMachineEvent($this));
+            $this->dispatcher->dispatch(new SetInitialState($this));
         }
 
         $this->currentState = $this->getState($initialState);
 
-        $this->dispatcher->dispatch(FiniteEvents::INITIALIZE, new StateMachineEvent($this));
+        $this->dispatcher->dispatch(new Initialize($this));
     }
 
     /**
@@ -397,10 +399,10 @@ class StateMachine implements StateMachineInterface
      */
     private function dispatchTransitionEvent(TransitionInterface $transition, TransitionEvent $event, $transitionState)
     {
-        $this->dispatcher->dispatch($transitionState, $event);
-        $this->dispatcher->dispatch($transitionState.'.'.$transition->getName(), $event);
+        $this->dispatcher->dispatch($event, $transitionState);
+        $this->dispatcher->dispatch($event, $transitionState.'.'.$transition->getName());
         if (null !== $this->getGraph()) {
-            $this->dispatcher->dispatch($transitionState.'.'.$this->getGraph().'.'.$transition->getName(), $event);
+            $this->dispatcher->dispatch($event, $transitionState.'.'.$this->getGraph().'.'.$transition->getName());
         }
     }
 }

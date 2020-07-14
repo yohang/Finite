@@ -2,6 +2,7 @@
 
 namespace Finite\Test\StateMachine;
 
+use Finite\Event\Initialize;
 use Finite\StateMachine\ListenableStateMachine;
 use Finite\Test\StateMachineTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -34,10 +35,11 @@ class ListenableStateMachineTest extends StateMachineTestCase
 
     public function testInitialize()
     {
+
         $this->dispatcher
             ->expects($this->once())
             ->method('dispatch')
-            ->with('finite.initialize', $this->isInstanceOf('Finite\Event\StateMachineEvent'));
+            ->with($this->isInstanceOf('Finite\Event\Initialize'));
 
         $this->initialize();
     }
@@ -47,32 +49,32 @@ class ListenableStateMachineTest extends StateMachineTestCase
         $this->dispatcher
             ->expects($this->at(1))
             ->method('dispatch')
-            ->with('finite.test_transition', $this->isInstanceOf('Finite\Event\TransitionEvent'));
+            ->with($this->isInstanceOf('Finite\Event\TransitionEvent'), 'finite.test_transition');
 
         $this->dispatcher
             ->expects($this->at(2))
             ->method('dispatch')
-            ->with('finite.test_transition.t23', $this->isInstanceOf('Finite\Event\TransitionEvent'));
+            ->with($this->isInstanceOf('Finite\Event\TransitionEvent'), 'finite.test_transition.t23');
 
         $this->dispatcher
             ->expects($this->at(3))
             ->method('dispatch')
-            ->with('finite.pre_transition', $this->isInstanceOf('Finite\Event\TransitionEvent'));
+            ->with($this->isInstanceOf('Finite\Event\TransitionEvent'), 'finite.pre_transition');
 
         $this->dispatcher
             ->expects($this->at(4))
             ->method('dispatch')
-            ->with('finite.pre_transition.t23', $this->isInstanceOf('Finite\Event\TransitionEvent'));
+            ->with($this->isInstanceOf('Finite\Event\TransitionEvent'), 'finite.pre_transition.t23');
 
         $this->dispatcher
             ->expects($this->at(5))
             ->method('dispatch')
-            ->with('finite.post_transition', $this->isInstanceOf('Finite\Event\TransitionEvent'));
+            ->with($this->isInstanceOf('Finite\Event\TransitionEvent'), 'finite.post_transition');
 
         $this->dispatcher
             ->expects($this->at(6))
             ->method('dispatch')
-            ->with('finite.post_transition.t23', $this->isInstanceOf('Finite\Event\TransitionEvent'));
+            ->with($this->isInstanceOf('Finite\Event\TransitionEvent'), 'finite.post_transition.t23');
 
         $this->initialize();
         $this->object->apply('t23');
@@ -83,12 +85,12 @@ class ListenableStateMachineTest extends StateMachineTestCase
         $this->dispatcher
             ->expects($this->at(1))
             ->method('dispatch')
-            ->with('finite.test_transition', $this->isInstanceOf('Finite\Event\TransitionEvent'));
+            ->with($this->isInstanceOf('Finite\Event\TransitionEvent'), 'finite.test_transition');
 
         $this->dispatcher
             ->expects($this->at(2))
             ->method('dispatch')
-            ->with('finite.test_transition.t23', $this->isInstanceOf('Finite\Event\TransitionEvent'));
+            ->with($this->isInstanceOf('Finite\Event\TransitionEvent'), 'finite.test_transition.t23');
 
         $this->initialize();
         $this->assertFalse($this->object->can('t34'));
@@ -100,15 +102,15 @@ class ListenableStateMachineTest extends StateMachineTestCase
         $this->dispatcher
             ->expects($this->at(1))
             ->method('dispatch')
-            ->with('finite.test_transition', $this->isInstanceOf('Finite\Event\TransitionEvent'));
+            ->with($this->isInstanceOf('Finite\Event\TransitionEvent'), 'finite.test_transition');
 
         $this->dispatcher
             ->expects($this->at(2))
             ->method('dispatch')
-            ->with('finite.test_transition.t23', $this->callback(function($event) {
+            ->with($this->callback(function($event) {
                 $event->reject();
                 return $event instanceof \Finite\Event\TransitionEvent;
-            }));
+            }), 'finite.test_transition.t23');
 
         $this->initialize();
         $this->assertFalse($this->object->can('t34'));
