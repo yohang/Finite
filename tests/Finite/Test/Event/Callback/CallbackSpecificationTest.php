@@ -16,7 +16,7 @@ class CallbackSpecificationTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->stateMachine = $this->getMock('Finite\StateMachine\StateMachine');
+        $this->stateMachine = $this->createMock('Finite\StateMachine\StateMachine');
     }
 
     public function testItIsSatisfiedByFrom()

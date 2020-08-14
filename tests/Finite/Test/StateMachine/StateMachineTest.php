@@ -16,7 +16,7 @@ class StateMachineTest extends StateMachineTestCase
         $this->object->addState('foo');
         $this->assertInstanceOf('Finite\State\StateInterface', $this->object->getState('foo'));
 
-        $stateMock = $this->getMock('Finite\State\StateInterface');
+        $stateMock = $this->createMock('Finite\State\StateInterface');
         $stateMock
             ->expects($this->once())
             ->method('getName')
@@ -31,7 +31,7 @@ class StateMachineTest extends StateMachineTestCase
         $this->object->addTransition('t12', 'state1', 'state2');
         $this->assertInstanceOf('Finite\Transition\TransitionInterface', $this->object->getTransition('t12'));
 
-        $transitionMock = $this->getMock('Finite\Transition\TransitionInterface');
+        $transitionMock = $this->createMock('Finite\Transition\TransitionInterface');
 
         $transitionMock->expects($this->atLeastOnce())->method('getName')         ->will($this->returnValue('t23'));
         $transitionMock->expects($this->once())       ->method('getInitialStates')->will($this->returnValue(array('state2')));
@@ -55,7 +55,7 @@ class StateMachineTest extends StateMachineTestCase
 
     public function testInitializeWithInitialState()
     {
-        $object = $this->getMock('Finite\StatefulInterface');
+        $object = $this->createMock('Finite\StatefulInterface');
 
         $this->accessor->expects($this->at(1))->method('setState')->will($this->returnValue('s1'));
 
@@ -81,7 +81,7 @@ class StateMachineTest extends StateMachineTestCase
 
     public function testCanWithGuardReturningFalse()
     {
-        $transition = $this->getMock('\Finite\Transition\TransitionInterface');
+        $transition = $this->createMock('\Finite\Transition\TransitionInterface');
         $transition->expects($this->any())
             ->method('getGuard')
             ->will($this->returnValue(function () {
@@ -96,14 +96,14 @@ class StateMachineTest extends StateMachineTestCase
 
     public function testCanWithGuardReturningTrue()
     {
-        $transition = $this->getMock('\Finite\Transition\TransitionInterface');
+        $transition = $this->createMock('\Finite\Transition\TransitionInterface');
         $transition->expects($this->any())
             ->method('getGuard')
             ->will($this->returnValue(function () {
                 return true;
             }));
 
-        $stateful = $this->getMock('Finite\StatefulInterface');
+        $stateful = $this->createMock('Finite\StatefulInterface');
         $this->object->addState(new State('state1', State::TYPE_INITIAL));
 
         $this->object->setObject($stateful);
@@ -174,7 +174,7 @@ class StateMachineTest extends StateMachineTestCase
     {
         $this->initialize();
 
-        $state = $this->getMock('stdClass', array('__toString'));
+        $state = $this->createMock(Stringable::class, array('__toString'));
         $state->expects($this->once())->method('__toString')->will($this->returnValue('s1'));
 
         $this->assertInstanceOf('Finite\State\State', $this->object->getState($state));
@@ -249,4 +249,9 @@ class StateMachineTest extends StateMachineTestCase
         $this->initialize();
         $this->assertSame(array('s2', 's4'), $this->object->findStateWithProperty('visible', true));
     }
+}
+
+interface Stringable
+{
+    public function __toString();
 }

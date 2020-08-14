@@ -24,7 +24,7 @@ class StateMachineTestCase extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->accessor = $this->getMock('Finite\State\Accessor\StateAccessorInterface');
+        $this->accessor = $this->createMock('Finite\State\Accessor\StateAccessorInterface');
         $this->dispatcher = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcher')
             ->disableOriginalConstructor()
             ->getMock();
@@ -77,7 +77,7 @@ class StateMachineTestCase extends \PHPUnit_Framework_TestCase
 
     protected function getStatefulObjectMock()
     {
-        $mock = $this->getMock('Finite\StatefulInterface');
+        $mock = $this->createMock('Finite\StatefulInterface');
         $this->accessor->expects($this->at(0))->method('getState')->will($this->returnValue('s2'));
 
         return $mock;

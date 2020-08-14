@@ -14,13 +14,13 @@ class PropertyPathStateAccessorTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->propertyAccessor = $this->getMock('Symfony\Component\PropertyAccess\PropertyAccessorInterface');
+        $this->propertyAccessor = $this->createMock('Symfony\Component\PropertyAccess\PropertyAccessorInterface');
     }
 
     public function testGetState()
     {
         $object   = new PropertyPathStateAccessor('bar', $this->propertyAccessor);
-        $stateful = $this->getMock('Finite\StatefulInterface');
+        $stateful = $this->createMock('Finite\StatefulInterface');
 
         $this->propertyAccessor
             ->expects($this->at(0))
@@ -43,7 +43,7 @@ class PropertyPathStateAccessorTest extends \PHPUnit_Framework_TestCase
     public function testSetState()
     {
         $object   = new PropertyPathStateAccessor('bar', $this->propertyAccessor);
-        $stateful = $this->getMock('Finite\StatefulInterface');
+        $stateful = $this->createMock('Finite\StatefulInterface');
 
         $this->propertyAccessor
             ->expects($this->at(0))
@@ -69,7 +69,7 @@ class PropertyPathStateAccessorTest extends \PHPUnit_Framework_TestCase
     public function testSetOnUnknownProperty()
     {
         $object   = new PropertyPathStateAccessor('bar', $this->propertyAccessor);
-        $stateful = $this->getMock('Finite\StatefulInterface');
+        $stateful = $this->createMock('Finite\StatefulInterface');
 
         $this->propertyAccessor
             ->expects($this->once())
@@ -87,7 +87,7 @@ class PropertyPathStateAccessorTest extends \PHPUnit_Framework_TestCase
     public function testGetOnUnknownProperty()
     {
         $object   = new PropertyPathStateAccessor('bar', $this->propertyAccessor);
-        $stateful = $this->getMock('Finite\StatefulInterface');
+        $stateful = $this->createMock('Finite\StatefulInterface');
 
         $this->propertyAccessor
             ->expects($this->once())

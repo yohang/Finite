@@ -11,7 +11,7 @@ class CallbackBuilderFactoryTest extends \PHPUnit_Framework_TestCase
 {
     public function testItConstructsCallbackBuilder()
     {
-        $sm = $this->getMock('Finite\StateMachine\StateMachineInterface');
+        $sm = $this->createMock('Finite\StateMachine\StateMachineInterface');
 
         $factory = new CallbackBuilderFactory;
 

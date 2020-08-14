@@ -18,8 +18,12 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('finite_finite');
+        $treeBuilder = new TreeBuilder('finite_finite');
+        if (method_exists($treeBuilder, 'root')) {
+            $rootNode = $treeBuilder->root('finite_finite');
+        } else {
+            $rootNode = $treeBuilder->getRootNode();
+        }
         $rootProto = $rootNode->useAttributeAsKey('name')->prototype('array')->children();
 
         $rootProto

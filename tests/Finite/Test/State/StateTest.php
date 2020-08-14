@@ -53,7 +53,7 @@ class StateTest extends \PHPUnit_Framework_TestCase
             array(array('t1', 't2'), 't2', 't3'),
         );
     }
-    
+
     /**
      * @param string $transitionName
      *
@@ -61,7 +61,7 @@ class StateTest extends \PHPUnit_Framework_TestCase
      */
     private function getTransitionMock($transitionName)
     {
-        $transition = $this->getMock('\Finite\Transition\TransitionInterface');
+        $transition = $this->createMock('\Finite\Transition\TransitionInterface');
 
         $transition->expects($this->once())
             ->method('getName')

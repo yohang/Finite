@@ -16,7 +16,7 @@ class PimpleFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->accessor = $accessor = $this->getMock('Finite\State\Accessor\StateAccessorInterface');
+        $this->accessor = $accessor = $this->createMock('Finite\State\Accessor\StateAccessorInterface');
         $container = new \Pimple(array(
             'state_machine' => function() use ($accessor) {
                 $sm =  new StateMachine(null, null, $accessor);
@@ -32,14 +32,14 @@ class PimpleFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testGet()
     {
-        $object = $this->getMock('Finite\StatefulInterface');
+        $object = $this->createMock('Finite\StatefulInterface');
         $this->accessor->expects($this->at(0))->method('getState')->will($this->returnValue('s2'));
         $sm = $this->object->get($object);
 
         $this->assertInstanceOf('Finite\StateMachine\StateMachine', $sm);
         $this->assertSame('s2', $sm->getCurrentState()->getName());
 
-        $object2 = $this->getMock('Finite\StatefulInterface');
+        $object2 = $this->createMock('Finite\StatefulInterface');
         $this->accessor->expects($this->at(0))->method('getState')->will($this->returnValue('s2'));
         $sm2 = $this->object->get($object2);
 
@@ -48,13 +48,13 @@ class PimpleFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testLoad()
     {
-        $object = $this->getMock('Finite\StatefulInterface');
+        $object = $this->createMock('Finite\StatefulInterface');
         $this->accessor->expects($this->any())->method('getState')->will($this->returnValue('s1'));
 
-        $loader1 = $this->getMock('Finite\Loader\LoaderInterface');
+        $loader1 = $this->createMock('Finite\Loader\LoaderInterface');
         $loader1->expects($this->at(0))->method('supports')->with($object, 'foo')->will($this->returnValue(false));
         $loader1->expects($this->at(1))->method('supports')->with($object, 'bar')->will($this->returnValue(true));
-        $loader2 = $this->getMock('Finite\Loader\LoaderInterface');
+        $loader2 = $this->createMock('Finite\Loader\LoaderInterface');
         $loader2->expects($this->at(0))->method('supports')->with($object, 'foo')->will($this->returnValue(true));
         $loader2->expects($this->at(1))->method('load');
 

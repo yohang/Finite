@@ -17,8 +17,8 @@ class SecurityAwareStateMachineTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->accessor = $this->getMock('Finite\State\Accessor\StateAccessorInterface');
-        $statefulMock = $this->getMock('Finite\StatefulInterface');
+        $this->accessor = $this->createMock('Finite\State\Accessor\StateAccessorInterface');
+        $statefulMock = $this->createMock('Finite\StatefulInterface');
         $this->accessor->expects($this->at(0))->method('getState')->will($this->returnValue('s1'));
 
         $this->object = new SecurityAwareStateMachine($statefulMock, null, $this->accessor);
@@ -29,7 +29,7 @@ class SecurityAwareStateMachineTest extends \PHPUnit_Framework_TestCase
 
     public function testCan()
     {
-        $securityMock = $this->getMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
+        $securityMock = $this->createMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         $this->object->setSecurityContext($securityMock);
 
         $that     = $this;

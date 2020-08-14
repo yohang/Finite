@@ -27,7 +27,7 @@ class FiniteExtensionTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->accessor = $accessor = $this->getMock('Finite\State\Accessor\StateAccessorInterface');
+        $this->accessor = $accessor = $this->createMock('Finite\State\Accessor\StateAccessorInterface');
         $this->env = new \Twig_Environment(
             new \Twig_Loader_Array(
                 array(
@@ -88,7 +88,7 @@ class FiniteExtensionTest extends \PHPUnit_Framework_TestCase
 
     public function getObjectMock()
     {
-        $mock = $this->getMock('Finite\StatefulInterface');
+        $mock = $this->createMock('Finite\StatefulInterface');
 
         return $mock;
     }
