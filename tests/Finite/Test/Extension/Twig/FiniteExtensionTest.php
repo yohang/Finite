@@ -27,6 +27,15 @@ class FiniteExtensionTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        if (!class_exists('Twig_Environment')) {
+            class_alias('Twig\Environment', 'Twig_Environment');
+        }
+
+        if (!class_exists('Twig_Loader_Array')) {
+            class_alias('Twig\Loader\ArrayLoader', 'Twig_Loader_Array');
+        }
+
+
         $this->accessor = $accessor = $this->createMock('Finite\State\Accessor\StateAccessorInterface');
         $this->env = new \Twig_Environment(
             new \Twig_Loader_Array(
