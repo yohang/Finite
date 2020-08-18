@@ -3,6 +3,7 @@
 namespace Finite\StateMachine;
 
 use Finite\Event\FiniteEvents;
+use Finite\Event\StateMachineDispatcher;
 use Finite\Event\StateMachineEvent;
 use Finite\Event\TransitionEvent;
 use Finite\Exception;
@@ -12,8 +13,6 @@ use Finite\State\State;
 use Finite\State\StateInterface;
 use Finite\Transition\Transition;
 use Finite\Transition\TransitionInterface;
-use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * The Finite State Machine.
@@ -51,7 +50,7 @@ class StateMachine implements StateMachineInterface
     protected $currentState;
 
     /**
-     * @var EventDispatcherInterface
+     * @var StateMachineDispatcher
      */
     protected $dispatcher;
 
@@ -67,16 +66,16 @@ class StateMachine implements StateMachineInterface
 
     /**
      * @param object                   $object
-     * @param EventDispatcherInterface $dispatcher
+     * @param StateMachineDispatcher   $dispatcher
      * @param StateAccessorInterface   $stateAccessor
      */
     public function __construct(
         $object = null,
-        EventDispatcherInterface $dispatcher = null,
+        StateMachineDispatcher $dispatcher = null,
         StateAccessorInterface $stateAccessor = null
     ) {
         $this->object = $object;
-        $this->dispatcher = $dispatcher ?: new EventDispatcher();
+        $this->dispatcher = $dispatcher ?: new StateMachineDispatcher();
         $this->stateAccessor = $stateAccessor ?: new PropertyPathStateAccessor();
     }
 
@@ -313,15 +312,15 @@ class StateMachine implements StateMachineInterface
     }
 
     /**
-     * @param EventDispatcherInterface $dispatcher
+     * @param StateMachineDispatcher $dispatcher
      */
-    public function setDispatcher(EventDispatcherInterface $dispatcher)
+    public function setDispatcher(StateMachineDispatcher $dispatcher)
     {
         $this->dispatcher = $dispatcher;
     }
 
     /**
-     * @return EventDispatcherInterface
+     * @return StateMachineDispatcher
      */
     public function getDispatcher()
     {

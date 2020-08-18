@@ -30,7 +30,7 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->dispatcher   = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcher');
+        $this->dispatcher   = $this->createMock('Finite\Event\StateMachineDispatcher');
         $this->statemachine = $this->createMock('Finite\StateMachine\StateMachineInterface');
         $this->object       = new CallbackHandler($this->dispatcher);
     }

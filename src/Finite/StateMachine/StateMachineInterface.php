@@ -2,6 +2,7 @@
 
 namespace Finite\StateMachine;
 
+use Finite\Event\StateMachineDispatcher;
 use Finite\State\Accessor\StateAccessorInterface;
 use Finite\State\StateInterface;
 use Finite\Transition\TransitionInterface;
@@ -102,7 +103,7 @@ interface StateMachineInterface
     public function getCurrentState();
 
     /**
-     * @return \Symfony\Component\EventDispatcher\EventDispatcherInterface
+     * @return StateMachineDispatcher
      */
     public function getDispatcher();
 

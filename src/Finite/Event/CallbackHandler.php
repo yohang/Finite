@@ -5,7 +5,6 @@ namespace Finite\Event;
 use Finite\Event\Callback\Callback;
 use Finite\Event\Callback\CallbackBuilder;
 use Finite\StateMachine\StateMachineInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -22,7 +21,7 @@ class CallbackHandler
     const ALL = 'all';
 
     /**
-     * @var EventDispatcherInterface
+     * @var StateMachineDispatcher
      */
     protected $dispatcher;
 
@@ -32,9 +31,9 @@ class CallbackHandler
     protected $specResolver;
 
     /**
-     * @param EventDispatcherInterface $dispatcher
+     * @param StateMachineDispatcher $dispatcher
      */
-    public function __construct(EventDispatcherInterface $dispatcher)
+    public function __construct(StateMachineDispatcher $dispatcher)
     {
         $this->dispatcher = $dispatcher;
         $this->specResolver = new OptionsResolver();

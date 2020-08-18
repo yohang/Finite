@@ -25,7 +25,7 @@ class StateMachineTestCase extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->accessor = $this->createMock('Finite\State\Accessor\StateAccessorInterface');
-        $this->dispatcher = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcher')
+        $this->dispatcher = $this->getMockBuilder('Finite\Event\StateMachineDispatcher')
             ->disableOriginalConstructor()
             ->getMock();
 

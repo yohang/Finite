@@ -25,7 +25,7 @@ class ListenableStateMachineTest extends StateMachineTestCase
     {
         parent::setUp();
 
-        $this->dispatcher = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcher')
+        $this->dispatcher = $this->getMockBuilder('Finite\Event\StateMachineDispatcher')
             ->disableOriginalConstructor()
             ->getMock();
 
