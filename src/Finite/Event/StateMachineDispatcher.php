@@ -40,8 +40,9 @@ class StateMachineDispatcher
         static $result = null;
 
         if (null === $result) {
-            $reflectionMethod = new \ReflectionMethod(EventDispatcherInterface::class, 'dispatch');
-            $result           = 'event' === ($reflectionMethod)->getParameters()[1]->getName();
+            $reflectionMethod     = new \ReflectionMethod(EventDispatcherInterface::class, 'dispatch');
+            $reflectionParameters = $reflectionMethod->getParameters();
+            $result               = count($reflectionParameters) >= 2 && 'event' === $reflectionParameters[1]->getName();
         }
 
         return $result;
