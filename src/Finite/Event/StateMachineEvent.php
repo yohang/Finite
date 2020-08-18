@@ -3,7 +3,11 @@
 namespace Finite\Event;
 
 use Finite\StateMachine\StateMachine;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
+
+if (!class_exists('Symfony\Contracts\EventDispatcher\Event')) {
+    class_alias('Symfony\Component\EventDispatcher\Event', 'Symfony\Contracts\EventDispatcher\Event');
+}
 
 /**
  * The event object which is thrown on state machine actions.
