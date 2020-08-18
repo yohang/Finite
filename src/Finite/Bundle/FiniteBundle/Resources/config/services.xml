@@ -12,11 +12,12 @@
         <parameter key="finite.twig_extension.class">Finite\Extension\Twig\FiniteExtension</parameter>
         <parameter key="finite.callback.handler.class">Finite\Event\CallbackHandler</parameter>
         <parameter key="finite.callback.builder.factory.class">Finite\Event\Callback\CallbackBuilderFactory</parameter>
+        <parameter key="finite.state_machine_dispatcher.class">Finite\Event\StateMachineDispatcher</parameter>
     </parameters>
 
     <services>
         <service id="finite.callback.handler" class="%finite.callback.handler.class%">
-            <argument type="service" id="event_dispatcher" />
+            <argument type="service" id="finite.state_machine_dispatcher" />
         </service>
         <service id="finite.callback.builder.factory" class="%finite.callback.builder.factory.class%" />
         <service id="finite.array_loader" class="%finite.array_loader.class%" public="false">
@@ -24,10 +25,13 @@
             <argument type="service" id="finite.callback.handler" />
             <argument type="service" id="finite.callback.builder.factory" />
         </service>
+        <service id="finite.state_machine_dispatcher" class="%finite.state_machine_dispatcher.class%">
+            <argument type="service" id="event_dispatcher" />
+        </service>
         <service id="finite.state_machine" class="%finite.state_machine.class%" public="true">
             <!-- shared="false" is defined in DependencyInjection extension as Symfony < 2.8 needs scope="prototype" -->
             <call method="setDispatcher">
-                <argument type="service" id="event_dispatcher" />
+                <argument type="service" id="finite.state_machine_dispatcher" />
             </call>
         </service>
         <service id="finite.factory" class="%finite.factory.class%" public="true">
