@@ -4,6 +4,8 @@ Use with Symfony
 Installation
 ------------
 
+The bundle does not require a separate Composer package, as it's shipped within `yohang/finite`:
+
 .. code-block:: bash
 
     $ composer require yohang/finite
