@@ -73,4 +73,12 @@ abstract class AbstractFactory implements FactoryInterface
      * @return StateMachineInterface
      */
     abstract protected function createStateMachine();
+
+    /**
+     * Clears all the machines.
+     */
+    public function clear()
+    {
+        $this->stateMachines = array();
+    }
 }

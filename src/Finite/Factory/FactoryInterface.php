@@ -20,4 +20,9 @@ interface FactoryInterface
      * @return StateMachineInterface
      */
     public function get($object, $graph = 'default');
+
+    /**
+     * Clears all the machines.
+     */
+    public function clear();
 }
