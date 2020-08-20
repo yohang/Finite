@@ -130,7 +130,7 @@ class StateMachine implements StateMachineInterface
 
         $this->dispatchTransitionEvent($transition, $event, FiniteEvents::PRE_TRANSITION);
 
-        $returnValue = $transition->process($this);
+        $returnValue = $transition->process($this, $parameters);
         $this->stateAccessor->setState($this->object, $transition->getState());
         $this->currentState = $this->getState($transition->getState());
 
