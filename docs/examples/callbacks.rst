@@ -87,7 +87,7 @@ Full example :
             'before' => [
                 [
                     'from' => '-proposed',
-                    'do'   => function(\Finite\Event\TransitionEvent $e) {
+                    'do'   => function($object, \Finite\Event\TransitionEvent $e) {
                         echo 'Applying transition '.$e->getTransition()->getName(), "\n";
                         if ($e->has('foo')) {
                             echo "Parameter \"foo\" is defined\n";
