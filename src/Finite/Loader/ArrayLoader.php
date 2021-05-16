@@ -193,6 +193,7 @@ class ArrayLoader implements LoaderInterface
                 'on' => array(),
                 'from' => array(),
                 'to' => array(),
+                'disabled' => false,
             )
         );
 
