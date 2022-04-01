@@ -10,7 +10,7 @@ use Finite\Transition\TransitionInterface;
 /**
  * The event object which is thrown on transitions actions.
  *
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @author Yohan Giarelli <yohan@giarel.li>
  */
 class TransitionEvent extends StateMachineEvent
 {

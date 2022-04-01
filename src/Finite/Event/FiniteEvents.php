@@ -5,7 +5,7 @@ namespace Finite\Event;
 /**
  * The class that contains event names.
  *
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @author Yohan Giarelli <yohan@giarel.li>
  */
 final class FiniteEvents
 {

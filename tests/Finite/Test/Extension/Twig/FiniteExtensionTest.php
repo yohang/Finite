@@ -13,7 +13,7 @@ use Twig\Environment;
 use Twig\Loader\ArrayLoader;
 
 /**
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @author Yohan Giarelli <yohan@giarel.li>
  */
 class FiniteExtensionTest extends TestCase
 {

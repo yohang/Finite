@@ -8,7 +8,7 @@ use Finite\Transition\TransitionInterface;
  * The base State class.
  * Feel free to extend it to fit to your needs.
  *
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @author Yohan Giarelli <yohan@giarel.li>
  * @author Michal Dabrowski <dabrowski@brillante.pl>
  */
 class State implements StateInterface

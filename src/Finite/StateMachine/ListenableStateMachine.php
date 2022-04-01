@@ -9,7 +9,7 @@ namespace Finite\StateMachine;
  *
  * @deprecated Deprecated since version 1.0.0-BETA2. Use the Basic State Machine (which is now listenable) instead.
  *
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @author Yohan Giarelli <yohan@giarel.li>
  */
 class ListenableStateMachine extends StateMachine
 {

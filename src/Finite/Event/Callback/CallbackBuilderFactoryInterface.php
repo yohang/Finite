@@ -7,7 +7,7 @@ use Finite\StateMachine\StateMachineInterface;
 /**
  * Base interface for CallbackBuilder factories.
  *
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @author Yohan Giarelli <yohan@giarel.li>
  */
 interface CallbackBuilderFactoryInterface
 {

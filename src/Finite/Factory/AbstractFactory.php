@@ -8,7 +8,7 @@ use Finite\StateMachine\StateMachineInterface;
 /**
  * The abstract base class for state machine factories.
  *
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @author Yohan Giarelli <yohan@giarel.li>
  */
 abstract class AbstractFactory implements FactoryInterface
 {

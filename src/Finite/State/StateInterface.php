@@ -7,7 +7,7 @@ use Finite\PropertiesAwareInterface;
 /**
  * The base State Interface.
  *
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @author Yohan Giarelli <yohan@giarel.li>
  */
 interface StateInterface extends PropertiesAwareInterface
 {

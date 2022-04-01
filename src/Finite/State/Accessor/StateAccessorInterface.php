@@ -7,7 +7,7 @@ use Finite\Exception\NoSuchPropertyException;
 /**
  * Base interface for state accessors.
  *
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @author Yohan Giarelli <yohan@giarel.li>
  */
 interface StateAccessorInterface
 {

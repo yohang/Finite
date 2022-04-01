@@ -10,7 +10,7 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 /**
  * Property path implementation of state accessor.
  *
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @author Yohan Giarelli <yohan@giarel.li>
  */
 class PropertyPathStateAccessor implements StateAccessorInterface
 {

@@ -13,7 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * The base Transition class.
  * Feel free to extend it to fit to your needs.
  *
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @author Yohan Giarelli <yohan@giarel.li>
  * @author Michal Dabrowski <dabrowski@brillante.pl>
  */
 class Transition implements PropertiesAwareTransitionInterface

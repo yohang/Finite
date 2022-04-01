@@ -6,7 +6,7 @@ use Finite\Event\Callback\CallbackBuilder;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @author Yohan Giarelli <yohan@giarel.li>
  */
 class CallbackBuilderTest extends TestCase
 {

@@ -7,7 +7,7 @@ use Finite\StateMachine\StateMachineInterface;
 /**
  * Builds a Callback instance.
  *
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @author Yohan Giarelli <yohan@giarel.li>
  */
 class CallbackBuilder
 {

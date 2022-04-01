@@ -6,7 +6,7 @@ namespace Finite;
  * Implementing this interface make an object Stateful and
  * able to be handled by the state machine.
  *
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @author Yohan Giarelli <yohan@giarel.li>
  */
 interface StatefulInterface
 {

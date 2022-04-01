@@ -8,7 +8,7 @@ use Finite\StateMachine\StateMachine;
 use Finite\Test\StateMachineTestCase;
 
 /**
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @author Yohan Giarelli <yohan@giarel.li>
  */
 class StateMachineTest extends StateMachineTestCase
 {

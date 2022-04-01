@@ -5,7 +5,7 @@ namespace Finite\Exception;
 /**
  * A transition exception.
  *
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @author Yohan Giarelli <yohan@giarel.li>
  */
 class TransitionException extends Exception
 {

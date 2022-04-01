@@ -5,7 +5,7 @@ namespace Finite\Event\Callback;
 use Finite\Event\TransitionEvent;
 
 /**
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @author Yohan Giarelli <yohan@giarel.li>
  */
 class Callback implements CallbackInterface
 {

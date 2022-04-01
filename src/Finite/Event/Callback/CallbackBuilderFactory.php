@@ -7,7 +7,7 @@ use Finite\StateMachine\StateMachineInterface;
 /**
  * Concrete implementation of CallbackBuilder factory.
  *
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @author Yohan Giarelli <yohan@giarel.li>
  */
 class CallbackBuilderFactory implements CallbackBuilderFactoryInterface
 {

@@ -7,7 +7,7 @@ use Finite\StateMachine\StateMachineInterface;
 /**
  * The base Transition interface.
  *
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @author Yohan Giarelli <yohan@giarel.li>
  */
 interface TransitionInterface
 {

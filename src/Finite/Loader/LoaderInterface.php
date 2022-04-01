@@ -7,7 +7,7 @@ use Finite\StateMachine\StateMachineInterface;
 /**
  * State & Transitions Loader interface.
  *
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @author Yohan Giarelli <yohan@giarel.li>
  */
 interface LoaderInterface
 {

@@ -9,7 +9,7 @@ use Finite\StateMachine\StateMachineInterface;
 /**
  * Concrete implementation of CallbackSpecification.
  *
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @author Yohan Giarelli <yohan@giarel.li>
  */
 class CallbackSpecification implements CallbackSpecificationInterface
 {

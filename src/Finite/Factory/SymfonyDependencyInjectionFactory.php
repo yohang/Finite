@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * A concrete implementation of State Machine Factory using the sf2 DIC.
  *
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @author Yohan Giarelli <yohan@giarel.li>
  */
 class SymfonyDependencyInjectionFactory extends AbstractFactory
 {

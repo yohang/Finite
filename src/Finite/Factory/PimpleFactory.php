@@ -9,7 +9,7 @@ use Pimple;
  *
  * @deprecated Pimple is not supported anymore (It was mostly here for silex)
  *
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @author Yohan Giarelli <yohan@giarel.li>
  */
 class PimpleFactory extends AbstractFactory
 {

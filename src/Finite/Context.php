@@ -9,7 +9,7 @@ use Finite\StateMachine\StateMachine;
  * The Finite context.
  * It provides easy ways to deal with Stateful objects, and factory.
  *
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @author Yohan Giarelli <yohan@giarel.li>
  */
 class Context
 {

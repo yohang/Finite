@@ -9,7 +9,7 @@ use Finite\State\State;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @author Yohan Giarelli <yohan@giarel.li>
  */
 class ContextTest extends TestCase
 {

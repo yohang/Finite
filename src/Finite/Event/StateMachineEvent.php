@@ -12,7 +12,7 @@ if (!class_exists('Symfony\Contracts\EventDispatcher\Event')) {
 /**
  * The event object which is thrown on state machine actions.
  *
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @author Yohan Giarelli <yohan@giarel.li>
  */
 class StateMachineEvent extends Event
 {

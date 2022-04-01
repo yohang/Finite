@@ -10,7 +10,7 @@ use Twig\TwigFunction;
 /**
  * The Finite Twig extension.
  *
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @author Yohan Giarelli <yohan@giarel.li>
  */
 class FiniteExtension extends AbstractExtension
 {

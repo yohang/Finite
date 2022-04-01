@@ -6,7 +6,7 @@ use Finite\StateMachine\SecurityAwareStateMachine;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @author Yohan Giarelli <yohan@giarel.li>
  */
 class SecurityAwareStateMachineTest extends TestCase
 {

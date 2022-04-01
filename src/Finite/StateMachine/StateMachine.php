@@ -17,7 +17,7 @@ use Finite\Transition\TransitionInterface;
 /**
  * The Finite State Machine.
  *
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @author Yohan Giarelli <yohan@giarel.li>
  */
 class StateMachine implements StateMachineInterface
 {

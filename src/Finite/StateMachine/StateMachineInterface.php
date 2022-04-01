@@ -10,7 +10,7 @@ use Finite\Transition\TransitionInterface;
 /**
  * The Finite State Machine base Interface.
  *
- * @author Yohan Giarelli <yohan@frequence-web.fr>
+ * @author Yohan Giarelli <yohan@giarel.li>
  */
 interface StateMachineInterface
 {
