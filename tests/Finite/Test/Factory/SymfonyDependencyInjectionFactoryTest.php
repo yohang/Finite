@@ -2,12 +2,14 @@
 
 namespace Finite\Test\Factory;
 
+use Finite\Exception\FactoryException;
 use Finite\Factory\SymfonyDependencyInjectionFactory;
 use  Finite\StateMachine\StateMachine;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class SymfonyDependencyInjectionFactoryTest extends \PHPUnit_Framework_TestCase
+class SymfonyDependencyInjectionFactoryTest extends TestCase
 {
     /**
      * @var PimpleFactory
@@ -16,7 +18,7 @@ class SymfonyDependencyInjectionFactoryTest extends \PHPUnit_Framework_TestCase
 
     protected $accessor;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->accessor = $this->createMock('Finite\State\Accessor\StateAccessorInterface');
         $container = new ContainerBuilder;
@@ -51,11 +53,10 @@ class SymfonyDependencyInjectionFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertNotSame($sm, $sm2);
     }
 
-    /**
-     * @expectedException \Finite\Exception\FactoryException
-     */
     public function testNoService()
     {
+        $this->expectException(FactoryException::class);
+
         new SymfonyDependencyInjectionFactory(new ContainerBuilder, 'state_machine');
     }
 }

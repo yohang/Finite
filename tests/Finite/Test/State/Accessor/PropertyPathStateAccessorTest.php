@@ -2,17 +2,20 @@
 
 namespace Finite\Test\State\Accessor;
 
+use Finite\Exception\NoSuchPropertyException;
 use Finite\State\Accessor\PropertyPathStateAccessor;
-use Symfony\Component\PropertyAccess\Exception\NoSuchPropertyException;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
-class PropertyPathStateAccessorTest extends \PHPUnit_Framework_TestCase
+class PropertyPathStateAccessorTest extends TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var MockObject
      */
     protected $propertyAccessor;
 
-    protected function setUp()
+    protected function setUp(): void
+
     {
         $this->propertyAccessor = $this->createMock('Symfony\Component\PropertyAccess\PropertyAccessorInterface');
     }
@@ -63,11 +66,10 @@ class PropertyPathStateAccessorTest extends \PHPUnit_Framework_TestCase
         $object->setState($stateful, 'foo');
     }
 
-    /**
-     * @expectedException \Finite\Exception\NoSuchPropertyException
-     */
     public function testSetOnUnknownProperty()
     {
+        $this->expectException(NoSuchPropertyException::class);
+
         $object   = new PropertyPathStateAccessor('bar', $this->propertyAccessor);
         $stateful = $this->createMock('Finite\StatefulInterface');
 
@@ -81,11 +83,10 @@ class PropertyPathStateAccessorTest extends \PHPUnit_Framework_TestCase
         $object->setState($stateful, 'foo');
     }
 
-    /**
-     * @expectedException \Finite\Exception\NoSuchPropertyException
-     */
     public function testGetOnUnknownProperty()
     {
+        $this->expectException(NoSuchPropertyException::class);
+
         $object   = new PropertyPathStateAccessor('bar', $this->propertyAccessor);
         $stateful = $this->createMock('Finite\StatefulInterface');
 

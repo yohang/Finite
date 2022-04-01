@@ -3,11 +3,12 @@
 namespace Finite\Test\Event\Callback;
 
 use Finite\Event\Callback\CallbackBuilder;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class CallbackBuilderTest extends \PHPUnit_Framework_TestCase
+class CallbackBuilderTest extends TestCase
 {
     public function testItBuildsCallback()
     {

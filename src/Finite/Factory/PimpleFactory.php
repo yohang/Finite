@@ -7,6 +7,8 @@ use Pimple;
 /**
  * A concrete implementation of State Machine Factory using Pimple.
  *
+ * @deprecated Pimple is not supported anymore (It was mostly here for silex)
+ *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
 class PimpleFactory extends AbstractFactory

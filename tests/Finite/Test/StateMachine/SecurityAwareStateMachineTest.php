@@ -3,11 +3,12 @@
 namespace Finite\Test\StateMachine;
 
 use Finite\StateMachine\SecurityAwareStateMachine;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class SecurityAwareStateMachineTest extends \PHPUnit_Framework_TestCase
+class SecurityAwareStateMachineTest extends TestCase
 {
     /**
      * @var SecurityAwareStateMachine
@@ -15,7 +16,7 @@ class SecurityAwareStateMachineTest extends \PHPUnit_Framework_TestCase
     protected $object;
     protected $accessor;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->accessor = $this->createMock('Finite\State\Accessor\StateAccessorInterface');
         $statefulMock = $this->createMock('Finite\StatefulInterface');

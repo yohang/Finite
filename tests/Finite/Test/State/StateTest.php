@@ -3,20 +3,21 @@
 namespace Finite\Test\State;
 
 use Finite\State\State;
+use PHPUnit\Framework\TestCase;
 
 /**
  *
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class StateTest extends \PHPUnit_Framework_TestCase
+class StateTest extends TestCase
 {
     /**
      * @var State
      */
     protected $object;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object = new State('test');
     }
@@ -34,7 +35,7 @@ class StateTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @depends      testAddTransition
-     * @dataProvider testCanDataProvider
+     * @dataProvider canDataProvider
      */
     public function testCan($transitions, $can, $cannot)
     {
@@ -46,7 +47,7 @@ class StateTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->object->can($cannot));
     }
 
-    public function testCanDataProvider()
+    public function canDataProvider()
     {
         return array(
             array(array('t1', 't2', 't3'), 't3', 't4'),

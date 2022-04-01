@@ -7,11 +7,13 @@ use Finite\Event\Callback\CallbackBuilder;
 use Finite\Event\CallbackHandler;
 use Finite\Event\FiniteEvents;
 use Finite\Event\TransitionEvent;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
+class CallbackHandlerTest extends TestCase
 {
     /**
      * @var CallbackHandler
@@ -19,16 +21,16 @@ class CallbackHandlerTest extends \PHPUnit_Framework_TestCase
     protected $object;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var MockObject
      */
     protected $dispatcher;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var MockObject
      */
     protected $statemachine;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->dispatcher   = $this->createMock('Finite\Event\StateMachineDispatcher');
         $this->statemachine = $this->createMock('Finite\StateMachine\StateMachineInterface');

@@ -3,18 +3,16 @@
 namespace Finite\Extension\Twig;
 
 use Finite\Context;
+use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-if (!class_exists('Twig_Extension')) {
-    class_alias('Twig\Extension\AbstractExtension', 'Twig_Extension');
-}
 
 /**
  * The Finite Twig extension.
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class FiniteExtension extends \Twig_Extension
+class FiniteExtension extends AbstractExtension
 {
     /**
      * @var Context
@@ -34,16 +32,6 @@ class FiniteExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        if (class_exists('Twig_SimpleFunction')) {
-            return [
-                new \Twig_SimpleFunction('finite_state', [$this, 'getFiniteState']),
-                new \Twig_SimpleFunction('finite_transitions', [$this, 'getFiniteTransitions']),
-                new \Twig_SimpleFunction('finite_properties', [$this, 'getFiniteProperties']),
-                new \Twig_SimpleFunction('finite_has', [$this, 'hasFiniteProperty']),
-                new \Twig_SimpleFunction('finite_can', [$this, 'canFiniteTransition']),
-            ];
-        }
-
         return [
             new TwigFunction('finite_state', [$this, 'getFiniteState']),
             new TwigFunction('finite_transitions', [$this, 'getFiniteTransitions']),

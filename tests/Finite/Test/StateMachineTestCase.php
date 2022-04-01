@@ -4,11 +4,13 @@ namespace Finite\Test;
 
 use Finite\State\State;
 use  Finite\StateMachine\StateMachine;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class StateMachineTestCase extends \PHPUnit_Framework_TestCase
+class StateMachineTestCase extends TestCase
 {
     /**
      * @var StateMachine
@@ -16,13 +18,13 @@ class StateMachineTestCase extends \PHPUnit_Framework_TestCase
     protected $object;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var MockObject
      */
     protected $dispatcher;
 
     protected $accessor;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->accessor = $this->createMock('Finite\State\Accessor\StateAccessorInterface');
         $this->dispatcher = $this->getMockBuilder('Finite\Event\StateMachineDispatcher')

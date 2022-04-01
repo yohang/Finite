@@ -21,7 +21,7 @@ class ListenableStateMachineTest extends StateMachineTestCase
      */
     protected $dispatcher;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

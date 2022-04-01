@@ -7,38 +7,33 @@ use Finite\Extension\Twig\FiniteExtension;
 use Finite\Factory\PimpleFactory;
 use  Finite\StateMachine\StateMachine;
 use Finite\State\State;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
+use Twig\Environment;
+use Twig\Loader\ArrayLoader;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class FiniteExtensionTest extends \PHPUnit_Framework_TestCase
+class FiniteExtensionTest extends TestCase
 {
     /**
-     * @var \Twig_Environment
+     * @var Environment
      */
     protected $env;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var MockObject
      */
     protected $context;
 
     protected $accessor;
 
-    public function setUp()
+    public function setUp(): void
     {
-        if (!class_exists('Twig_Environment')) {
-            class_alias('Twig\Environment', 'Twig_Environment');
-        }
-
-        if (!class_exists('Twig_Loader_Array')) {
-            class_alias('Twig\Loader\ArrayLoader', 'Twig_Loader_Array');
-        }
-
-
         $this->accessor = $accessor = $this->createMock('Finite\State\Accessor\StateAccessorInterface');
-        $this->env = new \Twig_Environment(
-            new \Twig_Loader_Array(
+        $this->env = new Environment(
+            new ArrayLoader(
                 array(
                     'state'       => '{{ finite_state(object) }}',
                     'transitions' => '{% for transition in finite_transitions(object) %}{{ transition }}{% endfor %}',

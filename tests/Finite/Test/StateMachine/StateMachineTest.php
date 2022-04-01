@@ -2,6 +2,7 @@
 
 namespace Finite\Test\StateMachine;
 
+use Finite\Exception\StateException;
 use Finite\State\State;
 use Finite\StateMachine\StateMachine;
 use Finite\Test\StateMachineTestCase;
@@ -115,11 +116,10 @@ class StateMachineTest extends StateMachineTestCase
         $this->assertTrue($this->object->can($transition));
     }
 
-    /**
-     * @expectedException \Finite\Exception\StateException
-     */
     public function testApply()
     {
+        $this->expectException(StateException::class);
+
         $this->dispatcher
             ->expects($this->at(1))
             ->method('dispatch')

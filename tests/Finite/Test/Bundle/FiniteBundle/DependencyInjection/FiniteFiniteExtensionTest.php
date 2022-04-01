@@ -3,6 +3,7 @@
 namespace Finite\Test\Bundle\FiniteBundle\DependencyInjection;
 
 use Finite\Bundle\FiniteBundle\DependencyInjection\FiniteFiniteExtension;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
@@ -10,7 +11,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  *
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class FiniteFiniteExtensionTest extends \PHPUnit_Framework_TestCase
+class FiniteFiniteExtensionTest extends TestCase
 {
     /**
      * @var FiniteFiniteExtension
@@ -22,7 +23,7 @@ class FiniteFiniteExtensionTest extends \PHPUnit_Framework_TestCase
      */
     protected $container;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->object    = new FiniteFiniteExtension;
         $this->container = new ContainerBuilder;

@@ -6,11 +6,12 @@ use Finite\Context;
 use Finite\Factory\PimpleFactory;
 use  Finite\StateMachine\StateMachine;
 use Finite\State\State;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class ContextTest extends \PHPUnit_Framework_TestCase
+class ContextTest extends TestCase
 {
     /**
      * @var Context
@@ -19,7 +20,7 @@ class ContextTest extends \PHPUnit_Framework_TestCase
 
     protected $accessor;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->accessor = $accessor = $this->createMock('Finite\State\Accessor\StateAccessorInterface');
         $container = new \Pimple(array(

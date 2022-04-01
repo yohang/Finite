@@ -6,15 +6,16 @@ use Finite\Event\Callback\CallbackSpecification;
 use Finite\Event\TransitionEvent;
 use Finite\State\State;
 use Finite\Transition\Transition;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Yohan Giarelli <yohan@frequence-web.fr>
  */
-class CallbackSpecificationTest extends \PHPUnit_Framework_TestCase
+class CallbackSpecificationTest extends TestCase
 {
     private $stateMachine;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->stateMachine = $this->createMock('Finite\StateMachine\StateMachine');
     }
