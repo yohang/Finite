@@ -4,6 +4,7 @@ namespace Finite\Bridge\Symfony\Normalizer;
 
 use Finite\Exception\FactoryException;
 use Finite\Factory\FactoryInterface;
+use Finite\StateMachine\StateMachineInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerAwareInterface;
@@ -44,9 +45,23 @@ class FiniteContextNormalizer implements NormalizerInterface, DenormalizerInterf
         $data = $this->decorated ? $this->decorated->normalize($object, $format, $context) : [];
 
         try {
-            $this->finite->get($data);
+            $stateMachines = $this->finite->getAllForObject($data);
+            if (!$stateMachines) {
+                return $data;
+            }
 
-
+            $data['_finite'] = [
+                ...array_map(
+                    fn (StateMachineInterface $stateMachine) => [
+                        'graphName'    => $stateMachine->getGraph(),
+                        'currentState' => [
+                            'name'       => $stateMachine->getCurrentState()->getName(),
+                            'properties' => $stateMachine->getCurrentState()->getProperties(),
+                        ],
+                    ],
+                    iterator_to_array($stateMachines),
+                ),
+            ];
         } catch (FactoryException $e) {
             return $data;
         }
