@@ -2,6 +2,7 @@
 
 namespace Finite\Factory;
 
+use Finite\Exception\FactoryException;
 use Finite\StateMachine\StateMachineInterface;
 
 /**
@@ -14,10 +15,14 @@ interface FactoryInterface
     /**
      * Returns a StateMachine instance initialized on $object.
      *
-     * @param object $object
-     * @param string $graph
-     *
-     * @return StateMachineInterface
+     * @throws FactoryException
      */
-    public function get($object, $graph = 'default');
+    public function get(object $object, string $graph = 'default'): StateMachineInterface;
+
+    /**
+     * @param object $object
+     *
+     * @return iterable<int,StateMachineInterface>
+     */
+    public function getAllForObject(object $object): iterable;
 }

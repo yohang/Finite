@@ -2,6 +2,7 @@
 
 namespace Finite\Factory;
 
+use Finite\StateMachine\StateMachineInterface;
 use Pimple;
 
 /**
@@ -13,30 +14,20 @@ use Pimple;
  */
 class PimpleFactory extends AbstractFactory
 {
-    /**
-     * @var Pimple
-     */
-    protected $container;
+    protected Pimple $container;
 
-    /**
-     * @var string
-     */
-    protected $id;
+    protected string $id;
 
-    /**
-     * @param Pimple $container
-     * @param string $id
-     */
-    public function __construct(Pimple $container, $id)
+    public function __construct(Pimple $container, string $id)
     {
         $this->container = $container;
-        $this->id = $id;
+        $this->id        = $id;
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function createStateMachine()
+    protected function createStateMachine(): StateMachineInterface
     {
         return $this->container[$this->id];
     }

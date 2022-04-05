@@ -15,19 +15,19 @@ abstract class AbstractFactory implements FactoryInterface
     /**
      * @var StateMachineInterface[]
      */
-    protected $stateMachines = array();
+    protected array $stateMachines = [];
 
     /**
      * @var LoaderInterface[]
      */
-    protected $loaders = array();
+    protected array $loaders = [];
 
     /**
      * {@inheritdoc}
      */
-    public function get($object, $graph = 'default')
+    public function get($object, string $graph = 'default'): StateMachineInterface
     {
-        $hash = spl_object_hash($object).'.'.$graph;
+        $hash = spl_object_hash($object) . '.' . $graph;
         if (!isset($this->stateMachines[$hash])) {
             $stateMachine = $this->createStateMachine();
             if (null !== ($loader = $this->getLoader($object, $graph))) {
@@ -42,21 +42,21 @@ abstract class AbstractFactory implements FactoryInterface
         return $this->stateMachines[$hash];
     }
 
-    /**
-     * @param LoaderInterface $loader
-     */
-    public function addLoader(LoaderInterface $loader)
+    public function getAllForObject(object $object): iterable
+    {
+        foreach ($this->loaders as $loader) {
+            if ($loader->supportsObject($object)) {
+                yield $this->get($object, $loader->getGraphName());
+            }
+        }
+    }
+
+    public function addLoader(LoaderInterface $loader): void
     {
         $this->loaders[] = $loader;
     }
 
-    /**
-     * @param object $object
-     * @param string $graph
-     *
-     * @return LoaderInterface|null
-     */
-    protected function getLoader($object, $graph)
+    protected function getLoader(object $object, string $graph): ?LoaderInterface
     {
         foreach ($this->loaders as $loader) {
             if ($loader->supports($object, $graph)) {
@@ -64,13 +64,11 @@ abstract class AbstractFactory implements FactoryInterface
             }
         }
 
-        return;
+        return null;
     }
 
     /**
      * Creates an instance of StateMachine.
-     *
-     * @return StateMachineInterface
      */
-    abstract protected function createStateMachine();
+    abstract protected function createStateMachine(): StateMachineInterface;
 }

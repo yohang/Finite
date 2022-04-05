@@ -3,6 +3,7 @@
 namespace Finite\Factory;
 
 use Finite\Exception\FactoryException;
+use Finite\StateMachine\StateMachineInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -44,7 +45,7 @@ class SymfonyDependencyInjectionFactory extends AbstractFactory
     /**
      * {@inheritdoc}
      */
-    protected function createStateMachine()
+    protected function createStateMachine(): StateMachineInterface
     {
         return $this->container->get($this->key);
     }
