@@ -2,6 +2,7 @@
 
 namespace Finite\Bridge\Symfony\Normalizer;
 
+use Finite\Exception\Exception;
 use Finite\Exception\FactoryException;
 use Finite\Factory\FactoryInterface;
 use Finite\StateMachine\StateMachineInterface;
@@ -31,11 +32,15 @@ class FiniteContextNormalizer implements NormalizerInterface, DenormalizerInterf
             return true;
         }
 
+        if (!is_object($data)) {
+            return false;
+        }
+
         try {
             $this->finite->get($data);
 
             return true;
-        } catch (FactoryException $e) {
+        } catch (Exception $e) {
             return false;
         }
     }
@@ -44,8 +49,12 @@ class FiniteContextNormalizer implements NormalizerInterface, DenormalizerInterf
     {
         $data = $this->decorated ? $this->decorated->normalize($object, $format, $context) : [];
 
+        if (!is_object($object)) {
+            return $data;
+        }
+
         try {
-            $stateMachines = $this->finite->getAllForObject($data);
+            $stateMachines = $this->finite->getAllForObject($object);
             if (!$stateMachines) {
                 return $data;
             }
@@ -62,6 +71,8 @@ class FiniteContextNormalizer implements NormalizerInterface, DenormalizerInterf
                     iterator_to_array($stateMachines),
                 ),
             ];
+
+            return $data;
         } catch (FactoryException $e) {
             return $data;
         }
