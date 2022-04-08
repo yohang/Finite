@@ -67,6 +67,10 @@ class FiniteContextNormalizer implements NormalizerInterface, DenormalizerInterf
                             'name'       => $stateMachine->getCurrentState()->getName(),
                             'properties' => $stateMachine->getCurrentState()->getProperties(),
                         ],
+                        'availableTransitions' => array_filter(
+                            $stateMachine->getTransitions(),
+                            static fn (string $transitionName) => $stateMachine->can($transitionName),
+                        ),
                     ],
                     iterator_to_array($stateMachines),
                 ),
