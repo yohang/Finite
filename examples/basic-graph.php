@@ -1,18 +1,56 @@
+#!/usr/bin/env php
 <?php
+
+use Finite\State;
+use Finite\Transition\Transition;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-// Implement your document class
-class Document implements Finite\StatefulInterface
+// Implement your State
+enum DocumentState: string implements State
 {
-    private $state;
+    const PUBLISH = 'publish';
+    const CLEAR = 'clear';
+    const REPORT = 'report';
+    const DISABLE = 'disable';
 
-    public function getFiniteState()
+    case DRAFT = 'draft';
+    case PUBLISHED = 'published';
+    case REPORTED = 'reported';
+    case DISABLED = 'disabled';
+
+    public function isDeletable(): bool
+    {
+        return in_array($this, [self::DRAFT, self::DISABLED]);
+    }
+
+    public function isPrintable(): bool
+    {
+        return in_array($this, [self::PUBLISHED, self::REPORTED]);
+    }
+
+    public static function getTransitions(): array
+    {
+        return [
+            new Transition(self::PUBLISH, [self::DRAFT], self::PUBLISHED),
+            new Transition(self::CLEAR, [self::REPORTED, self::DISABLED], self::PUBLISHED),
+            new Transition(self::REPORT, [self::PUBLISHED], self::REPORTED),
+            new Transition(self::DISABLE, [self::REPORTED, self::PUBLISHED], self::DISABLED),
+        ];
+    }
+}
+
+// Implement your document class
+class Document
+{
+    private DocumentState $state = DocumentState::DRAFT;
+
+    public function getState(): DocumentState
     {
         return $this->state;
     }
 
-    public function setFiniteState($state)
+    public function setState(DocumentState $state): void
     {
         $this->state = $state;
     }
@@ -20,55 +58,29 @@ class Document implements Finite\StatefulInterface
 
 // Configure your graph
 $document     = new Document;
-$stateMachine = new Finite\StateMachine\StateMachine($document);
-$loader       = new Finite\Loader\ArrayLoader(array(
-    'class'  => 'Document',
-    'states'  => array(
-        'draft' => array(
-            'type'       => Finite\State\StateInterface::TYPE_INITIAL,
-            'properties' => array('deletable' => true, 'editable' => true),
-        ),
-        'proposed' => array(
-            'type'       => Finite\State\StateInterface::TYPE_NORMAL,
-            'properties' => array(),
-        ),
-        'accepted' => array(
-            'type'       => Finite\State\StateInterface::TYPE_FINAL,
-            'properties' => array('printable' => true),
-        )
-    ),
-    'transitions' => array(
-        'propose' => array('from' => array('draft'), 'to' => 'proposed'),
-        'accept'  => array('from' => array('proposed'), 'to' => 'accepted'),
-        'reject'  => array('from' => array('proposed'), 'to' => 'draft'),
-    ),
-));
-
-$loader->load($stateMachine);
-$stateMachine->initialize();
+$stateMachine = new Finite\StateMachine;
 
 
 // Working with workflow
 
 // Current state
-var_dump($stateMachine->getCurrentState()->getName());
-var_dump($stateMachine->getCurrentState()->getProperties());
-var_dump($stateMachine->getCurrentState()->has('deletable'));
-var_dump($stateMachine->getCurrentState()->has('printable'));
+var_dump($document->getState());
+
 
 // Available transitions
-var_dump($stateMachine->getCurrentState()->getTransitions());
-var_dump($stateMachine->can('propose'));
-var_dump($stateMachine->can('accept'));
+var_dump($stateMachine->getReachablesTransitions($document));
+var_dump($stateMachine->can($document, DocumentState::PUBLISH));
+var_dump($stateMachine->can($document, DocumentState::PUBLISH, DocumentState::class));
+var_dump($stateMachine->can($document, DocumentState::REPORT));
+var_dump($stateMachine->can($document, DocumentState::REPORT, DocumentState::class));
 
 // Apply transitions
 try {
-    $stateMachine->apply('accept');
-} catch (\Finite\Exception\StateException $e) {
+    $stateMachine->apply($document, DocumentState::REPORT);
+} catch (\Exception $e) {
     echo $e->getMessage(), "\n";
 }
 
 // Applying a transition
-$stateMachine->apply('propose');
-var_dump($stateMachine->getCurrentState()->getName());
-var_dump($document->getFiniteState());
+$stateMachine->apply($document, DocumentState::PUBLISH);
+var_dump($document->getState());

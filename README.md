@@ -1,104 +1,139 @@
 Finite, A Simple PHP Finite State Machine
 =========================================
 
-Finite is a Simple State Machine, written in PHP. It can manage any Stateful object by defining states and transitions between these states.
+Finite is a Simple State Machine, written in PHP. 
+It can manage any Stateful object by defining states and transitions between these states.
 
-[![Build Status](https://travis-ci.org/yohang/Finite.svg?branch=master)](https://travis-ci.org/yohang/Finite)
+As of version 2, Finite is a low-deps and lightweight state machine library, thanks to the use of PHP Enums.
+
+
+[![Build Status](https://travis-ci.com/yohang/Finite.svg?branch=master)](https://app.travis-ci.com/yohang/Finite)
 [![Latest Stable Version](https://poser.pugx.org/yohang/finite/v/stable.png)](https://packagist.org/packages/yohang/finite)
 [![Total Downloads](https://poser.pugx.org/yohang/finite/downloads.png)](https://packagist.org/packages/yohang/finite)
 [![License](https://poser.pugx.org/yohang/finite/license.png)](https://packagist.org/packages/yohang/finite)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/yohang/Finite/badges/quality-score.png?s=d6b74d46e3e3f66431270ec39204d98764cb12cb)](https://scrutinizer-ci.com/g/yohang/Finite/)
-[![Code Coverage](https://scrutinizer-ci.com/g/yohang/Finite/badges/coverage.png?s=e1399f90a2ea42f4973e8bd79056540ff8de0ce4)](https://scrutinizer-ci.com/g/yohang/Finite/)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/394f3a8e-e6c5-4102-8979-d389db2d0293/mini.png)](https://insight.sensiolabs.com/projects/394f3a8e-e6c5-4102-8979-d389db2d0293)
-[![Dependency Status](https://www.versioneye.com/php/yohang:finite/1.0.3/badge.svg)](https://www.versioneye.com/php/yohang:finite/1.0.3)
-[![Reference Status](https://www.versioneye.com/php/yohang:finite/reference_badge.svg?style=flat)](https://www.versioneye.com/php/yohang:finite/references)
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/yohang/Finite?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
+
+Disclaimer
+----------
+
+I don't have the time anymore to maintain this lib. Here is the documentation for the brand new Finite V2, based
+on PHP >= 8.1 Enums, but don't expect it to be updated on a regular basis.
+
 
 Features
 --------
 
-* Managing State/Transition graph for an object
-* Defining and retrieving properties for states
-* Event Listenable transitions
-* Symfony2 integration
-* Custom state graph loaders
+* Manage State/Transition graph for an object
+* Attach business logic to states
+* Listen to transitions between state to trigger your domain code
+* Symfony integration
 * Twig Extension
-
-Documentation
--------------
-
-[Documentation for master (1.1)](http://finite.readthedocs.org/en/master/)
 
 Getting started
 ---------------
 
 ### Installation (via composer)
-```js
+```bash
+ $ composer req yohan/finite
+```
+
+### Define your state enum
+
+```php
+enum DocumentState: string implements State
 {
-      "require": {
-        "yohang/finite": "~1.1"
+    case DRAFT = 'draft';
+    case PUBLISHED = 'published';
+    case REPORTED = 'reported';
+    case DISABLED = 'disabled';
+
+    public static function getTransitions(): array
+    {
+        return [
+            new Transition('publish', [self::DRAFT], self::PUBLISHED),
+            new Transition('clear', [self::REPORTED, self::DISABLED], self::PUBLISHED),
+            new Transition('report', [self::PUBLISHED], self::REPORTED),
+            new Transition('disable', [self::REPORTED, self::PUBLISHED], self::DISABLED),
+        ];
+    }
+}
+
+```
+
+
+### Define your Stateful Object
+
+Your stateful object just need to have a state property
+
+
+```php
+class Document
+{
+    private DocumentState $state = DocumentState::DRAFT;
+
+    public function getState(): DocumentState
+    {
+        return $this->state;
+    }
+
+    public function setState(DocumentState $state): void
+    {
+        $this->state = $state;
     }
 }
 ```
 
-### Version note :
-
-If your are using this library in a Symfony project, 1.1 version is only compatible with Symfony `>=2.6`.
-1.0 is compatible with Symfony `>=2.3, <2.6`.
-
-### Define your Stateful Object
-Your stateful object just need to implement the `StatefulInterface` Interface.
-
-```php
-use Finite\StatefulInterface;
-
-class Document implements StatefulInterface
-{
-        private $state;
-        public function setFiniteState($state)
-        {
-                $this->state = $state;
-        }
-
-        public function getFiniteState()
-        {
-            return $this->state;
-        }
-}
-```
 
 ### Initializing a simple StateMachine
 
 ```php
-use Finite\StateMachine\StateMachine;
-use Finite\State\State;
-use Finite\State\StateInterface;
+use Finite\StateMachine;
 
-// $document = retrieve your stateful object
+$document = new Document;
 
-$sm = new StateMachine();
-
-// Define states
-$sm->addState(new State('s1', StateInterface::TYPE_INITIAL));
-$sm->addState('s2');
-$sm->addState('s3');
-$sm->addState(new State('s4', StateInterface::TYPE_FINAL));
-
-// Define transitions
-$sm->addTransition('t12', 's1', 's2');
-$sm->addTransition('t23', 's2', 's3');
-$sm->addTransition('t34', 's3', 's4');
-$sm->addTransition('t42', 's4', 's2');
-
-// Initialize
-$sm->setObject($document);
-$sm->initialize();
-
-// Retrieve current state
-$sm->getCurrentState();
+$sm = new StateMachine;
 
 // Can we process a transition ?
-$sm->can('t34');
+$sm->can($document, 'publish');
+
+// Apply a transition
+$sm->apply($document, 'publish'); 
 
 ```
+
+### Add business logic to states
+
+Finite < 2.0 had properties on states. A metadata mechanism that allowed to add business properties on states to 
+define the behavior of on object, depending on its state.
+
+The idea behind this was to avoid to test the state in your domain code (A controller must not throw a 404 if the state 
+is draft. But it can throw a 404 if the current state does not have a "visible" property. That was the idea).
+
+Finite 2 does not needs this. PHP Enums can have methods. So, replace your properties with simple methods on your state.
+
+```php
+enum DocumentState: string implements State
+{
+    // ...
+
+    public function isDeletable(): bool
+    {
+        return in_array($this, [self::DRAFT, self::DISABLED]);
+    }
+
+    public function isPrintable(): bool
+    {
+        return in_array($this, [self::PUBLISHED, self::REPORTED]);
+    }
+}
+```
+
+After that, you can use theses methods on your object, even without instantiating the state machine.
+
+```php
+var_dump($document->getState()->isDeletable());
+var_dump($document->getState()->isPrintable());
+```
+
+
 
