@@ -9,3 +9,5 @@ RUN set -eux; \
     apk del .build-deps;
 
 RUN echo "xdebug.mode=coverage" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer

@@ -25,7 +25,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5.26",
-        "symfony/var-dumper": "^6.1"
+        "symfony/var-dumper": "^6.1",
+        "twig/twig": "^3.4"
     },
     "autoload": {
         "psr-4": {
