@@ -6,7 +6,7 @@ use Finite\Event\CanTransitionEvent;
 use Finite\Event\EventDispatcher;
 use Finite\Event\PostTransitionEvent;
 use Finite\Event\PreTransitionEvent;
-use Finite\Transition\Transition;
+use Finite\Transition\TransitionInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class StateMachine
@@ -25,9 +25,11 @@ class StateMachine
         }
 
         $property   = $this->extractStateProperty($object, $stateClass);
-        $transition = array_filter(
-            $this->extractState($object, $stateClass)::getTransitions(),
-            fn (Transition $transition) => $transition->getName() === $transitionName,
+        $transition = array_values(
+            array_filter(
+                $this->extractState($object, $stateClass)::getTransitions(),
+                fn (TransitionInterface $transition) => $transition->getName() === $transitionName,
+            )
         )[0];
 
         $this->dispatcher->dispatch(new PreTransitionEvent($object, $transitionName, $stateClass));
@@ -39,6 +41,7 @@ class StateMachine
             $transition->getTargetState(),
         );
 
+        /** @var object $object */
         $this->dispatcher->dispatch(new PostTransitionEvent($object, $transitionName, $stateClass));
     }
 
@@ -69,7 +72,7 @@ class StateMachine
 
         return array_filter(
             $state->getTransitions(),
-            fn (Transition $transition) => $this->can($object, $transition->getName(), $stateClass),
+            fn (TransitionInterface $transition) => $this->can($object, $transition->getName(), $stateClass),
         );
     }
 
@@ -89,6 +92,10 @@ class StateMachine
         $reflectionClass = new \ReflectionClass($object);
         foreach ($reflectionClass->getProperties() as $property) {
             if (!enum_exists($property->getType()->getName())) {
+                continue;
+            }
+
+            if ($property instanceof \ReflectionUnionType) {
                 continue;
             }
 

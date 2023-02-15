@@ -10,14 +10,15 @@ class FiniteExtension extends AbstractExtension
 {
     public function __construct(
         private readonly StateMachine $stateMachine,
-    )
-    {
-    }
+    ) {}
 
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('finite_can', fn (...$args) => $this->stateMachine->can(...$args)),
+            new TwigFunction(
+                'finite_can',
+                fn(object $object, string $transitionName, ?string $stateClass = null) => $this->stateMachine->can($object, $transitionName, $stateClass),
+            ),
         ];
     }
 }

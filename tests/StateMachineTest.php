@@ -64,17 +64,21 @@ class StateMachineTest extends TestCase
             ->with();
 
         $eventDispatcher
-            ->expects($this->exactly(3))
+            ->expects($this->exactly(6))
             ->method('dispatch')
             ->withConsecutive(
                 [$this->callback(fn (CanTransitionEvent $e) => SimpleArticleState::PUBLISH === $e->getTransitionName())],
                 [$this->callback(fn (PreTransitionEvent $e) => SimpleArticleState::PUBLISH === $e->getTransitionName())],
                 [$this->callback(fn (PostTransitionEvent $e) => SimpleArticleState::PUBLISH === $e->getTransitionName())],
+                [$this->callback(fn (CanTransitionEvent $e) => SimpleArticleState::REPORT === $e->getTransitionName())],
+                [$this->callback(fn (PreTransitionEvent $e) => SimpleArticleState::REPORT === $e->getTransitionName())],
+                [$this->callback(fn (PostTransitionEvent $e) => SimpleArticleState::REPORT === $e->getTransitionName())],
             );
 
         $stateMachine = new StateMachine($eventDispatcher);
 
         $stateMachine->apply($object, SimpleArticleState::PUBLISH);
+        $stateMachine->apply($object, SimpleArticleState::REPORT);
     }
 
     public function test_it_rejects_non_stateful_object()
