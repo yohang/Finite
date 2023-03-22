@@ -54,9 +54,9 @@ Configuration
                 refused:  { type: final,   properties: { visible: false } }
 
             transitions:
-                propose:  { from: draft,    to: proposed }
-                accept:   { from: proposed, to: accepted }
-                refuse:   { from: proposed, to: refused  }
+                propose:  { from: [ draft ],    to: proposed }
+                accept:   { from: [ proposed ], to: accepted }
+                refuse:   { from: [ proposed ], to: refused  }
 
 
 At this point, your graph is ready and you can start using your workflow on your object.
