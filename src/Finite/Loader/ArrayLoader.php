@@ -55,7 +55,7 @@ class ArrayLoader implements LoaderInterface
             $this->callbackBuilderFactory = new CallbackBuilderFactory();
         }
 
-        if (!$stateMachine->hasStateAccessor()) {
+        if (!$stateMachine->hasStateAccessor() || $this->config['property_path'] != 'finiteState') {
             $stateMachine->setStateAccessor(new PropertyPathStateAccessor($this->config['property_path']));
         }
 
