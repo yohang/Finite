@@ -26,11 +26,11 @@ class StateMachine
 
         $property   = $this->extractStateProperty($object, $stateClass);
         $transition = array_values(
-            array_filter(
-                $this->extractState($object, $stateClass)::getTransitions(),
-                fn (TransitionInterface $transition) => $transition->getName() === $transitionName,
-            )
-        )[0];
+                          array_filter(
+                              $this->extractState($object, $stateClass)::getTransitions(),
+                              fn(TransitionInterface $transition) => $transition->getName() === $transitionName,
+                          )
+                      )[0];
 
         $this->dispatcher->dispatch(new PreTransitionEvent($object, $transitionName, $stateClass));
 
@@ -72,7 +72,7 @@ class StateMachine
 
         return array_filter(
             $state->getTransitions(),
-            fn (TransitionInterface $transition) => $this->can($object, $transition->getName(), $stateClass),
+            fn(TransitionInterface $transition) => $this->can($object, $transition->getName(), $stateClass),
         );
     }
 
@@ -90,32 +90,34 @@ class StateMachine
         }
 
         $reflectionClass = new \ReflectionClass($object);
-        foreach ($reflectionClass->getProperties() as $property) {
-            if (!enum_exists($property->getType()->getName())) {
-                continue;
+        do {
+            foreach ($reflectionClass->getProperties() as $property) {
+                if (!enum_exists($property->getType()->getName())) {
+                    continue;
+                }
+
+                if ($property instanceof \ReflectionUnionType) {
+                    continue;
+                }
+
+                $reflectionEnum = new \ReflectionEnum($property->getType()->getName());
+                if (
+                    null !== $stateClass &&
+                    (
+                        $reflectionEnum->getName() === $stateClass ||
+                        (interface_exists($stateClass) && $reflectionEnum->implementsInterface($stateClass))
+                    )
+                ) {
+                    return $property;
+                }
+
+                if (null === $stateClass && $reflectionEnum->implementsInterface(State::class)) {
+                    return $property;
+                }
+
             }
+        } while (null !== ($reflectionClass = $reflectionClass->getParentClass()));
 
-            if ($property instanceof \ReflectionUnionType) {
-                continue;
-            }
-
-            $reflectionEnum = new \ReflectionEnum($property->getType()->getName());
-            if (
-                null !== $stateClass &&
-                (
-                    $reflectionEnum->getName() === $stateClass ||
-                    (interface_exists($stateClass) && $reflectionEnum->implementsInterface($stateClass))
-                )
-            ) {
-                return $property;
-            }
-
-            if (null === $stateClass && $reflectionEnum->implementsInterface(State::class)) {
-                return $property;
-            }
-
-        }
-
-        throw new \InvalidArgumentException('Found no state on object '.get_class($object));
+        throw new \InvalidArgumentException('Found no state on object ' . get_class($object));
     }
 }
