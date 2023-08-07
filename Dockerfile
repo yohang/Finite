@@ -1,8 +1,8 @@
-FROM php:8.1-alpine3.16
+FROM php:8.2-alpine3.18
 
 RUN set -eux; \
     apk add --no-cache acl libzip; \
-    apk add --no-cache --virtual .build-deps ${PHPIZE_DEPS} zlib-dev libzip-dev; \
+    apk add --no-cache --virtual .build-deps ${PHPIZE_DEPS} zlib-dev libzip-dev linux-headers; \
     docker-php-ext-install zip; \
     pecl install xdebug;\
     docker-php-ext-enable xdebug; \

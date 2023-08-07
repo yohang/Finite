@@ -91,6 +91,10 @@ class StateMachine
 
         $reflectionClass = new \ReflectionClass($object);
         do {
+            if (!$reflectionClass) {
+                throw new \InvalidArgumentException('Found no state on object ' . get_class($object));
+            }
+
             foreach ($reflectionClass->getProperties() as $property) {
                 if (!enum_exists($property->getType()->getName())) {
                     continue;
