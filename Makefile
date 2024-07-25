@@ -20,3 +20,7 @@ test_all_targets:
 	docker run -it --rm yohang/finite:php-8.2-lowest php ./vendor/bin/phpunit
 	docker run -it --rm yohang/finite:php-8.3 php ./vendor/bin/phpunit
 	docker run -it --rm yohang/finite:php-8.3-lowest php ./vendor/bin/phpunit
+
+psalm:
+	docker build -t yohang/finite:php-8.3 --build-arg PHP_VERSION=8.3 .
+	docker run -it --rm yohang/finite:php-8.3 php ./vendor/bin/psalm --show-info=true

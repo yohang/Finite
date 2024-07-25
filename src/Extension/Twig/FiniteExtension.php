@@ -17,10 +17,12 @@ class FiniteExtension extends AbstractExtension
         return [
             new TwigFunction(
                 'finite_can',
+                /** @param class-string|null $stateClass */
                 fn(object $object, string $transitionName, ?string $stateClass = null) => $this->stateMachine->can($object, $transitionName, $stateClass),
             ),
             new TwigFunction(
                 'finite_reachable_transitions',
+                /** @param class-string|null $stateClass */
                 fn(object $object, ?string $stateClass = null) => $this->stateMachine->getReachablesTransitions($object, $stateClass),
             ),
         ];

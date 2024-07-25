@@ -18,6 +18,9 @@ class StateMachine
 
     }
 
+    /**
+     * @param class-string|null $stateClass
+     */
     public function apply(object $object, string $transitionName, ?string $stateClass = null): void
     {
         if (!$this->can($object, $transitionName, $stateClass)) {
@@ -45,6 +48,9 @@ class StateMachine
         $this->dispatcher->dispatch(new PostTransitionEvent($object, $transitionName, $stateClass));
     }
 
+    /**
+     * @param class-string|null $stateClass
+     */
     public function can(object $object, string $transitionName, ?string $stateClass = null): bool
     {
         $state = $this->extractState($object, $stateClass);
@@ -66,6 +72,9 @@ class StateMachine
         throw new \InvalidArgumentException(sprintf('No transition "%s" found', $transitionName));
     }
 
+    /**
+     * @param class-string|null $stateClass
+     */
     public function getReachablesTransitions(object $object, ?string $stateClass = null): array
     {
         $state = $this->extractState($object, $stateClass);
@@ -76,6 +85,9 @@ class StateMachine
         );
     }
 
+    /**
+     * @param class-string|null $stateClass
+     */
     private function extractState(object $object, ?string $stateClass = null): State
     {
         $property = $this->extractStateProperty($object, $stateClass);
@@ -83,6 +95,9 @@ class StateMachine
         return PropertyAccess::createPropertyAccessor()->getValue($object, $property->getName());
     }
 
+    /**
+     * @param class-string|null $stateClass
+     */
     private function extractStateProperty(object $object, ?string $stateClass = null): \ReflectionProperty
     {
         if ($stateClass && !enum_exists($stateClass)) {
@@ -96,15 +111,31 @@ class StateMachine
             }
 
             foreach ($reflectionClass->getProperties() as $property) {
-                if (!enum_exists($property->getType()->getName())) {
+                $reflectionType = $property->getType();
+                if (null === $reflectionType) {
                     continue;
                 }
 
-                if ($property instanceof \ReflectionUnionType) {
+                if ($reflectionType instanceof \ReflectionUnionType) {
                     continue;
                 }
 
-                $reflectionEnum = new \ReflectionEnum($property->getType()->getName());
+                if ($reflectionType instanceof \ReflectionIntersectionType) {
+                    continue;
+                }
+
+                if (!$reflectionType instanceof \ReflectionNamedType) {
+                    continue;
+                }
+
+                /** @var class-string $name */
+                $name = $reflectionType->getName();
+                if (!enum_exists($name)) {
+                    continue;
+                }
+
+                $reflectionEnum = new \ReflectionEnum($name);
+                /** @psalm-suppress RedundantConditionGivenDocblockType **/
                 if (
                     null !== $stateClass &&
                     (
@@ -118,7 +149,6 @@ class StateMachine
                 if (null === $stateClass && $reflectionEnum->implementsInterface(State::class)) {
                     return $property;
                 }
-
             }
         } while (null !== ($reflectionClass = $reflectionClass->getParentClass()));
 
