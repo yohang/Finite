@@ -21,4 +21,13 @@ interface TransitionInterface
     public function process(object $object): void;
 
     public function getName(): string;
+
+    public function hasProperty(string $name): bool;
+
+    public function getPropertyValue(string $name): mixed;
+
+    /**
+     * @return array<int, string>
+     */
+    public function getPropertyNames(): array;
 }
