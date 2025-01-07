@@ -1,0 +1,54 @@
+name: CI
+
+on:
+    push:
+    pull_request:
+
+jobs:
+    psalm:
+        runs-on: ubuntu-latest
+        permissions:
+            security-events: write
+        name: Static Analysis
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v4
+
+            -   name: Psalm
+                uses: docker://ghcr.io/psalm/psalm-github-actions
+                with:
+                    show_info: true
+                    security_analysis: true
+                    report_file: results.sarif
+
+            -   name: Upload Analysis results to GitHub
+                uses: github/codeql-action/upload-sarif@v3
+                with:
+                    sarif_file: results.sarif
+
+    phpunit:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                php-versions: [ '8.1', '8.2', '8.3', '8.4' ]
+                dependencies-versions: [ lowest, highest ]
+        name: PHPUnit test suite
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v4
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php-versions }}
+
+            -   name: Install dependencies
+                uses: ramsey/composer-install@v3
+                with:
+                    dependency-versions: ${{ matrix.dependencies-versions }}
+
+            -   name: Run tests
+                run: vendor/bin/phpunit --coverage-text
+
+
+
