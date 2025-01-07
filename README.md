@@ -7,11 +7,7 @@ It can manage any Stateful object by defining states and transitions between the
 As of version 2, Finite is a low-deps and lightweight state machine library, thanks to the use of PHP Enums.
 
 
-[![Build Status](https://travis-ci.com/yohang/Finite.svg?branch=master)](https://app.travis-ci.com/yohang/Finite)
-[![Latest Stable Version](https://poser.pugx.org/yohang/finite/v/stable.png)](https://packagist.org/packages/yohang/finite)
-[![Total Downloads](https://poser.pugx.org/yohang/finite/downloads.png)](https://packagist.org/packages/yohang/finite)
-[![License](https://poser.pugx.org/yohang/finite/license.png)](https://packagist.org/packages/yohang/finite)
-
+![CI Status](https://github.com/yohang/finite/actions/workflows/ci.yml/badge.svg)
 
 Disclaimer
 ----------
