@@ -5,7 +5,7 @@ namespace Finite\Event;
 use Finite\StateMachine\StateMachine;
 use Symfony\Contracts\EventDispatcher\Event;
 
-if (!class_exists('Symfony\Contracts\EventDispatcher\Event')) {
+if ((!is_subclass_of('Symfony\Component\EventDispatcher\EventDispatcher', 'Symfony\Contracts\EventDispatcher\EventDispatcherInterface'))) {
     class_alias('Symfony\Component\EventDispatcher\Event', 'Symfony\Contracts\EventDispatcher\Event');
 }
 
