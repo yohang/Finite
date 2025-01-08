@@ -6,3 +6,4 @@ composer.lock
 cache.properties
 coverage.clover
 docs/_build
+.phpunit.result.cache
