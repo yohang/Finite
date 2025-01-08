@@ -15,7 +15,6 @@ Disclaimer
 I don't have the time anymore to maintain this lib. Here is the documentation for the brand new Finite V2, based
 on PHP >= 8.1 Enums, but don't expect it to be updated on a regular basis.
 
-
 Features
 --------
 
