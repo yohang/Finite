@@ -105,6 +105,7 @@ class StateMachine
         }
 
         $reflectionClass = new \ReflectionClass($object);
+        /** @psalm-suppress DocblockTypeContradiction */
         do {
             if (!$reflectionClass) {
                 throw new \InvalidArgumentException('Found no state on object ' . get_class($object));
@@ -135,7 +136,7 @@ class StateMachine
                 }
 
                 $reflectionEnum = new \ReflectionEnum($name);
-                /** @psalm-suppress RedundantConditionGivenDocblockType **/
+                /** @psalm-suppress RedundantCondition */
                 if (
                     null !== $stateClass &&
                     (
@@ -150,7 +151,7 @@ class StateMachine
                     return $property;
                 }
             }
-        } while (null !== ($reflectionClass = $reflectionClass->getParentClass()));
+        } while ($reflectionClass = $reflectionClass->getParentClass());
 
         throw new \InvalidArgumentException('Found no state on object ' . get_class($object));
     }

@@ -4,8 +4,7 @@ namespace Finite\Tests;
 
 use Finite\Event\CanTransitionEvent;
 use Finite\Event\EventDispatcher;
-use Finite\Event\PostTransitionEvent;
-use Finite\Event\PreTransitionEvent;
+use Finite\Event\TransitionEvent;
 use Finite\StateMachine;
 use Finite\Tests\E2E\Article;
 use Finite\Tests\E2E\SimpleArticleState;
@@ -45,7 +44,7 @@ class StateMachineTest extends TestCase
             ->expects($this->once())
             ->method('dispatch')
             ->with($this->isInstanceOf(CanTransitionEvent::class))
-            ->willReturnCallback(fn (CanTransitionEvent $event) => $event->blockTransition());
+            ->willReturnCallback(fn(CanTransitionEvent $event) => $event->blockTransition());
 
 
         $stateMachine = new StateMachine($eventDispatcher);
@@ -58,21 +57,16 @@ class StateMachineTest extends TestCase
         $object = new Article('Hi !');
 
         $eventDispatcher = $this->getMockBuilder(EventDispatcher::class)->getMock();
-        $eventDispatcher
-            ->expects($this->atLeastOnce())
-            ->method('dispatch')
-            ->with();
 
+        $matcher = $this->exactly(6);
         $eventDispatcher
-            ->expects($this->exactly(6))
+            ->expects($matcher)
             ->method('dispatch')
-            ->withConsecutive(
-                [$this->callback(fn (CanTransitionEvent $e) => SimpleArticleState::PUBLISH === $e->getTransitionName())],
-                [$this->callback(fn (PreTransitionEvent $e) => SimpleArticleState::PUBLISH === $e->getTransitionName())],
-                [$this->callback(fn (PostTransitionEvent $e) => SimpleArticleState::PUBLISH === $e->getTransitionName())],
-                [$this->callback(fn (CanTransitionEvent $e) => SimpleArticleState::REPORT === $e->getTransitionName())],
-                [$this->callback(fn (PreTransitionEvent $e) => SimpleArticleState::REPORT === $e->getTransitionName())],
-                [$this->callback(fn (PostTransitionEvent $e) => SimpleArticleState::REPORT === $e->getTransitionName())],
+            ->willReturnCallback(
+                fn(TransitionEvent $e) => match ($matcher->numberOfInvocations()) {
+                    1, 2, 3 => SimpleArticleState::PUBLISH === $e->getTransitionName(),
+                    4, 5, 6 => SimpleArticleState::REPORT === $e->getTransitionName(),
+                }
             );
 
         $stateMachine = new StateMachine($eventDispatcher);
