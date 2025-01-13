@@ -32,7 +32,8 @@
         "symfony/http-kernel": ">=5.4,<8",
         "symfony/framework-bundle": ">=5.4,<8",
         "symfony/event-dispatcher": ">=5.4,<8",
-        "symfony/stopwatch": ">=5.4,<8"
+        "symfony/stopwatch": ">=5.4,<8",
+        "symfony/twig-bundle": ">=5.4,<8"
     },
     "autoload": {
         "psr-4": {

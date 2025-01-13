@@ -14,6 +14,7 @@ class AppKernel extends Kernel
     {
         return [
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+            new Symfony\Bundle\TwigBundle\TwigBundle(),
             new Finite\Extension\Symfony\Bundle\FiniteBundle(),
         ];
     }

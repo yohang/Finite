@@ -19,7 +19,9 @@ final class FiniteExtension extends Extension
                 StateMachine::class => (new Definition(StateMachine::class))
                     ->setArgument('$dispatcher', new Reference('event_dispatcher'))
                     ->setPublic(true),
-                TwigExtension::class => new Definition(TwigExtension::class),
+                TwigExtension::class => (new Definition(TwigExtension::class))
+                    ->setArgument('$stateMachine', new Reference(StateMachine::class))
+                    ->addTag('twig.extension'),
             ]
         );
     }

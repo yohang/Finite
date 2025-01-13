@@ -4,11 +4,14 @@ declare(strict_types=1);
 namespace Finite\Tests\Extension\Symfony;
 
 use Finite\Event\CanTransitionEvent;
+use Finite\Extension\Twig\FiniteExtension;
 use Finite\StateMachine;
 use Finite\Tests\Extension\Symfony\Fixtures\Model\Document;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\TestContainer;
 use Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Twig\Environment;
 
 class ServiceTest extends KernelTestCase
 {
@@ -18,6 +21,8 @@ class ServiceTest extends KernelTestCase
 
         $this->assertInstanceOf(StateMachine::class, $container->get(StateMachine::class));
         $this->assertInstanceOf(EventDispatcherInterface::class, $container->get(StateMachine::class)->getDispatcher());
+
+        $this->assertArrayHasKey(FiniteExtension::class, $container->get('twig')->getExtensions());
     }
 
     public function test_it_uses_the_symfony_dispatcher(): void
