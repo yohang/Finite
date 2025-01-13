@@ -1,0 +1,7 @@
+<div class="can">{{ finite_can(document, 'publish') ? 'yes' : 'no' }}</div>
+<div class="cannot">{{ finite_can(document, 'clear') ? 'yes' : 'no' }}</div>
+<div class="reachables">
+    {%- for transition in finite_reachable_transitions(document)%}
+        <span>{{ transition.name }}</span>
+    {%- endfor -%}
+</div>
