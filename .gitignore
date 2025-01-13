@@ -1,10 +1,4 @@
+tests/Extension/Symfony/fixtures/app/var/
+vendor/
 .phpunit.result.cache
-vendor
-build
-bin
-composer.phar
 composer.lock
-cache.properties
-coverage.clover
-docs/_build
-.phpunit.result.cache
