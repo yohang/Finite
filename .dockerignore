@@ -1,8 +1,4 @@
-vendor
-build
-bin
-composer.phar
+tests/Extension/Symfony/Fixtures/app/var/
+vendor/
+.phpunit.result.cache
 composer.lock
-cache.properties
-coverage.clover
-docs/_build

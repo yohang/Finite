@@ -14,8 +14,10 @@ class Transition implements TransitionInterface
 {
     public function __construct(
         public readonly string $name,
+        /** @var State[] */
         public readonly array $sourceStates,
         public readonly State $targetState,
+        /** @var array<string, string> */
         public readonly array $properties = []
     )
     {
