@@ -2,7 +2,9 @@
 
 namespace Finite\Event;
 
-abstract class Event
+use Psr\EventDispatcher\StoppableEventInterface;
+
+abstract class Event implements StoppableEventInterface
 {
     private bool $propagationStopped = false;
 

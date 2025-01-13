@@ -2,7 +2,10 @@
 
 namespace Finite\Event;
 
-class EventDispatcher
+use Psr\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\StoppableEventInterface;
+
+class EventDispatcher implements EventDispatcherInterface
 {
     /**
      * @var array<string,array<callable>>
@@ -18,7 +21,7 @@ class EventDispatcher
         $this->listeners[$eventClass][] = $listener;
     }
 
-    public function dispatch(Event $event): void
+    public function dispatch(object $event): void
     {
         if (!isset($this->listeners[get_class($event)])) {
             return;
@@ -27,7 +30,7 @@ class EventDispatcher
         foreach ($this->listeners[get_class($event)] as $listener) {
             $listener($event);
 
-            if ($event->isPropagationStopped()) {
+            if ($event instanceof StoppableEventInterface && $event->isPropagationStopped()) {
                 return;
             }
         }

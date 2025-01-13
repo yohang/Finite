@@ -20,7 +20,8 @@ class AppKernel extends Kernel
 
     protected function configureContainer(ContainerBuilder $c, LoaderInterface $loader): void
     {
-        $c->prependExtensionConfig('framework', ['test' => true]);
+        $c->setParameter('kernel.debug', true);
+        $c->prependExtensionConfig('framework', ['test' => true, 'profiler' => true]);
     }
 
     public function getProjectDir(): string

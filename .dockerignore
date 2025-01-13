@@ -1,4 +1,4 @@
-tests/Extension/Symfony/fixtures/app/var/
+tests/Extension/Symfony/Fixtures/app/var/
 vendor/
 .phpunit.result.cache
 composer.lock

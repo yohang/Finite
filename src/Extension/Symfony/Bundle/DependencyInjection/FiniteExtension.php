@@ -8,6 +8,7 @@ use Finite\StateMachine;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\Extension;
+use Symfony\Component\DependencyInjection\Reference;
 
 final class FiniteExtension extends Extension
 {
@@ -15,7 +16,9 @@ final class FiniteExtension extends Extension
     {
         $container->addDefinitions(
             [
-                StateMachine::class => (new Definition(StateMachine::class))->setPublic(true),
+                StateMachine::class => (new Definition(StateMachine::class))
+                    ->setArgument('$dispatcher', new Reference('event_dispatcher'))
+                    ->setPublic(true),
                 TwigExtension::class => new Definition(TwigExtension::class),
             ]
         );

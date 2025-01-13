@@ -7,6 +7,14 @@ use PHPUnit\Framework\TestCase;
 
 class Article
 {
+    public  $noTypeHere = null;
+
+    public  int|float $unionType = 0;
+
+    public  \Traversable&\Countable $intersectionType;
+
+    public string $namedType = 'named';
+
     private SimpleArticleState $state = SimpleArticleState::DRAFT;
 
     private readonly \DateTimeInterface $createdAt;

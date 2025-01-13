@@ -2,7 +2,7 @@
 <!-- http://www.phpunit.de/manual/current/en/appendixes.configuration.html -->
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          colors="true"
-         bootstrap="tests/Extension/Symfony/fixtures/app/bootstrap.php"
+         bootstrap="tests/Extension/Symfony/Fixtures/app/bootstrap.php"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd">
     <source>
         <include>

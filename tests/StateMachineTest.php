@@ -9,14 +9,28 @@ use Finite\StateMachine;
 use Finite\Tests\E2E\Article;
 use Finite\Tests\E2E\SimpleArticleState;
 use PHPUnit\Framework\TestCase;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 class StateMachineTest extends TestCase
 {
+    public function test_it_instantiate_event_dispatcher(): void
+    {
+        $this->assertInstanceOf(EventDispatcher::class, (new StateMachine)->getDispatcher());
+        $this->assertInstanceOf(EventDispatcherInterface::class, (new StateMachine)->getDispatcher());
+    }
+
+    public function test_it_use_constructor_event_dispatcher(): void
+    {
+        $eventDispatcher = $this->getMockBuilder(EventDispatcherInterface::class)->getMock();
+
+        $this->assertSame($eventDispatcher, (new StateMachine($eventDispatcher))->getDispatcher());
+    }
+
     public function test_it_can_transition(): void
     {
         $object = new Article('Hi !');
 
-        $eventDispatcher = $this->getMockBuilder(EventDispatcher::class)->getMock();
+        $eventDispatcher = $this->getMockBuilder(EventDispatcherInterface::class)->getMock();
         $eventDispatcher
             ->expects($this->once())
             ->method('dispatch')
@@ -29,7 +43,6 @@ class StateMachineTest extends TestCase
                 }),
             );
 
-
         $stateMachine = new StateMachine($eventDispatcher);
 
         $this->assertTrue($stateMachine->can($object, SimpleArticleState::PUBLISH));
@@ -39,7 +52,7 @@ class StateMachineTest extends TestCase
     {
         $object = new Article('Hi !');
 
-        $eventDispatcher = $this->getMockBuilder(EventDispatcher::class)->getMock();
+        $eventDispatcher = $this->getMockBuilder(EventDispatcherInterface::class)->getMock();
         $eventDispatcher
             ->expects($this->once())
             ->method('dispatch')
@@ -56,7 +69,7 @@ class StateMachineTest extends TestCase
     {
         $object = new Article('Hi !');
 
-        $eventDispatcher = $this->getMockBuilder(EventDispatcher::class)->getMock();
+        $eventDispatcher = $this->getMockBuilder(EventDispatcherInterface::class)->getMock();
 
         $matcher = $this->exactly(6);
         $eventDispatcher
@@ -92,5 +105,13 @@ class StateMachineTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
 
         (new StateMachine)->can(new \stdClass, 'transition', 'Unexistant enum');
+    }
+
+    public function test_it_throws_if_no_state(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        $stateMachine = new StateMachine;
+        $stateMachine->can(new class extends \stdClass {}, 'transition');
     }
 }

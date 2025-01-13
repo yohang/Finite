@@ -27,4 +27,4 @@ test_all_targets:
 
 psalm:
 	docker build -t yohang/finite:php-8.4 --build-arg PHP_VERSION=8.4 .
-	docker run -it --rm yohang/finite:php-8.4 php ./vendor/bin/psalm --show-info=true
+	docker run -it --rm yohang/finite:php-8.4 php ./vendor/bin/psalm --show-info=true --no-diff

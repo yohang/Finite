@@ -7,15 +7,15 @@ use Finite\Event\EventDispatcher;
 use Finite\Event\PostTransitionEvent;
 use Finite\Event\PreTransitionEvent;
 use Finite\Transition\TransitionInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class StateMachine
 {
     public function __construct(
-        private readonly EventDispatcher $dispatcher = new EventDispatcher,
+        private readonly EventDispatcherInterface $dispatcher = new EventDispatcher,
     )
     {
-
     }
 
     /**
@@ -85,6 +85,11 @@ class StateMachine
         );
     }
 
+    public function getDispatcher(): EventDispatcherInterface
+    {
+        return $this->dispatcher;
+    }
+
     /**
      * @param class-string|null $stateClass
      */
@@ -92,6 +97,7 @@ class StateMachine
     {
         $property = $this->extractStateProperty($object, $stateClass);
 
+        /** @psalm-suppress MixedReturnStatement */
         return PropertyAccess::createPropertyAccessor()->getValue($object, $property->getName());
     }
 
@@ -107,11 +113,8 @@ class StateMachine
         $reflectionClass = new \ReflectionClass($object);
         /** @psalm-suppress DocblockTypeContradiction */
         do {
-            if (!$reflectionClass) {
-                throw new \InvalidArgumentException('Found no state on object ' . get_class($object));
-            }
-
             foreach ($reflectionClass->getProperties() as $property) {
+                /** @var \ReflectionUnionType|\ReflectionIntersectionType|\ReflectionNamedType $reflectionType */
                 $reflectionType = $property->getType();
                 if (null === $reflectionType) {
                     continue;
@@ -122,10 +125,6 @@ class StateMachine
                 }
 
                 if ($reflectionType instanceof \ReflectionIntersectionType) {
-                    continue;
-                }
-
-                if (!$reflectionType instanceof \ReflectionNamedType) {
                     continue;
                 }
 

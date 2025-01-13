@@ -7,7 +7,7 @@ ARG DEPENDENCIES=highest
 RUN set -eux; \
     apk add --no-cache acl libzip; \
     apk add --no-cache --virtual .build-deps ${PHPIZE_DEPS} zlib-dev libzip-dev; \
-    docker-php-ext-install zip; \
+    docker-php-ext-install zip opcache; \
     pecl install pcov;\
     docker-php-ext-enable pcov; \
     apk del .build-deps;
