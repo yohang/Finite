@@ -14,9 +14,9 @@ class Transition implements TransitionInterface
 {
     public function __construct(
         public readonly string $name,
-        /** @var State[] */
+        /** @var array<int,State&\BackedEnum> */
         public readonly array $sourceStates,
-        public readonly State $targetState,
+        public readonly State&\BackedEnum $targetState,
         /** @var array<string, string> */
         public readonly array $properties = []
     )
@@ -28,7 +28,7 @@ class Transition implements TransitionInterface
         return $this->sourceStates;
     }
 
-    public function getTargetState(): State
+    public function getTargetState(): State&\BackedEnum
     {
         return $this->targetState;
     }
