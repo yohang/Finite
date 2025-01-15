@@ -1,6 +1,6 @@
 <?php
 
-namespace Finite\Tests\E2E;
+namespace Finite\Tests\Fixtures;
 
 use Finite\State;
 use Finite\Transition\Transition;

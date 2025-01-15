@@ -85,6 +85,27 @@ class StateMachine
         );
     }
 
+    /**
+     * @psalm-suppress MoreSpecificReturnType
+     * @psalm-suppress LessSpecificReturnStatement
+     * @return array<int, enum-string<State>>
+     */
+    public function getStateClasses(object $object): array
+    {
+        return array_filter(
+            array_map(
+                fn(\ReflectionProperty $property): string => (string)$property->getType(),
+                $this->extractStateProperties($object),
+            ),
+            fn (?string $name): bool => enum_exists($name),
+        );
+    }
+
+    public function hasState(object $object): bool
+    {
+        return count($this->extractStateProperties($object)) > 0;
+    }
+
     public function getDispatcher(): EventDispatcherInterface
     {
         return $this->dispatcher;
@@ -109,6 +130,35 @@ class StateMachine
         if ($stateClass && !enum_exists($stateClass)) {
             throw new \InvalidArgumentException(sprintf('Enum "%s" does not exists', $stateClass));
         }
+
+        $properties = $this->extractStateProperties($object);
+        if (null !== $stateClass) {
+            foreach ($properties as $property) {
+                if ((string)($property->getType()) === $stateClass) {
+                    return $property;
+                }
+            }
+
+            throw new \InvalidArgumentException(sprintf('Found no state on object "%s" with class "%s"', get_class($object), $stateClass));
+        }
+
+        if (1 === count($properties)) {
+            return $properties[0];
+        }
+
+        if (count($properties) > 1) {
+            throw new \InvalidArgumentException('Found multiple states on object ' . get_class($object));
+        }
+
+        throw new \InvalidArgumentException('Found no state on object ' . get_class($object));
+    }
+
+    /**
+     * @return array<int, \ReflectionProperty>
+     */
+    private function extractStateProperties(object $object): array
+    {
+        $properties = [];
 
         $reflectionClass = new \ReflectionClass($object);
         /** @psalm-suppress DocblockTypeContradiction */
@@ -135,23 +185,13 @@ class StateMachine
                 }
 
                 $reflectionEnum = new \ReflectionEnum($name);
-                /** @psalm-suppress RedundantCondition */
-                if (
-                    null !== $stateClass &&
-                    (
-                        $reflectionEnum->getName() === $stateClass ||
-                        (interface_exists($stateClass) && $reflectionEnum->implementsInterface($stateClass))
-                    )
-                ) {
-                    return $property;
-                }
-
-                if (null === $stateClass && $reflectionEnum->implementsInterface(State::class)) {
-                    return $property;
+                /** @psalm-suppress TypeDoesNotContainType */
+                if ($reflectionEnum->implementsInterface(State::class)) {
+                    $properties[] = $property;
                 }
             }
         } while ($reflectionClass = $reflectionClass->getParentClass());
 
-        throw new \InvalidArgumentException('Found no state on object ' . get_class($object));
+        return $properties;
     }
 }
