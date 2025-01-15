@@ -1,4 +1,5 @@
 tests/Extension/Symfony/Fixtures/app/var/
 vendor/
 .phpunit.result.cache
+.php-cs-fixer.cache
 composer.lock

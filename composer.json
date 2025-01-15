@@ -36,7 +36,8 @@
         "symfony/twig-bundle": ">=5.4,<8",
         "symfony/browser-kit": ">=5.4,<8",
         "symfony/css-selector": ">=5.4,<8",
-        "symfony/console": ">=5.4,<8"
+        "symfony/console": ">=5.4,<8",
+        "friendsofphp/php-cs-fixer": "^3.68"
     },
     "autoload": {
         "psr-4": {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Finite\Extension\Twig;
 
 use Finite\StateMachine;
@@ -10,8 +12,7 @@ class FiniteExtension extends AbstractExtension
 {
     public function __construct(
         private readonly StateMachine $stateMachine,
-    )
-    {
+    ) {
     }
 
     public function getFunctions(): array

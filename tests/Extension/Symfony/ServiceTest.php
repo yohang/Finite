@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Finite\Tests\Extension\Symfony;
@@ -8,14 +9,12 @@ use Finite\Extension\Twig\FiniteExtension;
 use Finite\StateMachine;
 use Finite\Tests\Extension\Symfony\Fixtures\Model\Document;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Bundle\FrameworkBundle\Test\TestContainer;
 use Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
-use Twig\Environment;
 
 class ServiceTest extends KernelTestCase
 {
-    public function test_services_are_registered(): void
+    public function testServicesAreRegistered(): void
     {
         $container = static::getContainer();
 
@@ -25,13 +24,13 @@ class ServiceTest extends KernelTestCase
         $this->assertArrayHasKey(FiniteExtension::class, $container->get('twig')->getExtensions());
     }
 
-    public function test_it_uses_the_symfony_dispatcher(): void
+    public function testItUsesTheSymfonyDispatcher(): void
     {
         $container = static::getContainer();
 
         /** @var StateMachine $stateMachine */
         $stateMachine = $container->get(StateMachine::class);
-        $stateMachine->can(new Document, 'publish');
+        $stateMachine->can(new Document(), 'publish');
 
         /** @var TraceableEventDispatcher $debugDispatcher */
         $debugDispatcher = $container->get('debug.event_dispatcher');

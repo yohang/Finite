@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Finite\Tests\Extension\Twig;
@@ -9,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 class FiniteExtensionTest extends TestCase
 {
-    public function test_it_declare_twig_functions(): void
+    public function testItDeclareTwigFunctions(): void
     {
         $object = $this->createMock(\stdClass::class);
         $stateMachine = $this->createMock(StateMachine::class);
@@ -17,7 +18,7 @@ class FiniteExtensionTest extends TestCase
         $functions = (new FiniteExtension($stateMachine))->getFunctions();
 
         $functions = array_combine(
-            array_map(fn($function) => $function->getName(), $functions),
+            array_map(fn ($function) => $function->getName(), $functions),
             $functions,
         );
         $this->assertArrayHasKey('finite_can', $functions);

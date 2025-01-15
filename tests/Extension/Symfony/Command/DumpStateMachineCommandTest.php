@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Finite\Tests\Extension\Symfony\Command;
 
 use Finite\Tests\Extension\Symfony\Fixtures\State\DocumentState;
@@ -22,7 +24,7 @@ class DumpStateMachineCommandTest extends KernelTestCase
         $this->commandTester = new CommandTester($command);
     }
 
-    public function test_it_returns_mermaid_dump(): void
+    public function testItReturnsMermaidDump(): void
     {
         $this->commandTester->execute([
             'state_enum' => DocumentState::class,
@@ -32,7 +34,7 @@ class DumpStateMachineCommandTest extends KernelTestCase
         $this->commandTester->assertCommandIsSuccessful();
     }
 
-    public function test_it_fails_with_unknown_state_enum(): void
+    public function testItFailsWithUnknownStateEnum(): void
     {
         $this->commandTester->execute([
             'state_enum' => 'UnknownStateEnum',
@@ -42,7 +44,7 @@ class DumpStateMachineCommandTest extends KernelTestCase
         $this->assertSame(1, $this->commandTester->getStatusCode());
     }
 
-    public function test_it_fails_with_unknown_format(): void
+    public function testItFailsWithUnknownFormat(): void
     {
         $this->commandTester->execute([
             'state_enum' => DocumentState::class,

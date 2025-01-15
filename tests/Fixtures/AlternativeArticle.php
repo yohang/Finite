@@ -1,16 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Finite\Tests\Fixtures;
 
 class AlternativeArticle
 {
-    private SimpleArticleState          $state            = SimpleArticleState::DRAFT;
-    private AlternativeArticleState     $alternativeState = AlternativeArticleState::NEW;
+    private SimpleArticleState $state = SimpleArticleState::DRAFT;
+    private AlternativeArticleState $alternativeState = AlternativeArticleState::NEW;
     private readonly \DateTimeInterface $createdAt;
 
     public function __construct(public readonly string $title)
     {
-        $this->createdAt = new \DateTimeImmutable;
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getTitle(): string

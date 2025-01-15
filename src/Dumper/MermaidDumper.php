@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Finite\Dumper;
 
 use Finite\State;
@@ -13,14 +15,14 @@ class MermaidDumper implements Dumper
     {
         $output = [
             '---',
-            'title: ' . $stateEnum,
+            'title: '.$stateEnum,
             '---',
             'stateDiagram-v2',
         ];
 
         foreach ($stateEnum::getTransitions() as $transition) {
             foreach ($transition->getSourceStates() as $state) {
-                $output[] = sprintf(
+                $output[] = \sprintf(
                     '    %s --> %s: %s',
                     $state->value,
                     $transition->getTargetState()->value,
@@ -29,6 +31,6 @@ class MermaidDumper implements Dumper
             }
         }
 
-        return implode(PHP_EOL, $output);
+        return implode(\PHP_EOL, $output);
     }
 }

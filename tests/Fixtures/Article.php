@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Finite\Tests\Fixtures;
 
 class Article
 {
-    public  $noTypeHere = null;
+    public $noTypeHere;
 
-    public  int|float $unionType = 0;
+    public int|float $unionType = 0;
 
-    public  \Traversable&\Countable $intersectionType;
+    public \Traversable&\Countable $intersectionType;
 
     public string $namedType = 'named';
 
@@ -18,7 +20,7 @@ class Article
 
     public function __construct(public readonly string $title)
     {
-        $this->createdAt = new \DateTimeImmutable;
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getTitle(): string

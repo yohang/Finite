@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Finite;
 
 use Finite\Event\CanTransitionEvent;
@@ -17,9 +19,8 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 class StateMachine
 {
     public function __construct(
-        private readonly EventDispatcherInterface $dispatcher = new EventDispatcher,
-    )
-    {
+        private readonly EventDispatcherInterface $dispatcher = new EventDispatcher(),
+    ) {
     }
 
     /**
@@ -28,16 +29,16 @@ class StateMachine
     public function apply(object $object, string $transitionName, ?string $stateClass = null): void
     {
         if (!$this->can($object, $transitionName, $stateClass)) {
-            throw new TransitionNotReachableException('Unable to apply transition ' . $transitionName);
+            throw new TransitionNotReachableException('Unable to apply transition '.$transitionName);
         }
 
-        $property   = $this->extractStateProperty($object, $stateClass);
+        $property = $this->extractStateProperty($object, $stateClass);
         $transition = array_values(
-                          array_filter(
-                              $this->extractState($object, $stateClass)::getTransitions(),
-                              fn(TransitionInterface $transition) => $transition->getName() === $transitionName,
-                          )
-                      )[0];
+            array_filter(
+                $this->extractState($object, $stateClass)::getTransitions(),
+                fn (TransitionInterface $transition) => $transition->getName() === $transitionName,
+            )
+        )[0];
 
         $this->dispatcher->dispatch(new PreTransitionEvent($object, $transitionName, $stateClass));
 
@@ -63,7 +64,7 @@ class StateMachine
                 continue;
             }
 
-            if (!in_array($state, $transition->getSourceStates())) {
+            if (!\in_array($state, $transition->getSourceStates(), true)) {
                 return false;
             }
 
@@ -73,7 +74,7 @@ class StateMachine
             return !$event->isTransitionBlocked();
         }
 
-        throw new TransitionNotReachableException(sprintf('No transition "%s" found', $transitionName));
+        throw new TransitionNotReachableException(\sprintf('No transition "%s" found', $transitionName));
     }
 
     /**
@@ -85,20 +86,21 @@ class StateMachine
 
         return array_filter(
             $state->getTransitions(),
-            fn(TransitionInterface $transition) => $this->can($object, $transition->getName(), $stateClass),
+            fn (TransitionInterface $transition) => $this->can($object, $transition->getName(), $stateClass),
         );
     }
 
     /**
      * @psalm-suppress MoreSpecificReturnType
      * @psalm-suppress LessSpecificReturnStatement
+     *
      * @return array<int, enum-string<State>>
      */
     public function getStateClasses(object $object): array
     {
         return array_filter(
             array_map(
-                fn(\ReflectionProperty $property): string => (string)$property->getType(),
+                fn (\ReflectionProperty $property): string => (string) $property->getType(),
                 $this->extractStateProperties($object),
             ),
             fn (?string $name): bool => enum_exists($name),
@@ -107,7 +109,7 @@ class StateMachine
 
     public function hasState(object $object): bool
     {
-        return count($this->extractStateProperties($object)) > 0;
+        return \count($this->extractStateProperties($object)) > 0;
     }
 
     public function getDispatcher(): EventDispatcherInterface
@@ -132,29 +134,29 @@ class StateMachine
     private function extractStateProperty(object $object, ?string $stateClass = null): \ReflectionProperty
     {
         if ($stateClass && !enum_exists($stateClass)) {
-            throw new NoStateFoundException(sprintf('Enum "%s" does not exists', $stateClass));
+            throw new NoStateFoundException(\sprintf('Enum "%s" does not exists', $stateClass));
         }
 
         $properties = $this->extractStateProperties($object);
         if (null !== $stateClass) {
             foreach ($properties as $property) {
-                if ((string)($property->getType()) === $stateClass) {
+                if ((string) $property->getType() === $stateClass) {
                     return $property;
                 }
             }
 
-            throw new BadStateClassException(sprintf('Found no state on object "%s" with class "%s"', get_class($object), $stateClass));
+            throw new BadStateClassException(\sprintf('Found no state on object "%s" with class "%s"', $object::class, $stateClass));
         }
 
-        if (1 === count($properties)) {
+        if (1 === \count($properties)) {
             return $properties[0];
         }
 
-        if (count($properties) > 1) {
-            throw new NonUniqueStateException('Found multiple states on object ' . get_class($object));
+        if (\count($properties) > 1) {
+            throw new NonUniqueStateException('Found multiple states on object '.$object::class);
         }
 
-        throw new NoStateFoundException('Found no state on object ' . get_class($object));
+        throw new NoStateFoundException('Found no state on object '.$object::class);
     }
 
     /**

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Finite\Transition;
 
 use Finite\Exception\PropertyNotFoundException;
@@ -19,9 +21,8 @@ class Transition implements TransitionInterface
         public readonly array $sourceStates,
         public readonly State&\BackedEnum $targetState,
         /** @var array<string, string> */
-        public readonly array $properties = []
-    )
-    {
+        public readonly array $properties = [],
+    ) {
     }
 
     public function getSourceStates(): array
@@ -51,7 +52,7 @@ class Transition implements TransitionInterface
     public function getPropertyValue(string $name): mixed
     {
         if (!$this->hasProperty($name)) {
-            throw new PropertyNotFoundException(sprintf('Property "%s" does not exist', $name));
+            throw new PropertyNotFoundException(\sprintf('Property "%s" does not exist', $name));
         }
 
         return $this->properties[$name];

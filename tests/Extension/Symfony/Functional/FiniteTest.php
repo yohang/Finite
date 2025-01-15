@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Finite\Tests\Extension\Symfony\Functional;
@@ -7,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class FiniteTest extends WebTestCase
 {
-    public function test_finite_controller(): void
+    public function testFiniteController(): void
     {
         $client = $this->createClient();
         $client->request('GET', '/finite');

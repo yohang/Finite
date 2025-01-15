@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Finite\Extension\Symfony\Bundle;
@@ -11,6 +12,6 @@ final class FiniteBundle extends Bundle
 {
     public function registerCommands(Application $application): void
     {
-        $application->add(new DumpStateMachineCommand);
+        $application->add(new DumpStateMachineCommand());
     }
 }

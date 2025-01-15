@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Finite\Tests\Dumper;
 
 use Finite\Dumper\MermaidDumper;
@@ -8,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 class MermaidDumperTest extends TestCase
 {
-    public function test_it_dumps(): void
+    public function testItDumps(): void
     {
         $this->assertSame(
             <<<MERMAID
@@ -23,7 +25,7 @@ class MermaidDumperTest extends TestCase
                 reported --> disabled: disable
                 published --> disabled: disable
             MERMAID,
-            (new MermaidDumper)->dump(SimpleArticleState::class)
+            (new MermaidDumper())->dump(SimpleArticleState::class)
         );
     }
 }

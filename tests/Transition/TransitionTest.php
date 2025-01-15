@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Finite\Tests\Transition;
@@ -23,20 +24,20 @@ class TransitionTest extends TestCase
         );
     }
 
-    public function test_it_has_properties(): void
+    public function testItHasProperties(): void
     {
         $this->assertTrue($this->object->hasProperty('property'));
         $this->assertTrue($this->object->hasProperty('property2'));
         $this->assertFalse($this->object->hasProperty('property3'));
     }
 
-    public function test_it_returns_property_value(): void
+    public function testItReturnsPropertyValue(): void
     {
         $this->assertSame('value', $this->object->getPropertyValue('property'));
         $this->assertSame('value2', $this->object->getPropertyValue('property2'));
     }
 
-    public function test_it_throws_exception_when_property_does_not_exist(): void
+    public function testItThrowsExceptionWhenPropertyDoesNotExist(): void
     {
         $this->expectException(\OutOfBoundsException::class);
         $this->expectException(FiniteException::class);
@@ -47,7 +48,7 @@ class TransitionTest extends TestCase
         $this->object->getPropertyValue('property3');
     }
 
-    public function test_it_returns_property_names(): void
+    public function testItReturnsPropertyNames(): void
     {
         $this->assertSame(['property', 'property2'], $this->object->getPropertyNames());
     }

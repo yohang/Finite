@@ -1,18 +1,20 @@
 #!/usr/bin/env php
 <?php
 
+declare(strict_types=1);
+
 use Finite\State;
 use Finite\Transition\Transition;
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
 
 // Implement your State
 enum DocumentState: string implements State
 {
-    const PUBLISH = 'publish';
-    const CLEAR = 'clear';
-    const REPORT = 'report';
-    const DISABLE = 'disable';
+    public const PUBLISH = 'publish';
+    public const CLEAR = 'clear';
+    public const REPORT = 'report';
+    public const DISABLE = 'disable';
 
     case DRAFT = 'draft';
     case PUBLISHED = 'published';
@@ -21,12 +23,12 @@ enum DocumentState: string implements State
 
     public function isDeletable(): bool
     {
-        return in_array($this, [self::DRAFT, self::DISABLED]);
+        return in_array($this, [self::DRAFT, self::DISABLED], true);
     }
 
     public function isPrintable(): bool
     {
-        return in_array($this, [self::PUBLISHED, self::REPORTED]);
+        return in_array($this, [self::PUBLISHED, self::REPORTED], true);
     }
 
     public static function getTransitions(): array
@@ -57,15 +59,13 @@ class Document
 }
 
 // Configure your graph
-$document     = new Document;
-$stateMachine = new Finite\StateMachine;
-
+$document = new Document();
+$stateMachine = new Finite\StateMachine();
 
 // Working with workflow
 
 // Current state
 var_dump($document->getState());
-
 
 // Available transitions
 var_dump($stateMachine->getReachablesTransitions($document));
@@ -77,7 +77,7 @@ var_dump($stateMachine->can($document, DocumentState::REPORT, DocumentState::cla
 // Apply transitions
 try {
     $stateMachine->apply($document, DocumentState::REPORT);
-} catch (\Exception $e) {
+} catch (Exception $e) {
     echo $e->getMessage(), "\n";
 }
 

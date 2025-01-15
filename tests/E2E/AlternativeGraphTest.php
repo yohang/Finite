@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Finite\Tests\E2E;
 
 use Finite\StateMachine;
@@ -10,15 +12,15 @@ use PHPUnit\Framework\TestCase;
 class AlternativeGraphTest extends TestCase
 {
     private AlternativeArticle $article;
-    private StateMachine       $stateMachine;
+    private StateMachine $stateMachine;
 
     protected function setUp(): void
     {
-        $this->article      = new AlternativeArticle('Hi ! I\'m an article.');
-        $this->stateMachine = new StateMachine;
+        $this->article = new AlternativeArticle('Hi ! I\'m an article.');
+        $this->stateMachine = new StateMachine();
     }
 
-    public function test_it_has_transitions(): void
+    public function testItHasTransitions(): void
     {
         $this->assertCount(2, $this->article->getAlternativeState()::getTransitions());
         $this->assertCount(1, $this->stateMachine->getReachablesTransitions($this->article, AlternativeArticleState::class));
@@ -29,20 +31,20 @@ class AlternativeGraphTest extends TestCase
         );
     }
 
-    public function test_it_allows_to_transition(): void
+    public function testItAllowsToTransition(): void
     {
         $this->assertTrue($this->stateMachine->can($this->article, AlternativeArticleState::MARK_READ, AlternativeArticleState::class));
         $this->assertFalse($this->stateMachine->can($this->article, AlternativeArticleState::MARK_OLD, AlternativeArticleState::class));
     }
 
-    public function test_it_applies_transition(): void
+    public function testItAppliesTransition(): void
     {
         $this->stateMachine->apply($this->article, AlternativeArticleState::MARK_READ, AlternativeArticleState::class);
 
         $this->assertSame(AlternativeArticleState::READ, $this->article->getAlternativeState());
     }
 
-    public function test_it_reject_bad_transition(): void
+    public function testItRejectBadTransition(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->stateMachine->apply($this->article, AlternativeArticleState::MARK_OLD, AlternativeArticleState::class);

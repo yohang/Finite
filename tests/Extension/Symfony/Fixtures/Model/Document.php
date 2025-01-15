@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Finite\Tests\Extension\Symfony\Fixtures\Model;

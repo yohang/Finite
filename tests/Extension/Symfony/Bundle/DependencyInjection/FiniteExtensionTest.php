@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Finite\Tests\Extension\Symfony\Bundle\DependencyInjection;
@@ -11,7 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class FiniteExtensionTest extends TestCase
 {
-    public function test_it_loads_services(): void
+    public function testItLoadsServices(): void
     {
         $container = $this->getMockBuilder(ContainerBuilder::class)
             ->disableOriginalConstructor()
@@ -25,7 +26,7 @@ class FiniteExtensionTest extends TestCase
             ),
         );
 
-        $extension = new FiniteExtension;
+        $extension = new FiniteExtension();
         $extension->load([], $container);
     }
 }

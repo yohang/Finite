@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 use Finite\Tests\Extension\Symfony\Fixtures\Controller\FiniteController;
@@ -36,7 +37,7 @@ class AppKernel extends Kernel
                 FiniteController::class => (new Definition(FiniteController::class))
                     ->setAutowired(true)
                     ->addTag('controller.service_arguments'),
-                'logger' => (new Definition(NullLogger::class))
+                'logger' => (new Definition(NullLogger::class)),
             ]
         );
     }
@@ -48,7 +49,7 @@ class AppKernel extends Kernel
 
     public function loadRoutes(LoaderInterface $loader): RouteCollection
     {
-        $collection = new RouteCollection;
+        $collection = new RouteCollection();
         $collection->add(
             'finite',
             new Route('/finite', ['_controller' => FiniteController::class]),

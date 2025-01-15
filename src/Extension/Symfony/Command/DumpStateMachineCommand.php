@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Finite\Extension\Symfony\Command;
 
 use Finite\Dumper\MermaidDumper;
@@ -27,23 +29,23 @@ final class DumpStateMachineCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $stateEnum = (string)$input->getArgument('state_enum');
+        $stateEnum = (string) $input->getArgument('state_enum');
 
         if (!(enum_exists($stateEnum) && is_subclass_of($stateEnum, State::class))) {
-            $io->error('The state enum "' . $stateEnum . '" does not exist.');
+            $io->error('The state enum "'.$stateEnum.'" does not exist.');
 
             return self::FAILURE;
         }
 
-        $format = (string)$input->getArgument('format');
+        $format = (string) $input->getArgument('format');
         switch ($format) {
             case self::FORMAT_MERMAID:
                 /** @psalm-suppress ArgumentTypeCoercion Type is enforced upper but not detected by psalm */
-                $output->writeln((new MermaidDumper)->dump($stateEnum));
+                $output->writeln((new MermaidDumper())->dump($stateEnum));
 
                 break;
             default:
-                $output->writeln('Unknown format "' . $format . '". Supported formats are: ' . implode(', ', self::FORMATS));
+                $output->writeln('Unknown format "'.$format.'". Supported formats are: '.implode(', ', self::FORMATS));
 
                 return self::FAILURE;
         }

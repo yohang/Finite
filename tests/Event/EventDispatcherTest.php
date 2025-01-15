@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Finite\Tests\Event;
 
 use Finite\Event\Event;
@@ -8,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 class EventDispatcherTest extends TestCase
 {
-    public function test_it_dispatch_event(): void
+    public function testItDispatchEvent(): void
     {
         $objectMock = $this->getMockBuilder(Event::class)->disableOriginalConstructor()->getMock();
 
@@ -18,14 +20,14 @@ class EventDispatcherTest extends TestCase
         $badListenerMock = $this->getMockBuilder(\stdClass::class)->addMethods(['__invoke'])->getMock();
         $badListenerMock->expects($this->never())->method('__invoke')->with($objectMock);
 
-        $dispatcher = new EventDispatcher;
+        $dispatcher = new EventDispatcher();
         $dispatcher->addEventListener($objectMock::class, $listenerMock);
         $dispatcher->addEventListener(Event::class, $badListenerMock);
 
         $dispatcher->dispatch($objectMock);
     }
 
-    public function test_it_dispatch_multiple_event(): void
+    public function testItDispatchMultipleEvent(): void
     {
         $objectMock = $this->getMockBuilder(Event::class)->disableOriginalConstructor()->getMock();
 
@@ -35,14 +37,14 @@ class EventDispatcherTest extends TestCase
         $otherListenerMock = $this->getMockBuilder(\stdClass::class)->addMethods(['__invoke'])->getMock();
         $otherListenerMock->expects($this->once())->method('__invoke')->with($objectMock);
 
-        $dispatcher = new EventDispatcher;
+        $dispatcher = new EventDispatcher();
         $dispatcher->addEventListener($objectMock::class, $listenerMock);
         $dispatcher->addEventListener($objectMock::class, $otherListenerMock);
 
         $dispatcher->dispatch($objectMock);
     }
 
-    public function test_it_stops_propagation(): void
+    public function testItStopsPropagation(): void
     {
         $objectMock = $this->getMockBuilder(Event::class)->disableOriginalConstructor()->getMock();
         $objectMock->expects($this->once())->method('stopPropagation');
@@ -58,7 +60,7 @@ class EventDispatcherTest extends TestCase
         $otherListenerMock = $this->getMockBuilder(\stdClass::class)->addMethods(['__invoke'])->getMock();
         $otherListenerMock->expects($this->never())->method('__invoke')->with($objectMock);
 
-        $dispatcher = new EventDispatcher;
+        $dispatcher = new EventDispatcher();
         $dispatcher->addEventListener($objectMock::class, $listenerMock);
         $dispatcher->addEventListener($objectMock::class, $otherListenerMock);
 

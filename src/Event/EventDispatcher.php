@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Finite\Event;
 
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -23,11 +25,11 @@ class EventDispatcher implements EventDispatcherInterface
 
     public function dispatch(object $event): void
     {
-        if (!isset($this->listeners[get_class($event)])) {
+        if (!isset($this->listeners[$event::class])) {
             return;
         }
 
-        foreach ($this->listeners[get_class($event)] as $listener) {
+        foreach ($this->listeners[$event::class] as $listener) {
             $listener($event);
 
             if ($event instanceof StoppableEventInterface && $event->isPropagationStopped()) {
