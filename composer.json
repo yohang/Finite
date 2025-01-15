@@ -35,7 +35,8 @@
         "symfony/stopwatch": ">=5.4,<8",
         "symfony/twig-bundle": ">=5.4,<8",
         "symfony/browser-kit": ">=5.4,<8",
-        "symfony/css-selector": ">=5.4,<8"
+        "symfony/css-selector": ">=5.4,<8",
+        "symfony/console": ">=5.4,<8"
     },
     "autoload": {
         "psr-4": {

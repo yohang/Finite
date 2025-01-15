@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Finite\Tests\Transition;
 
 use Finite\State;
+use Finite\Tests\E2E\SimpleArticleState;
 use Finite\Transition\Transition;
 use PHPUnit\Framework\TestCase;
 
@@ -13,12 +14,10 @@ class TransitionTest extends TestCase
 
     protected function setUp(): void
     {
-        $targetState = $this->createMock(State::class);
-
         $this->object = new Transition(
             'name',
-            ['source'],
-            $targetState,
+            [SimpleArticleState::DRAFT],
+            SimpleArticleState::PUBLISHED,
             ['property' => 'value', 'property2' => 'value2'],
         );
     }

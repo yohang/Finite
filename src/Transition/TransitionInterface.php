@@ -12,11 +12,11 @@ use Finite\State;
 interface TransitionInterface
 {
     /**
-     * @return State[]
+     * @return array<int, \BackedEnum&State>
      */
     public function getSourceStates(): array;
 
-    public function getTargetState(): State;
+    public function getTargetState(): State&\BackedEnum;
 
     public function process(object $object): void;
 
