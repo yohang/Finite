@@ -5,6 +5,11 @@ namespace Finite\Tests;
 use Finite\Event\CanTransitionEvent;
 use Finite\Event\EventDispatcher;
 use Finite\Event\TransitionEvent;
+use Finite\Exception\BadStateClassException;
+use Finite\Exception\FiniteException;
+use Finite\Exception\NonUniqueStateException;
+use Finite\Exception\NoStateFoundException;
+use Finite\Exception\TransitionNotReachableException;
 use Finite\StateMachine;
 use Finite\Tests\Fixtures\AlternativeArticle;
 use Finite\Tests\Fixtures\AlternativeArticleState;
@@ -93,6 +98,8 @@ class StateMachineTest extends TestCase
     public function test_it_rejects_non_stateful_object()
     {
         $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(FiniteException::class);
+        $this->expectException(NoStateFoundException::class);
 
         (new StateMachine)->can(
             new class {
@@ -105,6 +112,8 @@ class StateMachineTest extends TestCase
     public function test_it_rejects_unexistant_state_class()
     {
         $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(FiniteException::class);
+        $this->expectException(NoStateFoundException::class);
 
         (new StateMachine)->can(new \stdClass, 'transition', 'Unexistant enum');
     }
@@ -112,6 +121,8 @@ class StateMachineTest extends TestCase
     public function test_it_throws_if_no_state(): void
     {
         $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(FiniteException::class);
+        $this->expectException(NoStateFoundException::class);
 
         $stateMachine = new StateMachine;
         $stateMachine->can(new class extends \stdClass {}, 'transition');
@@ -120,6 +131,8 @@ class StateMachineTest extends TestCase
     public function test_it_throws_if_bad_state(): void
     {
         $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(FiniteException::class);
+        $this->expectException(BadStateClassException::class);
 
         $stateMachine = new StateMachine;
         $stateMachine->can(new Article('test'), 'publish', AlternativeArticleState::class);
@@ -128,6 +141,8 @@ class StateMachineTest extends TestCase
     public function test_it_throws_if_many_state_and_none_given(): void
     {
         $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(FiniteException::class);
+        $this->expectException(NonUniqueStateException::class);
 
         $stateMachine = new StateMachine;
         $stateMachine->can(new AlternativeArticle('test'), 'publish');

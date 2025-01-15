@@ -6,6 +6,10 @@ use Finite\Event\CanTransitionEvent;
 use Finite\Event\EventDispatcher;
 use Finite\Event\PostTransitionEvent;
 use Finite\Event\PreTransitionEvent;
+use Finite\Exception\BadStateClassException;
+use Finite\Exception\NonUniqueStateException;
+use Finite\Exception\NoStateFoundException;
+use Finite\Exception\TransitionNotReachableException;
 use Finite\Transition\TransitionInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
@@ -24,7 +28,7 @@ class StateMachine
     public function apply(object $object, string $transitionName, ?string $stateClass = null): void
     {
         if (!$this->can($object, $transitionName, $stateClass)) {
-            throw new \InvalidArgumentException('Unable to apply transition ' . $transitionName);
+            throw new TransitionNotReachableException('Unable to apply transition ' . $transitionName);
         }
 
         $property   = $this->extractStateProperty($object, $stateClass);
@@ -69,7 +73,7 @@ class StateMachine
             return !$event->isTransitionBlocked();
         }
 
-        throw new \InvalidArgumentException(sprintf('No transition "%s" found', $transitionName));
+        throw new TransitionNotReachableException(sprintf('No transition "%s" found', $transitionName));
     }
 
     /**
@@ -128,7 +132,7 @@ class StateMachine
     private function extractStateProperty(object $object, ?string $stateClass = null): \ReflectionProperty
     {
         if ($stateClass && !enum_exists($stateClass)) {
-            throw new \InvalidArgumentException(sprintf('Enum "%s" does not exists', $stateClass));
+            throw new NoStateFoundException(sprintf('Enum "%s" does not exists', $stateClass));
         }
 
         $properties = $this->extractStateProperties($object);
@@ -139,7 +143,7 @@ class StateMachine
                 }
             }
 
-            throw new \InvalidArgumentException(sprintf('Found no state on object "%s" with class "%s"', get_class($object), $stateClass));
+            throw new BadStateClassException(sprintf('Found no state on object "%s" with class "%s"', get_class($object), $stateClass));
         }
 
         if (1 === count($properties)) {
@@ -147,10 +151,10 @@ class StateMachine
         }
 
         if (count($properties) > 1) {
-            throw new \InvalidArgumentException('Found multiple states on object ' . get_class($object));
+            throw new NonUniqueStateException('Found multiple states on object ' . get_class($object));
         }
 
-        throw new \InvalidArgumentException('Found no state on object ' . get_class($object));
+        throw new NoStateFoundException('Found no state on object ' . get_class($object));
     }
 
     /**

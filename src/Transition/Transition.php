@@ -2,6 +2,7 @@
 
 namespace Finite\Transition;
 
+use Finite\Exception\PropertyNotFoundException;
 use Finite\State;
 
 /**
@@ -50,7 +51,7 @@ class Transition implements TransitionInterface
     public function getPropertyValue(string $name): mixed
     {
         if (!$this->hasProperty($name)) {
-            throw new \InvalidArgumentException(sprintf('Property "%s" does not exist', $name));
+            throw new PropertyNotFoundException(sprintf('Property "%s" does not exist', $name));
         }
 
         return $this->properties[$name];

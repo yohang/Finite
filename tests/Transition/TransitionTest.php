@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Finite\Tests\Transition;
 
+use Finite\Exception\FiniteException;
+use Finite\Exception\PropertyNotFoundException;
 use Finite\Tests\Fixtures\SimpleArticleState;
 use Finite\Transition\Transition;
 use PHPUnit\Framework\TestCase;
@@ -36,7 +38,10 @@ class TransitionTest extends TestCase
 
     public function test_it_throws_exception_when_property_does_not_exist(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(\OutOfBoundsException::class);
+        $this->expectException(FiniteException::class);
+        $this->expectException(PropertyNotFoundException::class);
+
         $this->expectExceptionMessage('Property "property3" does not exist');
 
         $this->object->getPropertyValue('property3');

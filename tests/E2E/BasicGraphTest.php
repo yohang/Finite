@@ -2,6 +2,8 @@
 
 namespace Finite\Tests\E2E;
 
+use Finite\Exception\FiniteException;
+use Finite\Exception\TransitionNotReachableException;
 use Finite\StateMachine;
 use Finite\Tests\Fixtures\Article;
 use Finite\Tests\Fixtures\SimpleArticleState;
@@ -36,6 +38,9 @@ class BasicGraphTest extends TestCase
     public function test_it_reject_bad_transitions(): void
     {
         $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(FiniteException::class);
+        $this->expectException(TransitionNotReachableException::class);
+
         $this->stateMachine->can($this->article, 'touch this');
     }
 
@@ -55,6 +60,7 @@ class BasicGraphTest extends TestCase
     public function test_it_reject_bad_transition(): void
     {
         $this->expectException(\InvalidArgumentException::class);
+
         $this->stateMachine->apply($this->article, SimpleArticleState::REPORT);
     }
 }
