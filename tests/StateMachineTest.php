@@ -6,8 +6,10 @@ use Finite\Event\CanTransitionEvent;
 use Finite\Event\EventDispatcher;
 use Finite\Event\TransitionEvent;
 use Finite\StateMachine;
-use Finite\Tests\E2E\Article;
-use Finite\Tests\E2E\SimpleArticleState;
+use Finite\Tests\Fixtures\AlternativeArticle;
+use Finite\Tests\Fixtures\AlternativeArticleState;
+use Finite\Tests\Fixtures\Article;
+use Finite\Tests\Fixtures\SimpleArticleState;
 use PHPUnit\Framework\TestCase;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
@@ -113,5 +115,44 @@ class StateMachineTest extends TestCase
 
         $stateMachine = new StateMachine;
         $stateMachine->can(new class extends \stdClass {}, 'transition');
+    }
+
+    public function test_it_throws_if_bad_state(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        $stateMachine = new StateMachine;
+        $stateMachine->can(new Article('test'), 'publish', AlternativeArticleState::class);
+    }
+
+    public function test_it_throws_if_many_state_and_none_given(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        $stateMachine = new StateMachine;
+        $stateMachine->can(new AlternativeArticle('test'), 'publish');
+    }
+
+    public function test_it_returns_class_state_classes(): void
+    {
+        $this->assertSame(
+            [SimpleArticleState::class],
+            (new StateMachine)->getStateClasses(new Article('Hi !')),
+        );
+        $this->assertSame(
+            [SimpleArticleState::class, AlternativeArticleState::class],
+            (new StateMachine)->getStateClasses(new AlternativeArticle('Hi !')),
+        );
+        $this->assertSame(
+            [],
+            (new StateMachine)->getStateClasses(new \stdClass),
+        );
+    }
+
+    public function test_it_returns_if_object_has_state(): void
+    {
+        $this->assertTrue((new StateMachine)->hasState(new Article('Hi !')));
+        $this->assertTrue((new StateMachine)->hasState(new AlternativeArticle('Hi !')));
+        $this->assertFalse((new StateMachine)->hasState(new \stdClass));
     }
 }

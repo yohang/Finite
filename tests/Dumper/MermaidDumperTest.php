@@ -3,7 +3,7 @@
 namespace Finite\Tests\Dumper;
 
 use Finite\Dumper\MermaidDumper;
-use Finite\Tests\E2E\SimpleArticleState;
+use Finite\Tests\Fixtures\SimpleArticleState;
 use PHPUnit\Framework\TestCase;
 
 class MermaidDumperTest extends TestCase
@@ -13,7 +13,7 @@ class MermaidDumperTest extends TestCase
         $this->assertSame(
             <<<MERMAID
             ---
-            title: Finite\Tests\E2E\SimpleArticleState
+            title: Finite\Tests\Fixtures\SimpleArticleState
             ---
             stateDiagram-v2
                 draft --> published: publish

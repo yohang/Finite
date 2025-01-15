@@ -3,8 +3,7 @@ declare(strict_types=1);
 
 namespace Finite\Tests\Transition;
 
-use Finite\State;
-use Finite\Tests\E2E\SimpleArticleState;
+use Finite\Tests\Fixtures\SimpleArticleState;
 use Finite\Transition\Transition;
 use PHPUnit\Framework\TestCase;
 
