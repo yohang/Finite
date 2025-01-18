@@ -29,7 +29,7 @@ Getting started
 
 ### Installation (via composer)
 ```bash
- $ composer req yohan/finite
+ $ composer req yohang/finite
 ```
 
 ### Define your state enum
