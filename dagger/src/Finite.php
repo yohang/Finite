@@ -6,6 +6,7 @@ namespace DaggerModule;
 
 use Dagger\Attribute\DaggerFunction;
 use Dagger\Attribute\DaggerObject;
+use Dagger\Attribute\DefaultPath;
 use Dagger\Attribute\Doc;
 use Dagger\Container;
 use Dagger\Directory;
@@ -20,7 +21,11 @@ final class Finite
 
     #[DaggerFunction]
     #[Doc('Build test environnment')]
-    public function build(Directory $source, string $phpVersion = '8.4', bool $preferLowest = false): Container
+    public function build(
+        #[DefaultPath('.')] Directory $source,
+        string $phpVersion = '8.4',
+        string $dependencyVersion = 'highest',
+    ): Container
     {
         $composerCache = dag()->cacheVolume('composer');
 
@@ -41,7 +46,7 @@ final class Finite
             ->withFile('composer.json', $source->file('composer.json'))
             ->withMountedCache('/root/.composer/cache', $composerCache);
 
-        if ($preferLowest) {
+        if ('lowest' === $dependencyVersion) {
             $container = $container
                 ->withExec(['composer', 'update', '--prefer-lowest']);
         }
@@ -58,22 +63,26 @@ final class Finite
 
     #[DaggerFunction]
     #[Doc('Run test suite')]
-    public function test(Directory $source, string $phpVersion = '8.4', bool $preferLowest = false): string
+    public function test(
+        #[DefaultPath('.')] Directory $source,
+        string $phpVersion = '8.4',
+        string $dependencyVersion = 'highest',
+    ): string
     {
         return $this
-            ->build($source, $phpVersion, $preferLowest)
+            ->build($source, $phpVersion, $dependencyVersion)
             ->withExec(['php', './vendor/bin/phpunit', '--coverage-text'])
             ->stdout();
     }
 
     #[DaggerFunction]
     #[Doc('Run test suite for all supported PHP versions')]
-    public function testAll(Directory $source): string
+    public function testAll(#[DefaultPath('.')] Directory $source): string
     {
         $output = '';
         foreach (self::PHP_VERSIONS as $phpVersion) {
             $output .= $this->test($source, $phpVersion);
-            $output .= $this->test($source, $phpVersion, true);
+            $output .= $this->test($source, $phpVersion, 'lowest');
         }
 
         return $output;
@@ -81,7 +90,7 @@ final class Finite
 
     #[DaggerFunction]
     #[Doc('Psalm static analysis')]
-    public function psalm(Directory $source): string
+    public function psalm(#[DefaultPath('.')] Directory $source): string
     {
         return $this
             ->build($source, '8.1')
@@ -91,11 +100,21 @@ final class Finite
 
     #[DaggerFunction]
     #[Doc('PHP-CS-Fixer static analysis')]
-    public function phpCsFixer(Directory $source): string
+    public function phpCsFixer(#[DefaultPath('.')] Directory $source): string
     {
         return $this
             ->build($source, '8.3')
             ->withExec(['./vendor/bin/php-cs-fixer', 'fix', '--dry-run', '--diff', '--ansi'])
             ->stdout();
+    }
+
+    #[DaggerFunction]
+    #[Doc('Opens a PHP Aware shell')]
+    public function cli(#[DefaultPath('.')] Directory $source, string $phpVersion = '8.4'): Container
+    {
+        return $this
+            ->build($source, $phpVersion)
+            ->withMountedDirectory('/app', $source)
+            ->terminal();
     }
 }

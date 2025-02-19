@@ -12,7 +12,7 @@ jobs:
             -   name: Checkout
                 uses: actions/checkout@v4
 
-            -   name: Call Dagger Function
+            -   name: Call php-cs-fixer Dagger Function
                 uses: dagger/dagger-for-github@v7
                 with:
                     version: "latest"
@@ -28,17 +28,12 @@ jobs:
             -   name: Checkout
                 uses: actions/checkout@v4
 
-            -   name: Psalm
-                uses: docker://ghcr.io/psalm/psalm-github-actions
+            -   name: Call Psalm Dagger Function
+                uses: dagger/dagger-for-github@v7
                 with:
-                    show_info: true
-                    security_analysis: true
-                    report_file: results.sarif
-
-            -   name: Upload Analysis results to GitHub
-                uses: github/codeql-action/upload-sarif@v3
-                with:
-                    sarif_file: results.sarif
+                    version: "latest"
+                    verb: call
+                    args: psalm --source=.
 
     phpunit:
         runs-on: ubuntu-latest
@@ -51,15 +46,9 @@ jobs:
             -   name: Checkout
                 uses: actions/checkout@v4
 
-            -   name: Setup PHP
-                uses: shivammathur/setup-php@v2
+            -   name: Call Test Dagger Function
+                uses: dagger/dagger-for-github@v7
                 with:
-                    php-version: ${{ matrix.php-versions }}
-
-            -   name: Install dependencies
-                uses: ramsey/composer-install@v3
-                with:
-                    dependency-versions: ${{ matrix.dependencies-versions }}
-
-            -   name: Run tests
-                run: vendor/bin/phpunit --coverage-text
+                    version: "latest"
+                    verb: call
+                    args: test --source=. --php-version=${{ matrix.php-versions }} --dependency-version=${{ matrix.dependencies-versions }}
