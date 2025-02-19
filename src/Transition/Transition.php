@@ -15,7 +15,7 @@ use Finite\State;
  *
  * @author Yohan Giarelli <yohan@giarel.li>
  */
-class Transition implements TransitionInterface
+final class Transition implements TransitionInterface
 {
     public function __construct(
         public readonly string $name,

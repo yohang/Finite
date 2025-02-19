@@ -12,16 +12,12 @@ jobs:
             -   name: Checkout
                 uses: actions/checkout@v4
 
-            -   name: Setup PHP
-                uses: shivammathur/setup-php@v2
+            -   name: Call Dagger Function
+                uses: dagger/dagger-for-github@v7
                 with:
-                    php-version: '8.3'
-
-            -   name: Install dependencies
-                uses: ramsey/composer-install@v3
-
-            -   name: PHP CS Fixer
-                run: ./vendor/bin/php-cs-fixer fix --dry-run --diff --ansi
+                    version: "latest"
+                    verb: call
+                    args: php-cs-fixer --source=.
 
     psalm:
         runs-on: ubuntu-latest
