@@ -10,6 +10,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 final class FiniteBundle extends Bundle
 {
+    #[\Override]
     public function registerCommands(Application $application): void
     {
         $application->add(new DumpStateMachineCommand());

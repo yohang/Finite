@@ -16,6 +16,9 @@ use Finite\Transition\TransitionInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
+/**
+ * @api
+ */
 class StateMachine
 {
     public function __construct(

@@ -8,13 +8,14 @@ use Finite\StateMachine;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-class FiniteExtension extends AbstractExtension
+final class FiniteExtension extends AbstractExtension
 {
     public function __construct(
         private readonly StateMachine $stateMachine,
     ) {
     }
 
+    #[\Override]
     public function getFunctions(): array
     {
         return [
