@@ -26,6 +26,7 @@ abstract class Event implements StoppableEventInterface
         return $this->stateClass;
     }
 
+    #[\Override]
     public function isPropagationStopped(): bool
     {
         return $this->propagationStopped;

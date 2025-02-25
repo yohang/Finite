@@ -6,6 +6,9 @@ namespace Finite;
 
 use Finite\Transition\TransitionInterface;
 
+/**
+ * @api
+ */
 interface State
 {
     /**

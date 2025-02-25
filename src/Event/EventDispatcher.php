@@ -7,7 +7,7 @@ namespace Finite\Event;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\EventDispatcher\StoppableEventInterface;
 
-class EventDispatcher implements EventDispatcherInterface
+final class EventDispatcher implements EventDispatcherInterface
 {
     /**
      * @var array<string,array<callable>>
@@ -23,6 +23,7 @@ class EventDispatcher implements EventDispatcherInterface
         $this->listeners[$eventClass][] = $listener;
     }
 
+    #[\Override]
     public function dispatch(object $event): void
     {
         if (!isset($this->listeners[$event::class])) {

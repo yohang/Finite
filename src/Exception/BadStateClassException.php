@@ -4,6 +4,6 @@ declare(strict_types=1);
 
 namespace Finite\Exception;
 
-class BadStateClassException extends \InvalidArgumentException implements FiniteException
+final class BadStateClassException extends \InvalidArgumentException implements FiniteException
 {
 }

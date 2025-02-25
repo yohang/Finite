@@ -6,11 +6,12 @@ namespace Finite\Dumper;
 
 use Finite\State;
 
-class MermaidDumper implements Dumper
+final class MermaidDumper implements Dumper
 {
     /**
      * @param enum-string<State> $stateEnum
      */
+    #[\Override]
     public function dump(string $stateEnum): string
     {
         $output = [
