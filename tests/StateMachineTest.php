@@ -47,7 +47,7 @@ class StateMachineTest extends TestCase
                     $this->assertSame($object, $e->getObject());
                     $this->assertFalse($e->isPropagationStopped());
 
-                    return null === $e->getStateClass();
+                    return SimpleArticleState::class === $e->getStateClass();
                 }),
             );
 
@@ -84,8 +84,8 @@ class StateMachineTest extends TestCase
             ->method('dispatch')
             ->willReturnCallback(
                 fn (TransitionEvent $e) => match ($matcher->numberOfInvocations()) {
-                    1, 2, 3 => SimpleArticleState::PUBLISH === $e->getTransitionName(),
-                    4, 5, 6 => SimpleArticleState::REPORT === $e->getTransitionName(),
+                    1, 2, 3 => SimpleArticleState::PUBLISH === $e->getTransition()->getName(),
+                    4, 5, 6 => SimpleArticleState::REPORT === $e->getTransition()->getName(),
                 }
             );
 
