@@ -11,6 +11,8 @@ use Finite\State;
  * The base Transition class.
  * Feel free to extend it to fit to your needs.
  *
+ * @api
+ *
  * @author Yohan Giarelli <yohan@giarel.li>
  */
 class Transition implements TransitionInterface
@@ -25,30 +27,36 @@ class Transition implements TransitionInterface
     ) {
     }
 
+    #[\Override]
     public function getSourceStates(): array
     {
         return $this->sourceStates;
     }
 
+    #[\Override]
     public function getTargetState(): State&\BackedEnum
     {
         return $this->targetState;
     }
 
+    #[\Override]
     public function process(object $object): void
     {
     }
 
+    #[\Override]
     public function getName(): string
     {
         return $this->name;
     }
 
+    #[\Override]
     public function hasProperty(string $name): bool
     {
         return isset($this->properties[$name]);
     }
 
+    #[\Override]
     public function getPropertyValue(string $name): mixed
     {
         if (!$this->hasProperty($name)) {
@@ -58,6 +66,7 @@ class Transition implements TransitionInterface
         return $this->properties[$name];
     }
 
+    #[\Override]
     public function getPropertyNames(): array
     {
         return array_keys($this->properties);

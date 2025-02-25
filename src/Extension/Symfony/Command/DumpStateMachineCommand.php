@@ -17,6 +17,7 @@ final class DumpStateMachineCommand extends Command
     private const FORMAT_MERMAID = 'mermaid';
     private const FORMATS = [self::FORMAT_MERMAID];
 
+    #[\Override]
     protected function configure(): void
     {
         $this
@@ -26,6 +27,7 @@ final class DumpStateMachineCommand extends Command
             ->addArgument('format', InputArgument::REQUIRED, 'The format to dump the graph in');
     }
 
+    #[\Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
