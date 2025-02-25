@@ -36,6 +36,7 @@ class StateMachine
         }
 
         $property = $this->extractStateProperty($object, $stateClass);
+        $fromState = $this->extractState($object, $stateClass);
         $transition = array_values(
             array_filter(
                 $this->extractState($object, $stateClass)::getTransitions(),
@@ -43,7 +44,7 @@ class StateMachine
             )
         )[0];
 
-        $this->dispatcher->dispatch(new PreTransitionEvent($object, $transitionName, $stateClass));
+        $this->dispatcher->dispatch(new PreTransitionEvent($object, $transition, $fromState));
 
         $transition->process($object);
         PropertyAccess::createPropertyAccessor()->setValue(
@@ -53,7 +54,7 @@ class StateMachine
         );
 
         /** @var object $object */
-        $this->dispatcher->dispatch(new PostTransitionEvent($object, $transitionName, $stateClass));
+        $this->dispatcher->dispatch(new PostTransitionEvent($object, $transition, $fromState));
     }
 
     /**
@@ -61,17 +62,17 @@ class StateMachine
      */
     public function can(object $object, string $transitionName, ?string $stateClass = null): bool
     {
-        $state = $this->extractState($object, $stateClass);
-        foreach ($state::getTransitions() as $transition) {
+        $fromState = $this->extractState($object, $stateClass);
+        foreach ($fromState::getTransitions() as $transition) {
             if ($transition->getName() !== $transitionName) {
                 continue;
             }
 
-            if (!\in_array($state, $transition->getSourceStates(), true)) {
+            if (!\in_array($fromState, $transition->getSourceStates(), true)) {
                 return false;
             }
 
-            $event = new CanTransitionEvent($object, $transitionName, $stateClass);
+            $event = new CanTransitionEvent($object, $transition, $fromState);
             $this->dispatcher->dispatch($event);
 
             return !$event->isTransitionBlocked();
@@ -123,7 +124,7 @@ class StateMachine
     /**
      * @param class-string|null $stateClass
      */
-    private function extractState(object $object, ?string $stateClass = null): State
+    private function extractState(object $object, ?string $stateClass = null): State&\BackedEnum
     {
         $property = $this->extractStateProperty($object, $stateClass);
 
