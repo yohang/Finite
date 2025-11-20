@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Finite\Tests\Extractor;
 
 use Finite\Exception\NonUniqueStateException;
@@ -14,7 +16,7 @@ final class ReflectionStatePropertyExtractorTest extends TestCase
 {
     private ReflectionStatePropertyExtractor $object;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->object = new ReflectionStatePropertyExtractor();
     }

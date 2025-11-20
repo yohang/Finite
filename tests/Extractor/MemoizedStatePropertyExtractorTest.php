@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Finite\Tests\Extractor;
 
 use Finite\Extractor\MemoizedStatePropertyExtractor;
