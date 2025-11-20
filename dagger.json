@@ -1,0 +1,8 @@
+{
+  "name": "Finite",
+  "engineVersion": "v0.15.4",
+  "sdk": {
+    "source": "php"
+  },
+  "source": "dagger"
+}
