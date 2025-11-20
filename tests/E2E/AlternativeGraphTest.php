@@ -42,6 +42,10 @@ class AlternativeGraphTest extends TestCase
         $this->stateMachine->apply($this->article, AlternativeArticleState::MARK_READ, AlternativeArticleState::class);
 
         $this->assertSame(AlternativeArticleState::READ, $this->article->getAlternativeState());
+
+        $this->stateMachine->apply($this->article, AlternativeArticleState::MARK_OLD, AlternativeArticleState::class);
+
+        $this->assertSame(AlternativeArticleState::OLD, $this->article->getAlternativeState());
     }
 
     public function testItRejectBadTransition(): void

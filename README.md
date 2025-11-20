@@ -8,6 +8,7 @@ As of version 2, Finite is a low-deps and lightweight state machine library, tha
 
 
 ![CI Status](https://github.com/yohang/finite/actions/workflows/ci.yml/badge.svg)
+[![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fyohang%2FFinite%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/yohang/Finite/main)
 
 Disclaimer
 ----------
@@ -129,6 +130,3 @@ After that, you can use theses methods on your object, even without instantiatin
 var_dump($document->getState()->isDeletable());
 var_dump($document->getState()->isPrintable());
 ```
-
-
-

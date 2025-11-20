@@ -20,6 +20,7 @@ jobs:
                     version: "latest"
                     verb: call
                     args: php-cs-fixer --source=.
+                    cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
 
     psalm:
         runs-on: ubuntu-latest
@@ -36,6 +37,7 @@ jobs:
                     version: "latest"
                     verb: call
                     args: psalm --source=.
+                    cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
 
     phpunit:
         runs-on: ubuntu-latest
@@ -54,3 +56,21 @@ jobs:
                     version: "latest"
                     verb: call
                     args: test --source=. --php-version=${{ matrix.php-versions }} --dependency-version=${{ matrix.dependencies-versions }}
+                    cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
+
+    mutation:
+        runs-on: ubuntu-latest
+        permissions:
+            security-events: write
+        name: Mutation testing
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v4
+
+            -   name: Call Psalm Dagger Function
+                uses: dagger/dagger-for-github@v7
+                with:
+                    version: "latest"
+                    verb: call
+                    args: infection --stryker-dashboard-api-key=${{ secrets.STRYKER_DASHBOARD_API_KEY }} --github-actions=$GITHUB_ACTIONS --github-repository=${{ github.repository }} --github-ref=${{ github.ref }}
+                    cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}

@@ -25,6 +25,11 @@ class FiniteExtensionTest extends TestCase
                 $this->arrayHasKey(StatePropertyExtractor::class),
                 $this->arrayHasKey(StateMachine::class),
                 $this->arrayHasKey(TwigExtension::class),
+                $this->callback(function (array $definitions): bool {
+                    $this->assertTrue($definitions[StateMachine::class]->isPublic());
+
+                    return true;
+                }),
             ),
         );
 

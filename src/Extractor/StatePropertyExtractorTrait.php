@@ -31,15 +31,15 @@ trait StatePropertyExtractorTrait
             throw new BadStateClassException(\sprintf('Found no state on object "%s" with class "%s"', $object::class, $stateClass));
         }
 
+        if (0 === \count($properties)) {
+            throw new NoStateFoundException('Found no state on object '.$object::class);
+        }
+
         if (1 === \count($properties)) {
             return $properties[0];
         }
 
-        if (\count($properties) > 1) {
-            throw new NonUniqueStateException('Found multiple states on object '.$object::class);
-        }
-
-        throw new NoStateFoundException('Found no state on object '.$object::class);
+        throw new NonUniqueStateException('Found multiple states on object '.$object::class);
     }
 
     /**

@@ -6,9 +6,9 @@ namespace Finite\Tests\Fixtures;
 
 class AlternativeArticle
 {
+    private readonly \DateTimeInterface $createdAt;
     private SimpleArticleState $state = SimpleArticleState::DRAFT;
     private AlternativeArticleState $alternativeState = AlternativeArticleState::NEW;
-    private readonly \DateTimeInterface $createdAt;
 
     public function __construct(public readonly string $title)
     {

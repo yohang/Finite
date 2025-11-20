@@ -36,7 +36,8 @@
         "symfony/browser-kit": ">=5.4,<8",
         "symfony/css-selector": ">=5.4,<8",
         "symfony/console": ">=5.4,<8",
-        "friendsofphp/php-cs-fixer": "^3.68"
+        "friendsofphp/php-cs-fixer": "^3.68",
+        "infection/infection": "^0.29.8"
     },
     "autoload": {
         "psr-4": {
@@ -51,6 +52,11 @@
     "extra": {
         "branch-alias": {
             "dev-main": "2.0.x-dev"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "infection/extension-installer": true
         }
     }
 }

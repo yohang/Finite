@@ -31,7 +31,8 @@ final class DumpStateMachineCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $stateEnum = (string) $input->getArgument('state_enum');
+        $stateEnum = $input->getArgument('state_enum');
+        \assert(\is_string($stateEnum));
 
         if (!(enum_exists($stateEnum) && is_subclass_of($stateEnum, State::class))) {
             $io->error('The state enum "'.$stateEnum.'" does not exist.');
@@ -39,7 +40,9 @@ final class DumpStateMachineCommand extends Command
             return self::FAILURE;
         }
 
-        $format = (string) $input->getArgument('format');
+        $format = $input->getArgument('format');
+        \assert(\is_string($format));
+
         switch ($format) {
             case self::FORMAT_MERMAID:
                 /** @psalm-suppress ArgumentTypeCoercion Type is enforced upper but not detected by psalm */
@@ -47,7 +50,7 @@ final class DumpStateMachineCommand extends Command
 
                 break;
             default:
-                $output->writeln('Unknown format "'.$format.'". Supported formats are: '.implode(', ', self::FORMATS));
+                $io->error('Unknown format "'.$format.'". Supported formats are: '.implode(', ', self::FORMATS));
 
                 return self::FAILURE;
         }

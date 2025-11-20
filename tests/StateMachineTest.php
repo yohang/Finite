@@ -11,11 +11,17 @@ use Finite\Exception\BadStateClassException;
 use Finite\Exception\FiniteException;
 use Finite\Exception\NonUniqueStateException;
 use Finite\Exception\NoStateFoundException;
+use Finite\Exception\TransitionNotReachableException;
 use Finite\StateMachine;
 use Finite\Tests\Fixtures\AlternativeArticle;
 use Finite\Tests\Fixtures\AlternativeArticleState;
 use Finite\Tests\Fixtures\Article;
+use Finite\Tests\Fixtures\ChildArticle;
+use Finite\Tests\Fixtures\MockableState;
+use Finite\Tests\Fixtures\MockableStateObject;
+use Finite\Tests\Fixtures\MockableTransitionProvider;
 use Finite\Tests\Fixtures\SimpleArticleState;
+use Finite\Transition\TransitionInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
@@ -94,6 +100,31 @@ class StateMachineTest extends TestCase
 
         $stateMachine->apply($object, SimpleArticleState::PUBLISH);
         $stateMachine->apply($object, SimpleArticleState::REPORT);
+
+        $this->assertSame(SimpleArticleState::REPORTED, $object->getState());
+    }
+
+    public function testItAppliesTransitionOnChildClass(): void
+    {
+        $object = new ChildArticle('Hi !');
+
+        $stateMachine = new StateMachine();
+
+        $stateMachine->apply($object, SimpleArticleState::PUBLISH);
+
+        $this->assertSame(SimpleArticleState::PUBLISHED, $object->getState());
+    }
+
+    public function testItThrowsForUnreachableTransition(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(FiniteException::class);
+        $this->expectException(TransitionNotReachableException::class);
+        $this->expectExceptionMessage('Unable to apply transition report');
+
+        $object = new Article('Hi !');
+        $stateMachine = new StateMachine();
+        $stateMachine->apply($object, SimpleArticleState::REPORT);
     }
 
     public function testItRejectsNonStatefulObject()
@@ -101,6 +132,7 @@ class StateMachineTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectException(FiniteException::class);
         $this->expectException(NoStateFoundException::class);
+        $this->expectExceptionMessage('Found no state on object class@anonymous');
 
         (new StateMachine())->can(
             new class {
@@ -145,6 +177,7 @@ class StateMachineTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectException(FiniteException::class);
         $this->expectException(NonUniqueStateException::class);
+        $this->expectExceptionMessage('Found multiple states on object Finite\Tests\Fixtures\AlternativeArticle');
 
         $stateMachine = new StateMachine();
         $stateMachine->can(new AlternativeArticle('test'), 'publish');
@@ -171,5 +204,32 @@ class StateMachineTest extends TestCase
         $this->assertTrue((new StateMachine())->hasState(new Article('Hi !')));
         $this->assertTrue((new StateMachine())->hasState(new AlternativeArticle('Hi !')));
         $this->assertFalse((new StateMachine())->hasState(new \stdClass()));
+    }
+
+    public function testTransitionIsProcessed(): void
+    {
+        $transition = $this->createMock(TransitionInterface::class);
+
+        $transition->expects($this->once())
+            ->method('process')
+            ->with($this->isInstanceOf(MockableStateObject::class));
+
+        $transition->expects($this->any())
+            ->method('getName')
+            ->willReturn('publish');
+
+        $transition->expects($this->once())
+            ->method('getSourceStates')
+            ->willReturn([MockableState::DRAFT]);
+
+        $transition->expects($this->once())
+            ->method('getTargetState')
+            ->willReturn(MockableState::PUBLISHED);
+
+        MockableTransitionProvider::$transitions = [$transition];
+        $object = new MockableStateObject();
+
+        $stateMachine = new StateMachine();
+        $stateMachine->apply($object, 'publish');
     }
 }
