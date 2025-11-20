@@ -28,7 +28,7 @@
         "phpunit/phpunit": "^10.5.40",
         "symfony/var-dumper": ">=5.4,<8",
         "twig/twig": "^3.4",
-        "vimeo/psalm": "dev-master@dev",
+        "vimeo/psalm": "^6.13.1",
         "symfony/http-kernel": ">=5.4,<8",
         "symfony/framework-bundle": ">=5.4,<8",
         "symfony/event-dispatcher": ">=5.4,<8",

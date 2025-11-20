@@ -103,7 +103,7 @@ final class Finite
     public function phpCsFixer(#[DefaultPath('.')] Directory $source): string
     {
         return $this
-            ->build($source, '8.3')
+            ->build($source)
             ->withExec(['./vendor/bin/php-cs-fixer', 'fix', '--dry-run', '--diff', '--ansi'])
             ->stdout();
     }
