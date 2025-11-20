@@ -72,5 +72,5 @@ jobs:
                 with:
                     version: "latest"
                     verb: call
-                    args: mutation --stryker-dashboard-api-key=${{ secrets.STRYKER_DASHBOARD_API_KEY }} --github-actions=$GITHUB_ACTIONS --github-repository=${{ github.repository }} --github-ref=${{ github.ref }}
+                    args: infection --stryker-dashboard-api-key=${{ secrets.STRYKER_DASHBOARD_API_KEY }} --github-actions=$GITHUB_ACTIONS --github-repository=${{ github.repository }} --github-ref=${{ github.ref }}
                     cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
