@@ -8,10 +8,9 @@ use Finite\Event\CanTransitionEvent;
 use Finite\Event\EventDispatcher;
 use Finite\Event\PostTransitionEvent;
 use Finite\Event\PreTransitionEvent;
-use Finite\Exception\BadStateClassException;
-use Finite\Exception\NonUniqueStateException;
-use Finite\Exception\NoStateFoundException;
 use Finite\Exception\TransitionNotReachableException;
+use Finite\Extractor\MemoizedStatePropertyExtractor;
+use Finite\Extractor\StatePropertyExtractor;
 use Finite\Transition\TransitionInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
@@ -22,6 +21,7 @@ class StateMachine
 {
     public function __construct(
         private readonly EventDispatcherInterface $dispatcher = new EventDispatcher(),
+        private readonly StatePropertyExtractor $statePropertyExtractor = new MemoizedStatePropertyExtractor(),
     ) {
     }
 
@@ -34,7 +34,7 @@ class StateMachine
             throw new TransitionNotReachableException('Unable to apply transition '.$transitionName);
         }
 
-        $property = $this->extractStateProperty($object, $stateClass);
+        $property = $this->statePropertyExtractor->extract($object, $stateClass);
         $fromState = $this->extractState($object, $stateClass);
         $transition = array_values(
             array_filter(
@@ -99,7 +99,7 @@ class StateMachine
         return array_filter(
             array_map(
                 fn (\ReflectionProperty $property): string => (string) $property->getType(),
-                $this->extractStateProperties($object),
+                $this->statePropertyExtractor->extractAll($object),
             ),
             fn (?string $name): bool => enum_exists($name),
         );
@@ -107,7 +107,7 @@ class StateMachine
 
     public function hasState(object $object): bool
     {
-        return \count($this->extractStateProperties($object)) > 0;
+        return \count($this->statePropertyExtractor->extractAll($object)) > 0;
     }
 
     public function getDispatcher(): EventDispatcherInterface
@@ -120,84 +120,11 @@ class StateMachine
      */
     private function extractState(object $object, ?string $stateClass = null): State&\BackedEnum
     {
-        $property = $this->extractStateProperty($object, $stateClass);
+        $property = $this->statePropertyExtractor->extract($object, $stateClass);
 
         /** @var State&\BackedEnum $value */
         $value = $property->getValue($object);
 
         return $value;
-    }
-
-    /**
-     * @param class-string|null $stateClass
-     */
-    private function extractStateProperty(object $object, ?string $stateClass = null): \ReflectionProperty
-    {
-        if ($stateClass && !enum_exists($stateClass)) {
-            throw new NoStateFoundException(\sprintf('Enum "%s" does not exists', $stateClass));
-        }
-
-        $properties = $this->extractStateProperties($object);
-        if (null !== $stateClass) {
-            foreach ($properties as $property) {
-                if ((string) $property->getType() === $stateClass) {
-                    return $property;
-                }
-            }
-
-            throw new BadStateClassException(\sprintf('Found no state on object "%s" with class "%s"', $object::class, $stateClass));
-        }
-
-        if (1 === \count($properties)) {
-            return $properties[0];
-        }
-
-        if (\count($properties) > 1) {
-            throw new NonUniqueStateException('Found multiple states on object '.$object::class);
-        }
-
-        throw new NoStateFoundException('Found no state on object '.$object::class);
-    }
-
-    /**
-     * @return array<int, \ReflectionProperty>
-     */
-    private function extractStateProperties(object $object): array
-    {
-        $properties = [];
-
-        $reflectionClass = new \ReflectionClass($object);
-        /** @psalm-suppress DocblockTypeContradiction */
-        do {
-            foreach ($reflectionClass->getProperties() as $property) {
-                /** @var \ReflectionUnionType|\ReflectionIntersectionType|\ReflectionNamedType $reflectionType */
-                $reflectionType = $property->getType();
-                if (null === $reflectionType) {
-                    continue;
-                }
-
-                if ($reflectionType instanceof \ReflectionUnionType) {
-                    continue;
-                }
-
-                if ($reflectionType instanceof \ReflectionIntersectionType) {
-                    continue;
-                }
-
-                /** @var class-string $name */
-                $name = $reflectionType->getName();
-                if (!enum_exists($name)) {
-                    continue;
-                }
-
-                $reflectionEnum = new \ReflectionEnum($name);
-                /** @psalm-suppress TypeDoesNotContainType */
-                if ($reflectionEnum->implementsInterface(State::class)) {
-                    $properties[] = $property;
-                }
-            }
-        } while ($reflectionClass = $reflectionClass->getParentClass());
-
-        return $properties;
     }
 }
