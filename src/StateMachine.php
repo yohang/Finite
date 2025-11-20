@@ -96,12 +96,9 @@ class StateMachine
      */
     public function getStateClasses(object $object): array
     {
-        return array_filter(
-            array_map(
-                fn (\ReflectionProperty $property): string => (string) $property->getType(),
-                $this->statePropertyExtractor->extractAll($object),
-            ),
-            fn (?string $name): bool => enum_exists($name),
+        return array_map(
+            fn (\ReflectionProperty $property): string => (string) $property->getType(),
+            $this->statePropertyExtractor->extractAll($object),
         );
     }
 

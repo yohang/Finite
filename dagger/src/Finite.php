@@ -9,9 +9,10 @@ use Dagger\Attribute\DaggerObject;
 use Dagger\Attribute\DefaultPath;
 use Dagger\Attribute\Doc;
 use Dagger\Container;
-use Dagger\Directory;
 
 use function Dagger\dag;
+
+use Dagger\Directory;
 
 #[DaggerObject]
 #[Doc('Finite dagger functions')]
@@ -25,8 +26,7 @@ final class Finite
         #[DefaultPath('.')] Directory $source,
         string $phpVersion = '8.4',
         string $dependencyVersion = 'highest',
-    ): Container
-    {
+    ): Container {
         $composerCache = dag()->cacheVolume('composer');
 
         $composer = dag()
@@ -38,7 +38,7 @@ final class Finite
 
         $container = dag()
             ->container()
-            ->from('php:' . $phpVersion)
+            ->from('php:'.$phpVersion)
             ->withFile('/usr/local/bin/install-php-extensions', $installPhpExtensions, 0755)
             ->withExec(['install-php-extensions', 'zip', 'opcache', 'pcov'])
             ->withFile('/usr/bin/composer', $composer->file('/usr/bin/composer'))
@@ -58,6 +58,7 @@ final class Finite
             ->withDirectory('tests', $source->directory('tests'))
             ->withFile('.php-cs-fixer.dist.php', $source->file('.php-cs-fixer.dist.php'))
             ->withFile('phpunit.xml.dist', $source->file('phpunit.xml.dist'))
+            ->withFile('infection.json5', $source->file('infection.json5'))
             ->withFile('psalm.xml', $source->file('psalm.xml'));
     }
 
@@ -67,8 +68,7 @@ final class Finite
         #[DefaultPath('.')] Directory $source,
         string $phpVersion = '8.4',
         string $dependencyVersion = 'highest',
-    ): string
-    {
+    ): string {
         return $this
             ->build($source, $phpVersion, $dependencyVersion)
             ->withExec(['php', './vendor/bin/phpunit', '--coverage-text'])
@@ -105,6 +105,38 @@ final class Finite
         return $this
             ->build($source)
             ->withExec(['./vendor/bin/php-cs-fixer', 'fix', '--dry-run', '--diff', '--ansi'])
+            ->stdout();
+    }
+
+    #[DaggerFunction]
+    #[Doc('Infection mutation testing')]
+    public function infection(
+        #[DefaultPath('.')] Directory $source,
+        ?string $strykerDashboardApiKey = null,
+        ?string $githubActions = null,
+        ?string $githubRepository = null,
+        ?string $githubRef = null,
+    ): string {
+        $container = $this
+            ->build($source)
+            ->withExec(['apt-get', 'update'])
+            ->withExec(['apt-get', 'install', '-y', 'git'])
+            ->withDirectory('.git', $source->directory('.git'));
+
+        $exec = ['./vendor/bin/infection', '--threads=1', '--min-msi=95'];
+
+        if ($strykerDashboardApiKey && $githubActions) {
+            $exec[] = '--logger-github=true';
+
+            $container = $container
+                ->withEnvVariable('GITHUB_ACTIONS', $githubActions)
+                ->withEnvVariable('GITHUB_REPOSITORY', $githubRepository)
+                ->withEnvVariable('GITHUB_REF', $githubRef)
+                ->withEnvVariable('STRYKER_DASHBOARD_API_KEY', $strykerDashboardApiKey);
+        }
+
+        return $container
+            ->withExec($exec)
             ->stdout();
     }
 
