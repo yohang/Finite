@@ -14,7 +14,8 @@ use Finite\Exception\NoStateFoundException;
 use Finite\Exception\TransitionNotReachableException;
 use Finite\Transition\TransitionInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
+use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 /**
  * @api
@@ -23,6 +24,7 @@ class StateMachine
 {
     public function __construct(
         private readonly EventDispatcherInterface $dispatcher = new EventDispatcher(),
+        private readonly ?PropertyAccessorInterface $propertyAccessor = new PropertyAccessor(),
     ) {
     }
 
@@ -47,7 +49,7 @@ class StateMachine
         $this->dispatcher->dispatch(new PreTransitionEvent($object, $transition, $fromState));
 
         $transition->process($object);
-        PropertyAccess::createPropertyAccessor()->setValue(
+        $this->propertyAccessor->setValue(
             $object,
             $property->getName(),
             $transition->getTargetState(),
@@ -129,7 +131,7 @@ class StateMachine
         $property = $this->extractStateProperty($object, $stateClass);
 
         /** @psalm-suppress MixedReturnStatement */
-        return PropertyAccess::createPropertyAccessor()->getValue($object, $property->getName());
+        return $this->propertyAccessor->getValue($object, $property->getName());
     }
 
     /**
