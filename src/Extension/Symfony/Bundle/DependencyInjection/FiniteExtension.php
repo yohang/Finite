@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Finite\Extension\Symfony\Bundle\DependencyInjection;
 
 use Finite\Extension\Twig\FiniteExtension as TwigExtension;
+use Finite\Extractor\MemoizedStatePropertyExtractor;
+use Finite\Extractor\ReflectionStatePropertyExtractor;
+use Finite\Extractor\StatePropertyExtractor;
 use Finite\StateMachine;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -18,8 +21,11 @@ final class FiniteExtension extends Extension
     {
         $container->addDefinitions(
             [
+                StatePropertyExtractor::class => (new Definition(MemoizedStatePropertyExtractor::class))
+                    ->setArgument('$decorated', new Definition(ReflectionStatePropertyExtractor::class)),
                 StateMachine::class => (new Definition(StateMachine::class))
                     ->setArgument('$dispatcher', new Reference('event_dispatcher'))
+                    ->setArgument('$statePropertyExtractor', new Reference(StatePropertyExtractor::class))
                     ->setPublic(true),
                 TwigExtension::class => (new Definition(TwigExtension::class))
                     ->setArgument('$stateMachine', new Reference(StateMachine::class))

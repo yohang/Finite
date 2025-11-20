@@ -46,6 +46,7 @@ class StateMachineTest extends TestCase
                 $this->callback(function (CanTransitionEvent $e) use ($object) {
                     $this->assertSame($object, $e->getObject());
                     $this->assertFalse($e->isPropagationStopped());
+                    $this->assertSame(SimpleArticleState::DRAFT, $e->getFromState());
 
                     return SimpleArticleState::class === $e->getStateClass();
                 }),
