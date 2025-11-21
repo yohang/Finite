@@ -43,7 +43,7 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                php-versions: [ '8.1', '8.2', '8.3', '8.4' ]
+                php-versions: [ '8.1', '8.2', '8.3', '8.4' , '8.5' ]
                 dependencies-versions: [ lowest, highest ]
         name: PHPUnit test suite
         steps:
