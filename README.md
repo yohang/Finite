@@ -10,12 +10,6 @@ As of version 2, Finite is a low-deps and lightweight state machine library, tha
 ![CI Status](https://github.com/yohang/finite/actions/workflows/ci.yml/badge.svg)
 [![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fyohang%2FFinite%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/yohang/Finite/main)
 
-Disclaimer
-----------
-
-I don't have the time anymore to maintain this lib. Here is the documentation for the brand new Finite V2, based
-on PHP >= 8.1 Enums, but don't expect it to be updated on a regular basis.
-
 Features
 --------
 
@@ -130,3 +124,68 @@ After that, you can use theses methods on your object, even without instantiatin
 var_dump($document->getState()->isDeletable());
 var_dump($document->getState()->isPrintable());
 ```
+
+### Events & Guards
+
+Finite dispatches PSR-14 events. You can listen to them to add custom logic or block transitions.
+
+```php
+use Finite\Event\CanTransitionEvent;
+use Finite\Event\PostTransitionEvent;
+
+$dispatcher = $stateMachine->getDispatcher();
+
+// 1. Guard: Prevent a transition dynamically
+$dispatcher->addEventListener(CanTransitionEvent::class, function (CanTransitionEvent $event) {
+    if ('publish' === $event->getTransition()->getName() && !$event->getObject()->title) {
+        // Block the transition if the title is empty
+        $event->blockTransition(); 
+    }
+});
+
+// 2. Post-Action: Do something after a transition
+$dispatcher->addEventListener(PostTransitionEvent::class, function (PostTransitionEvent $event) {
+    // e.g. Send an email, log activity...
+    echo 'Transition ' . $event->getTransition()->getName() . ' completed!';
+});
+```
+### Symfony Integration
+
+Register the bundle in `config/bundles.php`:
+
+```php
+return [
+    // ...
+    Finite\Extension\Symfony\Bundle\FiniteBundle::class => ['all' => true],
+];
+```
+
+This automatically registers the StateMachine service and the Twig extension.
+
+#### Twig Helper
+
+```twig
+{# Check if a transition is available #}
+{% if finite_can(document, 'publish') %}
+    <a href="...">Publish</a>
+{% endif %}
+
+{# List all reachable transitions #}
+<ul>
+    {% for transition in finite_reachable_transitions(document) %}
+        <li>{{ transition.name }}</li>
+    {% endfor %}
+</ul>
+```
+
+#### Console Command
+
+Dump your graph to visualize it:
+
+```bash
+php bin/console finite:state-machine:dump "App\State\DocumentState" mermaid
+```
+
+License
+-------
+This library is licensed under the MIT License.

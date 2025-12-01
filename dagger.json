@@ -4,5 +4,5 @@
   "sdk": {
     "source": "php"
   },
-  "source": "dagger"
+  "source": ".dagger"
 }
